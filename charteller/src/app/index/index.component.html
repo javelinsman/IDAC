@@ -1,6 +1,32 @@
-<div class="container">
-  <h1>Charteller</h1>
-  <h2>Auditory exploration of annotated charts for non-visual access</h2>
-  <p>Hello world!</p>
-  <button class="btn btn-primary">Good</button>
+<div class="container pb-5">
+  <div class="jumbotron jumbotron-fluid">
+    <div class="conatiner p-5">
+      <h1 class="display-4">
+        <img class="d-inline" width="64" src="/assets/charteller.png" alt="charteller logo">
+        Charteller
+      </h1>
+      <p class="lead">
+        Screenreading annotated charts for non-visual access
+      </p>
+      <hr class="my-4">
+      <p>Upload your <a href="https://chartaccent.github.io">ChartAccent</a> json file or quick start with examples</p>
+      <a class="btn btn-secondary btn-lg disabled" href="#" role="button" aria-disabled="true">Upload JSON</a>
+      <a class="btn btn-primary btn-lg mx-1" href="#examples" role="button">Examples</a>
+    </div>
+  </div>
+  <section id="examples">
+    <h1>Examples</h1>
+    <hr class="mb-4">
+    <div class="row">
+      <div class="col-md-6" *ngFor="let chart of charts">
+        <div class="card">
+          <img class="card-img-top" src="{{ chart.src_png }}" alt="annotated chart number 4">
+          <div class="card-body bg-light text-center">
+            <h5 class="card-text">{{ chart.title }}</h5>
+            <a class="card-link" href="#">Try Navigation</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
