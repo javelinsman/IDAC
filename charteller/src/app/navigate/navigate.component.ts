@@ -183,7 +183,7 @@ export class NavigateComponent implements OnInit {
           }
         }
         else{
-          ret += `강조되어 있는 막대입니다.`
+          ret += `강조되어 있는 막대입니다. `
         }
       }
       ret += `막대 그룹이름 ${bargroup.name} 범례 ${tag.key} ${y.label} ${tag.value}.`
@@ -204,7 +204,7 @@ export class NavigateComponent implements OnInit {
   moveToParent(){
     let element = this.currentElement()
     let parent = this.getElement(element.parentId)
-    if(!parent) return
+    if(!parent || parent._id == 0) return
     let element_index = parent.children.indexOf(element)
     parent['_bookmark'] = element_index
     this.currentFocus = parent._id;
