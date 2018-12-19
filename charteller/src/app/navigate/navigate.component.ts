@@ -117,7 +117,11 @@ export class NavigateComponent implements OnInit {
       ret += '차트 제목 ' + tag.title + '.';
     }
     else if(tag.tagname === 'y'){
-      ret += `y축 레이블 ${tag.label ? tag.label : "없음"} 단위 ${tag.unit ? tag.unit : "없음"} 범위 ${tag.min}부터 ${tag.max}.`
+      if(tag._annotation){
+        ret += `y축 ${tag._annotation.target.range}의 위치에 강조선이 있습니다. `
+      }
+      ret += `y축 레이블 ${tag.label ? tag.label : "없음"} 단위 ${tag.unit ? tag.unit : "없음"} `
+      ret += `범위 ${tag.min}부터 ${tag.max ? tag.max : this.info.children[4].children.map(bargroup => bargroup.children.map(bar => bar.value)).reduce((a, b) => a.concat(b)).reduce((a,b) => Math.max(a,b)) }.`
     }
     else if(tag.tagname === 'x'){
       ret += `x축 레이블 ${tag.lable ? tag.label : "없음"} 항목 ${tag.children.length}개 ${tag.children.map(d=>d.tick).join(', ')}.`
@@ -132,10 +136,16 @@ export class NavigateComponent implements OnInit {
       ret += tag.item;
     }
     else if(tag.tagname === 'marks'){
-      ret += `${tag.children.length}개의 막대 그룹에 각각 ${tag.children[0].children.length}개의 막대가 있습니다.`
+      if(tag.children[0].children.length === 1){
+        ret += `${tag.children.length}개의 막대가 있습니다.`
+      }
+      else
+        ret += `${tag.children.length}개의 막대 그룹에 각각 ${tag.children[0].children.length}개의 막대가 있습니다.`
     }
     else if(tag.tagname === 'bargroup'){
-      ret += `막대그룹 이름 ${tag.name}.`
+      if(tag.children.length == 1)
+        ret += this.describe(tag.children[0])
+      else ret += `막대그룹 이름 ${tag.name}.`
     }
     else if(tag.tagname === 'bar'){
       let bargroup = this.getElement(tag.parentId);
