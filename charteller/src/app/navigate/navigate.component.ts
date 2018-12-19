@@ -77,6 +77,26 @@ export class NavigateComponent implements OnInit {
       this.moveToNextAnnotation();
       this.speak(this.describe(this.currentElement()))
     }
+    else if(eqSet(this.keydowns, new Set(['shift', 'd']))){
+      this.moveToPreviousAnnotation();
+      this.speak(this.describe(this.currentElement()))
+    }
+    else if(eqSet(this.keydowns, new Set(['arrowright']))){
+      this.moveToNextSibling();
+      this.speak(this.describe(this.currentElement()))
+    }
+    else if(eqSet(this.keydowns, new Set(['arrowleft']))){
+      this.moveToPreviousSibling();
+      this.speak(this.describe(this.currentElement()))
+    }
+    else if(eqSet(this.keydowns, new Set(['arrowup']))){
+      this.moveToParent();
+      this.speak(this.describe(this.currentElement()))
+    }
+    else if(eqSet(this.keydowns, new Set(['arrowdown']))){
+      this.moveToChild();
+      this.speak(this.describe(this.currentElement()))
+    }
   }
 
   speak (message) {
@@ -89,9 +109,9 @@ export class NavigateComponent implements OnInit {
   describe(tag) {
     let ret = ''
     if(tag.tagname === 'graph'){
-      ret += this.describe(tag.children[0]);
-      ret += this.describe(tag.children[1]);
-      ret += this.describe(tag.children[2]);
+      ret += this.describe(tag.children[0]) + ' ';
+      ret += this.describe(tag.children[1]) + ' ';
+      ret += this.describe(tag.children[2]) + ' ';
     }
     else if(tag.tagname === 'title'){
       ret += '차트 제목 ' + tag.title + '.';
@@ -138,12 +158,61 @@ export class NavigateComponent implements OnInit {
     this.currentFocus %= this.tags.length;
   }
 
+  moveToParent(){
+    let element = this.currentElement()
+    let parent = this.getElement(element.parentId)
+    if(!parent) return
+    let element_index = parent.children.indexOf(element)
+    parent['_bookmark'] = element_index
+    this.currentFocus = parent._id;
+  }
+
+  moveToChild(){
+    let element = this.currentElement();
+    if(!element.children) return
+    let bookmark = element._bookmark ? element._bookmark : 0;
+    let child = element.children[bookmark]
+    this.currentFocus = child._id;
+  }
+
   moveToNextAnnotation(){
     let nextAnnotation = this.tags.slice(this.currentFocus+1).find(tag => tag._annotation)
     if(nextAnnotation){
       this.currentFocus = nextAnnotation._id;
     }
   }
+
+  moveToPreviousAnnotation(){
+    let prevAnnotation = this.tags.slice(0, this.currentFocus).reverse().find(tag => tag._annotation)
+    if(prevAnnotation){
+      this.currentFocus = prevAnnotation._id;
+    }
+  }
+
+  moveToNextSibling(){
+    let element = this.currentElement()
+    let parent = this.getElement(element.parentId)
+    if(!parent) return
+    let element_index = parent.children.indexOf(element)
+    if(element_index + 1 < parent.children.length){
+      let nextSibling = parent.children[element_index + 1];
+      this.currentFocus = nextSibling._id;
+    }
+  }
+
+  moveToPreviousSibling(){
+    let element = this.currentElement()
+    let parent = this.getElement(element.parentId)
+    if(!parent) return
+    let element_index = parent.children.indexOf(element)
+    if(element_index - 1 >= 0){
+      let prevSibling = parent.children[element_index - 1];
+      this.currentFocus = prevSibling._id;
+    }
+  }
+
+
+
 
   currentElement() {
     return this.tags[this.currentFocus];
@@ -199,6 +268,18 @@ export class NavigateComponent implements OnInit {
                 }))
             }
           })
+        }
+      ]
+    }
+
+    if(false && chartInfo.children[4].children[0].children.length == 1){
+      chartInfo.children[4].children = [
+        {
+          tagname: 'bargroup',
+          name: chartInfo.children[2].label,
+          children: chartInfo.children[4].children.map(bargroup =>
+              bargroup.children[0]),
+          annotation: undefined
         }
       ]
     }
