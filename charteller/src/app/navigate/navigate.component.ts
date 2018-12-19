@@ -159,7 +159,16 @@ export class NavigateComponent implements OnInit {
       let marks = this.getElement(bargroup.parentId);
       let graph = this.getElement(marks.parentId);
       let y = graph.children[1];
-      if(tag._annotation) ret += '강조되어 있습니다. '
+      if(tag._annotation){
+        if(tag._annotation.target_inherit){
+          if(tag._annotation.target_inherit.mode === "below"){
+            ret += `${tag._annotation.target.range}보다 아래에 있는 막대입니다. `
+          }
+        }
+        else{
+          ret += '강조되어 있는 막대입니다. '
+        }
+      }
       ret += `막대 그룹이름 ${bargroup.name} 범례 ${tag.key} ${y.label} ${tag.value}.`
     }
     return ret;
