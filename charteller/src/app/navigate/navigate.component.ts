@@ -54,7 +54,7 @@ export class NavigateComponent implements OnInit {
       .subscribe((chartAccent: ChartAccent.ChartAccentJSON) => {
         this.tags = [];
         this.info = this.convert(chartAccent);
-        this.currentFocus = 0;
+        this.currentFocus = 1;
         console.log(chartAccent);
         console.log(this.info);
         console.log(Object.entries(this.info))
@@ -119,6 +119,13 @@ export class NavigateComponent implements OnInit {
     else if(tag.tagname === 'y'){
       if(tag._annotation){
         ret += `y축 ${tag._annotation.target.range}의 위치에 강조선이 있습니다. `
+        tag._annotation.components.forEach(component => {
+          if(component.visible){
+            if(component.type === "label"){
+              ret += `강조선 설명: ${component.text}. `
+            }
+          }
+        })
       }
       ret += `y축 레이블 ${tag.label ? tag.label : "없음"} 단위 ${tag.unit ? tag.unit : "없음"} `
       ret += `범위 ${tag.min}부터 ${tag.max ? tag.max : this.info.children[4].children.map(bargroup => bargroup.children.map(bar => bar.value)).reduce((a, b) => a.concat(b)).reduce((a,b) => Math.max(a,b)) }.`
