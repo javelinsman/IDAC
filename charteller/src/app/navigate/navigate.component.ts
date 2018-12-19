@@ -8,6 +8,7 @@ import * as ChartAccent from '../chart_accent_json';
 import { ChartInfo } from '../chart_info';
 import { eqArray, eqSet } from '../utils';
 import { TargetLocator } from 'selenium-webdriver';
+import { componentFactoryName } from '@angular/compiler';
 
 @Component({
   selector: 'app-navigate',
@@ -140,7 +141,23 @@ export class NavigateComponent implements OnInit {
       ret += `범례 항목 ${tag.children.length}개 ${tag.children.map(d=>d.item).join(', ')}.`
     }
     else if(tag.tagname === 'item'){
-      ret += tag.item;
+      ret += `${tag.item}. `;
+      if(tag._annotation){
+        tag._annotation.components.forEach(component => {
+          if(component.visible){
+            if(component.type == 'trendline'){
+              ret += `이 범례에 추세선이 그려져 있습니다.`
+              let series = +tag._annotation.target.items[0].elements.slice(1) - 2;
+              let data = this.info.children[4].children.map(bargroup => {
+                return bargroup.children[series].value
+              })
+              let increase = Math.round(10 * (data[data.length-1] - data[0]))/10;
+              if(increase > 0) ret += `전체 기간 동안 ${increase}만큼 상승했습니다.`
+              else ret += `전체 기간 동안 ${-increase}만큼 하락했습니다.`
+            }
+          }
+        })
+      }
     }
     else if(tag.tagname === 'marks'){
       if(tag.children[0].children.length === 1){
@@ -166,7 +183,7 @@ export class NavigateComponent implements OnInit {
           }
         }
         else{
-          ret += '강조되어 있는 막대입니다. '
+          ret += `강조되어 있는 막대입니다.`
         }
       }
       ret += `막대 그룹이름 ${bargroup.name} 범례 ${tag.key} ${y.label} ${tag.value}.`
@@ -298,18 +315,6 @@ export class NavigateComponent implements OnInit {
       ]
     }
 
-    if(false && chartInfo.children[4].children[0].children.length == 1){
-      chartInfo.children[4].children = [
-        {
-          tagname: 'bargroup',
-          name: chartInfo.children[2].label,
-          children: chartInfo.children[4].children.map(bargroup =>
-              bargroup.children[0]),
-          annotation: undefined
-        }
-      ]
-    }
-
     let idCount = 0;
     let tags = this.tags;
     function assignId(tag){
@@ -332,13 +337,15 @@ export class NavigateComponent implements OnInit {
             let indices = item.items.map(dataindex => {
               return JSON.parse(dataindex)[2]
             })
-            console.log(series)
-            console.log(indices)
-            indices.forEach(index => {
-              let bar = chartInfo.children[4].children[index].children[series]
-              console.log(bar)
-              bar['_annotation'] = annotation;
-            })
+            if(indices.length == chartInfo.children[4].children.length){
+              chartInfo.children[3].children[series]['_annotation'] = annotation;
+            }
+            else{
+              indices.forEach(index => {
+                let bar = chartInfo.children[4].children[index].children[series]
+                bar['_annotation'] = annotation;
+              })
+            }
           });
         }
         else if(annotation.target.type === "range"){
