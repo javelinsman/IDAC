@@ -1,7 +1,19 @@
+class ItemsTarget {
+  type: "items";
+  items: {
+    elements: string,
+    items: string[]
+  }[];
+}
+
+class RangeTarget {
+  type: "range";
+  axis: string;
+  range: string;
+}
+
 export class Annotation {
-    target: {
-        type: string;
-    };
+    target: ItemsTarget | RangeTarget;
     target_inherit: {
         mode: string;
         serieses: string[]

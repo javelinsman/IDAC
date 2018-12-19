@@ -7,6 +7,7 @@ import { ChartService } from '../chart.service';
 import * as ChartAccent from '../chart_accent_json';
 import { ChartInfo } from '../chart_info';
 import { eqArray, eqSet } from '../utils';
+import { TargetLocator } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-navigate',
@@ -20,7 +21,7 @@ export class NavigateComponent implements OnInit {
   currentFocus: number;
   tags;
   keydowns;
-  
+
   constructor(
     private route: ActivatedRoute,
     private chartService: ChartService,
@@ -72,6 +73,10 @@ export class NavigateComponent implements OnInit {
       this.moveToPreviousElement();
       this.speak(this.describe(this.currentElement()))
     }
+    else if(eqSet(this.keydowns, new Set(['d']))){
+      this.moveToNextAnnotation();
+      this.speak(this.describe(this.currentElement()))
+    }
   }
 
   speak (message) {
@@ -117,6 +122,7 @@ export class NavigateComponent implements OnInit {
       let marks = this.getElement(bargroup.parentId);
       let graph = this.getElement(marks.parentId);
       let y = graph.children[1];
+      if(tag._annotation) ret += '강조되어 있습니다. '
       ret += `막대 그룹이름 ${bargroup.name} 범례 ${tag.key} ${y.label} ${tag.value}.`
     }
     return ret;
@@ -130,6 +136,13 @@ export class NavigateComponent implements OnInit {
   moveToPreviousElement(){
     this.currentFocus += this.tags.length - 1;
     this.currentFocus %= this.tags.length;
+  }
+
+  moveToNextAnnotation(){
+    let nextAnnotation = this.tags.slice(this.currentFocus+1).find(tag => tag._annotation)
+    if(nextAnnotation){
+      this.currentFocus = nextAnnotation._id;
+    }
   }
 
   currentElement() {
@@ -159,7 +172,7 @@ export class NavigateComponent implements OnInit {
         },
         {
           tagname: 'x',
-          label: ca.chart.xLabel,
+          label: ca.chart.xLabel.text,
           children: ca.dataset.rows.map(row => ({
             tagname: 'tick',
             tick: row[ca.dataset.columns[0].name]
@@ -186,16 +199,6 @@ export class NavigateComponent implements OnInit {
                 }))
             }
           })
-        },
-        {
-          tagname: 'annotations',
-          children: ca.annotations.annotations.map((annotation, i) => {
-            return {
-              tagname: 'annotation',
-              id: i,
-              type: annotation.target.type
-            };
-          })
         }
       ]
     }
@@ -213,6 +216,49 @@ export class NavigateComponent implements OnInit {
       }
     }
     assignId(chartInfo)
+
+    ca.annotations.annotations.forEach((annotation, aid: number) => {
+      if(!annotation.target_inherit){
+        if(annotation.target.type === "items"){
+          annotation.target.items.forEach(item => {
+            let series = +(item.elements.slice(1)) - 2;
+            let indices = item.items.map(dataindex => {
+              return JSON.parse(dataindex)[2]
+            })
+            console.log(series)
+            console.log(indices)
+            indices.forEach(index => {
+              let bar = chartInfo.children[4].children[index].children[series]
+              console.log(bar)
+              bar['_annotation'] = annotation;
+            })
+          });
+        }
+        else if(annotation.target.type === "range"){
+          let axisName = annotation.target.axis === "E0" ? 'x' : 'y';
+          let axis = chartInfo.children.find(tag => tag.tagname === axisName);
+          axis['_annotation'] = annotation;
+        }
+      }
+      else{
+        if(annotation.target.type == 'range'){
+          let mode = annotation.target_inherit.mode;
+          let serieses = annotation.target_inherit.serieses;
+          if(mode === "below"){
+            let range = +annotation.target.range;
+            serieses.forEach(seriesName => {
+              let series = +(seriesName.slice(1)) - 2;
+              chartInfo.children[4].children.forEach(bargroup => {
+                if(bargroup.children[series].value < range){
+                  bargroup.children[series]['_annotation'] = annotation;
+                }
+              })
+            })
+          }
+        }
+      }
+    })
+
     return chartInfo
   }
 }

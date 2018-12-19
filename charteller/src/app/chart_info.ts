@@ -26,17 +26,13 @@ export class ChartInfo {
             children: {
                 tagname: string /*'bargroup'*/,
                 name: string,
+                annotation: any
                 children: {
                     tagname: string /*'bar'*/,
                     key: string,
-                    value: number
+                    value: number,
+                    annotation: any
                 }[]
-            }[]
-        },
-        {
-            tagname: string /*'annotations'*/,
-            children: {
-                tagname: string /*'annotation'*/,
             }[]
         }
     ]
