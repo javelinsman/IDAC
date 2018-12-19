@@ -15,6 +15,7 @@ export class ChartInfo {
         {
             tagname: string; //'x',
             children: {tagname: string; /* tick */}[]
+            label: string;
         },
         {
             tagname: string; //'legend',

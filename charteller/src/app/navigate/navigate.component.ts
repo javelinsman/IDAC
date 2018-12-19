@@ -82,7 +82,43 @@ export class NavigateComponent implements OnInit {
   }
 
   describe(tag) {
-    let ret = tag.tagname + '입니다.';
+    let ret = ''
+    if(tag.tagname === 'graph'){
+      ret += this.describe(tag.children[0]);
+      ret += this.describe(tag.children[1]);
+      ret += this.describe(tag.children[2]);
+    }
+    else if(tag.tagname === 'title'){
+      ret += '차트 제목 ' + tag.title + '.';
+    }
+    else if(tag.tagname === 'y'){
+      ret += `y축 레이블 ${tag.label ? tag.label : "없음"} 단위 ${tag.unit ? tag.unit : "없음"} 범위 ${tag.min}부터 ${tag.max}.`
+    }
+    else if(tag.tagname === 'x'){
+      ret += `x축 레이블 ${tag.lable ? tag.label : "없음"} 항목 ${tag.children.length}개 ${tag.children.map(d=>d.tick).join(', ')}.`
+    }
+    else if(tag.tagname === 'tick'){
+      ret += tag.tick;
+    }
+    else if(tag.tagname === 'legend'){
+      ret += `범례 항목 ${tag.children.length}개 ${tag.children.map(d=>d.item).join(', ')}.`
+    }
+    else if(tag.tagname === 'item'){
+      ret += tag.item;
+    }
+    else if(tag.tagname === 'marks'){
+      ret += `${tag.children.length}개의 막대 그룹에 각각 ${tag.children[0].children.length}개의 막대가 있습니다.`
+    }
+    else if(tag.tagname === 'bargroup'){
+      ret += `막대그룹 이름 ${tag.name}.`
+    }
+    else if(tag.tagname === 'bar'){
+      let bargroup = this.getElement(tag.parentId);
+      let marks = this.getElement(bargroup.parentId);
+      let graph = this.getElement(marks.parentId);
+      let y = graph.children[1];
+      ret += `막대 그룹이름 ${bargroup.name} 범례 ${tag.key} ${y.label} ${tag.value}.`
+    }
     return ret;
   }
 
@@ -98,6 +134,10 @@ export class NavigateComponent implements OnInit {
 
   currentElement() {
     return this.tags[this.currentFocus];
+  }
+
+  getElement(id: number) {
+    return this.tags[id];
   }
 
   convert(ca: ChartAccent.ChartAccentJSON): ChartInfo {
@@ -119,6 +159,7 @@ export class NavigateComponent implements OnInit {
         },
         {
           tagname: 'x',
+          label: ca.chart.xLabel,
           children: ca.dataset.rows.map(row => ({
             tagname: 'tick',
             tick: row[ca.dataset.columns[0].name]
@@ -165,7 +206,10 @@ export class NavigateComponent implements OnInit {
       tag['_id'] = idCount++;
       tags.push(tag);
       if(tag['children']){
-        tag['children'].forEach(childTag => assignId(childTag))
+        tag['children'].forEach(childTag =>{
+          childTag['parentId'] = tag['_id']
+          assignId(childTag)
+        })
       }
     }
     assignId(chartInfo)
