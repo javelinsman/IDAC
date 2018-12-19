@@ -57,6 +57,7 @@ export class NavigateComponent implements OnInit {
         console.log(chartAccent);
         console.log(this.info);
         console.log(Object.entries(this.info))
+        this.speak(this.describe(this.currentElement()))
       });
   }
 
@@ -65,14 +66,24 @@ export class NavigateComponent implements OnInit {
     console.log(this.keydowns);
     if(eqSet(this.keydowns, new Set(['tab']))){
       this.moveToNextElement();
+      this.speak(this.describe(this.currentElement()))
     }
     else if(eqSet(this.keydowns, new Set(['shift', 'tab']))){
       this.moveToPreviousElement();
+      this.speak(this.describe(this.currentElement()))
     }
   }
 
+  speak (message) {
+    var msg = new SpeechSynthesisUtterance(message)
+    msg.lang = 'ko-KR';
+    msg.rate = 3;
+    window.speechSynthesis.speak(msg)
+  }
+
   describe(tag) {
-    return tag.tagname;
+    let ret = tag.tagname + '입니다.';
+    return ret;
   }
 
   moveToNextElement(){
