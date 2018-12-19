@@ -6,7 +6,7 @@ import { Chart } from '../chart';
 import { ChartService } from '../chart.service';
 import * as ChartAccent from '../chart_accent_json';
 import { ChartInfo } from '../chart_info';
-import { eqArray, eqSet } from '../utils';
+import { eqArray, eqSet, beep, beep_error, beep_detect } from '../utils';
 import { TargetLocator } from 'selenium-webdriver';
 import { componentFactoryName } from '@angular/compiler';
 
@@ -20,6 +20,7 @@ export class NavigateComponent implements OnInit {
   chart: Chart;
   info: ChartInfo;
   currentFocus: number;
+  prevFocus: number;
   tags;
   keydowns;
 
@@ -66,37 +67,46 @@ export class NavigateComponent implements OnInit {
 
   keyFire(){
     console.log(this.keydowns);
+    this.prevFocus = this.currentFocus
+    let shot = false;
     if(eqSet(this.keydowns, new Set(['tab']))){
       this.moveToNextElement();
-      this.speak(this.describe(this.currentElement()))
+      shot = true;
     }
     else if(eqSet(this.keydowns, new Set(['shift', 'tab']))){
       this.moveToPreviousElement();
-      this.speak(this.describe(this.currentElement()))
+      shot = true;
     }
     else if(eqSet(this.keydowns, new Set(['d']))){
       this.moveToNextAnnotation();
-      this.speak(this.describe(this.currentElement()))
+      shot = true;
     }
     else if(eqSet(this.keydowns, new Set(['shift', 'd']))){
       this.moveToPreviousAnnotation();
-      this.speak(this.describe(this.currentElement()))
+      shot = true;
     }
     else if(eqSet(this.keydowns, new Set(['arrowright']))){
       this.moveToNextSibling();
-      this.speak(this.describe(this.currentElement()))
+      shot = true;
     }
     else if(eqSet(this.keydowns, new Set(['arrowleft']))){
       this.moveToPreviousSibling();
-      this.speak(this.describe(this.currentElement()))
+      shot = true;
     }
     else if(eqSet(this.keydowns, new Set(['arrowup']))){
       this.moveToParent();
-      this.speak(this.describe(this.currentElement()))
+      shot = true;
     }
     else if(eqSet(this.keydowns, new Set(['arrowdown']))){
       this.moveToChild();
-      this.speak(this.describe(this.currentElement()))
+      shot = true;
+    }
+    if(shot){
+      if(this.prevFocus === this.currentFocus) beep_error();
+      else{
+        this.speak(this.describe(this.currentElement()))
+        if(this.currentElement().children) beep_detect();
+      }
     }
   }
 
