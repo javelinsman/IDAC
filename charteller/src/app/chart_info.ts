@@ -1,27 +1,42 @@
 export class ChartInfo {
-    title: string;
-    x: {
-        ticks: {tick}[]
-    };
-    y: {
-        min: number,
-        max: number,
-        label: string,
-        unit: string
-    };
-    legend: {
-        items: string[]
-    };
-    marks: {
-        bargroups: {
-            name: string;
-            bars: {
-                key: string,
-                value: number
+    tagname: 'graph';
+    children: [
+        {
+            tagname: string; //'title',
+            title: string
+        },
+        {
+            tagname: string; //'y'
+            min: number,
+            max: number,
+            label: string,
+            unit: string
+        },
+        {
+            tagname: string; //'x',
+            children: {tagname: string; /* tick */}[]
+        },
+        {
+            tagname: string; //'legend',
+            children: {tagname: string /*item*/, item: string}[]
+        },
+        {
+            tagname: string; //'marks',
+            children: {
+                tagname: string /*'bargroup'*/,
+                name: string,
+                children: {
+                    tagname: string /*'bar'*/,
+                    key: string,
+                    value: number
+                }[]
             }[]
-        }[]
-    };
-    annotations: {
-
-    }
+        },
+        {
+            tagname: string /*'annotations'*/,
+            children: {
+                tagname: string /*'annotation'*/,
+            }[]
+        }
+    ]
 }
