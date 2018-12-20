@@ -1,6 +1,9 @@
 <div class="container">
   <img class="img-fluid" src="{{ chart.src_svg }}">
-  <p>
-    {{ describe(currentElement()) }}
-  </p>
+  <app-description 
+    [info]="info"
+    [element]="currentElement()"
+    [getElement]="getElement"
+    >
+  </app-description>
 </div>
