@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { Chart } from '../chart';
 import { ChartService } from '../chart.service';
 import * as ChartAccent from '../chart_accent_json';
 import { ChartInfo } from '../chart_info';
-import { eqArray, eqSet, beep, beep_error, beep_detect } from '../utils';
-import { TargetLocator } from 'selenium-webdriver';
-import { componentFactoryName } from '@angular/compiler';
+import { eqSet, beep_error, beep_detect, speak } from '../utils';
 
 @Component({
   selector: 'app-navigate',
@@ -37,7 +35,7 @@ export class NavigateComponent implements OnInit {
 
   attachKeyboardListener(){
     this.keydowns = new Set();
-    let _this = this;
+    const _this = this;
     function keyboardListener(key, event){
       if(event === 'down') _this.keydowns.add(key);
       if(event ==='up'){
@@ -60,7 +58,7 @@ export class NavigateComponent implements OnInit {
         console.log(chartAccent);
         console.log(this.info);
         console.log(Object.entries(this.info))
-        this.speak(this.describe(this.currentElement()))
+        speak(this.describe(this.currentElement()))
       });
   }
 
@@ -104,30 +102,9 @@ export class NavigateComponent implements OnInit {
     if(shot){
       if(this.prevFocus === this.currentFocus) beep_error();
       else{
-        this.speak(this.describe(this.currentElement()))
+        speak(this.describe(this.currentElement()))
         if(this.currentElement().children) beep_detect();
       }
-    }
-  }
-
-  sayTimeout = null;
-  speak (message) {
-    if (speechSynthesis.speaking) {
-      // SpeechSyn is currently speaking, cancel the current utterance(s)
-      speechSynthesis.cancel();
-
-      // Make sure we don't create more than one timeout...
-      if (this.sayTimeout !== null)
-          clearTimeout(this.sayTimeout);
-
-      let _this = this;
-      this.sayTimeout = setTimeout(function () { _this.speak(message); }, 150);
-    }
-    else {
-      var msg = new SpeechSynthesisUtterance(message)
-      msg.lang = 'ko-KR';
-      msg.rate = 3;
-      window.speechSynthesis.speak(msg)
     }
   }
 

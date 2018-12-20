@@ -42,3 +42,22 @@ export function beep_error(){
 export function beep_detect(){
   beep(5, 350, 150)
 }
+
+let sayTimeout = null;
+export function speak(message) {
+  if (speechSynthesis.speaking) {
+    // SpeechSyn is currently speaking, cancel the current utterance(s)
+    speechSynthesis.cancel();
+    // Make sure we don't create more than one timeout...
+    if (this.sayTimeout !== null)
+        clearTimeout(this.sayTimeout);
+    let _this = this;
+    this.sayTimeout = setTimeout(function () { _this.speak(message); }, 150);
+  }
+  else {
+    var msg = new SpeechSynthesisUtterance(message)
+    msg.lang = 'ko-KR';
+    msg.rate = 3;
+    window.speechSynthesis.speak(msg)
+  }
+}
