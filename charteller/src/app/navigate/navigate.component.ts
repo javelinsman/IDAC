@@ -197,9 +197,13 @@ export class NavigateComponent implements OnInit {
   moveToLegend(){
     this.setFocus(this.getElement(0).children[3]._id);
   }
-  
+
   moveToMarks(){
     this.setFocus(this.getElement(0).children[4]._id);
+  }
+
+  moveToAnnotations(){
+    this.setFocus(this.getElement(0).children[5]._id);
   }
 
   moveToNextDataPoint(){
@@ -248,7 +252,7 @@ export class NavigateComponent implements OnInit {
     else {
       let bargroups = this.getAllBargroups();
       let maximumGroupIndex: number = bargroups
-        .map((bargroup, i) => 
+        .map((bargroup, i) =>
           [bargroup.children.reduce((a, b) => a + b.value, 0), i])
         .reduce((a, b) => a[0] > b[0] ? a : b)[1];
       this.setFocus(bargroups[maximumGroupIndex]._id);
@@ -265,7 +269,7 @@ export class NavigateComponent implements OnInit {
     else {
       let bargroups = this.getAllBargroups();
       let minimumGroupIndex: number = bargroups
-        .map((bargroup, i) => 
+        .map((bargroup, i) =>
           [bargroup.children.reduce((a, b) => a + b.value, 0), i])
         .reduce((a, b) => a[0] < b[0] ? a : b)[1];
       this.setFocus(bargroups[minimumGroupIndex]._id);
@@ -281,7 +285,7 @@ export class NavigateComponent implements OnInit {
     }
     else {
       let bargroups = this.getAllBargroups();
-      let sum_bargroups = bargroups.map((bargroup, i) => 
+      let sum_bargroups = bargroups.map((bargroup, i) =>
           bargroup.children.reduce((a, b) => a + b.value, 0))
           .reduce((a, b) => a + b)
       this.description.queryAnswer = `막대그룹 평균 ${Math.round(sum_bargroups / bargroups.length * 10) / 10}. `;

@@ -15,6 +15,7 @@ export const keyBindings = {
     moveToYAxis: new Set(['y']),
     moveToLegend: new Set(['l']),
     moveToMarks: new Set(['m']),
+    moveToAnnotations: new Set(['a']),
     moveToNextDataPoint: new Set(['p']),
     moveToPreviousDataPoint: new Set(['shift', 'p']),
     checkCurrentElement: new Set(['enter']),
