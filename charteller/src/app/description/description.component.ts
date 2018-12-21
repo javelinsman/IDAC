@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ChartInfo } from '../chart_structure/chart_info';
+import { $ } from 'protractor';
 
 @Component({
   selector: 'app-description',
@@ -12,6 +13,7 @@ export class DescriptionComponent implements OnInit {
   @Input() tags: any[];
   @Input() getElement: any;
   @Input() element: any;
+  @Input() keyboardEventName: string;
 
   constructor() { }
 
@@ -34,6 +36,9 @@ export class DescriptionComponent implements OnInit {
       if(tag.lines.length){
         ret += ` y축 ${tag.lines.join(', ')}의 위치에 ${tag.lines.length}개의 선이 그어져 있습니다. `
       }
+      if(tag.ranges.length){
+        // TODO
+      }
 
     }
     else if(tag.tagname === 'x'){
@@ -46,23 +51,25 @@ export class DescriptionComponent implements OnInit {
       ret += `범례 항목 ${tag.children.length}개 ${tag.children.map(d=>d.item).join(', ')}.`
     }
     else if(tag.tagname === 'item'){
-      ret += `${tag.item}. `;
+      let basic_description = `${tag.item}. `;
       if(tag._annotation){
         tag._annotation.components.forEach(component => {
           if(component.visible){
             if(component.type == 'trendline'){
-              ret += `이 범례에 추세선이 그려져 있습니다.`
+              ret += `이 범례에 추세선이 그려져 있습니다. `
               let series = +tag._annotation.target.items[0].elements.slice(1) - 2;
               let data = this.info.children[4].children.map(bargroup => {
                 return bargroup.children[series].value
               })
               let increase = Math.round(10 * (data[data.length-1] - data[0]))/10;
-              if(increase > 0) ret += `전체 기간 동안 ${increase}만큼 상승했습니다.`
-              else ret += `전체 기간 동안 ${-increase}만큼 하락했습니다.`
+              if(increase > 0) ret += `전체 기간 동안 ${increase}만큼 상승했습니다. `
+              else ret += `전체 기간 동안 ${-increase}만큼 하락했습니다. `
             }
           }
         })
       }
+      if(this.keyboardEventName.endsWith('Annotation')) ret = ret + basic_description;
+      else ret = basic_description + ret;
     }
     else if(tag.tagname === 'marks'){
       if(tag.children[0].children.length === 1){
@@ -81,17 +88,16 @@ export class DescriptionComponent implements OnInit {
       let marks = this.getElement(bargroup.parentId);
       let graph = this.getElement(marks.parentId);
       let y = graph.children[1];
-      if(tag._annotation){
-        if(tag._annotation.target_inherit){
-          if(tag._annotation.target_inherit.mode === "below"){
-            ret += `${tag._annotation.target.range}보다 아래에 있는 막대입니다. `
-          }
-        }
-        else{
-          ret += `강조되어 있는 막대입니다. `
-        }
+      if(['moveToNextDataPoint', 'moveToPreviousDataPoint'].indexOf(this.keyboardEventName) >= 0){
+        ret += `${tag.value} ${tag.key} ${bargroup.name}`
       }
-      ret += `막대 그룹이름 ${bargroup.name} 범례 ${tag.key} ${y.label} ${tag.value}.`
+      else{
+        let basic_description = `막대 그룹이름 ${bargroup.name} 범례 ${tag.key} ${y.label} ${tag.value}. `
+        let annotation_description = tag.highlighted ? `강조되어 있는 막대입니다. ` : ''
+
+        if(this.keyboardEventName.endsWith('Annotation')) ret += annotation_description + basic_description;
+        else ret += basic_description + annotation_description;
+      }
     }
     else if(tag.tagname === 'annotations'){
       ret += `어노테이션 총 ${tag.children.length}개`;

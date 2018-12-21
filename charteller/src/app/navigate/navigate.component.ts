@@ -21,6 +21,7 @@ export class NavigateComponent implements OnInit {
   info: ChartInfo;
   tags: any[];
   currentFocus: number;
+  keyboardEventName: string;
   focusHistory: number[] = [];
   focusFootprints = {
     title: -1,
@@ -82,6 +83,7 @@ export class NavigateComponent implements OnInit {
       beep_error();
     }
     else{
+      this.keyboardEventName = eventName;
       speak(this.description.describe(this.currentElement()));
       if(this.currentElement().children) beep_detect();
     }
