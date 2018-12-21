@@ -22,6 +22,14 @@ export class NavigateComponent implements OnInit {
   tags: any[];
   currentFocus: number;
   focusHistory: number[] = [];
+  focusFootprints = {
+    title: -1,
+    xAxis: -1,
+    yAxis: -1,
+    legend: -1,
+    marks: -1,
+    dataPoints: -1
+  }
 
   @ViewChild(DescriptionComponent) description: DescriptionComponent;
 
@@ -164,6 +172,49 @@ export class NavigateComponent implements OnInit {
     return this.moveToPreviousSibling(element);
   }
 
+  moveToTitle(){
+    this.setFocus(this.getElement(0).children[0]._id);
+  }
+
+  moveToXAxis(){
+    this.setFocus(this.getElement(0).children[2]._id);
+  }
+
+  moveToYAxis(){
+    this.setFocus(this.getElement(0).children[1]._id);
+  }
+
+  moveToLegend(){
+    this.setFocus(this.getElement(0).children[3]._id);
+  }
+  
+  moveToMarks(){
+    this.setFocus(this.getElement(0).children[4]._id);
+  }
+
+  moveToNextDataPoint(){
+    let focus = this.getFocus();
+    while(focus + 1 < this.tags.length){
+      focus += 1;
+      if(this.getElement(focus).tagname === 'bar'){
+        this.setFocus(focus);
+        return;
+      }
+    }
+    return false;
+  }
+
+  moveToPreviousDataPoint(){
+    let focus = this.getFocus();
+    while(focus - 1 >= 0){
+      focus -= 1;
+      if(this.getElement(focus).tagname === 'bar'){
+        this.setFocus(focus);
+        return;
+      }
+    }
+    return false;
+  }
 
   checkCurrentElement(){
     //should be empty
