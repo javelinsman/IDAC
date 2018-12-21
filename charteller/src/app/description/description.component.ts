@@ -14,15 +14,22 @@ export class DescriptionComponent implements OnInit {
   @Input() getElement: any;
   @Input() element: any;
   @Input() keyboardEventName: string;
+  queryAnswer: any;
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  describe(tag) {
+  describe(tag){
     let ret = ''
-    if(tag.tagname === 'graph'){
+    if(this.keyboardEventName === 'queryAverage'){
+      return this.queryAnswer;
+    }
+    else if(this.keyboardEventName === 'queryTendency'){
+      return this.queryAnswer;
+    }
+    else if(tag.tagname === 'graph'){
       ret += this.describe(tag.children[0]) + ' ';
       ret += this.describe(tag.children[1]) + ' ';
       ret += this.describe(tag.children[2]) + ' ';
@@ -81,7 +88,18 @@ export class DescriptionComponent implements OnInit {
     else if(tag.tagname === 'bargroup'){
       if(tag.children.length == 1)
         ret += this.describe(tag.children[0])
-      else ret += `막대그룹 이름 ${tag.name}.`
+      else{
+        if(this.keyboardEventName.startsWith('query')){
+          if(this.keyboardEventName.endsWith('Maximum')){
+            ret += `합이 가장 큰 막대그룹. `
+          }
+          else if(this.keyboardEventName.endsWith('Minimum')){
+            ret += `합이 가장 작은 막대그룹. `
+          }
+        }
+         ret += `막대그룹 이름 ${tag.name}. `
+         ret += `총합 ${Math.round(tag.children.reduce((a,b) => a + b.value, 0) * 10) / 10}. `
+      }
     }
     else if(tag.tagname === 'bar'){
       let bargroup = this.getElement(tag.parentId);
@@ -92,6 +110,14 @@ export class DescriptionComponent implements OnInit {
         ret += `${tag.value} ${tag.key} ${bargroup.name}`
       }
       else{
+        if(this.keyboardEventName.startsWith('query')){
+          if(this.keyboardEventName.endsWith('Maximum')){
+            ret += `${tag.key} 중 가장 큰 막대. `
+          }
+          else if(this.keyboardEventName.endsWith('Minimum')){
+            ret += `${tag.key} 중 가장 작은 막대. `
+          }
+        }
         let basic_description = `막대 그룹이름 ${bargroup.name} 범례 ${tag.key} ${y.label} ${tag.value}. `
         let annotation_description = tag.highlighted ? `강조되어 있는 막대입니다. ` : ''
 

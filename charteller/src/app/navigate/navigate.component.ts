@@ -6,7 +6,7 @@ import { Chart } from '../chart';
 import { ChartService } from '../chart.service';
 import * as ChartAccent from '../chart_structure/chart_accent_json';
 import { ChartInfo } from '../chart_structure/chart_info';
-import { beep_error, beep_detect, speak } from '../utils';
+import { beep_error, beep_detect, speak, isAscendingArray, isDescendingArray } from '../utils';
 import { accentToInfo } from '../chart_structure/accent_to_info';
 import { DescriptionComponent } from '../description/description.component';
 
@@ -21,7 +21,7 @@ export class NavigateComponent implements OnInit {
   info: ChartInfo;
   tags: any[];
   currentFocus: number;
-  keyboardEventName: string;
+  keyboardEventName: string = 'moveToNextElement';
   focusHistory: number[] = [];
   focusFootprints = {
     title: -1,
@@ -63,6 +63,12 @@ export class NavigateComponent implements OnInit {
     return this.tags[id];
   }
 
+  getElementSiblingIndex(id: number){
+    let element = this.getElement(id);
+    let parent = this.getElement(element.parentId);
+    return parent.children.indexOf(element);
+  }
+
 
   getChart(): void {
     const id = +this.route.snapshot.paramMap.get('id');
@@ -74,7 +80,8 @@ export class NavigateComponent implements OnInit {
         console.log(chartAccent);
         console.log(this.info);
         console.log(Object.entries(this.info))
-        speak(this.description.describe(this.currentElement()));
+        this.description.keyboardEventName = this.keyboardEventName;
+        speak(this.description.describe(this.currentElement()))
       });
   }
 
@@ -84,6 +91,7 @@ export class NavigateComponent implements OnInit {
     }
     else{
       this.keyboardEventName = eventName;
+      this.description.keyboardEventName = eventName;
       speak(this.description.describe(this.currentElement()));
       if(this.currentElement().children) beep_detect();
     }
@@ -221,5 +229,82 @@ export class NavigateComponent implements OnInit {
   checkCurrentElement(){
     //should be empty
   }
+
+  getAllBars(seriesIndex){
+    return this.getAllBargroups().map(d => d.children[seriesIndex])
+  }
+
+  getAllBargroups(){
+    return this.tags.filter(d => d.tagname === 'bargroup')
+  }
+
+  queryMaximum(){
+    let element = this.currentElement()
+    if(element.tagname === 'bar'){
+      let bars = this.getAllBars(this.getElementSiblingIndex(element._id));
+      let maximum_bar = bars.reduce((a, b) => a.value > b.value ? a : b);
+      this.setFocus(maximum_bar._id);
+    }
+    else {
+      let bargroups = this.getAllBargroups();
+      let maximumGroupIndex: number = bargroups
+        .map((bargroup, i) => 
+          [bargroup.children.reduce((a, b) => a + b.value, 0), i])
+        .reduce((a, b) => a[0] > b[0] ? a : b)[1];
+      this.setFocus(bargroups[maximumGroupIndex]._id);
+    }
+  }
+
+  queryMinimum(){
+    let element = this.currentElement()
+    if(element.tagname === 'bar'){
+      let bars = this.getAllBars(this.getElementSiblingIndex(element._id));
+      let minimum_bar = bars.reduce((a, b) => a.value < b.value ? a : b);
+      this.setFocus(minimum_bar._id);
+    }
+    else {
+      let bargroups = this.getAllBargroups();
+      let minimumGroupIndex: number = bargroups
+        .map((bargroup, i) => 
+          [bargroup.children.reduce((a, b) => a + b.value, 0), i])
+        .reduce((a, b) => a[0] < b[0] ? a : b)[1];
+      this.setFocus(bargroups[minimumGroupIndex]._id);
+    }
+  }
+
+  queryAverage(){
+    let element = this.currentElement()
+    if(element.tagname === 'bar'){
+      let bars = this.getAllBars(this.getElementSiblingIndex(element._id));
+      let bars_sum = bars.reduce((a, b) => a + b.value, 0)
+      this.description.queryAnswer = `${element.key} 평균 ${Math.round(bars_sum / bars.length * 10) / 10}. `;
+    }
+    else {
+      let bargroups = this.getAllBargroups();
+      let sum_bargroups = bargroups.map((bargroup, i) => 
+          bargroup.children.reduce((a, b) => a + b.value, 0))
+          .reduce((a, b) => a + b)
+      this.description.queryAnswer = `막대그룹 평균 ${Math.round(sum_bargroups / bargroups.length * 10) / 10}. `;
+    }
+  }
+
+  queryTendency(){
+    let element = this.currentElement()
+    if(element.tagname === 'bar'){
+      let bars = this.getAllBars(this.getElementSiblingIndex(element._id)).map(d => d.value);
+      if(isAscendingArray(bars)) this.description.queryAnswer = `${element.key} 막대가 오름차순으로 정렬되어 있습니다.`
+      else if(isDescendingArray(bars)) this.description.queryAnswer = `${element.key} 막대가 내림차순으로 정렬되어 있습니다.`
+      else this.description.queryAnswer = `${element.key} 막대는 정렬되어 있지 않습니다`
+    }
+    else {
+      let bargroups = this.getAllBargroups();
+      let reduced_bargroups = bargroups
+        .map(bargroup => bargroup.children.reduce((a, b) => a + b.value, 0))
+      if(isAscendingArray(reduced_bargroups)) this.description.queryAnswer = '막대그룹 총합이 오름차순으로 정렬되어 있습니다.'
+      else if(isDescendingArray(reduced_bargroups)) this.description.queryAnswer = '막대그룹 총합이 내림차순으로 정렬되어 있습니다.'
+      else this.description.queryAnswer = '막대그룹 총합은 정렬되어 있지 않습니다'
+    }
+  }
+
 
 }

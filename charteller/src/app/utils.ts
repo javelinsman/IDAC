@@ -52,7 +52,7 @@ export function speak(message) {
     if (sayTimeout !== null)
         clearTimeout(sayTimeout);
     let _this = this;
-    sayTimeout = setTimeout(function () { speak(message); }, 150);
+    sayTimeout = setTimeout(function () { speak(message); }, 250);
   }
   else {
     var msg = new SpeechSynthesisUtterance(message)
@@ -60,4 +60,18 @@ export function speak(message) {
     msg.rate = 3;
     window.speechSynthesis.speak(msg)
   }
+}
+
+export function isAscendingArray(arr){
+  for(let i=1;i<arr.length;i++){
+    if(arr[i-1] > arr[i]) return false;
+  }
+  return true
+}
+
+export function isDescendingArray(arr){
+  for(let i=1;i<arr.length;i++){
+    if(arr[i-1] < arr[i]) return false;
+  }
+  return true
 }
