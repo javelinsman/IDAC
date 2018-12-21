@@ -30,6 +30,7 @@ export class KeyboardInputComponent implements OnInit {
       if(event ==='up'){
         _this.detectKeyFire();
         _this.keydowns.delete(key);
+        if(key === 'shift') _this.keydowns.clear();
       }
     }
     document.addEventListener('keydown', function(e){
