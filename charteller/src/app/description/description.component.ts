@@ -29,18 +29,12 @@ export class DescriptionComponent implements OnInit {
       ret += '차트 제목 ' + tag.title + '.';
     }
     else if(tag.tagname === 'y'){
-      if(tag._annotation){
-        ret += `y축 ${tag._annotation.target.range}의 위치에 강조선이 있습니다. `
-        tag._annotation.components.forEach(component => {
-          if(component.visible){
-            if(component.type === "label"){
-              ret += `강조선 설명: ${component.text}. `
-            }
-          }
-        })
-      }
       ret += `y축 레이블 ${tag.label ? tag.label : "없음"} 단위 ${tag.unit ? tag.unit : "없음"} `
       ret += `범위 ${tag.min}부터 ${tag.max ? tag.max : this.info.children[4].children.map(bargroup => bargroup.children.map(bar => bar.value)).reduce((a, b) => a.concat(b)).reduce((a,b) => Math.max(a,b)) }.`
+      if(tag.lines.length){
+        ret += ` y축 ${tag.lines.join(', ')}의 위치에 ${tag.lines.length}개의 선이 그어져 있습니다. `
+      }
+
     }
     else if(tag.tagname === 'x'){
       ret += `x축 레이블 ${tag.lable ? tag.label : "없음"} 항목 ${tag.children.length}개 ${tag.children.map(d=>d.tick).join(', ')}.`
@@ -98,6 +92,29 @@ export class DescriptionComponent implements OnInit {
         }
       }
       ret += `막대 그룹이름 ${bargroup.name} 범례 ${tag.key} ${y.label} ${tag.value}.`
+    }
+    else if(tag.tagname === 'annotations'){
+      ret += `어노테이션 총 ${tag.children.length}개`;
+    }
+    else if(tag.tagname === 'line'){
+      ret += `${tag.axis}축 ${tag.range}의 위치에 선이 그어져 있습니다.`
+      tag._annotation.components.forEach(component => {
+        if(component.visible){
+          if(component.type === "label"){
+            ret += `: ${component.text}. `
+          }
+        }
+      })
+
+    }
+    else if(tag.tagname === 'relationalLine'){
+      ret += `${tag.axis}축 ${tag.range}의 위치에 그어진 선보다 ${tag.mode == 'below' ? '아래' : tag.mode}에 있는 모든 막대가 강조되어 있습니다.`
+    }
+    else if(tag.tagname === 'range'){
+      ret += `${tag.axis}축 ${tag.rs} 이상 ${tag.rf} 미만의 범위가 표시되어 있습니다.`
+    }
+    else if(tag.tagname === 'relationalRange'){
+      ret += `${tag.axis}축 ${tag.rs} 이상 ${tag.rf} 미만의 범위에 ${tag.mode == 'within-or-equal' ? '포함' : tag.mode}된 모든 막대가 강조되어 있습니다.`;
     }
     return ret;
   }

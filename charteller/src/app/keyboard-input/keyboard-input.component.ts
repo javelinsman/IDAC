@@ -13,6 +13,8 @@ export class KeyboardInputComponent implements OnInit {
 
   keydowns: Set<string>;
   keyBindings = keyBindings;
+  currentKeybinding: Set<string>;
+  currentEventName: string;
 
   constructor() { }
 
@@ -44,6 +46,8 @@ export class KeyboardInputComponent implements OnInit {
   detectKeyFire(){
     for(let [eventName, keyBinding] of Object.entries(this.keyBindings)){
       if(eqSet(this.keydowns, keyBinding)){
+        this.currentEventName = eventName;
+        this.currentKeybinding = keyBinding;
         this.keyFire.emit(eventName);
         return 
       }

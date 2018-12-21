@@ -22,7 +22,7 @@ export class Annotation {
         type: string;
         visible: boolean;
         style: Object;
-    }
+    }[]
 }
 export class ChartAccentJSON {
     annotations: {annotations: Annotation[]};
