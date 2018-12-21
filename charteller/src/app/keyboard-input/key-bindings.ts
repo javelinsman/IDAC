@@ -6,5 +6,13 @@ export const keyBindings = {
     moveToNextSibling: new Set(['arrowright']),
     moveToPreviousSibling: new Set(['arrowleft']),
     moveToParent: new Set(['arrowup']),
-    moveToChild: new Set(['arrowdown'])
+    moveToChild: new Set(['arrowdown']),
+    moveToPreviouslyVisitedElement: new Set(['u']),
+    moveToNextFrame: new Set(['f']),
+    moveToPreviousFrame: new Set(['shift', 'f']),
+    checkCurrentElement: new Set(['enter']),
+    queryMaximum: new Set(['q', 'h']),
+    queryMinimum: new Set(['q', 'j']),
+    queryAverage: new Set(['q', 'k']),
+    queryTendency: new Set(['q', 'l']),
 }

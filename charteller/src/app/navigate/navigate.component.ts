@@ -21,7 +21,7 @@ export class NavigateComponent implements OnInit {
   info: ChartInfo;
   tags: any[];
   currentFocus: number;
-  prevFocus: number;
+  focusHistory: number[] = [];
 
   @ViewChild(DescriptionComponent) description: DescriptionComponent;
 
@@ -35,99 +35,13 @@ export class NavigateComponent implements OnInit {
     this.getChart();
   }
 
-  getChart(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.chart = this.chartService.getCharts().find(d => +d.id == +id);
-    this.http.get(this.chart.src_json)
-      .subscribe((chartAccent: ChartAccent.ChartAccentJSON) => {
-        [this.info, this.tags] = accentToInfo(chartAccent);
-        this.currentFocus = 1;
-        console.log(chartAccent);
-        console.log(this.info);
-        console.log(Object.entries(this.info))
-        speak(this.description.describe(this.currentElement()));
-      });
+  setFocus(f, trace=true){
+    if(trace) this.focusHistory.push(f);
+    this.currentFocus = f;
   }
 
-  keyFire(eventName: string){
-    this.prevFocus = this.currentFocus
-    if(eventName === 'moveToNextElement') this.moveToNextElement();
-    if(eventName === 'moveToPreviousElement') this.moveToPreviousElement();
-    if(eventName === 'moveToNextAnnotation') this.moveToNextAnnotation();
-    if(eventName === 'moveToPreviousAnnotation') this.moveToPreviousAnnotation();
-    if(eventName === 'moveToNextSibling') this.moveToNextSibling();
-    if(eventName === 'moveToPreviousSibling') this.moveToPreviousSibling();
-    if(eventName === 'moveToParent') this.moveToParent();
-    if(eventName === 'moveToChild') this.moveToChild();
-    
-    if(this.prevFocus === this.currentFocus) beep_error();
-    else{
-      speak(this.description.describe(this.currentElement()));
-      if(this.currentElement().children) beep_detect();
-    }
-  }
-
-  moveToNextElement(){
-    this.currentFocus += 1;
-    this.currentFocus %= this.tags.length;
-  }
-
-  moveToPreviousElement(){
-    this.currentFocus += this.tags.length - 1;
-    this.currentFocus %= this.tags.length;
-  }
-
-  moveToParent(){
-    let element = this.currentElement()
-    let parent = this.getElement(element.parentId)
-    if(!parent || parent._id == 0) return
-    let element_index = parent.children.indexOf(element)
-    parent['_bookmark'] = element_index
-    this.currentFocus = parent._id;
-  }
-
-  moveToChild(){
-    let element = this.currentElement();
-    if(!element.children) return
-    let bookmark = element._bookmark ? element._bookmark : 0;
-    let child = element.children[bookmark]
-    this.currentFocus = child._id;
-  }
-
-  moveToNextAnnotation(){
-    let nextAnnotation = this.tags.slice(this.currentFocus+1).find(tag => tag._annotation)
-    if(nextAnnotation){
-      this.currentFocus = nextAnnotation._id;
-    }
-  }
-
-  moveToPreviousAnnotation(){
-    let prevAnnotation = this.tags.slice(0, this.currentFocus).reverse().find(tag => tag._annotation)
-    if(prevAnnotation){
-      this.currentFocus = prevAnnotation._id;
-    }
-  }
-
-  moveToNextSibling(){
-    let element = this.currentElement()
-    let parent = this.getElement(element.parentId)
-    if(!parent) return
-    let element_index = parent.children.indexOf(element)
-    if(element_index + 1 < parent.children.length){
-      let nextSibling = parent.children[element_index + 1];
-      this.currentFocus = nextSibling._id;
-    }
-  }
-
-  moveToPreviousSibling(){
-    let element = this.currentElement()
-    let parent = this.getElement(element.parentId)
-    if(!parent) return
-    let element_index = parent.children.indexOf(element)
-    if(element_index - 1 >= 0){
-      let prevSibling = parent.children[element_index - 1];
-      this.currentFocus = prevSibling._id;
-    }
+  getFocus(){
+    return this.currentFocus;
   }
 
   currentElement() {
@@ -139,4 +53,120 @@ export class NavigateComponent implements OnInit {
   getElement(id: number) {
     return this.tags[id];
   }
+
+
+  getChart(): void {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.chart = this.chartService.getCharts().find(d => +d.id == +id);
+    this.http.get(this.chart.src_json)
+      .subscribe((chartAccent: ChartAccent.ChartAccentJSON) => {
+        [this.info, this.tags] = accentToInfo(chartAccent);
+        this.setFocus(1);
+        console.log(chartAccent);
+        console.log(this.info);
+        console.log(Object.entries(this.info))
+        speak(this.description.describe(this.currentElement()));
+      });
+  }
+
+  keyFire(eventName: string){
+    if(this[eventName]() === false){
+      beep_error();
+    }
+    else{
+      speak(this.description.describe(this.currentElement()));
+      if(this.currentElement().children) beep_detect();
+    }
+  }
+
+  moveToNextElement(){
+    if(this.getFocus() + 1 >= this.tags.length) return false;
+    this.setFocus(this.getFocus() + 1);
+  }
+
+  moveToPreviousElement(){
+    if(this.getFocus() - 1 < 1) return false;
+    this.setFocus(this.getFocus() - 1);
+  }
+
+  moveToParent(){
+    let element = this.currentElement()
+    let parent = this.getElement(element.parentId)
+    if(!parent || parent._id == 0) return false
+    let element_index = parent.children.indexOf(element)
+    parent['_bookmark'] = element_index
+    this.setFocus(parent._id);
+  }
+
+  moveToChild(){
+    let element = this.currentElement();
+    if(!element.children) return false
+    let bookmark = element._bookmark ? element._bookmark : 0;
+    let child = element.children[bookmark]
+    this.setFocus(child._id);
+  }
+
+  moveToNextAnnotation(){
+    let nextAnnotation = this.tags.slice(this.getFocus()+1).find(tag => tag._annotation)
+    if(nextAnnotation){
+      this.setFocus(nextAnnotation._id);
+    }
+    else return false;
+  }
+
+  moveToPreviousAnnotation(){
+    let prevAnnotation = this.tags.slice(0, this.getFocus()).reverse().find(tag => tag._annotation)
+    if(prevAnnotation){
+      this.setFocus(prevAnnotation._id);
+    }
+    else return false;
+  }
+
+  moveToNextSibling(element){
+    if(!element) element = this.currentElement();
+    let parent = this.getElement(element.parentId)
+    if(!parent) return false;
+    let element_index = parent.children.indexOf(element)
+    if(element_index + 1 < parent.children.length){
+      let nextSibling = parent.children[element_index + 1];
+      this.setFocus(nextSibling._id);
+    }
+    else return false;
+  }
+
+  moveToPreviousSibling(element){
+    if(!element) element = this.currentElement();
+    let parent = this.getElement(element.parentId);
+    if(!parent) return;
+    let element_index = parent.children.indexOf(element)
+    if(element_index - 1 >= 0){
+      let prevSibling = parent.children[element_index - 1];
+      this.setFocus(prevSibling._id);
+    }
+    else return false;
+  }
+
+  moveToPreviouslyVisitedElement() {
+    if(this.focusHistory.length <= 1) return false;
+    this.focusHistory.pop();
+    this.setFocus(this.focusHistory.pop());
+  }
+
+  moveToNextFrame() {
+    let element = this.currentElement();
+    while(element.parentId != 0) element = this.getElement(element.parentId);
+    return this.moveToNextSibling(element);
+  }
+
+  moveToPreviousFrame() {
+    let element = this.currentElement();
+    while(element.parentId != 0) element = this.getElement(element.parentId);
+    return this.moveToPreviousSibling(element);
+  }
+
+
+  checkCurrentElement(){
+    //should be empty
+  }
+
 }
