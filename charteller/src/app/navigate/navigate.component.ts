@@ -6,7 +6,7 @@ import { Chart } from '../chart';
 import { ChartService } from '../chart.service';
 import * as ChartAccent from '../chart_structure/chart_accent_json';
 import { ChartInfo } from '../chart_structure/chart_info';
-import { eqSet, beep_error, beep_detect, speak } from '../utils';
+import { beep_error, beep_detect, speak } from '../utils';
 import { accentToInfo } from '../chart_structure/accent_to_info';
 
 @Component({
@@ -21,7 +21,6 @@ export class NavigateComponent implements OnInit {
   tags: any[];
   currentFocus: number;
   prevFocus: number;
-  keydowns;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,21 +30,6 @@ export class NavigateComponent implements OnInit {
 
   ngOnInit() {
     this.getChart();
-    this.attachKeyboardListener();
-  }
-
-  attachKeyboardListener(){
-    this.keydowns = new Set();
-    const _this = this;
-    function keyboardListener(key, event){
-      if(event === 'down') _this.keydowns.add(key);
-      if(event ==='up'){
-        _this.keyFire();
-        _this.keydowns.delete(key);
-      }
-    }
-    document.addEventListener('keydown', function(e){e.preventDefault(); keyboardListener(e.key.toLowerCase(), 'down')});
-    document.addEventListener('keyup', function(e){e.preventDefault(); keyboardListener(e.key.toLowerCase(), 'up')});
   }
 
   getChart(): void {
@@ -62,49 +46,21 @@ export class NavigateComponent implements OnInit {
       });
   }
 
-
-  keyFire(){
-    console.log(this.keydowns);
+  keyFire(eventName: string){
     this.prevFocus = this.currentFocus
-    let shot = false;
-    if(eqSet(this.keydowns, new Set(['tab']))){
-      this.moveToNextElement();
-      shot = true;
-    }
-    else if(eqSet(this.keydowns, new Set(['shift', 'tab']))){
-      this.moveToPreviousElement();
-      shot = true;
-    }
-    else if(eqSet(this.keydowns, new Set(['d']))){
-      this.moveToNextAnnotation();
-      shot = true;
-    }
-    else if(eqSet(this.keydowns, new Set(['shift', 'd']))){
-      this.moveToPreviousAnnotation();
-      shot = true;
-    }
-    else if(eqSet(this.keydowns, new Set(['arrowright']))){
-      this.moveToNextSibling();
-      shot = true;
-    }
-    else if(eqSet(this.keydowns, new Set(['arrowleft']))){
-      this.moveToPreviousSibling();
-      shot = true;
-    }
-    else if(eqSet(this.keydowns, new Set(['arrowup']))){
-      this.moveToParent();
-      shot = true;
-    }
-    else if(eqSet(this.keydowns, new Set(['arrowdown']))){
-      this.moveToChild();
-      shot = true;
-    }
-    if(shot){
-      if(this.prevFocus === this.currentFocus) beep_error();
-      else{
-        //speak(this.describe(this.currentElement()))
-        if(this.currentElement().children) beep_detect();
-      }
+    if(eventName === 'moveToNextElement') this.moveToNextElement();
+    if(eventName === 'moveToPreviousElement') this.moveToPreviousElement();
+    if(eventName === 'moveToNextAnnotation') this.moveToNextAnnotation();
+    if(eventName === 'moveToPreviousAnnotation') this.moveToPreviousAnnotation();
+    if(eventName === 'moveToNextSibling') this.moveToNextSibling();
+    if(eventName === 'moveToPreviousSibling') this.moveToPreviousSibling();
+    if(eventName === 'moveToParent') this.moveToParent();
+    if(eventName === 'moveToChild') this.moveToChild();
+    
+    if(this.prevFocus === this.currentFocus) beep_error();
+    else{
+      //speak(this.describe(this.currentElement()))
+      if(this.currentElement().children) beep_detect();
     }
   }
 

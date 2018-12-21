@@ -1,9 +1,5 @@
 <div class="container">
   <img class="img-fluid" src="{{ chart.src_svg }}">
-  <app-description 
-    [info]="info"
-    [element]="currentElement()"
-    [getElement]="getElement"
-    >
-  </app-description>
+  <app-description [info]="info" [element]="currentElement()" [getElement]="getElement" ></app-description>
+  <app-keyboard-input (keyFire)="keyFire($event)"></app-keyboard-input>
 </div>

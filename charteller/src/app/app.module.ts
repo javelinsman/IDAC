@@ -7,13 +7,15 @@ import { IndexComponent } from './index/index.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NavigateComponent } from './navigate/navigate.component';
 import { DescriptionComponent } from './description/description.component';
+import { KeyboardInputComponent } from './keyboard-input/keyboard-input.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IndexComponent,
     NavigateComponent,
-    DescriptionComponent
+    DescriptionComponent,
+    KeyboardInputComponent
   ],
   imports: [
     BrowserModule,
