@@ -128,7 +128,9 @@ export class NavigateComponent implements OnInit {
   }
 
   currentElement() {
-    return this.tags[this.currentFocus];
+    if(this.tags){
+      return this.tags[this.currentFocus];
+    }
   }
 
   getElement(id: number) {
