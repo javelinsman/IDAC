@@ -4,8 +4,8 @@ import { IndexComponent } from './index/index.component';
 import { NavigateComponent } from './navigate/navigate.component';
 
 const routes: Routes = [
-  { path: '', component: IndexComponent },
-  { path: 'navigate/:id', component: NavigateComponent },
+  { path: 'Charteller', component: IndexComponent },
+  { path: 'Charteller/navigate/:id', component: NavigateComponent },
 ]
 
 @NgModule({
