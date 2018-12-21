@@ -9,6 +9,7 @@ import { ChartInfo } from '../chart_structure/chart_info';
 export class DescriptionComponent implements OnInit {
 
   @Input() info: ChartInfo;
+  @Input() tags: any[];
   @Input() getElement: any;
   @Input() element: any;
 
