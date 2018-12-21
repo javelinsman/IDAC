@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { NavigateComponent } from '../navigate/navigate.component';
 import { ChartInfo } from '../chart_structure/chart_info';
 
 @Component({

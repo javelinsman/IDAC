@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
@@ -8,6 +8,7 @@ import * as ChartAccent from '../chart_structure/chart_accent_json';
 import { ChartInfo } from '../chart_structure/chart_info';
 import { beep_error, beep_detect, speak } from '../utils';
 import { accentToInfo } from '../chart_structure/accent_to_info';
+import { DescriptionComponent } from '../description/description.component';
 
 @Component({
   selector: 'app-navigate',
@@ -21,6 +22,8 @@ export class NavigateComponent implements OnInit {
   tags: any[];
   currentFocus: number;
   prevFocus: number;
+
+  @ViewChild(DescriptionComponent) description: DescriptionComponent;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,7 +45,7 @@ export class NavigateComponent implements OnInit {
         console.log(chartAccent);
         console.log(this.info);
         console.log(Object.entries(this.info))
-        //speak(this.describe(this.currentElement()))
+        speak(this.description.describe(this.currentElement()));
       });
   }
 
@@ -59,7 +62,7 @@ export class NavigateComponent implements OnInit {
     
     if(this.prevFocus === this.currentFocus) beep_error();
     else{
-      //speak(this.describe(this.currentElement()))
+      speak(this.description.describe(this.currentElement()));
       if(this.currentElement().children) beep_detect();
     }
   }
