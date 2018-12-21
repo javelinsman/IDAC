@@ -24,7 +24,8 @@ export class KeyboardInputComponent implements OnInit {
   attachKeyboardListener(){
     const _this = this;
     function keyboardListener(eventObject, key, event){
-      if(_this.isReservedKey(key)) eventObject.preventDefault();
+      if(!_this.isReservedKey(key)) return;
+      eventObject.preventDefault();
       if(event === 'down') _this.keydowns.add(key);
       if(event ==='up'){
         _this.detectKeyFire();
