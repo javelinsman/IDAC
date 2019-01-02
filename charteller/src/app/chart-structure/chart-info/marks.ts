@@ -1,6 +1,7 @@
 import { ChartAccent } from '../chart-accent/chart-accent';
+import { Tag } from './tag';
 
-export class Marks {
+export class Marks implements Tag {
   tagname: 'marks';
   children: Bargroup[];
 
@@ -10,7 +11,7 @@ export class Marks {
   }
 }
 
-export class Bargroup {
+export class Bargroup implements Tag {
   tagname: 'bargroup';
   name: string;
   relationalRanges: any[];
@@ -24,7 +25,7 @@ export class Bargroup {
     this.relationalRanges = [];
   }
 }
-export class Bar {
+export class Bar implements Tag {
   tagname: 'bar';
   key: string;
   value: number;

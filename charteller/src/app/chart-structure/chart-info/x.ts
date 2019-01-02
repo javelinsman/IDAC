@@ -1,6 +1,7 @@
 import { ChartAccent } from '../chart-accent/chart-accent';
+import { Tag } from './tag';
 
-export class X {
+export class X implements Tag {
   tagname: 'x';
   children: { tagname: 'tick' }[];
   label: string;

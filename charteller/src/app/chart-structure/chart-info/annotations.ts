@@ -1,6 +1,7 @@
 import { ChartAccent } from '../chart-accent/chart-accent';
+import { Tag } from './tag';
 
-export class Annotations {
+export class Annotations implements Tag {
   tagname: 'annotations';
   children: Annotation[];
   constructor(ca: ChartAccent) {
@@ -8,6 +9,5 @@ export class Annotations {
     this.children = [];
   }
 }
-export class Annotation {
-  [key: string]: any;
-}
+
+type Annotation = Tag;

@@ -1,8 +1,8 @@
 import { ChartAccent } from '../chart-accent/chart-accent';
-import { AnnotatedTag } from './annotated-tag';
+import { Tag } from './tag';
 import { ItemsTarget } from '../chart-accent/t1';
 
-export class Legend implements AnnotatedTag {
+export class Legend implements Tag {
   tagname: 'legend';
   children: Item[];
   constructor(ca: ChartAccent) {
@@ -28,7 +28,7 @@ export class Legend implements AnnotatedTag {
   }
 }
 
-export class Item {
+export class Item implements Tag {
   tagname: 'item';
   item: string;
   trendline: boolean;
@@ -39,4 +39,3 @@ export class Item {
       this.trendline = false;
   }
 }
-
