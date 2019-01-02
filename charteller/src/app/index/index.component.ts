@@ -14,7 +14,7 @@ export class IndexComponent implements OnInit {
   constructor(private chartService: ChartService) { }
 
   ngOnInit() {
-    this.getCharts()
+    this.getCharts();
   }
 
   getCharts(): void {
