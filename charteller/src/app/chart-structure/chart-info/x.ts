@@ -23,6 +23,5 @@ export class Tick {
   constructor(row, ca: ChartAccent) {
     this.tagname = 'tick';
     this.tick = row[ca.dataset.columns[0].name];
-    this.tick = '17';
   }
 }
