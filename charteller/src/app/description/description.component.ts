@@ -21,11 +21,15 @@ export class DescriptionComponent implements OnInit {
   }
 
   describe(tag) {
-    let ret = '';
+    // let ret = '';
     if (this.keyboardEventName === 'queryAverage') {
       return this.queryAnswer;
     } else if (this.keyboardEventName === 'queryTendency') {
       return this.queryAnswer;
+    } else {
+      return tag.describe(this.info, this.tags, this.keyboardEventName);
+    }
+    /*
     } else if (tag.tagname === 'graph') {
       ret += this.describe(tag.children[0]) + ' ';
       ret += this.describe(tag.children[1]) + ' ';
@@ -140,7 +144,6 @@ export class DescriptionComponent implements OnInit {
       ret += `${tag.axis}축 ${tag.rs} 이상 ${tag.rf} 미만의 범위에 ${tag.mode === 'within-or-equal' ? '포함' : tag.mode}된 모든 막대가 강조되어 있습니다.`;
     }
     return ret;
+    */
   }
-
-
 }
