@@ -70,7 +70,7 @@ export class Highlight extends Tag {
   constructor(protected annotation: Annotation) {
     super('highlight');
     this.makeTargetDescription();
-    this.description_rule = [
+    this.descriptionRule = [
       '$(target).',
       ...this.getHighlightInfo(),
     ].join(' ');
@@ -84,7 +84,7 @@ export class CoordinateRange extends Tag {
     this.attributes.axis = (annotation.target as RangeTarget).axis === 'E0' ? 'x' : 'y';
     this.makeRangeInfo();
 
-    this.description_rule = [
+    this.descriptionRule = [
       'The range from $(rangeStart) to $(rangeEnd) on $(axis) axis are marked.'
     ].join(' ');
 
@@ -109,7 +109,7 @@ export class CoordinateLine extends Tag {
     this.attributes.axis = (annotation.target as RangeTarget).axis === 'E0' ? 'x' : 'y';
 
     this.makeRangeInfo();
-    this.description_rule = [
+    this.descriptionRule = [
       'The point at $(point) on $(axis) axis are marked.'
     ].join(' ');
 

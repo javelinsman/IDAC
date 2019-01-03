@@ -12,7 +12,7 @@ export class Y extends Tag {
 
   constructor(ca: ChartAccent) {
     super('y');
-    this.description_rule = [
+    this.descriptionRule = [
       'Y axis with label named $(label).',
       'The unit of measurement is $(unit).',
       'The range is from $(min) to $(max).',
