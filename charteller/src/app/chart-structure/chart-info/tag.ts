@@ -6,10 +6,9 @@ export class Tag {
   description_rule: string;
   attributes: any;
 
-  constructor(tagInfo) {
-    this.tagname = tagInfo.tagname;
-    this.description_rule = tagInfo.description_rule;
-    this.attributes = tagInfo.attributes;
+  constructor(tagname: string) {
+    this.tagname = tagname;
+    this.attributes = {};
   }
 
   fetchAnnotation?: (...args: any[]) => void;
