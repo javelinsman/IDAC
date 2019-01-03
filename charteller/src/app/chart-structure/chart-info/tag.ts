@@ -8,6 +8,7 @@ export class Tag {
 
   constructor(tagname: string) {
     this.tagname = tagname;
+    this.description_rule = `<${tagname}> tag.`;
     this.attributes = {};
   }
 
