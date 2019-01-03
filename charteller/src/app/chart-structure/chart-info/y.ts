@@ -1,7 +1,7 @@
 import { ChartAccent } from '../chart-accent/chart-accent';
-import { Tag } from './tag';
+import { AnnotatedTag } from './annotated-tag';
 
-export class Y implements Tag {
+export class Y implements AnnotatedTag {
   tagname: 'y';
   min: number;
   max: number;

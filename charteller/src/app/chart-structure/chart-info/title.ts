@@ -1,7 +1,6 @@
 import { ChartAccent } from '../chart-accent/chart-accent';
-import { Tag } from './tag';
 
-export class Title implements Tag {
+export class Title {
   tagname: 'title';
   title: string;
 

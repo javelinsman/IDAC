@@ -25,11 +25,11 @@ export class ChartInfo {
       let idCount = 0;
       const tags = [];
       function assignId(tag) {
-        tag._id = idCount++;
+        tag['_id'] = idCount++;
         tags.push(tag);
-        if (tag.children) {
-          tag.children.forEach(childTag => {
-            childTag.parentId = tag._id;
+        if (tag['children']) {
+          tag['children'].forEach(childTag => {
+            childTag['parentId'] = tag['_id'];
             assignId(childTag);
           });
         }
