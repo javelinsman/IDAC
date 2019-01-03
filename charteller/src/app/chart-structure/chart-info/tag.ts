@@ -15,10 +15,12 @@ export class Tag {
   fetchAnnotation?: (...args: any[]) => void;
   describe(info: ChartInfo, tags: Tag[], keyboardEvent: string) {
     let description = this.description_rule;
-    const args = this.description_rule.match(/\$\(([^)]*)\)/g)
-      .map(d => [d, d.slice(2, -1)]);
-    args.forEach(([arg, strip]) =>
-      description = description.replace(arg, this.attributes[strip]));
+    const args = this.description_rule.match(/\$\(([^)]*)\)/g);
+    if (args) {
+      args.map(d => [d, d.slice(2, -1)])
+        .forEach(([arg, strip]) =>
+          description = description.replace(arg, this.attributes[strip]));
+    }
     return description;
   }
 }
