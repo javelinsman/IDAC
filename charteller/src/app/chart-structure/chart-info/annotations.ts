@@ -41,10 +41,11 @@ export class Highlight extends Tag {
     }
     if (highlight.visible) {
       this.attributes.highlight = true;
-      this.attributes.highlightEmphasized = highlight.style.fill.value < 0;
-      if (this.attributes.highlightEmphasized) {
+      this.attributes.isEmphasized = highlight.style.fill.value < 0 || highlight.style.stroke_width > 0;
+      this.attributes.isDeemphasized = highlight.style.fill.value > 0 && highlight.style.stroke_width <= 0;
+      if (this.attributes.isEmphasized) {
         descriptionRule.push('They are highlighted.');
-      } else {
+      } else if (this.attributes.isDeemphasized) {
         descriptionRule.push('They are de-emphasized.');
       }
     }
@@ -130,6 +131,7 @@ export class CoordinateLine extends Tag {
 export class RelationalHighlight extends Highlight {
   constructor(annotation: Annotation) {
     super(annotation);
+    this.tagname = 'relationalHighlight';
   }
 
   makeTargetDescription() {

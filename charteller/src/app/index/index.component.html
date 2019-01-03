@@ -9,9 +9,10 @@
         Screenreading annotated charts for non-visual access
       </p>
       <hr class="my-4">
-      <p>Upload your <a href="https://chartaccent.github.io">ChartAccent</a> json file or quick start with examples</p>
-      <a class="btn btn-secondary btn-lg disabled" href="#" role="button" aria-disabled="true">Upload JSON</a>
-      <a class="btn btn-primary btn-lg mx-1" href="#examples" role="button">Examples</a>
+      <p>Make your charts auditorily navigable with rich supports for annotations!</p>
+      <a class="btn btn-primary btn-lg mx-2" href="#examples" role="button">Play with examples</a>
+      <a class="btn btn-secondary btn-lg disabled mx-2" href="#" role="button" aria-disabled="true">Start an empty project</a>
+      <a class="btn btn-secondary btn-lg disabled" href="#" role="button" aria-disabled="true">Convert from ChartAccent.json</a>
     </div>
   </div>
   <section id="examples">
@@ -23,7 +24,7 @@
           <img class="card-img-top" src="{{ chart.src_png }}" alt="annotated chart number 4">
           <div class="card-body bg-light text-center">
             <h5 class="card-text">{{ chart.title }}</h5>
-            <a class="card-link" href="/navigate/{{ chart.id }}">Try Navigation</a>
+            <a class="card-link" routerLink="/navigate/{{ chart.id }}">Try Navigation</a>
           </div>
         </div>
       </div>
