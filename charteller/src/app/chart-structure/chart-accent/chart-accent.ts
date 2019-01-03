@@ -71,12 +71,14 @@ export type Target = ItemsTarget | RangeTarget;
 export interface ItemsTarget {
   type: 'items';
   items: Item[];
+  _id: string;
 }
 
 export interface RangeTarget {
   type: 'range';
   axis: string;
   range: string;
+  _id: string;
 }
 
 export interface Item {
