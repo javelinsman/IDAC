@@ -4,9 +4,12 @@ export class Tag {
   tagname: string;
   children?: Tag[];
   description_rule: string;
+  attributes: any;
 
-  constructor(tagname: string) {
-    this.tagname = tagname;
+  constructor(tagInfo) {
+    this.tagname = tagInfo.tagname;
+    this.description_rule = tagInfo.description_rule;
+    this.attributes = tagInfo.attributes;
   }
 
   fetchAnnotation?: (...args: any[]) => void;
@@ -14,7 +17,8 @@ export class Tag {
     let description = this.description_rule;
     const args = this.description_rule.match(/\$\(([^)]*)\)/g)
       .map(d => [d, d.slice(2, -1)]);
-    args.forEach(([arg, strip]) => description = description.replace(arg, this[strip]));
+    args.forEach(([arg, strip]) =>
+      description = description.replace(arg, this.attributes[strip]));
     return description;
   }
 }

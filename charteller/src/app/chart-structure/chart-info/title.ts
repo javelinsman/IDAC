@@ -3,12 +3,14 @@ import { Tag } from './tag';
 import { ChartInfo } from './chart-info';
 
 export class Title extends Tag {
-  title: string;
-
   constructor(ca: ChartAccent) {
-    super('title');
-    this.title = ca.chart.title.text;
-    this.description_rule = `Chart Title: $(title)`;
+    super({
+      tagname: 'title',
+      description_rule: `Chart Title: $(title)`,
+      attributes: {
+        title: ca.chart.title.text,
+      }
+    });
   }
 
 }
