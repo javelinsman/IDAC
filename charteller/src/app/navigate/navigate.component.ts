@@ -310,14 +310,14 @@ export class NavigateComponent implements OnInit {
     const element = this.currentElement();
     if (element.tagname === 'bar') {
       const bars = this.getAllBars(this.getElementSiblingIndex(element._id));
-      const bars_sum = bars.reduce((a, b) => a + b.value, 0);
-      this.description.queryAnswer = `${element.key} 평균 ${Math.round(bars_sum / bars.length * 10) / 10}. `;
+      const bars_sum = bars.reduce((a, b) => a + b.attributes.value, 0);
+      this.description.queryAnswer = `The average of ${element.attributes.key} is ${Math.round(bars_sum / bars.length * 10) / 10}. `;
     } else {
       const bargroups = this.getAllBargroups();
       const sum_bargroups = bargroups.map((bargroup, i) =>
-          bargroup.children.reduce((a, b) => a + b.value, 0))
+          bargroup.children.reduce((a, b) => a + b.attributes.value, 0))
           .reduce((a, b) => a + b);
-      this.description.queryAnswer = `막대그룹 평균 ${
+      this.description.queryAnswer = `The average of total value in each bargroup is ${
         Math.round(sum_bargroups / bargroups.length * 10) / 10}. `;
     }
   }
