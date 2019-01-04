@@ -21,7 +21,6 @@ export class DescriptionComponent implements OnInit {
   }
 
   describe(tag) {
-    // let ret = '';
     if (this.keyboardEventName === 'queryAverage') {
       return this.queryAnswer;
     } else if (this.keyboardEventName === 'queryTendency') {
