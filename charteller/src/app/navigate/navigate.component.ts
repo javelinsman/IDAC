@@ -317,7 +317,7 @@ export class NavigateComponent implements OnInit {
       const sum_bargroups = bargroups.map((bargroup, i) =>
           bargroup.children.reduce((a, b) => a + b.attributes.value, 0))
           .reduce((a, b) => a + b);
-      this.description.queryAnswer = `The average of total value in each bargroup is ${
+      this.description.queryAnswer = `The average of the sum of each bargroup is ${
         Math.round(sum_bargroups / bargroups.length * 10) / 10}. `;
     }
   }
@@ -325,24 +325,24 @@ export class NavigateComponent implements OnInit {
   queryTendency() {
     const element = this.currentElement();
     if (element.tagname === 'bar') {
-      const bars = this.getAllBars(this.getElementSiblingIndex(element._id)).map(d => d.value);
+      const bars = this.getAllBars(this.getElementSiblingIndex(element._id)).map(d => d.attributes.value);
       if (isAscendingArray(bars)) {
-        this.description.queryAnswer = `${element.key} 막대가 오름차순으로 정렬되어 있습니다.`;
+        this.description.queryAnswer = `${element.attributes.key} is sorted in ascending order.`;
       } else if (isDescendingArray(bars)) {
-        this.description.queryAnswer = `${element.key} 막대가 내림차순으로 정렬되어 있습니다.`;
+        this.description.queryAnswer = `${element.attributes.key} is sorted in descending order.`;
       } else {
-        this.description.queryAnswer = `${element.key} 막대는 정렬되어 있지 않습니다`;
+        this.description.queryAnswer = `${element.attributes.key} is not sorted.`;
       }
     } else {
       const bargroups = this.getAllBargroups();
       const reduced_bargroups = bargroups
-        .map(bargroup => bargroup.children.reduce((a, b) => a + b.value, 0));
+        .map(bargroup => bargroup.children.reduce((a, b) => a + b.attributes.value, 0));
       if (isAscendingArray(reduced_bargroups)) {
-        this.description.queryAnswer = '막대그룹 총합이 오름차순으로 정렬되어 있습니다.';
+        this.description.queryAnswer = 'The sum of each bargroup is sorted in ascending order.';
       } else if (isDescendingArray(reduced_bargroups)) {
-        this.description.queryAnswer = '막대그룹 총합이 내림차순으로 정렬되어 있습니다.';
+        this.description.queryAnswer = 'The sum of each bargroup is sorted in descending order.';
       } else {
-        this.description.queryAnswer = '막대그룹 총합은 정렬되어 있지 않습니다';
+        this.description.queryAnswer = 'The sum of each bargroup is not sorted.';
       }
     }
   }
