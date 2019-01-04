@@ -18,7 +18,7 @@ export class Y extends Tag {
         .slice(1).join('(').slice(0, -1).split(':').slice(1).join(':').trim(),
     };
     this.setDescriptionRule([
-      'Y axis with label named $(label).',
+      'Y axis with label name $(label).',
       'The unit of measurement is $(unit).',
       'The range is from $(min) to $(max).',
     ].join(' '));
