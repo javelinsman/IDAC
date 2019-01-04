@@ -33,9 +33,13 @@ export class Tick extends Tag {
   constructor(row: Row, ca: ChartAccent) {
     super('tick');
     this.setDescriptionRule([
-      '$(tick)'
+      '$(tick) $(unit)'
     ].join(' '));
 
-    this.attributes.tick = row[ca.dataset.columns[0].name];
+    this.attributes = {
+      tick: row[ca.dataset.columns[0].name],
+      unit: ca.chart.xLabel.text.split('(')
+        .slice(1).join('(').slice(0, -1).split(':').slice(1).join(':').trim(),
+    };
   }
 }
