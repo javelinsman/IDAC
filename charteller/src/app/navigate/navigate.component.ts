@@ -278,13 +278,13 @@ export class NavigateComponent implements OnInit {
     const element = this.currentElement();
     if (element.tagname === 'bar') {
       const bars = this.getAllBars(this.getElementSiblingIndex(element._id));
-      const maximum_bar = bars.reduce((a, b) => a.value > b.value ? a : b);
+      const maximum_bar = bars.reduce((a, b) => a.attributes.value > b.attributes.value ? a : b);
       this.setFocus(maximum_bar._id);
     } else {
       const bargroups = this.getAllBargroups();
       const maximumGroupIndex: number = bargroups
         .map((bargroup, i) =>
-          [bargroup.children.reduce((a, b) => a + b.value, 0), i])
+          [bargroup.children.reduce((a, b) => a + b.attributes.value, 0), i])
         .reduce((a, b) => a[0] > b[0] ? a : b)[1];
       this.setFocus(bargroups[maximumGroupIndex]._id);
     }
@@ -294,13 +294,13 @@ export class NavigateComponent implements OnInit {
     const element = this.currentElement();
     if (element.tagname === 'bar') {
       const bars = this.getAllBars(this.getElementSiblingIndex(element._id));
-      const minimum_bar = bars.reduce((a, b) => a.value < b.value ? a : b);
+      const minimum_bar = bars.reduce((a, b) => a.attributes.value < b.attributes.value ? a : b);
       this.setFocus(minimum_bar._id);
     } else {
       const bargroups = this.getAllBargroups();
       const minimumGroupIndex: number = bargroups
         .map((bargroup, i) =>
-          [bargroup.children.reduce((a, b) => a + b.value, 0), i])
+          [bargroup.children.reduce((a, b) => a + b.attributes.value, 0), i])
         .reduce((a, b) => a[0] < b[0] ? a : b)[1];
       this.setFocus(bargroups[minimumGroupIndex]._id);
     }
