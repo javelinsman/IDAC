@@ -20,43 +20,55 @@ export class KeyboardInputComponent implements OnInit {
 
   ngOnInit() {
     this.keydowns = new Set();
-    this.attachKeyboardListener()
+    this.attachKeyboardListener();
   }
 
-  attachKeyboardListener(){
+  attachKeyboardListener() {
     const _this = this;
-    function keyboardListener(eventObject, key, event){
-      if(!_this.isReservedKey(key)) return;
+    function keyboardListener(eventObject, key, event) {
+      if (document.activeElement.tagName === 'TEXTAREA') {
+        if (key === 'escape') {
+          eventObject.preventDefault();
+          document.activeElement.blur();
+        }
+        return;
+      } else if (!_this.isReservedKey(key)) {
+        return;
+      }
       eventObject.preventDefault();
-      if(event === 'down') _this.keydowns.add(key);
-      if(event ==='up'){
+      console.log(_this.keydowns);
+      if (event === 'down') {
+        _this.keydowns.add(key);
+      } else if (event === 'up') {
         _this.detectKeyFire();
         _this.keydowns.delete(key);
-        if(key === 'shift') _this.keydowns.clear();
+        if (key === 'shift') {
+          _this.keydowns.clear();
+        }
       }
     }
-    document.addEventListener('keydown', function(e){
+    document.addEventListener('keydown', function(e) {
         keyboardListener(event, e.key.toLowerCase(), 'down');
     });
-    document.addEventListener('keyup', function(e){
-      keyboardListener(event, e.key.toLowerCase(), 'up')
+    document.addEventListener('keyup', function(e) {
+      keyboardListener(event, e.key.toLowerCase(), 'up');
     });
   }
 
-  detectKeyFire(){
-    for(let [eventName, keyBinding] of Object.entries(this.keyBindings)){
-      if(eqSet(this.keydowns, keyBinding)){
+  detectKeyFire() {
+    for(let [eventName, keyBinding] of Object.entries(this.keyBindings)) {
+      if(eqSet(this.keydowns, keyBinding)) {
         this.currentEventName = eventName;
         this.currentKeybinding = keyBinding;
         this.keyFire.emit(eventName);
-        return 
+        return
       }
     }
   }
 
   isReservedKey(key: string): boolean {
-    for(let keyBinding of Object.values(this.keyBindings)){
-      if(keyBinding.has(key)){
+    for(let keyBinding of Object.values(this.keyBindings)) {
+      if(keyBinding.has(key)) {
         return true;
       }
     }
