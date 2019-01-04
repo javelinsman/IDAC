@@ -44,21 +44,23 @@ export function beep_detect(){
 }
 
 let sayTimeout = null;
-export function speak(message) {
+export function speak(message, korean = false) {
   if (speechSynthesis.speaking) {
     // SpeechSyn is currently speaking, cancel the current utterance(s)
     speechSynthesis.cancel();
     // Make sure we don't create more than one timeout...
-    if (sayTimeout !== null)
+    if (sayTimeout !== null) {
         clearTimeout(sayTimeout);
-    let _this = this;
+    }
+    const _this = this;
     sayTimeout = setTimeout(function () { speak(message); }, 250);
-  }
-  else {
-    var msg = new SpeechSynthesisUtterance(message)
-    msg.lang = 'ko-KR';
-    msg.rate = 3;
-    window.speechSynthesis.speak(msg)
+  } else {
+    const msg = new SpeechSynthesisUtterance(message);
+    if (korean) {
+      msg.lang = 'ko-KR';
+    }
+    msg.rate = 2.5;
+    window.speechSynthesis.speak(msg);
   }
 }
 
