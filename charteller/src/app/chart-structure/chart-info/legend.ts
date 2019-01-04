@@ -8,7 +8,7 @@ export class Legend extends Tag {
     this.attributes.num_children = this.children.length;
     this.attributes.list_children = this.children.map(d => d.attributes.item).join(', ');
     this.descriptionRule = [
-      '범례 항목 $(num_children)개: $(list_children)',
+      '$(num_children) legend items: $(list_children)',
     ].join(' ');
   }
 }
