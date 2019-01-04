@@ -7,7 +7,7 @@ export class Marks extends Tag {
   constructor(ca: ChartAccent) {
     super('marks');
 
-    this.children = ca.dataset.rows.map(row => new Bargroup(row, ca));
+    this.children = ca.dataset.rows.map((row, index) => new Bargroup(row, index, ca));
 
     this.attributes = {
       numBargroups: this.children.length,
@@ -27,18 +27,19 @@ export class Bargroup extends Tag {
   relationalRanges: any[];
   children: Bar[];
 
-  constructor(row: Row, ca: ChartAccent) {
+  constructor(row: Row, index: number, ca: ChartAccent) {
     super('bargroup');
 
     const name = row[ca.dataset.columns[0].name] as string;
     this.children =  ca.dataset.columns.slice(1).map(column => column.name)
-      .map(key => new Bar(ca, key, row, name));
+      .map((key, _index) => new Bar(ca, key, row, name, _index));
 
     const borrowX = new X(ca);
     const borrowY = new Y(ca);
 
     this.attributes = {
       name: name,
+      index: index,
       numBars: this.children.length,
       sumOfBarValues: Math.round(10 * this.children.map(d => d.attributes.value).reduce((a, b) => a + b)) / 10,
       xLabel: borrowX.attributes.label,
@@ -56,15 +57,16 @@ export class Bargroup extends Tag {
   }
 }
 export class Bar extends Tag {
-  constructor(ca: ChartAccent, key: string, row: Row, bargroupName: string) {
+  constructor(ca: ChartAccent, key: string, row: Row, bargroupName: string, index: number) {
     super('bar');
 
     const borrowX = new X(ca);
     const borrowY = new Y(ca);
 
     this.attributes = {
-      key: key,
+      seriesName: key,
       value: row[key],
+      index: index,
       bargroupName: bargroupName,
       xLabel: borrowX.attributes.label,
       xUnit: borrowX.attributes.unit,
@@ -73,7 +75,7 @@ export class Bar extends Tag {
     };
 
     this.setDescriptionRule([
-      '$(value) at a bar $(key) in $(bargroupName).'
+      '$(value) at the bar series $(seriesName) in $(bargroupName).'
     ].join(' '));
   }
 }
