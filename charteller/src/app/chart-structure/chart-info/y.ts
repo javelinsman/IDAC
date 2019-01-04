@@ -7,16 +7,14 @@ export class Y extends Tag {
   max: number;
   label: string;
   unit: string;
-  lines: any[]; // annotation
-  ranges: any[]; // annotation
 
   constructor(ca: ChartAccent) {
     super('y');
-    this.descriptionRule = [
+    this.setDescriptionRule([
       'Y axis with label named $(label).',
       'The unit of measurement is $(unit).',
       'The range is from $(min) to $(max).',
-    ].join(' ');
+    ].join(' '));
     this.attributes.min = ca.chart.yScale.min;
     this.attributes.max = ca.chart.yScale.max;
     this.attributes.label = ca.chart.yLabel.text.split('(')[0].trim();

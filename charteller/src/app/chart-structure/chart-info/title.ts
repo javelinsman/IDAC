@@ -4,10 +4,10 @@ import { Tag } from './tag';
 export class Title extends Tag {
   constructor(ca: ChartAccent) {
     super('title');
-    this.descriptionRule = 'Chart title: $(title).';
     this.attributes = {
       title: ca.chart.title.text,
     };
+    this.setDescriptionRule('Chart title: $(title).');
   }
 
 }

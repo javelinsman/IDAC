@@ -5,10 +5,10 @@ export class Marks extends Tag {
   constructor(ca: ChartAccent) {
     super('marks');
     this.children = ca.dataset.rows.map(row => new Bargroup(row, ca));
-    this.descriptionRule = [
+    this.setDescriptionRule([
       'There are $(num_bargroups) bargroups.',
       'Each bargroup contains $(num_bars) bars.',
-    ].join(' ');
+    ].join(' '));
     this.attributes.num_bargroups = this.children.length;
     this.attributes.num_bars = this.children[0].children.length;
   }
@@ -29,10 +29,10 @@ export class Bargroup extends Tag {
     this.attributes.tick = tick;
     this.attributes.num_bars = this.children.length;
 
-    this.descriptionRule = [
+    this.setDescriptionRule([
       'A group of bar in $(tick).',
       'It contains $(num_bars) bars.',
-    ].join(' ');
+    ].join(' '));
   }
 }
 export class Bar extends Tag {
@@ -42,8 +42,8 @@ export class Bar extends Tag {
     this.attributes.value = row[key];
     this.attributes.bargroup_name = bargroup_name;
     // TODO: unit_y
-    this.descriptionRule = [
+    this.setDescriptionRule([
       '$(value) at a bar $(key) in $(bargroup_name).'
-    ].join(' ');
+    ].join(' '));
   }
 }

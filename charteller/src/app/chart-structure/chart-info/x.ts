@@ -5,10 +5,10 @@ export class X extends Tag {
 
   constructor(ca: ChartAccent) {
     super('x');
-    this.descriptionRule = [
+    this.setDescriptionRule([
       'X axis with label named $(label).',
       'There are $(num_children) tick marks: $(list_children).',
-    ].join(' ');
+    ].join(' '));
 
     this.children = ca.dataset.rows.map(row => new Tick(row, ca));
     this.attributes.label = ca.chart.xLabel.text;
@@ -21,9 +21,9 @@ export class X extends Tag {
 export class Tick extends Tag {
   constructor(row: Row, ca: ChartAccent) {
     super('tick');
-    this.descriptionRule = [
+    this.setDescriptionRule([
       '$(tick)'
-    ].join(' ');
+    ].join(' '));
 
     this.attributes.tick = row[ca.dataset.columns[0].name];
   }

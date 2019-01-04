@@ -1,6 +1,8 @@
 import { ChartInfo } from './chart-info';
 
 export class Tag {
+  public static descriptionRule = '';
+
   tagname: string;
   children?: Tag[];
   descriptionRule: string;
@@ -8,13 +10,22 @@ export class Tag {
 
   constructor(tagname: string) {
     this.tagname = tagname;
-    this.descriptionRule = `<${tagname}> tag.`;
+    this.setDescriptionRule(`<${tagname}> tag.`);
     this.attributes = {};
   }
 
   fetchAnnotation?: (...args: any[]) => void;
+
+  setDescriptionRule(descriptionRule: string) {
+    (this.constructor as any).descriptionRule = descriptionRule;
+  }
+
+  getDescriptionRule(): string {
+    return (this.constructor as any).descriptionRule;
+  }
+
   describe(info: ChartInfo, tags: Tag[], keyboardEvent: string, queryAnswer: string = null) {
-    let description = this.descriptionRule;
+    let description = (this.constructor as any).descriptionRule;
     if (queryAnswer) {
       description = queryAnswer + ' ' + description;
       console.log(description);

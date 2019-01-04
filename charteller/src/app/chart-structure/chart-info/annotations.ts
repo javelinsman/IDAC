@@ -71,10 +71,10 @@ export class Highlight extends Tag {
   constructor(protected annotation: Annotation) {
     super('highlight');
     this.makeTargetDescription();
-    this.descriptionRule = [
+    this.setDescriptionRule([
       '$(target).',
       ...this.getHighlightInfo(),
-    ].join(' ');
+    ].join(' '));
   }
 }
 
@@ -85,9 +85,9 @@ export class CoordinateRange extends Tag {
     this.attributes.axis = (annotation.target as RangeTarget).axis === 'E0' ? 'x' : 'y';
     this.makeRangeInfo();
 
-    this.descriptionRule = [
+    this.setDescriptionRule([
       'The range from $(rangeStart) to $(rangeEnd) on $(axis) axis are marked.'
-    ].join(' ');
+    ].join(' '));
 
     const relatedAnnotations = annotations.filter(_annotation =>
         _annotation.target._id === annotation.target._id && _annotation.target_inherit);
@@ -110,9 +110,9 @@ export class CoordinateLine extends Tag {
     this.attributes.axis = (annotation.target as RangeTarget).axis === 'E0' ? 'x' : 'y';
 
     this.makeRangeInfo();
-    this.descriptionRule = [
+    this.setDescriptionRule([
       'The point at $(point) on $(axis) axis are marked.'
-    ].join(' ');
+    ].join(' '));
 
     const relatedAnnotations = annotations.filter(_annotation =>
         _annotation.target._id === annotation.target._id && _annotation.target_inherit);
