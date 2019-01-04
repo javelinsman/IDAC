@@ -64,6 +64,8 @@ export enum Type {
   Highlight = 'highlight',
   ItemLabel = 'item-label',
   Trendline = 'trendline',
+  Label = 'label',
+  RangeLine = 'range-line'
 }
 
 export type Target = ItemsTarget | RangeTarget;
