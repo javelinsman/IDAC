@@ -10,15 +10,17 @@ export class Y extends Tag {
 
   constructor(ca: ChartAccent) {
     super('y');
+    this.attributes = {
+      min: ca.chart.yScale.min,
+      max: ca.chart.yScale.max,
+      label: ca.chart.yLabel.text.split('(')[0].trim(),
+      unit: ca.chart.yLabel.text.split('(')
+        .slice(1).join('(').slice(0, -1).split(':').slice(1).join(':').trim(),
+    };
     this.setDescriptionRule([
       'Y axis with label named $(label).',
       'The unit of measurement is $(unit).',
       'The range is from $(min) to $(max).',
     ].join(' '));
-    this.attributes.min = ca.chart.yScale.min;
-    this.attributes.max = ca.chart.yScale.max;
-    this.attributes.label = ca.chart.yLabel.text.split('(')[0].trim();
-    this.attributes.unit = ca.chart.yLabel.text.split('(')
-      .slice(1).join('(').slice(0, -1).split(':').slice(1).join(':').trim();
   }
 }
