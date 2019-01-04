@@ -17,10 +17,19 @@ export class Y extends Tag {
       unit: ca.chart.yLabel.text.split('(')
         .slice(1).join('(').slice(0, -1).split(':').slice(1).join(':').trim(),
     };
+
     this.setDescriptionRule([
       'Y axis with label name $(label).',
       'The unit of measurement is $(unit).',
       'The range is from $(min) to $(max).',
     ].join(' '));
+
+    if (!this.attributes.label) {
+      this.attributes.label = 'not specified';
+    }
+    if (!this.attributes.unit) {
+      this.attributes.unit = 'not specified';
+    }
+
   }
 }

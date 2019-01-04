@@ -7,8 +7,8 @@ export class Legend extends Tag {
     this.children = ca.chart.yColumns.map((item, index) => new Item(item, index));
 
     this.attributes = {
-      num_children: this.children.length,
-      list_children: this.children.map(d => d.attributes.item).join(', '),
+      numItems: this.children.length,
+      listOfItems: this.children.map(d => d.attributes.item).join(', '),
     };
 
     this.setDescriptionRule([

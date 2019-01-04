@@ -10,13 +10,13 @@ export class X extends Tag {
       label: ca.chart.xLabel.text.split('(')[0].trim(),
       unit: ca.chart.xLabel.text.split('(')
         .slice(1).join('(').slice(0, -1).split(':').slice(1).join(':').trim(),
-      num_children: this.children.length,
-      list_children: this.children.map(d => d.attributes.tick).join(', ')
+      numTicks: this.children.length,
+      listOfTicks: this.children.map(d => d.attributes.tick).join(', ')
     };
     this.setDescriptionRule([
       'X axis with label name $(label).',
       'The unit of measurement is $(unit).',
-      'There are $(num_children) tick marks: $(list_children).',
+      'There are $(numTicks) tick marks: $(listOfTicks).',
     ].join(' '));
 
     if (!this.attributes.label) {
