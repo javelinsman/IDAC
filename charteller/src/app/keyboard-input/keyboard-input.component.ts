@@ -36,7 +36,6 @@ export class KeyboardInputComponent implements OnInit {
         return;
       }
       eventObject.preventDefault();
-      console.log(_this.keydowns);
       if (event === 'down') {
         _this.keydowns.add(key);
       } else if (event === 'up') {

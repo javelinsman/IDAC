@@ -79,9 +79,7 @@ export class NavigateComponent implements OnInit {
         this.info = new ChartInfo(chartAccent);
         this.tags = this.info.flattenedTags();
         this.setFocus(1);
-        console.log(chartAccent);
-        console.log(this.info);
-        console.log(Object.entries(this.info));
+        console.log({chartAccent, info: this.info});
         this.description.keyboardEventName = this.keyboardEventName;
         speak(this.description.describe(this.currentElement()));
       });
