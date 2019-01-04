@@ -29,7 +29,7 @@ export class KeyboardInputComponent implements OnInit {
       if (document.activeElement.tagName === 'TEXTAREA') {
         if (key === 'escape') {
           eventObject.preventDefault();
-          document.activeElement.blur();
+          (document.activeElement as any).blur();
         }
         return;
       } else if (!_this.isReservedKey(key)) {
@@ -56,19 +56,19 @@ export class KeyboardInputComponent implements OnInit {
   }
 
   detectKeyFire() {
-    for(let [eventName, keyBinding] of Object.entries(this.keyBindings)) {
-      if(eqSet(this.keydowns, keyBinding)) {
+    for (const [eventName, keyBinding] of Object.entries(this.keyBindings)) {
+      if (eqSet(this.keydowns, keyBinding)) {
         this.currentEventName = eventName;
         this.currentKeybinding = keyBinding;
         this.keyFire.emit(eventName);
-        return
+        return;
       }
     }
   }
 
   isReservedKey(key: string): boolean {
-    for(let keyBinding of Object.values(this.keyBindings)) {
-      if(keyBinding.has(key)) {
+    for (const keyBinding of Object.values(this.keyBindings)) {
+      if (keyBinding.has(key)) {
         return true;
       }
     }
