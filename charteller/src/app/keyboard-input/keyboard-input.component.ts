@@ -42,7 +42,7 @@ export class KeyboardInputComponent implements OnInit {
       } else if (event === 'up') {
         _this.detectKeyFire();
         _this.keydowns.delete(key);
-        if (key === 'shift') {
+        if (key === 'shift' || key === 'q') {
           _this.keydowns.clear();
         }
       }
