@@ -1,0 +1,262 @@
+{
+  "dataset": {
+    "columns": [
+      {
+        "name": "월",
+        "type": "string"
+      },
+      {
+        "name": "mm",
+        "type": "integer",
+        "format": ".0f"
+      }
+    ],
+    "rawFile": "월,mm\r\n_1, 13\r\n_2, 16\r\n_3, 7\r\n_4, 31\r\n_5, 63\r\n_6, 98\r\n_7, 208\r\n_8, 173\r\n_9, 88\r\n_10, 52\r\n_11, 42\r\n_12, 18",
+    "fileName": "annotated_3.csv",
+    "rows": [
+      {
+        "월": "_1",
+        "mm": 13
+      },
+      {
+        "월": "_2",
+        "mm": 16
+      },
+      {
+        "월": "_3",
+        "mm": 7
+      },
+      {
+        "월": "_4",
+        "mm": 31
+      },
+      {
+        "월": "_5",
+        "mm": 63
+      },
+      {
+        "월": "_6",
+        "mm": 98
+      },
+      {
+        "월": "_7",
+        "mm": 208
+      },
+      {
+        "월": "_8",
+        "mm": 173
+      },
+      {
+        "월": "_9",
+        "mm": 88
+      },
+      {
+        "월": "_10",
+        "mm": 52
+      },
+      {
+        "월": "_11",
+        "mm": 42
+      },
+      {
+        "월": "_12",
+        "mm": 18
+      }
+    ],
+    "type": "csv"
+  },
+  "chart": {
+    "type": "bar-chart",
+    "title": {
+      "text": "월별 강수량",
+      "fontFamily": "Roboto",
+      "fontSize": 20,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "width": 700,
+    "height": 400,
+    "xColumn": "월",
+    "yColumns": [
+      "mm"
+    ],
+    "xLabel": {
+      "text": "시기 (단위: 월)",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "yLabel": {
+      "text": "강수량 (단위: mm)",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "xScale": {
+      "type": "categorical"
+    },
+    "yScale": {
+      "min": 0,
+      "max": 220,
+      "type": "linear"
+    },
+    "legendLabel": {
+      "text": "Series",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "colors": [
+      "#aec7e8",
+      "#ffbb78",
+      "#98df8a",
+      "#ff9896",
+      "#c5b0d5",
+      "#c49c94",
+      "#f7b6d2",
+      "#c7c7c7",
+      "#dbdb8d",
+      "#9edae5"
+    ]
+  },
+  "annotations": {
+    "annotations": [
+      {
+        "target": {
+          "_id": "_uniqueid_570",
+          "type": "range",
+          "axis": "E0",
+          "range": "range(\"_6\", \"_8\", $[WyJfMSIsIl8yIiwiXzMiLCJfNCIsIl81IiwiXzYiLCJfNyIsIl84IiwiXzkiLCJfMTAiLCJfMTEiLCJfMTIiXQ==])"
+        },
+        "components": [
+          {
+            "type": "label",
+            "visible": true,
+            "style": {
+              "fill": {
+                "r": 117,
+                "g": 117,
+                "b": 117,
+                "a": 1
+              },
+              "stroke": null,
+              "stroke_width": 2,
+              "line_stroke": null,
+              "font_family": "Roboto",
+              "font_size": 14
+            },
+            "text": "하절기",
+            "anchor": "r,t",
+            "anchor_offset": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "type": "range",
+            "visible": true,
+            "style": {
+              "fill": {
+                "r": 238,
+                "g": 238,
+                "b": 238,
+                "a": 1
+              },
+              "stroke": null,
+              "stroke_width": 1,
+              "line_stroke": null
+            }
+          }
+        ],
+        "visible": true,
+        "id": "#A1"
+      },
+      {
+        "target": {
+          "_id": "_uniqueid_570",
+          "type": "range",
+          "axis": "E0",
+          "range": "range(\"_6\", \"_8\", $[WyJfMSIsIl8yIiwiXzMiLCJfNCIsIl81IiwiXzYiLCJfNyIsIl84IiwiXzkiLCJfMTAiLCJfMTEiLCJfMTIiXQ==])"
+        },
+        "target_inherit": {
+          "mode": "within-or-equal",
+          "serieses": [
+            "E2"
+          ]
+        },
+        "components": [
+          {
+            "type": "item-label",
+            "visible": true,
+            "style": {
+              "fill": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "paint_order": "stroke",
+              "stroke": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null,
+              "font_family": "Roboto",
+              "font_size": 14
+            },
+            "text": "{format(\".0f\", value)}",
+            "anchor": "m,tt",
+            "anchor_offset": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "type": "highlight",
+            "visible": true,
+            "style": {
+              "fill": {
+                "mode": "brighter-darker",
+                "value": -0.38421052631578956
+              },
+              "stroke": {
+                "mode": "brighter-darker",
+                "value": -1
+              },
+              "stroke_width": 0,
+              "line_stroke": {
+                "mode": "brighter-darker",
+                "value": -0.2
+              },
+              "line_stroke_width": 3
+            }
+          },
+          {
+            "type": "trendline",
+            "visible": false,
+            "style": {
+              "fill": null,
+              "stroke": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null
+            }
+          }
+        ],
+        "visible": true,
+        "id": "#A2"
+      }
+    ]
+  },
+  "timestamp": 1545152876991
+}
