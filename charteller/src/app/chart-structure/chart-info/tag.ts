@@ -13,9 +13,13 @@ export class Tag {
   }
 
   fetchAnnotation?: (...args: any[]) => void;
-  describe(info: ChartInfo, tags: Tag[], keyboardEvent: string) {
+  describe(info: ChartInfo, tags: Tag[], keyboardEvent: string, queryAnswer: string = null) {
     let description = this.descriptionRule;
-    const args = this.descriptionRule.match(/\$\(([^)]*)\)/g);
+    if (queryAnswer) {
+      description = queryAnswer + ' ' + description;
+      console.log(description);
+    }
+    const args = description.match(/\$\(([^)]*)\)/g);
     if (args) {
       args.map(d => [d, d.slice(2, -1)])
         .forEach(([arg, strip]) =>

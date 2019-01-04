@@ -26,6 +26,8 @@ export class DescriptionComponent implements OnInit {
       return this.queryAnswer;
     } else if (this.keyboardEventName === 'queryTendency') {
       return this.queryAnswer;
+    } else if (this.keyboardEventName.startsWith('query')) {
+      return tag.describe(this.info, this.tags, this.keyboardEventName, this.queryAnswer);
     } else {
       return tag.describe(this.info, this.tags, this.keyboardEventName);
     }

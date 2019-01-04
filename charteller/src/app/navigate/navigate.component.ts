@@ -280,6 +280,7 @@ export class NavigateComponent implements OnInit {
       const bars = this.getAllBars(this.getElementSiblingIndex(element._id));
       const maximum_bar = bars.reduce((a, b) => a.attributes.value > b.attributes.value ? a : b);
       this.setFocus(maximum_bar._id);
+      this.description.queryAnswer = 'This is the highest bar in series $(key):';
     } else {
       const bargroups = this.getAllBargroups();
       const maximumGroupIndex: number = bargroups
@@ -287,6 +288,7 @@ export class NavigateComponent implements OnInit {
           [bargroup.children.reduce((a, b) => a + b.attributes.value, 0), i])
         .reduce((a, b) => a[0] > b[0] ? a : b)[1];
       this.setFocus(bargroups[maximumGroupIndex]._id);
+      this.description.queryAnswer = 'This is a bargroup with the highest sum:';
     }
   }
 
@@ -296,6 +298,7 @@ export class NavigateComponent implements OnInit {
       const bars = this.getAllBars(this.getElementSiblingIndex(element._id));
       const minimum_bar = bars.reduce((a, b) => a.attributes.value < b.attributes.value ? a : b);
       this.setFocus(minimum_bar._id);
+      this.description.queryAnswer = 'This is the smallest bar in series $(key):';
     } else {
       const bargroups = this.getAllBargroups();
       const minimumGroupIndex: number = bargroups
@@ -303,6 +306,7 @@ export class NavigateComponent implements OnInit {
           [bargroup.children.reduce((a, b) => a + b.attributes.value, 0), i])
         .reduce((a, b) => a[0] < b[0] ? a : b)[1];
       this.setFocus(bargroups[minimumGroupIndex]._id);
+      this.description.queryAnswer = 'This is a bargroup with the smallest sum:';
     }
   }
 
