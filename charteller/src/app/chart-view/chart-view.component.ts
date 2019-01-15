@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, AfterViewInit, OnChanges } from '@angular/core';
-import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
+import { ChartSpec, Highlight } from '../chart-structure/chart-spec/chart-spec';
 import { render } from './draw-chart';
 import * as d3 from 'd3';
 
@@ -92,6 +92,27 @@ export class ChartViewComponent implements OnInit, AfterViewInit {
         }
       })
     };
+    this.chartSpec.annotations.highlights.value.forEach(highlight => {
+      if (highlight.itemLabel.value === 'on') {
+        highlight.target.value.forEach(bar => {
+          const groupIndex = bar._root.marks.bargroups.value.map(bargroup => bargroup.name.value)
+            .indexOf(bar._parent.name.value);
+          const seriesIndex = bar._root.legend.items.value.map(item => item.text.value)
+            .indexOf(bar.key.value.text.value);
+          if (bar._root.marks.type.value === 'grouped') {
+            (drawSpec as any).marks[groupIndex].groups[seriesIndex].bar.label = {
+              position: 'top',
+              format: '%v',
+            };
+          } else {
+            (drawSpec as any).marks[groupIndex].stacks[seriesIndex].label = {
+              position: 'middle',
+              format: '%v',
+            };
+          }
+        });
+      }
+    });
     return drawSpec;
   }
 }
