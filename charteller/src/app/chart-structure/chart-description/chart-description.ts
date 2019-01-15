@@ -6,7 +6,7 @@ import { Marks } from './marks';
 import { Annotations } from './annotations';
 import { ChartAccent } from '../chart-accent/chart-accent';
 
-export class ChartInfo {
+export class ChartDescription {
     tagname: 'graph';
     children: [ Title, Y, X, Legend, Marks, Annotations ];
 

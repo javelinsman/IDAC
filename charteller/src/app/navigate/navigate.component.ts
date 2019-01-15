@@ -6,7 +6,7 @@ import { Chart } from '../chart';
 import { ChartService } from '../chart.service';
 import { beep_error, beep_detect, speak, isAscendingArray, isDescendingArray } from '../utils';
 import { DescriptionComponent } from '../description/description.component';
-import { ChartInfo } from '../chart-structure/chart-info/chart-info';
+import { ChartDescription } from '../chart-structure/chart-description/chart-description';
 import { ChartAccent } from '../chart-structure/chart-accent/chart-accent';
 
 @Component({
@@ -17,7 +17,7 @@ import { ChartAccent } from '../chart-structure/chart-accent/chart-accent';
 export class NavigateComponent implements OnInit {
 
   chart: Chart;
-  info: ChartInfo;
+  info: ChartDescription;
   tags: any[];
   currentFocus: number;
   keyboardEventName = 'moveToNextElement';
@@ -78,7 +78,7 @@ export class NavigateComponent implements OnInit {
     if (mode === 'from-chart-accent') {
       this.http.get(this.chart.src_json)
         .subscribe((chartAccent: ChartAccent) => {
-          this.info = new ChartInfo(chartAccent);
+          this.info = new ChartDescription(chartAccent);
           this.tags = this.info.flattenedTags();
           this.setFocus(1);
           console.log({chartAccent, info: this.info});

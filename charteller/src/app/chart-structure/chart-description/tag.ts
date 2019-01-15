@@ -1,4 +1,4 @@
-import { ChartInfo } from './chart-info';
+import { ChartDescription } from './chart-description';
 
 export class Tag {
   public static descriptionRule = '';
@@ -24,7 +24,7 @@ export class Tag {
     return (this.constructor as any).descriptionRule;
   }
 
-  describe(info: ChartInfo, tags: Tag[], keyboardEvent: string, queryAnswer: string = null) {
+  describe(info: ChartDescription, tags: Tag[], keyboardEvent: string, queryAnswer: string = null) {
     let description = (this.constructor as any).descriptionRule;
     if (queryAnswer) {
       description = queryAnswer + ' ' + description;
