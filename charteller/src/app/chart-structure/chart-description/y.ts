@@ -10,9 +10,16 @@ export class Y extends Tag {
 
   constructor(cs: ChartSpec) {
     super('y');
-    const maxValue = cs.marks.bargroups.value.map(bargroup => bargroup.bars.value.map(bar => bar.value.value))
+    let maxValue;
+    if (cs.marks.type.value === 'grouped') {
+      maxValue = cs.marks.bargroups.value.map(bargroup => bargroup.bars.value.map(bar => bar.value.value))
       .reduce((a, b) => [...a, ...b], [])
       .reduce((a, b) => a > b ? a : b, 0);
+    } else {
+      maxValue = cs.marks.bargroups.value.map(bargroup => bargroup.bars.value.map(bar => bar.value.value))
+      .reduce((a, b) => [...a, b.reduce((x, y) => x + y, 0)], [])
+      .reduce((a, b) => a > b ? a : b, 0);
+    }
     this.attributes = {
       min: +cs.y.rangeMin.value,
       max: cs.y.rangeMax.value ? +cs.y.rangeMax.value : maxValue,
