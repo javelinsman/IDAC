@@ -268,16 +268,19 @@ export class Highlight {
         value: new Set() as Set<Bar>
     };
     itemLabel = {
-        type: 'input',
-        value: true
+        type: 'input-select',
+        candidates: ['on', 'off'],
+        value: 'on'
     };
     highlight = {
-        type: 'input',
-        value: true
+        type: 'input-select',
+        candidates: ['on', 'off'],
+        value: 'on'
     };
     trendline = {
-        type: 'input',
-        value: true
+        type: 'input-select',
+        candidates: ['on', 'off'],
+        value: 'on'
     };
     label = {
         type: 'input',
@@ -379,16 +382,19 @@ export class RelationalHighlightRange {
     constructor(public _root: ChartSpec, public _parent: CoordinateRange) {}
     _tagname = 'RelationalHighlightRange';
     itemLabel = {
-        type: 'input',
-        value: true
+        type: 'input-select',
+        candidates: ['on', 'off'],
+        value: 'on'
     };
     highlight = {
-        type: 'input',
-        value: true
+        type: 'input-select',
+        candidates: ['on', 'off'],
+        value: 'on'
     };
     trendline = {
-        type: 'input',
-        value: true
+        type: 'input-select',
+        candidates: ['on', 'off'],
+        value: 'on'
     };
     mode = {
         type: 'input-select',
@@ -409,16 +415,19 @@ export class RelationalHighlightLine {
     constructor(public _root: ChartSpec, public _parent: CoordinateLine) {}
     _tagname = 'RelationalHighlightLine';
     itemLabel = {
-        type: 'input',
-        value: true
+        type: 'input-select',
+        candidates: ['on', 'off'],
+        value: 'on'
     };
     highlight = {
-        type: 'input',
-        value: true
+        type: 'input-select',
+        candidates: ['on', 'off'],
+        value: 'on'
     };
     trendline = {
-        type: 'input',
-        value: true
+        type: 'input-select',
+        candidates: ['on', 'off'],
+        value: 'on'
     };
     mode = {
         type: 'input-select',

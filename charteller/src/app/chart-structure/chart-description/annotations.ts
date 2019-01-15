@@ -32,9 +32,9 @@ export class Highlight extends Tag {
   constructor(protected highlight: ChartSpec.Highlight, cs: ChartSpec.ChartSpec) {
     super('highlight');
     this.attributes = {
-      itemLabel: highlight.itemLabel ? 'Item labels are marked on them' : '',
-      highlight: highlight.highlight ? 'They are highlighted' : '',
-      trendline: highlight.trendline ? 'A trend line is drawn' : '',
+      itemLabel: highlight.itemLabel.value === 'on' ? 'Item labels are marked on them' : '',
+      highlight: highlight.highlight.value === 'on' ? 'They are highlighted' : '',
+      trendline: highlight.trendline.value === 'on' ? 'A trend line is drawn' : '',
       numTargets: highlight.target.value.size,
       targetLocations: Array.from(highlight.target.value).sort().map(bar => bar._foreignRepr()).join(', ')
     };
@@ -95,9 +95,9 @@ export class RelationalHighlightLine extends Tag {
         ? bar.value.value < highlight._parent.range.value
         : bar.value.value >= highlight._parent.range.value);
     this.attributes = {
-      itemLabel: highlight.itemLabel ? 'Item labels are marked on them' : '',
-      highlight: highlight.highlight ? 'They are highlighted' : '',
-      trendline: highlight.trendline ? 'A trend line is drawn' : '',
+      itemLabel: highlight.itemLabel.value === 'on' ? 'Item labels are marked on them' : '',
+      highlight: highlight.highlight.value === 'on' ? 'They are highlighted' : '',
+      trendline: highlight.trendline.value === 'on' ? 'A trend line is drawn' : '',
       numTargets: targets.length,
       mode: highlight.mode.value,
       range: highlight._parent.range.value,
@@ -123,9 +123,9 @@ export class RelationalHighlightRange extends Tag {
         ? (+highlight._parent.rangeStart.value <= bar.value.value && bar.value.value <= +highlight._parent.rangeEnd.value)
         : (bar.value.value < +highlight._parent.rangeStart.value || +highlight._parent.rangeEnd.value < bar.value.value));
     this.attributes = {
-      itemLabel: highlight.itemLabel ? 'Item labels are marked on them' : '',
-      highlight: highlight.highlight ? 'They are highlighted' : '',
-      trendline: highlight.trendline ? 'A trend line is drawn' : '',
+      itemLabel: highlight.itemLabel.value === 'on' ? 'Item labels are marked on them' : '',
+      highlight: highlight.highlight.value === 'on' ? 'They are highlighted' : '',
+      trendline: highlight.trendline.value === 'on' ? 'A trend line is drawn' : '',
       numTargets: targets.length,
       mode: highlight.mode.value,
       rangeStart: highlight._parent.rangeStart.value,
