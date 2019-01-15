@@ -1,0 +1,30 @@
+<div class="border {{indent ? 'ml-'+indent : ''}}">
+  <h3>{{ tag._tagname }}</h3>
+  <div *ngFor="let attr of tag | keyvalue">
+    <div *ngIf="!attr.key.startsWith('_')">
+      <div *ngIf="attr.value.type === 'input'">
+        {{ attr.key }}: <input style="width: 100%" value="{{ attr.value.value }}">
+      </div>
+      <div *ngIf="attr.value.type === 'foreign'">
+        {{ attr.key }}: <p>It is foreign</p>
+      </div>
+    </div>
+  </div>
+  <div *ngFor="let attr of tag | keyvalue">
+    <div *ngIf="!attr.key.startsWith('_')">
+      <div *ngIf="attr.value.type === 'children'">
+        <div>{{ attr.key }}:</div>
+        <div *ngFor="let childTag of attr.value.value">
+          <app-spec-tree-view [tag]="childTag" [indent]="indent + 2"></app-spec-tree-view>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngFor="let attr of tag | keyvalue">
+    <div *ngIf="!attr.key.startsWith('_')">
+      <div *ngIf="attr.value.type === 'addFunction'">
+        <button (click)="attr.value.value()">+ Add New Child</button>
+      </div>
+    </div>
+  </div>
+</div>

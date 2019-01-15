@@ -10,6 +10,7 @@ import { NavigateComponent } from './navigate/navigate.component';
 import { DescriptionComponent } from './description/description.component';
 import { KeyboardInputComponent } from './keyboard-input/keyboard-input.component';
 import { ChartSpecComponent } from './chart-spec/chart-spec.component';
+import { SpecTreeViewComponent } from './spec-tree-view/spec-tree-view.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ChartSpecComponent } from './chart-spec/chart-spec.component';
     NavigateComponent,
     DescriptionComponent,
     KeyboardInputComponent,
-    ChartSpecComponent
+    ChartSpecComponent,
+    SpecTreeViewComponent
   ],
   imports: [
     BrowserModule,

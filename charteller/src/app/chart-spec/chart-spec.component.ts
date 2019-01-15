@@ -16,13 +16,9 @@ export class ChartSpecComponent implements OnInit {
   ngOnInit() {
     this.chartSpec = new ChartSpec();
     console.log(this.chartSpec);
+    const { title, y, x, legend, marks, annotations } = this.chartSpec;
     this.renderList = [
-      this.chartSpec.title,
-      this.chartSpec.y,
-      this.chartSpec.x,
-      this.chartSpec.legend,
-      this.chartSpec.marks,
-      this.chartSpec.annotations,
+      title, y, x, legend, marks, annotations
     ];
   }
 
