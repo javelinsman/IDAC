@@ -1,15 +1,18 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
+      <app-chart-view class="mx-auto" [chartSpec]="chartSpec"></app-chart-view>
+    </div>
+    <div class="col-md-3">
       <app-spec-tree-view [tag]="chartSpec.title"></app-spec-tree-view>
       <app-spec-tree-view [tag]="chartSpec.y"></app-spec-tree-view>
       <app-spec-tree-view [tag]="chartSpec.x"></app-spec-tree-view>
       <app-spec-tree-view [tag]="chartSpec.legend"></app-spec-tree-view>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <app-spec-tree-view [tag]="chartSpec.marks"></app-spec-tree-view>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <app-spec-tree-view [tag]="chartSpec.annotations"></app-spec-tree-view>
     </div>
   </div>
