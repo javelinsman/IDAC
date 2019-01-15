@@ -57,11 +57,19 @@ export class Y  {
     _tagname = 'Y';
     label = {
         type: 'input',
-        value: ''
+        value: '',
     };
     unit = {
         type: 'input',
-        value: ''
+        value: '',
+    };
+    rangeMin = {
+        type: 'input',
+        value: '',
+    };
+    rangeMax =  {
+        type: 'input',
+        value: '',
     };
     _foreignRepr() {
         return this._tagname;

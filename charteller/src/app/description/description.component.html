@@ -23,7 +23,7 @@
         </thead>
         <tr *ngFor="let attribute of element.attributes | keyvalue">
           <td>{{ attribute.key }}</td>
-          <td>{{ attribute.value }}</td>
+          <td>{{ attribute.value() }}</td>
         </tr>
       </table>
     </div>

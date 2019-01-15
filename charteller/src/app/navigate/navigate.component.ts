@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
@@ -7,7 +7,6 @@ import { ChartService } from '../chart.service';
 import { beep_error, beep_detect, speak, isAscendingArray, isDescendingArray } from '../utils';
 import { DescriptionComponent } from '../description/description.component';
 import { ChartDescription } from '../chart-structure/chart-description/chart-description';
-import { ChartAccent } from '../chart-structure/chart-accent/chart-accent';
 
 @Component({
   selector: 'app-navigate',
@@ -16,8 +15,9 @@ import { ChartAccent } from '../chart-structure/chart-accent/chart-accent';
 })
 export class NavigateComponent implements OnInit {
 
+  @Input() info: ChartDescription;
+
   chart: Chart;
-  info: ChartDescription;
   tags: any[];
   currentFocus: number;
   keyboardEventName = 'moveToNextElement';
@@ -40,7 +40,10 @@ export class NavigateComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getChart();
+    this.tags = this.info.flattenedTags();
+    this.setFocus(1);
+    this.description.keyboardEventName = this.keyboardEventName;
+    speak(this.description.describe(this.currentElement()));
   }
 
   setFocus(f, trace = true) {
@@ -70,25 +73,6 @@ export class NavigateComponent implements OnInit {
     return parent.children.indexOf(element);
   }
 
-
-  getChart(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    const mode = this.route.snapshot.paramMap.get('mode');
-    this.chart = this.chartService.getCharts().find(d => +d.id === +id);
-    if (mode === 'from-chart-accent') {
-      this.http.get(this.chart.src_json)
-        .subscribe((chartAccent: ChartAccent) => {
-          this.info = new ChartDescription(chartAccent);
-          this.tags = this.info.flattenedTags();
-          this.setFocus(1);
-          console.log({chartAccent, info: this.info});
-          this.description.keyboardEventName = this.keyboardEventName;
-          speak(this.description.describe(this.currentElement()));
-        });
-    } else {
-      console.log(mode);
-    }
-  }
 
   keyFire(eventName: string) {
     if (this[eventName]() === false) {

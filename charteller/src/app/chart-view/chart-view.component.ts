@@ -40,6 +40,8 @@ export class ChartViewComponent implements OnInit, AfterViewInit {
           x_unit: cs.x.unit.value,
           y_title: cs.y.label.value,
           y_unit: cs.y.unit.value,
+          y_min: cs.y.rangeMin.value,
+          y_max: cs.y.rangeMax.value,
           gridline: 'horizontal',
           colors: cs.legend.items.value.map((item, i) => {
             const itemName = item.text.value;
@@ -50,8 +52,8 @@ export class ChartViewComponent implements OnInit, AfterViewInit {
             return accum;
           }, {}),
           x_tick_rotate: '30',
-          width: 700,
-          height: 400,
+          // width: 700,
+          // height: 400,
       },
       marks: cs.marks.bargroups.value.map(bargroup => {
         const marksSpec = {

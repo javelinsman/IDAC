@@ -4,20 +4,20 @@ import { X } from './x';
 import { Legend } from './legend';
 import { Marks } from './marks';
 import { Annotations } from './annotations';
-import { ChartAccent } from '../chart-accent/chart-accent';
+import { ChartSpec } from '../chart-spec/chart-spec';
 
 export class ChartDescription {
     tagname: 'graph';
-    children: [ Title, Y, X, Legend, Marks, Annotations ];
+    children: [ Title ]; // , Y, X, Legend, Marks, Annotations ];
 
-    constructor(ca: ChartAccent) {
+    constructor(cs: ChartSpec) {
       this.children = [
-        new Title(ca),
-        new Y(ca),
-        new X(ca),
-        new Legend(ca),
-        new Marks(ca),
-        new Annotations(ca),
+        new Title(cs),
+        // new Y(cs),
+        // new X(cs),
+        // new Legend(cs),
+        // new Marks(cs),
+        // new Annotations(cs),
       ];
     }
 

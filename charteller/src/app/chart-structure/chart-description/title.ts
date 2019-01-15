@@ -1,11 +1,11 @@
-import { ChartAccent } from '../chart-accent/chart-accent';
 import { Tag } from './tag';
+import { ChartSpec } from '../chart-spec/chart-spec';
 
 export class Title extends Tag {
-  constructor(ca: ChartAccent) {
+  constructor(cs: ChartSpec) {
     super('title');
     this.attributes = {
-      title: ca.chart.title.text,
+      title: () => cs.title.title.value,
     };
     this.setDescriptionRule('Chart title: $(title).');
   }

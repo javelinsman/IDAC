@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
+import { ChartDescription } from '../chart-structure/chart-description/chart-description';
 
 @Component({
   selector: 'app-make-chart',
@@ -9,6 +10,7 @@ import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
 export class MakeChartComponent implements OnInit {
 
   chartSpec: ChartSpec;
+  chartDescription: ChartDescription;
 
   constructor() { }
 
@@ -26,6 +28,8 @@ export class MakeChartComponent implements OnInit {
         bar.value.value =  2 * i + j + 1;
       });
     });
+
+    this.chartDescription = new ChartDescription(this.chartSpec);
   }
 
 }

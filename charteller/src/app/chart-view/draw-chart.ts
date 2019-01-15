@@ -66,7 +66,10 @@ export function render(spec, svgId) {
         .call(react_on_hover);
 
     const x = d3.scaleBand().domain(spec.marks.map(d => d.key)).range([0, width]).padding(0.1);
-    const y = d3.scaleLinear().domain([0, +d3.max(bar_heights)]).range([height, 0]);
+    const y = d3.scaleLinear().domain([
+        spec.meta.y_min ? spec.meta.y_min : 0,
+        spec.meta.y_max ? spec.meta.y_max : +d3.max(bar_heights) * 1.1
+    ]).range([height, 0]);
     const x_axis = d3.axisBottom(x);
     const y_axis = d3.axisLeft(y);
     const x_axis_g = svg.append('g').attr('id', 'x-axis')
