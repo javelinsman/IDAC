@@ -150,7 +150,7 @@ export function render(spec, svgId) {
             // .style('fill', (d: any) => d.bar.bar.color.name ? spec.meta.colors[d.bar.bar.color.name] : d.bar.bar.color)
             .call(react_on_hover)
             .style('fill', (d: any) => d.bar.bar.highlight
-                ? d3.color(spec.meta.colors[d.bar.bar.color.name]).darker()
+                ? d3.color(spec.meta.colors[d.bar.bar.color.name]).brighter(0.4)
                 : spec.meta.colors[d.bar.bar.color.name])
             .each(function(d: any, i) {
                 console.log(d.bar.bar);
