@@ -17,6 +17,11 @@ export class MakeChartComponent implements OnInit {
   ngOnInit() {
     this.chartSpec = new ChartSpec();
 
+    this.chartSpec.title.title.value = 'Honolulu';
+    this.chartSpec.y.label.value = 'y label';
+    this.chartSpec.y.unit.value = 'y unit';
+    this.chartSpec.x.label.value = 'x label';
+    this.chartSpec.x.unit.value = 'x unit';
     this.chartSpec.legend.addChild.value();
     this.chartSpec.legend.addChild.value();
     this.chartSpec.legend.items.value.forEach((item, i) => item.text.value = `Series ${i + 1}`);

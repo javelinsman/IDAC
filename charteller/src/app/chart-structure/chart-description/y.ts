@@ -1,5 +1,5 @@
-import { ChartAccent } from '../chart-accent/chart-accent';
 import { Tag } from './tag';
+import { ChartSpec } from '../chart-spec/chart-spec';
 
 export class Y extends Tag {
   tagname: 'y';
@@ -8,14 +8,16 @@ export class Y extends Tag {
   label: string;
   unit: string;
 
-  constructor(ca: ChartAccent) {
+  constructor(cs: ChartSpec) {
     super('y');
+    const maxValue = () => cs.marks.bargroups.value.map(bargroup => bargroup.bars.value.map(bar => bar.value.value))
+      .reduce((a, b) => [...a, ...b], [])
+      .reduce((a, b) => a > b ? a : b, 0);
     this.attributes = {
-      min: ca.chart.yScale.min,
-      max: ca.chart.yScale.max,
-      label: ca.chart.yLabel.text.split('(')[0].trim(),
-      unit: ca.chart.yLabel.text.split('(')
-        .slice(1).join('(').slice(0, -1).split(':').slice(1).join(':').trim(),
+      min: () => +cs.y.rangeMin.value,
+      max: () => cs.y.rangeMax.value ? +cs.y.rangeMax.value : maxValue(),
+      label: () => cs.y.label.value,
+      unit: () => cs.y.unit.value,
     };
 
     this.setDescriptionRule([
