@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { NavigateComponent } from './navigate/navigate.component';
 import { DescriptionComponent } from './description/description.component';
 import { KeyboardInputComponent } from './keyboard-input/keyboard-input.component';
+import { ChartSpecComponent } from './chart-spec/chart-spec.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { KeyboardInputComponent } from './keyboard-input/keyboard-input.componen
     IndexComponent,
     NavigateComponent,
     DescriptionComponent,
-    KeyboardInputComponent
+    KeyboardInputComponent,
+    ChartSpecComponent
   ],
   imports: [
     BrowserModule,

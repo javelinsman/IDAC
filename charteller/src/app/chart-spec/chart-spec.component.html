@@ -1,0 +1,23 @@
+<div *ngFor="let tag of renderList">
+  <h3>{{ tag._tagname }}</h3>
+  <div *ngFor="let attr of tag | keyvalue">
+    <div *ngIf="!attr.key.startsWith('_')">
+      <div *ngIf="attr.value.type === 'input'">
+        {{ attr.key }}: <input value="{{ attr.value.value }}">
+      </div>
+      <div *ngIf="attr.value.type === 'children'">
+        {{ attr.key }}: <p>It is children</p>
+      </div>
+      <div *ngIf="attr.value.type === 'foreign'">
+        {{ attr.key }}: <p>It is foreign</p>
+      </div>
+    </div>
+  </div>
+  <div *ngFor="let attr of tag | keyvalue">
+    <div *ngIf="!attr.key.startsWith('_')">
+      <div *ngIf="attr.value.type === 'addFunction'">
+        <button (click)="attr.value.value()">+ Add New Child</button>
+      </div>
+    </div>
+  </div>
+</div>
