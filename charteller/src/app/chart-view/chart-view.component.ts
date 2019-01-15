@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, AfterViewInit, OnChanges } from '@angular/core';
 import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
 import { render } from './draw-chart';
+import * as d3 from 'd3';
 
 @Component({
   selector: 'app-chart-view',
@@ -19,12 +20,15 @@ export class ChartViewComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.renderChart();
+    setInterval(() => this.renderChart(), 1000);
+
+  }
+
+  renderChart() {
     const svgId = `#chart-view-svg-${this.chartId}`;
     const drawSpec = this.makeDrawSpec();
     render(drawSpec, svgId);
-    setInterval(() => {
-      render(drawSpec, svgId);
-    }, 1000);
   }
 
   makeDrawSpec() {
@@ -33,11 +37,13 @@ export class ChartViewComponent implements OnInit, AfterViewInit {
       meta: {
           title: cs.title.title.value,
           x_title: cs.x.label.value,
+          x_unit: cs.x.unit.value,
           y_title: cs.y.label.value,
+          y_unit: cs.y.unit.value,
           gridline: 'horizontal',
           colors: cs.legend.items.value.map((item, i) => {
             const itemName = item.text.value;
-            const itemColor = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'][i];
+            const itemColor = d3.schemeCategory10[i];
             return { itemName, itemColor };
           }).reduce((accum, itemPair) => {
             accum[itemPair.itemName] = itemPair.itemColor;
@@ -45,7 +51,7 @@ export class ChartViewComponent implements OnInit, AfterViewInit {
           }, {}),
           x_tick_rotate: '30',
           width: 700,
-          height: 300,
+          height: 400,
       },
       marks: cs.marks.bargroups.value.map(bargroup => {
         const marksSpec = {
