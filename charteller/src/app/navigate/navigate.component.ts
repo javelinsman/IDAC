@@ -73,16 +73,21 @@ export class NavigateComponent implements OnInit {
 
   getChart(): void {
     const id = +this.route.snapshot.paramMap.get('id');
+    const mode = this.route.snapshot.paramMap.get('mode');
     this.chart = this.chartService.getCharts().find(d => +d.id === +id);
-    this.http.get(this.chart.src_json)
-      .subscribe((chartAccent: ChartAccent) => {
-        this.info = new ChartInfo(chartAccent);
-        this.tags = this.info.flattenedTags();
-        this.setFocus(1);
-        console.log({chartAccent, info: this.info});
-        this.description.keyboardEventName = this.keyboardEventName;
-        speak(this.description.describe(this.currentElement()));
-      });
+    if (mode === 'from-chart-accent') {
+      this.http.get(this.chart.src_json)
+        .subscribe((chartAccent: ChartAccent) => {
+          this.info = new ChartInfo(chartAccent);
+          this.tags = this.info.flattenedTags();
+          this.setFocus(1);
+          console.log({chartAccent, info: this.info});
+          this.description.keyboardEventName = this.keyboardEventName;
+          speak(this.description.describe(this.currentElement()));
+        });
+    } else {
+      console.log(mode);
+    }
   }
 
   keyFire(eventName: string) {

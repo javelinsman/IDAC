@@ -6,7 +6,8 @@ import { NavigateComponent } from './navigate/navigate.component';
 const routes: Routes = [
   { path: '', component: IndexComponent },
   { path: 'navigate/:id', component: NavigateComponent },
-]
+  { path: 'navigate/:id/:mode', component: NavigateComponent },
+];
 
 @NgModule({
   imports: [ RouterModule.forRoot(routes) ],
