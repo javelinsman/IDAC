@@ -44,7 +44,7 @@ export class ChartSpec {
 }
 
 export class Title {
-    constructor(private _root: ChartSpec) {}
+    constructor(public _root: ChartSpec) {}
     _tagname = 'Title';
     title = {
         type: 'input',
@@ -53,7 +53,7 @@ export class Title {
 }
 
 export class Y  {
-    constructor(private _root: ChartSpec) {}
+    constructor(public _root: ChartSpec) {}
     _tagname = 'Y';
     label = {
         type: 'input',
@@ -76,7 +76,7 @@ export class Y  {
     }
 }
 export class X {
-    constructor(private _root: ChartSpec) {}
+    constructor(public _root: ChartSpec) {}
     _tagname = 'X';
     label = {
         type: 'input',
@@ -105,7 +105,7 @@ export class X {
 }
 
 export class Tick {
-    constructor(private _root: ChartSpec, private _parent: X) {}
+    constructor(public _root: ChartSpec, public _parent: X) {}
     _tagname = 'Tick';
     text = {
         type: 'input',
@@ -125,7 +125,7 @@ export class Tick {
 }
 
 export class Legend {
-    constructor(private _root: ChartSpec) {}
+    constructor(public _root: ChartSpec) {}
     _tagname = 'Legend';
     label = {
         type: 'input',
@@ -147,7 +147,7 @@ export class Legend {
 }
 
 export class Item {
-    constructor(private _root: ChartSpec, private _parent: Legend) {}
+    constructor(public _root: ChartSpec, public _parent: Legend) {}
     _tagname = 'Item';
     text = {
         type: 'input',
@@ -167,7 +167,7 @@ export class Item {
 }
 
 export class Marks {
-    constructor(private _root: ChartSpec) {}
+    constructor(public _root: ChartSpec) {}
     _tagname = 'Marks';
     bargroups = {
         type: 'children',
@@ -176,7 +176,7 @@ export class Marks {
 }
 
 export class Bargroup {
-    constructor(private _root: ChartSpec, private _parent: Marks) {}
+    constructor(public _root: ChartSpec, public _parent: Marks) {}
     _tagname = 'Bargroup';
     name = {
         type: 'foreign',
@@ -189,7 +189,7 @@ export class Bargroup {
 }
 
 export class Bar {
-    constructor(private _root: ChartSpec, private _parent: Bargroup) {}
+    constructor(public _root: ChartSpec, public _parent: Bargroup) {}
     _tagname = 'Bar';
     key = {
         type: 'foreign',
@@ -205,7 +205,7 @@ export class Bar {
 }
 
 export class Annotations {
-    constructor(private _root: ChartSpec) {}
+    constructor(public _root: ChartSpec) {}
     _tagname = 'Annotations';
     highlights = {
         type: 'children',
@@ -258,7 +258,7 @@ export class Annotations {
 }
 
 export class Highlight {
-    constructor(private _root: ChartSpec, private _parent: Annotations) {}
+    constructor(public _root: ChartSpec, public _parent: Annotations) {}
     _tagname = 'Highlight';
     target = {
         type: 'foreign-multiselect',
@@ -294,7 +294,7 @@ export class Highlight {
 }
 
 export class CoordinateRange {
-    constructor(private _root: ChartSpec, private _parent: Annotations) {}
+    constructor(public _root: ChartSpec, public _parent: Annotations) {}
     _tagname = 'CoordinateRange';
     target = {
         type: 'foreign-select',
@@ -337,7 +337,7 @@ export class CoordinateRange {
 }
 
 export class CoordinateLine {
-    constructor(private _root: ChartSpec, private _parent: Annotations) {}
+    constructor(public _root: ChartSpec, public _parent: Annotations) {}
     _tagname = 'CoordinateLine';
     target = {
         type: 'foreign-select',
@@ -376,7 +376,7 @@ export class CoordinateLine {
 }
 
 export class RelationalHighlightRange {
-    constructor(private _root: ChartSpec, private _parent: CoordinateRange) {}
+    constructor(public _root: ChartSpec, public _parent: CoordinateRange) {}
     _tagname = 'RelationalHighlightRange';
     itemLabel = {
         type: 'input',
@@ -406,7 +406,7 @@ export class RelationalHighlightRange {
 }
 
 export class RelationalHighlightLine {
-    constructor(private _root: ChartSpec, private _parent: CoordinateLine) {}
+    constructor(public _root: ChartSpec, public _parent: CoordinateLine) {}
     _tagname = 'RelationalHighlightLine';
     itemLabel = {
         type: 'input',

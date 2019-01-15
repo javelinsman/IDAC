@@ -10,14 +10,14 @@ export class Y extends Tag {
 
   constructor(cs: ChartSpec) {
     super('y');
-    const maxValue = () => cs.marks.bargroups.value.map(bargroup => bargroup.bars.value.map(bar => bar.value.value))
+    const maxValue = cs.marks.bargroups.value.map(bargroup => bargroup.bars.value.map(bar => bar.value.value))
       .reduce((a, b) => [...a, ...b], [])
       .reduce((a, b) => a > b ? a : b, 0);
     this.attributes = {
-      min: () => +cs.y.rangeMin.value,
-      max: () => cs.y.rangeMax.value ? +cs.y.rangeMax.value : maxValue(),
-      label: () => cs.y.label.value,
-      unit: () => cs.y.unit.value,
+      min: +cs.y.rangeMin.value,
+      max: cs.y.rangeMax.value ? +cs.y.rangeMax.value : maxValue,
+      label: cs.y.label.value ? cs.y.label.value : 'not specified',
+      unit: cs.y.unit.value ? cs.y.unit.value : 'not specified',
     };
 
     this.setDescriptionRule([
@@ -25,13 +25,6 @@ export class Y extends Tag {
       'The unit of measurement is $(unit).',
       'The range is from $(min) to $(max).',
     ].join(' '));
-
-    if (!this.attributes.label) {
-      this.attributes.label = 'not specified';
-    }
-    if (!this.attributes.unit) {
-      this.attributes.unit = 'not specified';
-    }
 
   }
 }

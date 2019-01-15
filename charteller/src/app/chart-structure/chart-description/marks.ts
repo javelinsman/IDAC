@@ -1,17 +1,17 @@
-import { ChartAccent, Row } from '../chart-accent/chart-accent';
 import { Tag } from './tag';
 import { X } from './x';
 import { Y } from './y';
+import * as ChartSpec from '../chart-spec/chart-spec';
 
 export class Marks extends Tag {
-  constructor(ca: ChartAccent) {
+  constructor(cs: ChartSpec.ChartSpec) {
     super('marks');
 
-    this.children = ca.dataset.rows.map((row, index) => new Bargroup(row, index, ca));
+    this.children = cs.marks.bargroups.value.map((bargroup, index) => new Bargroup(bargroup, index, cs));
 
     this.attributes = {
       numBargroups: this.children.length,
-      numBars: this.children[0].children.length,
+      numBars: this.children.length ? this.children[0].children.length : 0,
     };
 
     this.setDescriptionRule([
@@ -27,15 +27,14 @@ export class Bargroup extends Tag {
   relationalRanges: any[];
   children: Bar[];
 
-  constructor(row: Row, index: number, ca: ChartAccent) {
+  constructor(bargroup: ChartSpec.Bargroup, index: number, cs: ChartSpec.ChartSpec) {
     super('bargroup');
 
-    const name = row[ca.dataset.columns[0].name] as string;
-    this.children =  ca.dataset.columns.slice(1).map(column => column.name)
-      .map((key, _index) => new Bar(ca, key, row, name, _index));
+    const name = bargroup.name.value.text.value;
+    this.children =  bargroup.bars.value.map((bar, _index) => new Bar(bar, _index, cs));
 
-    const borrowX = new X(ca);
-    const borrowY = new Y(ca);
+    const borrowX = new X(cs);
+    const borrowY = new Y(cs);
 
     this.attributes = {
       name: name,
@@ -57,17 +56,17 @@ export class Bargroup extends Tag {
   }
 }
 export class Bar extends Tag {
-  constructor(ca: ChartAccent, key: string, row: Row, bargroupName: string, index: number) {
+  constructor(bar: ChartSpec.Bar, index: number, cs: ChartSpec.ChartSpec) {
     super('bar');
 
-    const borrowX = new X(ca);
-    const borrowY = new Y(ca);
+    const borrowX = new X(cs);
+    const borrowY = new Y(cs);
 
     this.attributes = {
-      seriesName: key,
-      value: row[key],
+      seriesName: bar.key.value.text.value,
+      value: bar.value.value,
       index: index,
-      bargroupName: bargroupName,
+      bargroupName: bar._parent.name.value.text.value,
       xLabel: borrowX.attributes.label,
       xUnit: borrowX.attributes.unit,
       yLabel: borrowY.attributes.label,

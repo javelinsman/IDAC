@@ -1,10 +1,10 @@
-import { ChartAccent, ItemsTarget } from '../chart-accent/chart-accent';
 import { Tag } from './tag';
+import * as ChartSpec from '../chart-spec/chart-spec';
 
 export class Legend extends Tag {
-  constructor(ca: ChartAccent) {
+  constructor(cs: ChartSpec.ChartSpec) {
     super('legend');
-    this.children = ca.chart.yColumns.map((item, index) => new Item(item, index));
+    this.children = cs.legend.items.value.map((item, index) => new Item(item, index));
 
     this.attributes = {
       numItems: this.children.length,
@@ -19,11 +19,11 @@ export class Legend extends Tag {
 
 export class Item extends Tag {
 
-  constructor(item: string, index: number) {
+  constructor(item: ChartSpec.Item, index: number) {
     super('item');
 
     this.attributes = {
-      item: item,
+      item: item.text.value,
       index: index,
     };
 
