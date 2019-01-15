@@ -70,7 +70,7 @@ export class NavigateComponent implements OnInit {
   getElementSiblingIndex(id: number) {
     const element = this.getElement(id);
     const parent = this.getElement(element.parentId);
-    return parent.children.indexOf(element);
+    return parent.children().indexOf(element);
   }
 
 
@@ -81,7 +81,7 @@ export class NavigateComponent implements OnInit {
       this.keyboardEventName = eventName;
       this.description.keyboardEventName = eventName;
       speak(this.description.describe(this.currentElement()));
-      if (this.currentElement().children) {
+      if (this.currentElement().children()) {
         beep_detect();
       }
     }
@@ -107,18 +107,18 @@ export class NavigateComponent implements OnInit {
     if (!parent || parent._id === 0) {
       return false;
     }
-    const element_index = parent.children.indexOf(element);
+    const element_index = parent.children().indexOf(element);
     parent['_bookmark'] = element_index;
     this.setFocus(parent._id);
   }
 
   moveToChild() {
     const element = this.currentElement();
-    if (!element.children) {
+    if (!element.children().length) {
       return false;
     }
     const bookmark = element._bookmark ? element._bookmark : 0;
-    const child = element.children[bookmark];
+    const child = element.children()[bookmark];
     this.setFocus(child._id);
   }
 
@@ -150,9 +150,9 @@ export class NavigateComponent implements OnInit {
     if (!parent) {
       return false;
     }
-    const element_index = parent.children.indexOf(element);
-    if (element_index + 1 < parent.children.length) {
-      const nextSibling = parent.children[element_index + 1];
+    const element_index = parent.children().indexOf(element);
+    if (element_index + 1 < parent.children().length) {
+      const nextSibling = parent.children()[element_index + 1];
       this.setFocus(nextSibling._id);
     } else {
       return false;
@@ -167,9 +167,9 @@ export class NavigateComponent implements OnInit {
     if (!parent) {
       return;
     }
-    const element_index = parent.children.indexOf(element);
+    const element_index = parent.children().indexOf(element);
     if (element_index - 1 >= 0) {
-      const prevSibling = parent.children[element_index - 1];
+      const prevSibling = parent.children()[element_index - 1];
       this.setFocus(prevSibling._id);
     } else {
       return false;
@@ -201,27 +201,27 @@ export class NavigateComponent implements OnInit {
   }
 
   moveToTitle() {
-    this.setFocus(this.getElement(0).children[0]._id);
+    this.setFocus(this.getElement(0).children()[0]._id);
   }
 
   moveToXAxis() {
-    this.setFocus(this.getElement(0).children[2]._id);
+    this.setFocus(this.getElement(0).children()[2]._id);
   }
 
   moveToYAxis() {
-    this.setFocus(this.getElement(0).children[1]._id);
+    this.setFocus(this.getElement(0).children()[1]._id);
   }
 
   moveToLegend() {
-    this.setFocus(this.getElement(0).children[3]._id);
+    this.setFocus(this.getElement(0).children()[3]._id);
   }
 
   moveToMarks() {
-    this.setFocus(this.getElement(0).children[4]._id);
+    this.setFocus(this.getElement(0).children()[4]._id);
   }
 
   moveToAnnotations() {
-    this.setFocus(this.getElement(0).children[5]._id);
+    this.setFocus(this.getElement(0).children()[5]._id);
   }
 
   moveToNextDataPoint() {
@@ -254,7 +254,7 @@ export class NavigateComponent implements OnInit {
   }
 
   getAllBars(seriesIndex) {
-    return this.getAllBargroups().map(d => d.children[seriesIndex]);
+    return this.getAllBargroups().map(d => d.children()[seriesIndex]);
   }
 
   getAllBargroups() {
@@ -272,7 +272,7 @@ export class NavigateComponent implements OnInit {
       const bargroups = this.getAllBargroups();
       const maximumGroupIndex: number = bargroups
         .map((bargroup, i) =>
-          [bargroup.children.reduce((a, b) => a + b.attributes.value, 0), i])
+          [bargroup.children().reduce((a, b) => a + b.attributes.value, 0), i])
         .reduce((a, b) => a[0] > b[0] ? a : b)[1];
       this.setFocus(bargroups[maximumGroupIndex]._id);
       this.description.queryAnswer = 'This is a bargroup with the highest sum:';
@@ -290,7 +290,7 @@ export class NavigateComponent implements OnInit {
       const bargroups = this.getAllBargroups();
       const minimumGroupIndex: number = bargroups
         .map((bargroup, i) =>
-          [bargroup.children.reduce((a, b) => a + b.attributes.value, 0), i])
+          [bargroup.children().reduce((a, b) => a + b.attributes.value, 0), i])
         .reduce((a, b) => a[0] < b[0] ? a : b)[1];
       this.setFocus(bargroups[minimumGroupIndex]._id);
       this.description.queryAnswer = 'This is a bargroup with the smallest sum:';
@@ -306,7 +306,7 @@ export class NavigateComponent implements OnInit {
     } else {
       const bargroups = this.getAllBargroups();
       const sum_bargroups = bargroups.map((bargroup, i) =>
-          bargroup.children.reduce((a, b) => a + b.attributes.value, 0))
+          bargroup.children().reduce((a, b) => a + b.attributes.value, 0))
           .reduce((a, b) => a + b);
       this.description.queryAnswer = `The average of the sum of each bargroup is ${
         Math.round(sum_bargroups / bargroups.length * 10) / 10}. `;
@@ -327,7 +327,7 @@ export class NavigateComponent implements OnInit {
     } else {
       const bargroups = this.getAllBargroups();
       const reduced_bargroups = bargroups
-        .map(bargroup => bargroup.children.reduce((a, b) => a + b.attributes.value, 0));
+        .map(bargroup => bargroup.children().reduce((a, b) => a + b.attributes.value, 0));
       if (isAscendingArray(reduced_bargroups)) {
         this.description.queryAnswer = 'The sum of each bargroup is sorted in ascending order.';
       } else if (isDescendingArray(reduced_bargroups)) {

@@ -5,16 +5,31 @@ import { Legend } from './legend';
 import { Marks } from './marks';
 import { Annotations } from './annotations';
 import { ChartSpec } from '../chart-spec/chart-spec';
+import { Tag } from './tag';
 
-export class ChartDescription {
+export class ChartDescription extends Tag {
     tagname: 'graph';
-    children: [ Title, Y ]; // , Y, X, Legend, Marks, Annotations ];
+    children: () => Tag[];
+
+    title: Title;
+    y: Y;
+    x: X;
+    legend: Legend;
+    marks: Marks;
+    annotations: Annotations;
 
     constructor(cs: ChartSpec) {
-      this.children = [
-        new Title(cs),
-        new Y(cs),
-        // new X(cs),
+      super('graph');
+      this.title = new Title(cs);
+      this.y = new Y(cs);
+      this.x = new X(cs);
+      // this.legend = new Legend(cs);
+      // is.marks = new Marks(cs);
+      // is.annotations = new Annotations(cs);
+      this.children = () => [
+        this.title,
+        this.y,
+        this.x
         // new Legend(cs),
         // new Marks(cs),
         // new Annotations(cs),
@@ -24,17 +39,19 @@ export class ChartDescription {
     flattenedTags() {
       let idCount = 0;
       const tags = [];
-      function assignId(tag) {
-        tag['_id'] = idCount++;
+      function assignId(tag: Tag) {
+        tag._id = idCount++;
         tags.push(tag);
-        if (tag['children']) {
-          tag['children'].forEach(childTag => {
+        console.log(tag);
+        if (tag.children()) {
+          tag.children().forEach(childTag => {
             childTag['parentId'] = tag['_id'];
             assignId(childTag);
           });
         }
       }
       assignId(this);
+      console.log(this);
       return tags;
     }
 }

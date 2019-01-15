@@ -3,10 +3,11 @@ import { ChartDescription } from './chart-description';
 export class Tag {
   public static descriptionRule = '';
 
+  _id?: number;
   tagname: string;
-  children?: Tag[];
   descriptionRule: string;
   attributes: any;
+  children: () => Tag[] = () => null;
 
   constructor(tagname: string) {
     this.tagname = tagname;
