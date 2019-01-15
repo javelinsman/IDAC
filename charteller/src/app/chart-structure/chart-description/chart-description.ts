@@ -8,7 +8,7 @@ import { ChartSpec } from '../chart-spec/chart-spec';
 
 export class ChartDescription {
     tagname: 'graph';
-    children: [ Title, Y, X, Legend, Marks ]; // , Y, X, Legend, Marks, Annotations ];
+    children: [ Title, Y, X, Legend, Marks, Annotations ];
 
     constructor(cs: ChartSpec) {
       this.children = [
@@ -17,7 +17,7 @@ export class ChartDescription {
         new X(cs),
         new Legend(cs),
         new Marks(cs),
-        // new Annotations(cs),
+        new Annotations(cs),
       ];
     }
 

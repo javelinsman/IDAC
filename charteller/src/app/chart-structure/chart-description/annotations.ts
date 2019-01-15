@@ -1,13 +1,22 @@
 import { ChartAccent, Annotation, ItemsTarget, RangeTarget } from '../chart-accent/chart-accent';
 import { Tag } from './tag';
 import { Marks } from './marks';
+import * as ChartSpec from '../chart-spec/chart-spec';
 
 export class Annotations extends Tag {
-  constructor(ca: ChartAccent) {
+  constructor(cs: ChartSpec.ChartSpec) {
     super('annotations');
-    this.children = ca.annotations.annotations
-      .filter(annotation => !annotation.target_inherit)
-      .map(annotation => convertToAnnotation(annotation, ca.annotations.annotations, ca));
+    this.children = [
+      ...cs.annotations.highlights.value.map(highlight => {
+        return new Highlight(highlight, cs);
+      }),
+      ...cs.annotations.coordinateLines.value.map(coordinateLine => {
+        return new CoordinateLine(coordinateLine, cs);
+      }),
+      ...cs.annotations.coordinateRanges.value.map(coordinateRange => {
+        return new CoordinateRange(coordinateRange, cs);
+      })
+    ];
 
     this.attributes = {
       numAnnotations: this.children.length,
@@ -19,153 +28,118 @@ export class Annotations extends Tag {
   }
 }
 
-function convertToAnnotation(annotation: Annotation, annotations: Annotation[], ca: ChartAccent) {
-  if (annotation.target.type === 'range') {
-    if (annotation.target.range.startsWith('range')) {
-      return new CoordinateRange(annotation, annotations, ca);
-    } else {
-      return new CoordinateLine(annotation, annotations, ca);
-    }
-  } else {
-    return new Highlight(annotation, ca);
-  }
-}
-
 export class Highlight extends Tag {
-
-  makeHighlightInfo(ca: ChartAccent): void {
-    const descriptionRule = [];
-
-    const itemLabel = this.annotation.components.find(d => d.type === 'item-label');
-    const highlight = this.annotation.components.find(d => d.type === 'highlight');
-    const trendline = this.annotation.components.find(d => d.type === 'trendline');
-
-    this.attributes.itemLabel = '';
-    if (itemLabel.visible) {
-      this.attributes.itemLabel = 'Item labels are marked on them.';
-    }
-    this.attributes.highlight = '';
-    if (highlight.visible) {
-      const isEmphasized = highlight.style.fill.value < 0 || highlight.style.stroke_width > 0;
-      const isDeemphasized = highlight.style.fill.value > 0 && highlight.style.stroke_width <= 0;
-      if (isEmphasized) {
-        this.attributes.highlight = 'They are highlighted.';
-      } else if (isDeemphasized) {
-        this.attributes.highlight = 'They are de-emphasized.';
-      }
-    }
-    this.attributes.trendline = '';
-    if (trendline.visible) {
-      this.attributes.trendline = 'A trendline is drawn.';
-      /*
-      const data = ca.dataset.rows.
-      const increase = Math.round(10 * (data[data.length - 1] - data[0])) / 10;
-      if (increase > 0) {
-        this.attributes.trendline += `전체 기간 동안 ${increase}만큼 상승했습니다. `;
-      } else {
-        this.attributes.trendline += `전체 기간 동안 ${-increase}만큼 하락했습니다. `;
-      }
-      */
-    }
-  }
-
-  makeTargetDescription(ca: ChartAccent): void {
-    const targets = [];
-    this.attributes.numTargets = 0;
-    (this.annotation.target as ItemsTarget).items.forEach(item => {
-      const series = +item.elements.slice(1) - 2;
-      const borrowMarks = new Marks(ca);
-      const seriesName = borrowMarks.children[0].children[series].attributes.seriesName;
-      const indices = item.items.map(itemString => JSON.parse(itemString)[2]);
-      targets.push(`${indices.length === borrowMarks.children.length ? 'all bars' : `${indices.join(', ')}-th position`} in ${seriesName}`);
-      this.attributes.numTargets += indices.length;
-    });
-    this.attributes.targetLocations = targets.join(', and ');
-  }
-
-  constructor(protected annotation: Annotation, ca: ChartAccent) {
+  constructor(protected highlight: ChartSpec.Highlight, cs: ChartSpec.ChartSpec) {
     super('highlight');
-    this.makeTargetDescription(ca);
-    this.makeHighlightInfo(ca);
+    this.attributes = {
+      itemLabel: highlight.itemLabel ? 'Item labels are marked on them' : '',
+      highlight: highlight.highlight ? 'They are highlighted' : '',
+      trendline: highlight.trendline ? 'A trend line is drawn' : '',
+      numTargets: highlight.target.value.size,
+      targetLocations: Array.from(highlight.target.value).sort().map(bar => bar._foreignRepr()).join(', ')
+    };
     this.setDescriptionRule([
       'The annotation on $(numTargets) bar\'s on $(targetLocations).',
-      '$(highlight)',
-      '$(itemLabel)',
-      '$(trendline)',
+      '$(highlight).',
+      '$(itemLabel).',
+      '$(trendline).',
     ].join(' '));
   }
 }
 
 export class CoordinateRange extends Tag {
-  constructor(private annotation: Annotation, annotations: Annotation[], ca: ChartAccent) {
+  constructor(private coordinateRange: ChartSpec.CoordinateRange, cs: ChartSpec.ChartSpec) {
     super('coordinateRange');
 
-    this.attributes.axis = (annotation.target as RangeTarget).axis === 'E0' ? 'x' : 'y';
-    this.makeRangeInfo();
+    this.attributes = {
+      axis: coordinateRange.target.value._foreignRepr(),
+      label: coordinateRange.label.value,
+      rangeStart: coordinateRange.rangeStart.value,
+      rangeEnd: coordinateRange.rangeEnd.value,
+      relationalHighlights: coordinateRange.relationalHighlights.value,
+    };
 
-    const label = annotation.components.find(d => d.type === 'label');
-    this.attributes.label = label.visible ? label.text : '';
+    this.children = coordinateRange.relationalHighlights.value
+      .map(relationalHighlight => new RelationalHighlightRange(relationalHighlight, cs));
 
     this.setDescriptionRule([
       'The range from $(rangeStart) to $(rangeEnd) on $(axis) axis are marked: $(label)'
     ].join(' '));
-
-    const relatedAnnotations = annotations.filter(_annotation =>
-        _annotation.target._id === annotation.target._id && _annotation.target_inherit);
-    this.children = relatedAnnotations
-      .map(relatedAnnotation => new RelationalHighlight(relatedAnnotation, ca));
-  }
-
-  makeRangeInfo() {
-    const range = (this.annotation.target as RangeTarget).range;
-    const [rangeStart, rangeEnd] = JSON.parse(
-      '[' + range.slice(6, -1).split(',').slice(0, 2).join(',') + ']');
-    this.attributes.rangeStart = rangeStart;
-    this.attributes.rangeEnd = rangeEnd;
   }
 }
 
 export class CoordinateLine extends Tag {
-  constructor(private annotation: Annotation, annotations: Annotation[], ca: ChartAccent) {
-    super('coordinateRange');
-    this.attributes.axis = (annotation.target as RangeTarget).axis === 'E0' ? 'x' : 'y';
-    this.attributes.orientation = this.attributes.axis === 'x' ? 'vertical' : 'horizontal';
+  constructor(private coordinateLine: ChartSpec.CoordinateLine, cs: ChartSpec.ChartSpec) {
+    super('coordinateLine');
+    this.attributes = {
+      axis: coordinateLine.target.value._foreignRepr(),
+      label: coordinateLine.label.value,
+      range: coordinateLine.range.value,
+      relationalHighlights: coordinateLine.relationalHighlights.value,
+    };
+    this.children = coordinateLine.relationalHighlights.value
+      .map(relationalHighlight => new RelationalHighlightLine(relationalHighlight, cs));
 
-    const label = annotation.components.find(d => d.type === 'label');
-    this.attributes.label = label.visible ? label.text : '';
-
-    this.makeRangeInfo();
     this.setDescriptionRule([
-      'The point at $(point) on $(axis) axis are marked with $(orientation) line: $(label)'
+      'The point at $(range) on $(axis) axis are marked with $(orientation) line: $(label)'
     ].join(' '));
-
-    const relatedAnnotations = annotations.filter(_annotation =>
-        _annotation.target._id === annotation.target._id && _annotation.target_inherit);
-    this.children = relatedAnnotations
-      .map(relatedAnnotation => new RelationalHighlight(relatedAnnotation, ca));
   }
-
-  makeRangeInfo() {
-    const range = (this.annotation.target as RangeTarget).range;
-    this.attributes.point = +range;
-  }
-
 }
 
 
-export class RelationalHighlight extends Highlight {
-  constructor(annotation: Annotation, ca: ChartAccent) {
-    super(annotation, ca);
-    this.tagname = 'relationalHighlight';
+export class RelationalHighlightLine extends Tag {
+  constructor(highlight: ChartSpec.RelationalHighlightLine, cs: ChartSpec.ChartSpec) {
+    super('relationalHighlightLine');
+    const targets = cs.marks.bargroups.value.map(bargroup => bargroup.bars.value).reduce((a, b) => [...a, ...b])
+      .filter(bar => highlight.mode.value === 'below'
+        ? bar.value.value < highlight._parent.range.value
+        : bar.value.value >= highlight._parent.range.value);
+    this.attributes = {
+      itemLabel: highlight.itemLabel ? 'Item labels are marked on them' : '',
+      highlight: highlight.highlight ? 'They are highlighted' : '',
+      trendline: highlight.trendline ? 'A trend line is drawn' : '',
+      numTargets: targets.length,
+      mode: highlight.mode.value,
+      range: highlight._parent.range.value,
+      axis: highlight._parent.target.value._foreignRepr(),
+      label: highlight._parent.label.value,
+      // TODO: select series
+    };
+    this.descriptionRule = [
+      'Bars $(mode) the point $(range) of $(axis) axis.',
+      'There are $(numTargets) bars selected.',
+      '$(itemLabel).',
+      '$(highlight).',
+      '$(trendline).',
+    ].join(' ');
   }
+}
 
-  makeTargetDescription(ca: ChartAccent) {
-    const mode = this.annotation.target_inherit.mode;
-    const serieses = this.annotation.target_inherit.serieses.map(series =>
-      +series.slice(1) - 2);
-    const lineOrRange = (this.annotation.target as RangeTarget).range.startsWith('range') ? 'the range' : 'the line';
-
-    this.attributes.numTargets = 0;
-    this.attributes.targetLocations = `Bars ${mode} ${lineOrRange} in ${serieses.join(', ')}-th serieses`;
+export class RelationalHighlightRange extends Tag {
+  constructor(highlight: ChartSpec.RelationalHighlightRange, cs: ChartSpec.ChartSpec) {
+    super('relationalHighlightLine');
+    const targets = cs.marks.bargroups.value.map(bargroup => bargroup.bars.value).reduce((a, b) => [...a, ...b])
+      .filter(bar => highlight.mode.value === 'between'
+        ? (+highlight._parent.rangeStart.value <= bar.value.value && bar.value.value <= +highlight._parent.rangeEnd.value)
+        : (bar.value.value < +highlight._parent.rangeStart.value || +highlight._parent.rangeEnd.value < bar.value.value));
+    this.attributes = {
+      itemLabel: highlight.itemLabel ? 'Item labels are marked on them' : '',
+      highlight: highlight.highlight ? 'They are highlighted' : '',
+      trendline: highlight.trendline ? 'A trend line is drawn' : '',
+      numTargets: targets.length,
+      mode: highlight.mode.value,
+      rangeStart: highlight._parent.rangeStart.value,
+      rangeEnd: highlight._parent.rangeEnd.value,
+      axis: highlight._parent.target.value._foreignRepr(),
+      label: highlight._parent.label.value,
+      // TODO: select series
+    };
+    this.descriptionRule = [
+      'Bars $(mode) the range between $(rangeStart) and $(rangeEnd) of $(axis) axis.',
+      'There are $(numTargets) bars selected.',
+      '$(itemLabel).',
+      '$(highlight).',
+      '$(trendline).',
+    ].join(' ');
   }
 }

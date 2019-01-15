@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
 import { ChartDescription } from '../chart-structure/chart-description/chart-description';
+import { NavigateComponent } from '../navigate/navigate.component';
 
 @Component({
   selector: 'app-make-chart',
@@ -11,6 +12,8 @@ export class MakeChartComponent implements OnInit {
 
   chartSpec: ChartSpec;
   chartDescription: ChartDescription;
+
+  @ViewChild(NavigateComponent) NavigateComponent: NavigateComponent;
 
   constructor() { }
 
@@ -33,8 +36,17 @@ export class MakeChartComponent implements OnInit {
         bar.value.value =  2 * i + j + 1;
       });
     });
+    this.chartSpec.annotations.addHighlights.value();
+    this.chartSpec.annotations.addCoordinateLine.value();
+    this.chartSpec.annotations.addCoordinateRange.value();
 
     this.chartDescription = new ChartDescription(this.chartSpec);
+  }
+
+  renderAgain() {
+    this.chartDescription = new ChartDescription(this.chartSpec);
+    this.NavigateComponent.info = this.chartDescription;
+    this.NavigateComponent.ngOnInit();
   }
 
 }
