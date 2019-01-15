@@ -12,7 +12,7 @@ export class Legend extends Tag {
     };
 
     this.setDescriptionRule([
-      '$(num_children) legend items: $(list_children)',
+      '$(numItems) legend items: $(listOfItems)',
     ].join(' '));
   }
 }
