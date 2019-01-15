@@ -39,6 +39,7 @@ export class ChartSpec {
                 return bargroup;
             })
         };
+        this.annotations.clear();
     }
 
 }
@@ -187,6 +188,9 @@ export class Bar {
         type: 'input',
         value: 0
     };
+    _foreignRepr() {
+        return `${this._parent.name.value.text.value}:${this.key.value.text.value}`;
+    }
 }
 
 export class Annotations {
@@ -234,6 +238,11 @@ export class Annotations {
         description: 'Add new coordinate range'
     };
 
+    clear() {
+        this.highlights.value = [];
+        this.coordinateLines.value = [];
+        this.coordinateRanges.value = [];
+    }
 
 }
 
@@ -241,8 +250,11 @@ export class Highlight {
     constructor(private _root: ChartSpec, private _parent: Annotations) {}
     _tagname = 'Highlight';
     target = {
-        type: 'foreign',
-        value: [] as Bar[]
+        type: 'foreign-multiselect',
+        candidates: this._root.marks.bargroups.value
+            .map(bargroup => bargroup.bars.value)
+            .reduce((a, b) => [...a, ...b], []),
+        value: new Set() as Set<Bar>
     };
     itemLabel = {
         type: 'input',
