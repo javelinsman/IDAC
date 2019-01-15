@@ -284,8 +284,9 @@ export class Highlight {
     };
     trendline = {
         type: 'input-select',
-        candidates: ['on', 'off'],
-        value: 'on'
+        // candidates: ['on', 'off'],
+        candidates: ['off'],
+        value: 'off'
     };
     label = {
         type: 'input',
@@ -306,8 +307,9 @@ export class CoordinateRange {
     _tagname = 'CoordinateRange';
     target = {
         type: 'foreign-select',
-        candidates: [this._root.x, this._root.y],
-        value: this._root.x,
+        // candidates: [this._root.x, this._root.y],
+        candidates: [this._root.y],
+        value: this._root.y,
     };
     rangeStart = {
         type: 'input',
@@ -349,8 +351,9 @@ export class CoordinateLine {
     _tagname = 'CoordinateLine';
     target = {
         type: 'foreign-select',
-        candidates: [this._root.x, this._root.y],
-        value: this._root.x,
+        // candidates: [this._root.x, this._root.y],
+        candidates: [this._root.y],
+        value: this._root.y,
     };
     range = {
         type: 'input',
@@ -398,8 +401,9 @@ export class RelationalHighlightRange {
     };
     trendline = {
         type: 'input-select',
-        candidates: ['on', 'off'],
-        value: 'on'
+        // candidates: ['on', 'off'],
+        candidates: ['off'],
+        value: 'off'
     };
     mode = {
         type: 'input-select',
@@ -431,8 +435,9 @@ export class RelationalHighlightLine {
     };
     trendline = {
         type: 'input-select',
-        candidates: ['on', 'off'],
-        value: 'on'
+        // candidates: ['on', 'off'],
+        candidates: ['off'],
+        value: 'off'
     };
     mode = {
         type: 'input-select',
