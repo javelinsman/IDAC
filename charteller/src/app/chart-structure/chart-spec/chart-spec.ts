@@ -383,7 +383,8 @@ export class RelationalHighlightRange {
         value: true
     };
     mode = {
-        type: 'input',
+        type: 'input-select',
+        candidates: ['between', 'outside'],
         value: 'between' as 'between' | 'outside'
     };
     delete = {
@@ -412,7 +413,8 @@ export class RelationalHighlightLine {
         value: true
     };
     mode = {
-        type: 'input',
+        type: 'input-select',
+        candidates: ['below', 'above'],
         value: 'below' as 'below' | 'above'
     };
     delete = {
