@@ -39,7 +39,6 @@ export class ChartSpec {
                 return bargroup;
             })
         };
-        this.annotations.clear();
     }
 
 }
@@ -86,8 +85,9 @@ export class X {
     addChild = {
         type: 'addFunction',
         value: () => {
-        this.ticks.value.push(new Tick(this._root, this));
-        this._root.update();
+            this.ticks.value.push(new Tick(this._root, this));
+            this._root.update();
+            this._root.annotations.clear();
         },
         description: 'Add new tick'
     };
@@ -106,8 +106,9 @@ export class Tick {
     delete = {
         type: 'deleteFunction',
         value: () => {
-        this._parent.ticks.value.splice(this._parent.ticks.value.indexOf(this), 1);
-        this._root.update();
+            this._parent.ticks.value.splice(this._parent.ticks.value.indexOf(this), 1);
+            this._root.update();
+            this._root.annotations.clear();
         }
     };
     _foreignRepr() {
@@ -129,8 +130,9 @@ export class Legend {
     addChild = {
         type: 'addFunction',
         value: () => {
-        this.items.value.push(new Item(this._root, this));
-        this._root.update();
+            this.items.value.push(new Item(this._root, this));
+            this._root.update();
+            this._root.annotations.clear();
         },
         description: 'Add new item'
     };
@@ -146,8 +148,9 @@ export class Item {
     delete = {
         type: 'deleteFunction',
         value: () => {
-        this._parent.items.value.splice(this._parent.items.value.indexOf(this), 1);
-        this._root.update();
+            this._parent.items.value.splice(this._parent.items.value.indexOf(this), 1);
+            this._root.update();
+            this._root.annotations.clear();
         }
     };
     _foreignRepr() {
