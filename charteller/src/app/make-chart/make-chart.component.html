@@ -1,12 +1,17 @@
 <div class="container">
-  <div class="row my-2">
-    <app-chart-view class="mx-auto" [chartSpec]="chartSpec"></app-chart-view>
-  </div>
   <div class="row">
     <app-chart-spec [chartSpec]="chartSpec"></app-chart-spec>
-    <button (click)="renderAgain()">Render</button>
+  </div>
+  <div class="row my-4 ">
+    <button class="btn btn-info w-100" (click)="renderAgain()">Render</button>
   </div>
   <div class="row">
-    <app-navigate [info]="chartDescription"></app-navigate>
+    <div class="col-md-6">
+      <app-chart-view class="mx-auto" [chartSpec]="chartSpec"></app-chart-view>
+    </div>
+    <div class="col-md-6">
+      <app-navigate [info]="chartDescription"></app-navigate>
+    </div>
+
   </div>
 </div>
