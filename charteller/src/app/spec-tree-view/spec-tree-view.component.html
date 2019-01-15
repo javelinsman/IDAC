@@ -6,10 +6,10 @@
   <div *ngFor="let attr of tag | keyvalue">
     <div *ngIf="!attr.key.startsWith('_')">
       <div *ngIf="attr.value.type === 'input'">
-        {{ attr.key }}: <input class="border" style="width: 100%" value="{{ attr.value.value }}">
+        {{ attr.key }}: <input class="border" style="width: 100%" [(ngModel)]="attr.value.value">
       </div>
       <div *ngIf="attr.value.type === 'foreign'">
-        {{ attr.key }}: <p>It is foreign</p>
+        {{ attr.key }}: <p>{{ attr.value.value._foreignRepr() }}</p>
       </div>
     </div>
   </div>

@@ -7,6 +7,38 @@ export class ChartSpec {
     annotations = new Annotations(this);
 
     update() {
+        const ticks = this.x.ticks.value;
+        const items = this.legend.items.value;
+        const prev_values = {};
+        this.marks.bargroups.value.forEach(bargroup => {
+            const tick = bargroup.name.value.text.value;
+            prev_values[tick] = {};
+            bargroup.bars.value.forEach(bar => {
+                const item = bar.key.value.text.value;
+                prev_values[tick][item] = bar.value.value;
+            });
+        });
+        this.marks.bargroups = {
+            type: 'children',
+            value: ticks.map(tick => {
+                const bargroup = new Bargroup(this, this.marks);
+                bargroup.name.value = tick;
+                bargroup.bars = {
+                    type: 'children',
+                    value: items.map(item => {
+                        const bar = new Bar(this, bargroup);
+                        bar.key.value = item;
+                        if (prev_values[tick.text.value] && prev_values[tick.text.value][item.text.value]) {
+                            bar.value.value = prev_values[tick.text.value][item.text.value];
+                        } else {
+                            bar.value.value = 0;
+                        }
+                        return bar;
+                    })
+                };
+                return bargroup;
+            })
+        };
     }
 
 }
@@ -71,6 +103,9 @@ export class Tick {
         this._root.update();
         }
     };
+    _foreignRepr() {
+        return this.text.value;
+    }
 }
 
 export class Legend {
@@ -108,6 +143,9 @@ export class Item {
         this._root.update();
         }
     };
+    _foreignRepr() {
+        return this.text.value;
+    }
 }
 
 export class Marks {
