@@ -26,7 +26,7 @@ export class KeyboardInputComponent implements OnInit {
   attachKeyboardListener() {
     const _this = this;
     function keyboardListener(eventObject, key, event) {
-      if (document.activeElement.tagName === 'TEXTAREA') {
+      if (['TEXTAREA', 'INPUT'].includes(document.activeElement.tagName)) {
         if (key === 'escape') {
           eventObject.preventDefault();
           (document.activeElement as any).blur();
