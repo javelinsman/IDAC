@@ -1,18 +1,18 @@
-<div class="border ml-{{indent}} p-2">
-  <h5>
-    {{ tag._tagname }}
-    <button class="btn btn-danger btn-sm" *ngIf="tag.delete" (click)="tag.delete.value()">X</button>
-  </h5>
-  <div *ngFor="let attr of tag | keyvalue">
+<div class="container-fluid border ml-{{indent}} p-2">
+  <div class="d-flex w-100">
+    <h5>{{ tag._tagname }}</h5>
+    <button class="btn btn-danger btn-sm ml-1 mb-1" *ngIf="tag.delete" (click)="tag.delete.value()">X</button>
+  </div>
+  <div class="mb-1" *ngFor="let attr of tag | keyvalue">
     <div *ngIf="!attr.key.startsWith('_')">
-      <div *ngIf="attr.value.type === 'input'">
-        {{ attr.key }}: <input class="border" style="width: 100%" [(ngModel)]="attr.value.value">
+      <div class="d-flex" *ngIf="attr.value.type === 'input'">
+        {{ attr.key }}: <input class="border ml-1" style="width: 100%" [(ngModel)]="attr.value.value">
       </div>
       <div *ngIf="attr.value.type === 'input-select'">
-        {{ attr.key }}: {{ attr.value.value }}
+        {{ attr.key }}:
         <div class="btn-group" role="group">
           <button *ngFor="let cand of attr.value.candidates"
-            class="btn btn-secondary"
+            class="btn btn-sm {{ attr.value.value === cand ? 'btn-primary' : 'btn-secondary' }}"
             (click)="attr.value.value = cand">
             {{ cand }}
           </button>
@@ -20,26 +20,28 @@
       </div>
 
       <div *ngIf="attr.value.type === 'foreign'">
-        {{ attr.key }}: <p>{{ attr.value.value._foreignRepr() }}</p>
+        {{ attr.key }}: {{ attr.value.value._foreignRepr() }}
       </div>
       <div *ngIf="attr.value.type === 'foreign-select'">
-        {{ attr.key }}: {{ attr.value.value._foreignRepr() }}
+        {{ attr.key }}:
         <div class="btn-group" role="group">
           <button *ngFor="let cand of attr.value.candidates"
-            class="btn btn-secondary"
+            class="btn btn-sm {{ attr.value.value === cand ? 'btn-primary' : 'btn-secondary' }}"
             (click)="attr.value.value = cand">
             {{ cand._foreignRepr() }}
           </button>
         </div>
       </div>
-      <div *ngIf="attr.value.type === 'foreign-multiselect'">
-        {{ attr.key }}: <p *ngFor="let selected of attr.value.value">{{ selected._foreignRepr() }}</p>
-        <div class="btn-group" role="group">
-          <button *ngFor="let cand of attr.value.candidates"
-            class="btn btn-secondary"
-            (click)="attr.value.value.has(cand) ? attr.value.value.delete(cand) : attr.value.value.add(cand)">
-            {{ cand._foreignRepr() }}
-          </button>
+      <div class="w-100" *ngIf="attr.value.type === 'foreign-multiselect'">
+        {{ attr.key }}:
+        <div class="row" role="group">
+          <div class="col-12">
+            <button *ngFor="let cand of attr.value.candidates"
+              class="btn btn-sm {{ attr.value.value.has(cand) ? 'btn-primary' : 'btn-secondary' }}"
+              (click)="attr.value.value.has(cand) ? attr.value.value.delete(cand) : attr.value.value.add(cand)">
+              {{ cand._foreignRepr() }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -49,7 +51,7 @@
       <div *ngIf="attr.value.type === 'children'">
         <div>{{ attr.key }}:</div>
         <div *ngFor="let childTag of attr.value.value">
-          <app-spec-tree-view [tag]="childTag" [indent]="indent + 2"></app-spec-tree-view>
+          <app-spec-tree-view [tag]="childTag" [indent]="indent + 1"></app-spec-tree-view>
         </div>
       </div>
     </div>
@@ -57,7 +59,7 @@
   <div *ngFor="let attr of tag | keyvalue">
     <div *ngIf="!attr.key.startsWith('_')">
       <div *ngIf="attr.value.type === 'addFunction'">
-        <button class="btn btn-light" (click)="attr.value.value()">{{ attr.value.description }}</button>
+        <button class="btn btn-sm btn-light" (click)="attr.value.value()">{{ attr.value.description }}</button>
       </div>
     </div>
   </div>
