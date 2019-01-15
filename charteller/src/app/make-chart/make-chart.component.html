@@ -3,9 +3,9 @@
     <app-chart-spec [chartSpec]="chartSpec"></app-chart-spec>
   </div>
   <div class="row my-4 ">
-    <button class="btn btn-info w-100" (click)="renderAgain()">Render</button>
+    <button class="btn btn-info w-100" (click)="render()">Render</button>
   </div>
-  <div class="row">
+  <div *ngIf="isRendered" class="row">
     <div class="col-md-4">
       <app-chart-view class="mx-auto" [chartSpec]="chartSpec"></app-chart-view>
     </div>

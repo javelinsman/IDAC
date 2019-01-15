@@ -12,6 +12,7 @@ export class MakeChartComponent implements OnInit {
 
   chartSpec: ChartSpec;
   chartDescription: ChartDescription;
+  isRendered = false;
 
   @ViewChild(NavigateComponent) NavigateComponent: NavigateComponent;
 
@@ -39,11 +40,10 @@ export class MakeChartComponent implements OnInit {
     this.chartSpec.annotations.addHighlights.value();
     this.chartSpec.annotations.addCoordinateLine.value();
     this.chartSpec.annotations.addCoordinateRange.value();
-
-    this.chartDescription = new ChartDescription(this.chartSpec);
   }
 
-  renderAgain() {
+  render() {
+    this.isRendered = true;
     this.chartDescription = new ChartDescription(this.chartSpec);
     this.NavigateComponent.info = this.chartDescription;
     this.NavigateComponent.ngOnInit();
