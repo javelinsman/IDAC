@@ -1,6 +1,6 @@
 <div class="container">
+  <app-keyboard-input (keyFire)="keyFire($event)"></app-keyboard-input>
   <app-description [info]="info" [tags]="tags"
     [element]="currentElement()" [getElement]="getElement"
     [keyboardEventName]="keyboardEventName"></app-description>
-  <app-keyboard-input (keyFire)="keyFire($event)"></app-keyboard-input>
 </div>

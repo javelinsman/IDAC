@@ -58,8 +58,10 @@
   </div>
   <div *ngFor="let attr of tag | keyvalue">
     <div *ngIf="!attr.key.startsWith('_')">
-      <div *ngIf="attr.value.type === 'addFunction'">
-        <button class="btn btn-sm btn-light" (click)="attr.value.value()">{{ attr.value.description }}</button>
+      <div class="row my-1" *ngIf="attr.value.type === 'addFunction'">
+        <div class="col-12">
+          <button class="btn btn-sm btn-light" (click)="attr.value.value()">{{ attr.value.description }}</button>
+        </div>
       </div>
     </div>
   </div>

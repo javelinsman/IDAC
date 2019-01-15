@@ -267,7 +267,7 @@ export class NavigateComponent implements OnInit {
       const bars = this.getAllBars(this.getElementSiblingIndex(element._id));
       const maximum_bar = bars.reduce((a, b) => a.attributes.value > b.attributes.value ? a : b);
       this.setFocus(maximum_bar._id);
-      this.description.queryAnswer = 'This is the highest bar in series $(key):';
+      this.description.queryAnswer = 'This is the highest bar in series $(seriesName):';
     } else {
       const bargroups = this.getAllBargroups();
       const maximumGroupIndex: number = bargroups
@@ -285,7 +285,7 @@ export class NavigateComponent implements OnInit {
       const bars = this.getAllBars(this.getElementSiblingIndex(element._id));
       const minimum_bar = bars.reduce((a, b) => a.attributes.value < b.attributes.value ? a : b);
       this.setFocus(minimum_bar._id);
-      this.description.queryAnswer = 'This is the smallest bar in series $(key):';
+      this.description.queryAnswer = 'This is the smallest bar in series $(seriesName):';
     } else {
       const bargroups = this.getAllBargroups();
       const minimumGroupIndex: number = bargroups
@@ -302,7 +302,7 @@ export class NavigateComponent implements OnInit {
     if (element.tagname === 'bar') {
       const bars = this.getAllBars(this.getElementSiblingIndex(element._id));
       const bars_sum = bars.reduce((a, b) => a + b.attributes.value, 0);
-      this.description.queryAnswer = `The average of ${element.attributes.key} is ${Math.round(bars_sum / bars.length * 10) / 10}. `;
+      this.description.queryAnswer = `The average of ${element.attributes.seriesName} is ${Math.round(bars_sum / bars.length * 10) / 10}. `;
     } else {
       const bargroups = this.getAllBargroups();
       const sum_bargroups = bargroups.map((bargroup, i) =>
@@ -318,11 +318,11 @@ export class NavigateComponent implements OnInit {
     if (element.tagname === 'bar') {
       const bars = this.getAllBars(this.getElementSiblingIndex(element._id)).map(d => d.attributes.value);
       if (isAscendingArray(bars)) {
-        this.description.queryAnswer = `${element.attributes.key} is sorted in ascending order.`;
+        this.description.queryAnswer = `${element.attributes.seriesName} is sorted in ascending order.`;
       } else if (isDescendingArray(bars)) {
-        this.description.queryAnswer = `${element.attributes.key} is sorted in descending order.`;
+        this.description.queryAnswer = `${element.attributes.seriesName} is sorted in descending order.`;
       } else {
-        this.description.queryAnswer = `${element.attributes.key} is not sorted.`;
+        this.description.queryAnswer = `${element.attributes.seriesName} is not sorted.`;
       }
     } else {
       const bargroups = this.getAllBargroups();
