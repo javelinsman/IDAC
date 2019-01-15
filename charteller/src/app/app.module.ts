@@ -11,6 +11,8 @@ import { DescriptionComponent } from './description/description.component';
 import { KeyboardInputComponent } from './keyboard-input/keyboard-input.component';
 import { ChartSpecComponent } from './chart-spec/chart-spec.component';
 import { SpecTreeViewComponent } from './spec-tree-view/spec-tree-view.component';
+import { ChartViewComponent } from './chart-view/chart-view.component';
+import { MakeChartComponent } from './make-chart/make-chart.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { SpecTreeViewComponent } from './spec-tree-view/spec-tree-view.component
     DescriptionComponent,
     KeyboardInputComponent,
     ChartSpecComponent,
-    SpecTreeViewComponent
+    SpecTreeViewComponent,
+    ChartViewComponent,
+    MakeChartComponent
   ],
   imports: [
     BrowserModule,
