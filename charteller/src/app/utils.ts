@@ -58,6 +58,8 @@ export function speak(message, korean = false) {
     const msg = new SpeechSynthesisUtterance(message);
     if (korean) {
       msg.lang = 'ko-KR';
+    } else {
+      msg.lang = 'en-US';
     }
     msg.rate = 2.5;
     window.speechSynthesis.speak(msg);
