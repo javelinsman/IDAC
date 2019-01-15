@@ -63,6 +63,9 @@ export class Y  {
         type: 'input',
         value: ''
     };
+    _foreignRepr() {
+        return this._tagname;
+    }
 }
 export class X {
     constructor(private _root: ChartSpec) {}
@@ -87,6 +90,9 @@ export class X {
         },
         description: 'Add new tick'
     };
+    _foreignRepr() {
+        return this._tagname;
+    }
 }
 
 export class Tick {
@@ -268,8 +274,9 @@ export class CoordinateRange {
     constructor(private _root: ChartSpec, private _parent: Annotations) {}
     _tagname = 'CoordinateRange';
     target = {
-        type: 'foreign',
-        value: null as X | Y
+        type: 'foreign-select',
+        candidates: [this._root.x, this._root.y],
+        value: this._root.x,
     };
     rangeStart = {
         type: 'input',
@@ -310,8 +317,9 @@ export class CoordinateLine {
     constructor(private _root: ChartSpec, private _parent: Annotations) {}
     _tagname = 'CoordinateLine';
     target = {
-        type: 'foreign',
-        value: null as X | Y
+        type: 'foreign-select',
+        candidates: [this._root.x, this._root.y],
+        value: this._root.x,
     };
     range = {
         type: 'input',
