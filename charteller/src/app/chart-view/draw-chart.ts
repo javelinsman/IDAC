@@ -27,21 +27,23 @@ function react_on_hover(selection) {
 }
 
 export function render(spec, svgId) {
-    const svg_width = spec.meta.width ? spec.meta.width : 700,
-        svg_height = spec.meta.height ? spec.meta.height : 550,
-        margin = {
-            top: svg_height * 0.15,
-            left: svg_width * 0.1,
-            right: spec.meta.colors ? svg_width * 0.3 : svg_width * 0.1,
-            bottom: svg_height * 0.15
-        },
-        width = svg_width - margin.left - margin.right,
-        height = svg_height - margin.top - margin.bottom;
+    const svg = d3.select(svgId);
+    const svgWidth = parseFloat(svg.style('width'));
+    const legendHeight = 30 * (Object.keys(spec.meta.colors).length + 1);
+    const margin = {
+            top: 50,
+            left: 50,
+            right: 50,
+            bottom: 100,
+        };
+    const svgHeight = margin.top + svgWidth + margin.bottom + legendHeight;
+    const width = svgWidth - margin.left - margin.right,
+        height = svgHeight - margin.top - margin.bottom - legendHeight;
 
-    const svg = d3.select(svgId).attr('width', svg_width).attr('height', svg_height);
+    svg.attr('width', svgWidth).attr('height', svgHeight);
     svg.selectAll('*').remove();
 
-    const view_background = svg.append('rect').attr('transform', translate(margin.left, margin.top))
+    const viewBackground = svg.append('rect').attr('transform', translate(margin.left, margin.top))
         .attr('width', width).attr('height', height)
         .style('fill', 'rgb(230, 230, 230)');
 
@@ -58,7 +60,7 @@ export function render(spec, svgId) {
     });
 
     const title = svg.append('text')
-        .attr('transform', translate(svg_width / 2, 50))
+        .attr('transform', translate(svgWidth / 2, 35))
         .style('text-anchor', 'middle')
         .style('font-size', '150%')
         .style('font-weight', 'bold')
@@ -94,14 +96,16 @@ export function render(spec, svgId) {
     };
 
     const x_title = svg.append('text')
-        .attr('transform', translate(svg_width / 2, margin.top + height + 2 * margin.bottom / 3))
+        .attr('transform', translate(svgWidth / 2, margin.top + height + 2 * margin.bottom / 3))
         .style('text-anchor', 'middle')
+        .style('font-size', '100%')
         .text(title_and_unit(spec.meta.x_title, spec.meta.x_unit))
         .call(react_on_hover);
 
     const y_title = svg.append('text')
-        .attr('transform', translate(margin.left / 2, svg_height / 2) + ' rotate(-90)')
+        .attr('transform', translate(margin.left / 3, margin.top + height / 2) + ' rotate(-90)')
         .style('text-anchor', 'middle')
+        .style('font-size', '100%')
         .text(title_and_unit(spec.meta.y_title, spec.meta.y_unit))
         .call(react_on_hover);
 
@@ -207,18 +211,19 @@ export function render(spec, svgId) {
     }
     if (spec.meta.colors) {
         const legend = svg.append('g')
-            .attr('transform', translate(margin.left + width + 50, margin.top));
+            .attr('transform', translate(margin.left, margin.top + height + margin.bottom));
         const legend_items = legend.selectAll('g').data(Object.entries(spec.meta.colors), (d: any) => d[0])
             .enter().append('g')
-                .attr('transform', (d, i) => translate(0, 50 * i))
+                .attr('transform', (d, i) => translate(0, 30 * i))
                 .call(react_on_hover);
         legend_items
             .append('rect')
-                .attr('width', 30).attr('height', 30)
+                .attr('width', 20).attr('height', 20)
+                .attr('transform', translate(5, 5))
                 .style('fill', (d: any) => d[1]);
         legend_items
             .append('text')
-                .attr('transform', translate(50, 15))
+                .attr('transform', translate(40, 15))
                 .attr('height', 30)
                 .text(d => d[0]);
     }
