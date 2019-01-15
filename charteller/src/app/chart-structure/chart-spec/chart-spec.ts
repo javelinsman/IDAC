@@ -173,6 +173,11 @@ export class Marks {
         type: 'children',
         value: [] as Bargroup[]
     };
+    type = {
+        type: 'input-select',
+        candidates: ['grouped', 'stacked'],
+        value: 'grouped'
+    };
 }
 
 export class Bargroup {

@@ -56,23 +56,40 @@ export class ChartViewComponent implements OnInit, AfterViewInit {
           // height: 400,
       },
       marks: cs.marks.bargroups.value.map(bargroup => {
-        const marksSpec = {
-          type: 'grouped_bar',
-          key: bargroup.name.value.text.value,
-          groups: bargroup.bars.value.map(bar => {
-            const barSpec = {
-              type: 'bar',
-              bar: {
+        if (cs.marks.type.value === 'grouped') {
+          const marksSpec = {
+            type: 'grouped_bar',
+            key: bargroup.name.value.text.value,
+            groups: bargroup.bars.value.map(bar => {
+              const barSpec = {
+                type: 'bar',
+                bar: {
+                  value: bar.value.value,
+                  color: {
+                    name: bar.key.value.text.value
+                  }
+                }
+              };
+              return barSpec;
+            })
+          };
+          return marksSpec;
+        } else {
+          const marksSpec = {
+            type: 'stacked_bar',
+            key: bargroup.name.value.text.value,
+            stacks: bargroup.bars.value.map(bar => {
+              const stackSpec = {
                 value: bar.value.value,
                 color: {
                   name: bar.key.value.text.value
                 }
-              }
-            };
-            return barSpec;
-          })
-        };
-        return marksSpec;
+              };
+              return stackSpec;
+            })
+          };
+          return marksSpec;
+        }
       })
     };
     return drawSpec;
