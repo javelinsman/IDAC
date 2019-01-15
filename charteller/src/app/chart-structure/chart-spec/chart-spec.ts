@@ -52,7 +52,8 @@ export class X {
         value: () => {
         this.ticks.value.push(new Tick(this._root, this));
         this._root.update();
-        }
+        },
+        description: 'Add new tick'
     };
 }
 
@@ -88,7 +89,8 @@ export class Legend {
         value: () => {
         this.items.value.push(new Item(this._root, this));
         this._root.update();
-        }
+        },
+        description: 'Add new item'
     };
 }
 
@@ -158,6 +160,37 @@ export class Annotations {
         type: 'children',
         value: [] as CoordinateLine[]
     };
+
+    addHighlights = {
+        type: 'addFunction',
+        value: () => {
+            this.highlights.value.push(
+                new Highlight(this._root, this)
+            );
+        },
+        description: 'Add new highlight'
+    };
+    addCoordinateLine = {
+        type: 'addFunction',
+        value: () => {
+            this.coordinateLines.value.push(
+                new CoordinateLine(this._root, this)
+            );
+        },
+        description: 'Add new coordinate line'
+    };
+
+    addCoordinateRange = {
+        type: 'addFunction',
+        value: () => {
+            this.coordinateRanges.value.push(
+                new CoordinateRange(this._root, this)
+            );
+        },
+        description: 'Add new coordinate range'
+    };
+
+
 }
 
 export class Highlight {
@@ -208,6 +241,15 @@ export class CoordinateRange {
         type: 'children',
         value: [] as RelationalHighlightRange[]
     };
+    addRelationalHighlight = {
+        type: 'addFunction',
+        value: () => {
+            this.relationalHighlights.value.push(
+                new RelationalHighlightRange(this._root, this)
+            );
+        },
+        description: 'Add new relational highlight'
+    };
 }
 
 export class CoordinateLine {
@@ -226,8 +268,17 @@ export class CoordinateLine {
         value: ''
     };
     relationalHighlights = {
-        type: 'foreign',
+        type: 'children',
         value: [] as RelationalHighlightLine[]
+    };
+    addRelationalHighlight = {
+        type: 'addFunction',
+        value: () => {
+            this.relationalHighlights.value.push(
+                new RelationalHighlightLine(this._root, this)
+            );
+        },
+        description: 'Add new relational highlight'
     };
 }
 

@@ -1,9 +1,9 @@
-<div class="border {{indent ? 'ml-'+indent : ''}}">
-  <h3>{{ tag._tagname }}</h3>
+<div class="border ml-{{indent}} p-2">
+  <h5>{{ tag._tagname }}</h5>
   <div *ngFor="let attr of tag | keyvalue">
     <div *ngIf="!attr.key.startsWith('_')">
       <div *ngIf="attr.value.type === 'input'">
-        {{ attr.key }}: <input style="width: 100%" value="{{ attr.value.value }}">
+        {{ attr.key }}: <input class="border" style="width: 100%" value="{{ attr.value.value }}">
       </div>
       <div *ngIf="attr.value.type === 'foreign'">
         {{ attr.key }}: <p>It is foreign</p>
@@ -23,7 +23,7 @@
   <div *ngFor="let attr of tag | keyvalue">
     <div *ngIf="!attr.key.startsWith('_')">
       <div *ngIf="attr.value.type === 'addFunction'">
-        <button (click)="attr.value.value()">+ Add New Child</button>
+        <button (click)="attr.value.value()">{{ attr.value.description }}</button>
       </div>
     </div>
   </div>
