@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Chart } from '../chart';
-import { ChartService } from '../chart.service';
+import { ChartSpecExampleService } from '../chart-spec-example.service';
+import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
 
 @Component({
   selector: 'app-index',
@@ -9,16 +9,19 @@ import { ChartService } from '../chart.service';
 })
 export class IndexComponent implements OnInit {
 
-  charts: Chart[];
+  examples: ChartSpec[];
 
-  constructor(private chartService: ChartService) { }
+  constructor(private chartSpecExampleService: ChartSpecExampleService) {}
 
   ngOnInit() {
     this.getCharts();
   }
 
   getCharts(): void {
-    this.charts = this.chartService.getCharts();
+    this.chartSpecExampleService.getExamples()
+      .subscribe(data => {
+        this.examples = data;
+      });
   }
 
 }

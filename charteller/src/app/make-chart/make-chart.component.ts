@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
 import { ChartDescription } from '../chart-structure/chart-description/chart-description';
 import { NavigateComponent } from '../navigate/navigate.component';
+import { ChartSpecExampleService } from '../chart-spec-example.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-make-chart',
@@ -16,30 +18,21 @@ export class MakeChartComponent implements OnInit {
 
   @ViewChild(NavigateComponent) NavigateComponent: NavigateComponent;
 
-  constructor() { }
+  constructor(
+      private chartSpecExampleService: ChartSpecExampleService,
+      private route: ActivatedRoute
+    ) { }
 
   ngOnInit() {
-    this.chartSpec = new ChartSpec();
-
-    this.chartSpec.title.title.value = 'Honolulu';
-    this.chartSpec.y.label.value = 'y label';
-    this.chartSpec.y.unit.value = 'y unit';
-    this.chartSpec.x.label.value = 'x label';
-    this.chartSpec.x.unit.value = 'x unit';
-    this.chartSpec.legend.addChild.value();
-    this.chartSpec.legend.addChild.value();
-    this.chartSpec.legend.items.value.forEach((item, i) => item.text.value = `Series ${i + 1}`);
-    this.chartSpec.x.addChild.value();
-    this.chartSpec.x.addChild.value();
-    this.chartSpec.x.ticks.value.forEach((tick, i) => tick.text.value = `Group ${i + 1}`);
-    this.chartSpec.marks.bargroups.value.forEach((bargroup, i) => {
-      bargroup.bars.value.forEach((bar, j) => {
-        bar.value.value =  2 * i + j + 1;
-      });
-    });
-    this.chartSpec.annotations.addHighlights.value();
-    this.chartSpec.annotations.addCoordinateLine.value();
-    this.chartSpec.annotations.addCoordinateRange.value();
+    const exampleId = this.route.snapshot.paramMap.get('exampleId');
+    if (exampleId) {
+      this.chartSpecExampleService.getExamples()
+        .subscribe(data => {
+          this.chartSpec = data[+exampleId];
+        });
+    } else {
+      this.chartSpec = new ChartSpec();
+    }
   }
 
   render() {

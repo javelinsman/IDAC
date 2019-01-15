@@ -153,7 +153,6 @@ export function render(spec, svgId) {
                 ? d3.color(spec.meta.colors[d.bar.bar.color.name]).brighter(0.4)
                 : spec.meta.colors[d.bar.bar.color.name])
             .each(function(d: any, i) {
-                console.log(d.bar.bar);
                 if (!d.bar.bar.label) {
                     return;
                 }

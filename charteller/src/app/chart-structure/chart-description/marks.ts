@@ -46,6 +46,7 @@ export class Bargroup extends Tag {
       yLabel: borrowY.attributes.label,
       yUnit: borrowY.attributes.unit,
     };
+    console.log(this.children.map(d => d.attributes.value));
 
     this.setDescriptionRule([
       'A group of bar in $(name).',
@@ -64,7 +65,7 @@ export class Bar extends Tag {
 
     this.attributes = {
       seriesName: bar.key.value.text.value,
-      value: bar.value.value,
+      value: +bar.value.value,
       index: index,
       bargroupName: bar._parent.name.value.text.value,
       xLabel: borrowX.attributes.label,
