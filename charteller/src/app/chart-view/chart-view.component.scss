@@ -3,14 +3,14 @@ svg {
 }
 
 .grid line {
-    stroke: grey;
+    stroke: red;
     stroke-opacity: 0.7;
     shape-rendering: crispEdges;
     z-index: -1;
 }
 
 .grid path {
-stroke-width: 0;
+    stroke-width: 0;
 }
 
 .focused {

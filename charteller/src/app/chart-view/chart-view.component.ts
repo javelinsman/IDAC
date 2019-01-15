@@ -19,10 +19,10 @@ export class ChartViewComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    const svgId = `#chart-view-svg-${this.chartId}`;
+    const drawSpec = this.makeDrawSpec();
+    render(drawSpec, svgId);
     setInterval(() => {
-      const svgId = `#chart-view-svg-${this.chartId}`;
-      const drawSpec = this.makeDrawSpec();
-      console.log(drawSpec);
       render(drawSpec, svgId);
     }, 1000);
   }
@@ -34,7 +34,7 @@ export class ChartViewComponent implements OnInit, AfterViewInit {
           title: cs.title.title.value,
           x_title: cs.x.label.value,
           y_title: cs.y.label.value,
-          gridline: 'grid',
+          gridline: 'horizontal',
           colors: cs.legend.items.value.map((item, i) => {
             const itemName = item.text.value;
             const itemColor = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'][i];
@@ -43,9 +43,9 @@ export class ChartViewComponent implements OnInit, AfterViewInit {
             accum[itemPair.itemName] = itemPair.itemColor;
             return accum;
           }, {}),
-          // width: 1000,
-          // height: 800,
           x_tick_rotate: '30',
+          width: 700,
+          height: 300,
       },
       marks: cs.marks.bargroups.value.map(bargroup => {
         const marksSpec = {
