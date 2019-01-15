@@ -216,6 +216,14 @@ export class Highlight {
         type: 'input',
         value: ''
     };
+    delete = {
+        type: 'deleteFunction',
+        value: () => {
+        this._parent.highlights.value.splice(this._parent.highlights.value.indexOf(this), 1);
+        this._root.update();
+        }
+    };
+
 }
 
 export class CoordinateRange {
@@ -250,6 +258,14 @@ export class CoordinateRange {
         },
         description: 'Add new relational highlight'
     };
+    delete = {
+        type: 'deleteFunction',
+        value: () => {
+        this._parent.coordinateRanges.value.splice(this._parent.coordinateRanges.value.indexOf(this), 1);
+        this._root.update();
+        }
+    };
+
 }
 
 export class CoordinateLine {
@@ -280,6 +296,14 @@ export class CoordinateLine {
         },
         description: 'Add new relational highlight'
     };
+    delete = {
+        type: 'deleteFunction',
+        value: () => {
+        this._parent.coordinateLines.value.splice(this._parent.coordinateLines.value.indexOf(this), 1);
+        this._root.update();
+        }
+    };
+
 }
 
 export class RelationalHighlightRange {
@@ -301,6 +325,14 @@ export class RelationalHighlightRange {
         type: 'input',
         value: 'between' as 'between' | 'outside'
     };
+    delete = {
+        type: 'deleteFunction',
+        value: () => {
+        this._parent.relationalHighlights.value.splice(this._parent.relationalHighlights.value.indexOf(this), 1);
+        this._root.update();
+        }
+    };
+
 }
 
 export class RelationalHighlightLine {
@@ -322,4 +354,12 @@ export class RelationalHighlightLine {
         type: 'input',
         value: 'below' as 'below' | 'above'
     };
+    delete = {
+        type: 'deleteFunction',
+        value: () => {
+        this._parent.relationalHighlights.value.splice(this._parent.relationalHighlights.value.indexOf(this), 1);
+        this._root.update();
+        }
+    };
+
 }

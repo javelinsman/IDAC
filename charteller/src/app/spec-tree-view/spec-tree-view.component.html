@@ -1,5 +1,8 @@
 <div class="border ml-{{indent}} p-2">
-  <h5>{{ tag._tagname }}</h5>
+  <h5>
+    {{ tag._tagname }}
+    <button class="btn btn-danger btn-sm" *ngIf="tag.delete" (click)="tag.delete.value()">X</button>
+  </h5>
   <div *ngFor="let attr of tag | keyvalue">
     <div *ngIf="!attr.key.startsWith('_')">
       <div *ngIf="attr.value.type === 'input'">
@@ -23,7 +26,7 @@
   <div *ngFor="let attr of tag | keyvalue">
     <div *ngIf="!attr.key.startsWith('_')">
       <div *ngIf="attr.value.type === 'addFunction'">
-        <button (click)="attr.value.value()">{{ attr.value.description }}</button>
+        <button class="btn btn-light" (click)="attr.value.value()">{{ attr.value.description }}</button>
       </div>
     </div>
   </div>
