@@ -65,7 +65,7 @@ export function speak(message, korean = false) {
     } else {
       msg.lang = 'en-US';
     }
-    msg.rate = 2.5;
+    msg.rate = 1;
     window.speechSynthesis.speak(msg);
   }
 }
