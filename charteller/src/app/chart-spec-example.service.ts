@@ -57,25 +57,38 @@ export class ChartSpecExampleService {
 
   example2() {
     const cs = new ChartSpec();
-    cs.title.title.value = 'Honolulu';
-    cs.y.label.value = 'y label';
-    cs.y.unit.value = 'y unit';
-    cs.x.label.value = 'x label';
-    cs.x.unit.value = 'x unit';
+    cs.title.title.value = 'Suicide Rate among OECD Countries';
+    cs.y.label.value = 'people';
+    cs.y.unit.value = 'per 0.1 million';
+    cs.x.label.value = '';
+    cs.x.unit.value = '';
     cs.legend.addChild.value();
-    cs.legend.addChild.value();
-    cs.legend.items.value.forEach((item, i) => item.text.value = `Series ${i + 1}`);
-    cs.x.addChild.value();
-    cs.x.addChild.value();
-    cs.x.ticks.value.forEach((tick, i) => tick.text.value = `Group ${i + 1}`);
+    cs.legend.items.value[0].text.value = 'Suicide Rate';
+    for (let _ = 0; _ < 12; _++) {
+      cs.x.addChild.value();
+    }
+    const countries = [
+      'Korea', 'Japan', 'Slovenia', 'Hungary', 'Belgium',
+      'Poland', 'Findland', 'Czech', 'New Zealand', 'Austrailia',
+      'Sweden', 'Denmark'
+    ];
+    cs.x.ticks.value.forEach((tick, i) => tick.text.value = `${countries[i]}`);
+    const data = [
+      25.8, 18.3, 18.2, 17.6, 16.3, 14.3, 13.6, 13.1,
+      12.7, 12.5, 11, 10.3
+    ];
     cs.marks.bargroups.value.forEach((bargroup, i) => {
-      bargroup.bars.value.forEach((bar, j) => {
-        bar.value.value =  2 * i + j + 1;
-      });
+      bargroup.bars.value[0].value.value = data[i];
     });
     cs.annotations.addHighlights.value();
     cs.annotations.addCoordinateLine.value();
-    cs.annotations.addCoordinateRange.value();
+    cs.annotations.highlights.value[0].target.value = new Set([cs.marks.bargroups.value[0].bars.value[0]]);
+    const at = cs.annotations.coordinateLines.value[0];
+    at.range.value = 13;
+    at.label.value = 'Average: 13';
+    at.addRelationalHighlight.value();
+    at.relationalHighlights.value[0].mode.value = 'above';
+    at.relationalHighlights.value[0].itemLabel.value = 'off';
     return cs;
   }
 

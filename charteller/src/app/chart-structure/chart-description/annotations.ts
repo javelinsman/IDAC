@@ -56,14 +56,15 @@ export class CoordinateRange extends Tag {
       label: coordinateRange.label.value,
       rangeStart: coordinateRange.rangeStart.value,
       rangeEnd: coordinateRange.rangeEnd.value,
-      relationalHighlights: coordinateRange.relationalHighlights.value,
+      relationalHighlights: coordinateRange.relationalHighlights.value.length ? 'There are underlying relational annotations' : '',
     };
 
     this.children = coordinateRange.relationalHighlights.value
       .map(relationalHighlight => new RelationalHighlightRange(relationalHighlight, cs));
 
     this.setDescriptionRule([
-      'The range from $(rangeStart) to $(rangeEnd) on $(axis) axis are marked: $(label)'
+      'The range from $(rangeStart) to $(rangeEnd) on $(axis) axis are marked: $(label).',
+      '$(relationalHighlights).'
     ].join(' '));
   }
 }
@@ -75,13 +76,14 @@ export class CoordinateLine extends Tag {
       axis: coordinateLine.target.value._foreignRepr(),
       label: coordinateLine.label.value,
       range: coordinateLine.range.value,
-      relationalHighlights: coordinateLine.relationalHighlights.value,
+      relationalHighlights: coordinateLine.relationalHighlights.value.length ? 'There are underlying relational annotations' : '',
     };
     this.children = coordinateLine.relationalHighlights.value
       .map(relationalHighlight => new RelationalHighlightLine(relationalHighlight, cs));
 
     this.setDescriptionRule([
-      'The point at $(range) on $(axis) axis are marked with $(orientation) line: $(label)'
+      'The point at $(range) on $(axis) axis are marked with $(orientation) line: $(label).',
+      '$(relationalHighlights).'
     ].join(' '));
   }
 }
@@ -105,13 +107,13 @@ export class RelationalHighlightLine extends Tag {
       label: highlight._parent.label.value,
       // TODO: select series
     };
-    this.descriptionRule = [
+    this.setDescriptionRule([
       'Bars $(mode) the point $(range) of $(axis) axis.',
       'There are $(numTargets) bars selected.',
       '$(itemLabel).',
       '$(highlight).',
       '$(trendline).',
-    ].join(' ');
+    ].join(' '));
   }
 }
 
@@ -134,12 +136,12 @@ export class RelationalHighlightRange extends Tag {
       label: highlight._parent.label.value,
       // TODO: select series
     };
-    this.descriptionRule = [
+    this.setDescriptionRule([
       'Bars $(mode) the range between $(rangeStart) and $(rangeEnd) of $(axis) axis.',
       'There are $(numTargets) bars selected.',
       '$(itemLabel).',
       '$(highlight).',
       '$(trendline).',
-    ].join(' ');
+    ].join(' '));
   }
 }
