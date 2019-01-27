@@ -21,5 +21,40 @@ export const CHARTS: Chart[] = [
         src_png: './assets/chart_3_eng.png',
         src_json: './assets/chart_3_eng.json',
         src_svg: './assets/chart_3_eng.svg'
-    }
+    },
+    {
+        id: 4,
+        title: 'Average Monthly Temperature',
+        src_png: './assets/chart_4_eng.png',
+        src_json: './assets/chart_4_eng.json',
+        src_svg: './assets/chart_4_eng.svg'
+    },
+    {
+        id: 5,
+        title: 'Beijing Air Quality',
+        src_png: './assets/chart_5_eng.png',
+        src_json: './assets/chart_5_eng.json',
+        src_svg: './assets/chart_5_eng.svg'
+    },
+    {
+        id: 6,
+        title: 'Iris Flowers',
+        src_png: './assets/chart_6_eng.png',
+        src_json: './assets/chart_6_eng.json',
+        src_svg: './assets/chart_6_eng.svg'
+    },
+    {
+        id: 7,
+        title: 'Gapminder',
+        src_png: './assets/chart_7_eng.png',
+        src_json: './assets/chart_7_eng.json',
+        src_svg: './assets/chart_7_eng.svg'
+    },
+    {
+        id: 8,
+        title: 'Average Monthly Temperature',
+        src_png: './assets/chart_8_eng.png',
+        src_json: './assets/chart_8_eng.json',
+        src_svg: './assets/chart_8_eng.svg'
+    },
 ];
