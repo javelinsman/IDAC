@@ -8,34 +8,31 @@ import { Item } from './legend';
 import { Bar } from './marks';
 import { Tick } from './x';
 
-export class CoordinateRange extends SpecTag {
+export class CoordinateLine extends SpecTag {
     constructor(
         private annotation: ChartAccent.Annotation,
         private annotations: ChartAccent.Annotation[],
         public _root: ChartSpec, public _parent: Annotations
     ) {
-        super('CoordinateRange');
+        super('CoordinateLine');
         this.attributes = {
-            rangeStart: new AttrInput(0),
-            rangeEnd: new AttrInput(0),
+            range: new AttrInput(0),
             targetAxis: new AttrInputSelect(['x', 'y'], 'x'),
             label: new AttrInput(''),
         };
         this.properties = {
             numChildren: () => this.children.length,
-            listOfChildren: () => this.children.map(d => d.foreignRepr()).join(', ')
+            listOfChildren: () => this.children.map(d => d.foreignRepr()).join(', '),
+            orientation: () => this.attributes.targetAxis.value === 'x' ? 'vertical' : 'horizontal',
         };
-        this.children = [] as RelationalHighlightRange[];
+        this.children = [] as RelationalHighlightLine[];
         this.descriptionRule =
-            'The range from $(rangeStart) to $(rangeEnd) on $(targetAxis) axis are marked: $(label)';
+            'The point at $(range) on $(targetAxis) axis are marked with $(orientation) line: $(label)';
     }
     fromChartAccent(ca: ChartAccent.ChartAccent) {
         // rangeStart, rangeEnd
         const range = (this.annotation.target as ChartAccent.RangeTarget).range;
-        const [rangeStart, rangeEnd] = JSON.parse(
-            '[' + range.slice(6, -1).split(',').slice(0, 2).join(',') + ']');
-        this.attributes.rangeStart.value = rangeStart;
-        this.attributes.rangeEnd.value = rangeEnd;
+        this.attributes.range.value = range;
         // label
         const label = this.annotation.components.find(d => d.type === 'label');
         this.attributes.label.value = label.visible ? label.text : '';
@@ -46,7 +43,7 @@ export class CoordinateRange extends SpecTag {
         const relatedAnnotations = this.annotations.filter(_annotation =>
             _annotation.target._id === this.annotation.target._id && _annotation.target_inherit);
         this.children = relatedAnnotations.map(relatedAnnotation => {
-            const relationalHighlight = new RelationalHighlightRange(relatedAnnotation, this._root, this);
+            const relationalHighlight = new RelationalHighlightLine(relatedAnnotation, this._root, this);
             relationalHighlight.fromChartAccent(ca);
             return relationalHighlight;
         });
@@ -54,25 +51,24 @@ export class CoordinateRange extends SpecTag {
     }
 }
 
-export class RelationalHighlightRange extends Highlight {
+export class RelationalHighlightLine extends Highlight {
     constructor(
         annotation: ChartAccent.Annotation,
-        _root: ChartSpec, _parent: CoordinateRange
+        _root: ChartSpec, _parent: CoordinateLine
     ) {
         super(annotation, _root, _parent);
-        this._tagname = 'RelationalHighlightRange';
+        this._tagname = 'RelationalHighlightLine';
         this.attributes = {
             ...this.attributes,
-            targetRelation: new AttrInputSelect(['between', 'outside'], 'between')
+            targetRelation: new AttrInputSelect(['below', 'above'], 'below')
         };
 
         const mode = this.annotation.target_inherit.mode;
-        this.attributes.targetRelation.value = mode.startsWith('between') ? 'between' : 'outside';
+        this.attributes.targetRelation.value = mode.startsWith('below') ? 'below' : 'above';
 
         this.properties = {
             ...this.properties,
-            rangeStart: () => this._parent.properties.rangeStart(),
-            rangeEnd: () => this._parent.properties.rangeEnd(),
+            range: () => this._parent.properties.range(),
         };
 
     }
@@ -84,37 +80,32 @@ export class RelationalHighlightRange extends Highlight {
         seriesIndices.forEach(seriesIndex => {
             const series = this._root.legend.children[seriesIndex];
             const bars = this._root.marks.children.map(bargroup => bargroup.children[seriesIndex]) as Bar[];
-            const rangeStart = this.properties.rangeStart();
-            const rangeEnd = this.properties.rangeEnd();
+            const range = this.properties.range();
             const mode = this.attributes.targetRelation.value;
             let indices: number[];
             if (axis === 'x') {
                 const ticks = this._root.x.children.map((tick, i) => [tick, i]);
-                const rangeStartIndex = ticks.find(([tick, i]: [Tick, number]) => {
-                    return tick.properties.text() === rangeStart;
+                const rangeIndex = ticks.find(([tick, i]: [Tick, number]) => {
+                    return tick.properties.text() === range;
                 })[1] as number;
-                const rangeEndIndex = ticks.find(([tick, i]: [Tick, number]) => {
-                    return tick.properties.text() === rangeEnd;
-                })[1] as number;
+
                 indices = [];
-                if (mode === 'between') {
-                    for (let i = rangeStartIndex; i <= rangeEndIndex; i++) {
+                if (mode === 'below') {
+                    for (let i = 0; i < rangeIndex; i++) {
                         indices.push(i);
                     }
                 } else {
-                    for (let i = 0; i < ticks.length; i++) {
-                        if (i < rangeStartIndex || rangeEndIndex < i) {
-                            indices.push(i);
-                        }
+                    for (let i = rangeIndex; i < ticks.length; i++) {
+                        indices.push(i);
                     }
                 }
             } else {
                 indices = bars.map((bar, i) => [bar, i]).filter(([bar, i]: [Bar, number]) => {
                     const value = bar.properties.value();
-                    if (mode === 'between') {
-                        return rangeStart <= value && value <= rangeEnd;
+                    if (mode === 'below') {
+                        return value < range;
                     } else {
-                        return rangeStart > value || value > rangeEnd;
+                        return range <= value;
                     }
                 }).map(([bar, i]: [Bar, number]) => i);
             }

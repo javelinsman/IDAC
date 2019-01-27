@@ -5,12 +5,13 @@ import { Annotations } from './annotations';
 import { AttrInputSelect, AttrInput } from './attributes';
 import { CoordinateRange } from './coordinate-range';
 import { Item } from './legend';
+import { CoordinateLine } from './coordinate-line';
 
 export class Highlight extends SpecTag {
     constructor(
         protected annotation: ChartAccent.Annotation,
         public _root: ChartSpec,
-        public _parent: Annotations | CoordinateRange
+        public _parent: Annotations | CoordinateRange | CoordinateLine
     ) {
         super('Highlight');
         this.attributes = {
@@ -75,8 +76,7 @@ export class Highlight extends SpecTag {
         const locations = [];
         (this.annotation.target as ChartAccent.ItemsTarget).items.forEach(item => {
           const seriesIndex = +item.elements.slice(1) - 2;
-          const borrowMarks = this._root.marks;
-          const series = borrowMarks.children[0].children[seriesIndex];
+          const series = this._root.legend.children[seriesIndex];
           const indices = item.items.map(itemString => JSON.parse(itemString)[2]);
           locations.push([series, indices]);
         });

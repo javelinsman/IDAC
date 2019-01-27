@@ -3,6 +3,7 @@ import { SpecTag } from './spec-tag';
 import * as ChartAccent from '../chart-accent/chart-accent';
 import { Highlight } from './highlight';
 import { CoordinateRange } from './coordinate-range';
+import { CoordinateLine } from './coordinate-line';
 
 type Annotation = Highlight; // | CoordinateRange | CoordinateLine;
 
@@ -25,7 +26,9 @@ export class Annotations extends SpecTag {
                 coordinateRange.fromChartAccent(ca);
                 return coordinateRange;
             } else {
-                // return new CoordinateLine(annotation, annotations, ca);
+                const coordinateLine = new CoordinateLine(annotation, annotations, this._root, this);
+                coordinateLine.fromChartAccent(ca);
+                return coordinateLine;
             }
         } else {
             const highlight = new Highlight(annotation, this._root, this);
@@ -34,81 +37,3 @@ export class Annotations extends SpecTag {
         }
     }
 }
-
-/*
-
-export class CoordinateLine extends SpecTag {
-    constructor(public _root: ChartSpec, public _parent: Annotations) {}
-    _tagname = 'CoordinateLine';
-    target = {
-        type: 'foreign-select',
-        // candidates: [this._root.x, this._root.y],
-        candidates: [this._root.y],
-        value: this._root.y,
-    };
-    range = {
-        type: 'input',
-        value: 0
-    };
-    label = {
-        type: 'input',
-        value: ''
-    };
-    relationalHighlights = {
-        type: 'children',
-        value: [] as RelationalHighlightLine[]
-    };
-    addRelationalHighlight = {
-        type: 'addFunction',
-        value: () => {
-            this.relationalHighlights.value.push(
-                new RelationalHighlightLine(this._root, this)
-            );
-        },
-        description: 'Add new relational highlight'
-    };
-    delete = {
-        type: 'deleteFunction',
-        value: () => {
-        this._parent.coordinateLines.value.splice(this._parent.coordinateLines.value.indexOf(this), 1);
-        this._root.update();
-        }
-    };
-
-}
-
-
-export class RelationalHighlightLine {
-    constructor(public _root: ChartSpec, public _parent: CoordinateLine) {}
-    _tagname = 'RelationalHighlightLine';
-    itemLabel = {
-        type: 'input-select',
-        candidates: ['on', 'off'],
-        value: 'on'
-    };
-    highlight = {
-        type: 'input-select',
-        candidates: ['on', 'off'],
-        value: 'on'
-    };
-    trendline = {
-        type: 'input-select',
-        // candidates: ['on', 'off'],
-        candidates: ['off'],
-        value: 'off'
-    };
-    mode = {
-        type: 'input-select',
-        candidates: ['below', 'above'],
-        value: 'below' as 'below' | 'above'
-    };
-    delete = {
-        type: 'deleteFunction',
-        value: () => {
-        this._parent.relationalHighlights.value.splice(this._parent.relationalHighlights.value.indexOf(this), 1);
-        this._root.update();
-        }
-    };
-
-}
-*/
