@@ -3,12 +3,12 @@ export interface IAttribute {
 }
 
 export interface IProperty {
-    [key: string]: () => string;
+    [key: string]: () => string | number;
 }
 
 export class AttrInput {
     type = 'input';
-    constructor(public value: string = '') {}
+    constructor(public value: string | number = '') {}
 }
 
 export type Attribute = any;

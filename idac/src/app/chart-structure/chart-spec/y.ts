@@ -23,8 +23,8 @@ export class Y extends SpecTag {
             label: new AttrInput(ca.chart.yLabel.text.split('(')[0].trim()),
             unit: new AttrInput(ca.chart.yLabel.text.split('(')
                 .slice(1).join('(').slice(0, -1).trim()),
-            rangeMax: new AttrInput('' + ca.chart.yScale.max),
-            rangeMin: new AttrInput('' + ca.chart.yScale.min)
+            rangeMax: new AttrInput(ca.chart.yScale.max),
+            rangeMin: new AttrInput(ca.chart.yScale.min)
         };
     }
     _foreignRepr() {

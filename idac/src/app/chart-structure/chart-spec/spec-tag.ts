@@ -8,6 +8,7 @@ export class SpecTag {
 
     attributes: IAttribute = {};
     _properties: IProperty = {};
+    children: SpecTag[];
 
     set properties(properties: IProperty) {
         this._properties = properties;
@@ -42,12 +43,16 @@ export class SpecTag {
         if (args) {
         args.map(d => [d, d.slice(2, -1)])
             .forEach(([arg, strip]) =>
-            description = description.replace(arg,
-                this.properties[strip] ? this.properties[strip]() : 'undefined'
+            description = description.replace(arg, '' +
+                (this.properties[strip] ? this.properties[strip]() : 'undefined')
             ));
         }
         return description;
     }
 
     fromChartAccent(ca: ChartAccent): void {}
+
+    foreignRepr(): string {
+        return this._tagname;
+    }
 }

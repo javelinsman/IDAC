@@ -1,6 +1,7 @@
 import { ChartAccent } from '../chart-accent/chart-accent';
 import { Title } from './title';
 import { Y } from './y';
+import { X, Tick } from './x';
 
 export class ChartSpec {
     title = new Title(this);
@@ -13,6 +14,7 @@ export class ChartSpec {
     fromChartAccent(ca: ChartAccent) {
         this.title.fromChartAccent(ca);
         this.y.fromChartAccent(ca);
+        this.x.fromChartAccent(ca);
     }
 
     update() {
@@ -52,55 +54,6 @@ export class ChartSpec {
     */
     }
 
-}
-
-export class X {
-    constructor(public _root: ChartSpec) {}
-    _tagname = 'X';
-    label = {
-        type: 'input',
-        value: ''
-    };
-    unit = {
-        type: 'input',
-        value: ''
-    };
-    ticks = {
-        type: 'children',
-        value: [] as Tick[]
-    };
-    addChild = {
-        type: 'addFunction',
-        value: () => {
-            this.ticks.value.push(new Tick(this._root, this));
-            this._root.update();
-            this._root.annotations.clear();
-        },
-        description: 'Add new tick'
-    };
-    _foreignRepr() {
-        return this._tagname;
-    }
-}
-
-export class Tick {
-    constructor(public _root: ChartSpec, public _parent: X) {}
-    _tagname = 'Tick';
-    text = {
-        type: 'input',
-        value: ''
-    };
-    delete = {
-        type: 'deleteFunction',
-        value: () => {
-            this._parent.ticks.value.splice(this._parent.ticks.value.indexOf(this), 1);
-            this._root.update();
-            this._root.annotations.clear();
-        }
-    };
-    _foreignRepr() {
-        return this.text.value;
-    }
 }
 
 export class Legend {
@@ -184,7 +137,7 @@ export class Bar {
         value: 0
     };
     _foreignRepr() {
-        return `${this._parent.name.value.text.value}:${this.key.value.text.value}`;
+        // return `${this._parent.name.value.text.value}:${this.key.value.text.value}`;
     }
 }
 
