@@ -7,22 +7,23 @@
     <app-svg-container class="col-4 border" [src]="chart.src_svg"></app-svg-container>
     <div class="col-4 border">
       <div class="card">
-          <div class="card-header d-flex justify-content-between">
-            <h3>Description</h3>
-            <button class="btn btn-sm"
-              (click)="state['description-rule-text-edit'] = !state['description-rule-text-edit']">
-              {{ state['description-rule-text-edit'] ? 'Done' : 'Edit Rule' }}
-            </button>
-          </div>
-          <div class="form-group">
-            <label for="description-rule-textarea">Text</label>
-            <textarea *ngIf="state['description-rule-text-edit']"
-              class="form-control" id="description-rule-textarea" rows="3"></textarea>
-            <p *ngIf="!state['description-rule-text-edit']">Lorem Ipsum</p>
-          </div>
+        <div class="card-header d-flex justify-content-between">
+          <h3>Description</h3>
+          <button class="btn btn-sm"
+            (click)="state['description-rule-text-edit'] = !state['description-rule-text-edit']">
+            {{ state['description-rule-text-edit'] ? 'Done' : 'Edit Rule' }}
+          </button>
         </div>
+        <div class="card-body">
+          <h5 class="card-title">Text</h5>
+          <p class="card-text" *ngIf="!state['description-rule-text-edit']">Lorem Ipsum</p>
+          <textarea *ngIf="state['description-rule-text-edit']"
+            class="form-control" id="description-rule-textarea" rows="3"></textarea>
+        </div>
+      </div>
     </div>
-    <div class="col-4 border"></div>
+    <div class="col-4 border">
+    </div>
   </div>
   <!--
   <div class="row">
