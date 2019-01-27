@@ -21,7 +21,9 @@ export class SpecTag {
 
     propagateAttributes() {
         Object.entries(this.attributes).forEach(([key, value]) => {
-            this._properties[key] = () => value.value;
+            if (!(key in this._properties)) {
+                this._properties[key] = () => value.value;
+            }
         });
     }
 
