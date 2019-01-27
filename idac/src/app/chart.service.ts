@@ -10,6 +10,6 @@ export class ChartService {
   constructor() { }
 
   getCharts(): Chart[] {
-    return CHARTS
+    return CHARTS;
   }
 }
