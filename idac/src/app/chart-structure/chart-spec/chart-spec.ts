@@ -2,6 +2,7 @@ import { ChartAccent } from '../chart-accent/chart-accent';
 import { Title } from './title';
 import { Y } from './y';
 import { X, Tick } from './x';
+import { Legend, Item } from './legend';
 
 export class ChartSpec {
     title = new Title(this);
@@ -15,6 +16,7 @@ export class ChartSpec {
         this.title.fromChartAccent(ca);
         this.y.fromChartAccent(ca);
         this.x.fromChartAccent(ca);
+        this.legend.fromChartAccent(ca);
     }
 
     update() {
@@ -54,48 +56,6 @@ export class ChartSpec {
     */
     }
 
-}
-
-export class Legend {
-    constructor(public _root: ChartSpec) {}
-    _tagname = 'Legend';
-    label = {
-        type: 'input',
-        value: ''
-    };
-    items = {
-        type: 'children',
-        value: [] as Item[]
-    };
-    addChild = {
-        type: 'addFunction',
-        value: () => {
-            this.items.value.push(new Item(this._root, this));
-            this._root.update();
-            this._root.annotations.clear();
-        },
-        description: 'Add new item'
-    };
-}
-
-export class Item {
-    constructor(public _root: ChartSpec, public _parent: Legend) {}
-    _tagname = 'Item';
-    text = {
-        type: 'input',
-        value: ''
-    };
-    delete = {
-        type: 'deleteFunction',
-        value: () => {
-            this._parent.items.value.splice(this._parent.items.value.indexOf(this), 1);
-            this._root.update();
-            this._root.annotations.clear();
-        }
-    };
-    _foreignRepr() {
-        return this.text.value;
-    }
 }
 
 export class Marks {
