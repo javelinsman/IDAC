@@ -1,5 +1,13 @@
 <div class="container-fluid" *ngIf="chart && chartAccent">
-  <app-svg-container [src]="chart.src_svg"></app-svg-container>
+  <div class="row">
+    <div class="col-12 border">
+    </div>
+  </div>
+  <div class="row">
+    <app-svg-container class="col-4 border" [src]="chart.src_svg"></app-svg-container>
+    <div class="col-4 border"></div>
+    <div class="col-4 border"></div>
+  </div>
   <!--
   <div class="row">
     <app-chart-spec [chartSpec]="chartSpec"></app-chart-spec>
