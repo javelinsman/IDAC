@@ -1,4 +1,6 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="chart && chartAccent">
+  <app-svg-container [src]="chart.src_svg"></app-svg-container>
+  <!--
   <div class="row">
     <app-chart-spec [chartSpec]="chartSpec"></app-chart-spec>
   </div>
@@ -16,4 +18,5 @@
   <div class="row my-4">
     <button class="btn btn-light w-100" disabled>Export</button>
   </div>
+  -->
 </div>

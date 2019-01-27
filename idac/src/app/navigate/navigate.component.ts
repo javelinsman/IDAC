@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 import { Chart } from '../chart';
-import { ChartService } from '../chart.service';
+import { ChartExampleService } from '../chart-example.service';
 import { beep_error, beep_detect, speak, isAscendingArray, isDescendingArray } from '../utils';
 import { DescriptionComponent } from '../description/description.component';
 import { ChartDescription } from '../chart-structure/chart-description/chart-description';
@@ -35,7 +35,7 @@ export class NavigateComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private chartService: ChartService,
+    private chartExampleService: ChartExampleService,
     private http: HttpClient
   ) { }
 
