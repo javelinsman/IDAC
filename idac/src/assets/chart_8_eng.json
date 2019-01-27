@@ -1,0 +1,821 @@
+{
+  "dataset": {
+    "columns": [
+      {
+        "name": "Month",
+        "type": "string"
+      },
+      {
+        "name": "Seattle",
+        "type": "number",
+        "format": ".1f"
+      },
+      {
+        "name": "Charlotte",
+        "type": "number",
+        "format": ".1f"
+      },
+      {
+        "name": "Houston",
+        "type": "number",
+        "format": ".1f"
+      },
+      {
+        "name": "Jacksonville",
+        "type": "number",
+        "format": ".1f"
+      },
+      {
+        "name": "NewYork",
+        "type": "number",
+        "format": ".1f"
+      },
+      {
+        "name": "Phoenix",
+        "type": "number",
+        "format": ".1f"
+      },
+      {
+        "name": "Caquetania",
+        "type": "number",
+        "format": ".1f"
+      },
+      {
+        "name": "Chicago",
+        "type": "number",
+        "format": ".1f"
+      },
+      {
+        "name": "Indianapolis",
+        "type": "number",
+        "format": ".1f"
+      },
+      {
+        "name": "Philadelphia",
+        "type": "number",
+        "format": ".1f"
+      }
+    ],
+    "rawFile": "\"Month\",\"Seattle\",\"Charlotte\",\"Houston\",\"Jacksonville\",\"NewYork\",\"Phoenix\",\"Caquetania\",\"Chicago\",\"Indianapolis\",\"Philadelphia\"\n\"Jan\",\"45.3\",\"40.5\",\"50.0\",\"53.5\",\"30.2\",\"58.9\",\"62.3\",\"25.5\",\"25.5\",\"31.2\"\n\"Feb\",\"49.0\",\"37.7\",\"52.9\",\"51.6\",\"24.2\",\"65.8\",\"64.4\",\"18.4\",\"20.4\",\"26.0\"\n\"Mar\",\"50.8\",\"54.4\",\"62.7\",\"65.5\",\"38.4\",\"72.4\",\"68.5\",\"38.3\",\"39.5\",\"39.4\"\n\"Apr\",\"51.6\",\"62.5\",\"72.7\",\"72.3\",\"54.5\",\"74.6\",\"66.1\",\"52.7\",\"54.8\",\"55.6\"\n\"May\",\"59.4\",\"71.9\",\"77.2\",\"74.9\",\"68.8\",\"79.0\",\"64.4\",\"63.7\",\"67.0\",\"70.3\"\n\"Jun\",\"68.0\",\"80.3\",\"82.4\",\"81.0\",\"71.5\",\"94.2\",\"70.8\",\"70.4\",\"72.8\",\"75.1\"\n\"Jul\",\"69.5\",\"77.7\",\"84.0\",\"81.9\",\"76.3\",\"96.7\",\"74.9\",\"72.7\",\"70.4\",\"78.3\"\n\"Aug\",\"69.4\",\"76.6\",\"84.8\",\"82.3\",\"74.7\",\"91.8\",\"75.6\",\"75.7\",\"74.1\",\"75.0\"\n\"Sep\",\"65.1\",\"72.5\",\"80.8\",\"78.0\",\"69.9\",\"89.3\",\"76.8\",\"66.3\",\"65.7\",\"70.8\"\n\"Oct\",\"58.2\",\"63.2\",\"73.0\",\"69.8\",\"59.9\",\"80.2\",\"73.1\",\"55.0\",\"54.5\",\"60.1\"\n\"Nov\",\"46.2\",\"47.5\",\"57.7\",\"57.3\",\"45.5\",\"66.3\",\"66.3\",\"36.6\",\"36.2\",\"45.4\"\n\"Dec\",\"45.5\",\"46.0\",\"57.2\",\"58.4\",\"40.8\",\"58.0\",\"59.3\",\"34.9\",\"33.6\",\"41.3\"\n",
+    "fileName": "temperature.csv",
+    "rows": [
+      {
+        "Month": "Jan",
+        "Seattle": 45.3,
+        "Charlotte": 40.5,
+        "Houston": 50,
+        "Jacksonville": 53.5,
+        "NewYork": 30.2,
+        "Phoenix": 58.9,
+        "Caquetania": 62.3,
+        "Chicago": 25.5,
+        "Indianapolis": 25.5,
+        "Philadelphia": 31.2
+      },
+      {
+        "Month": "Feb",
+        "Seattle": 49,
+        "Charlotte": 37.7,
+        "Houston": 52.9,
+        "Jacksonville": 51.6,
+        "NewYork": 24.2,
+        "Phoenix": 65.8,
+        "Caquetania": 64.4,
+        "Chicago": 18.4,
+        "Indianapolis": 20.4,
+        "Philadelphia": 26
+      },
+      {
+        "Month": "Mar",
+        "Seattle": 50.8,
+        "Charlotte": 54.4,
+        "Houston": 62.7,
+        "Jacksonville": 65.5,
+        "NewYork": 38.4,
+        "Phoenix": 72.4,
+        "Caquetania": 68.5,
+        "Chicago": 38.3,
+        "Indianapolis": 39.5,
+        "Philadelphia": 39.4
+      },
+      {
+        "Month": "Apr",
+        "Seattle": 51.6,
+        "Charlotte": 62.5,
+        "Houston": 72.7,
+        "Jacksonville": 72.3,
+        "NewYork": 54.5,
+        "Phoenix": 74.6,
+        "Caquetania": 66.1,
+        "Chicago": 52.7,
+        "Indianapolis": 54.8,
+        "Philadelphia": 55.6
+      },
+      {
+        "Month": "May",
+        "Seattle": 59.4,
+        "Charlotte": 71.9,
+        "Houston": 77.2,
+        "Jacksonville": 74.9,
+        "NewYork": 68.8,
+        "Phoenix": 79,
+        "Caquetania": 64.4,
+        "Chicago": 63.7,
+        "Indianapolis": 67,
+        "Philadelphia": 70.3
+      },
+      {
+        "Month": "Jun",
+        "Seattle": 68,
+        "Charlotte": 80.3,
+        "Houston": 82.4,
+        "Jacksonville": 81,
+        "NewYork": 71.5,
+        "Phoenix": 94.2,
+        "Caquetania": 70.8,
+        "Chicago": 70.4,
+        "Indianapolis": 72.8,
+        "Philadelphia": 75.1
+      },
+      {
+        "Month": "Jul",
+        "Seattle": 69.5,
+        "Charlotte": 77.7,
+        "Houston": 84,
+        "Jacksonville": 81.9,
+        "NewYork": 76.3,
+        "Phoenix": 96.7,
+        "Caquetania": 74.9,
+        "Chicago": 72.7,
+        "Indianapolis": 70.4,
+        "Philadelphia": 78.3
+      },
+      {
+        "Month": "Aug",
+        "Seattle": 69.4,
+        "Charlotte": 76.6,
+        "Houston": 84.8,
+        "Jacksonville": 82.3,
+        "NewYork": 74.7,
+        "Phoenix": 91.8,
+        "Caquetania": 75.6,
+        "Chicago": 75.7,
+        "Indianapolis": 74.1,
+        "Philadelphia": 75
+      },
+      {
+        "Month": "Sep",
+        "Seattle": 65.1,
+        "Charlotte": 72.5,
+        "Houston": 80.8,
+        "Jacksonville": 78,
+        "NewYork": 69.9,
+        "Phoenix": 89.3,
+        "Caquetania": 76.8,
+        "Chicago": 66.3,
+        "Indianapolis": 65.7,
+        "Philadelphia": 70.8
+      },
+      {
+        "Month": "Oct",
+        "Seattle": 58.2,
+        "Charlotte": 63.2,
+        "Houston": 73,
+        "Jacksonville": 69.8,
+        "NewYork": 59.9,
+        "Phoenix": 80.2,
+        "Caquetania": 73.1,
+        "Chicago": 55,
+        "Indianapolis": 54.5,
+        "Philadelphia": 60.1
+      },
+      {
+        "Month": "Nov",
+        "Seattle": 46.2,
+        "Charlotte": 47.5,
+        "Houston": 57.7,
+        "Jacksonville": 57.3,
+        "NewYork": 45.5,
+        "Phoenix": 66.3,
+        "Caquetania": 66.3,
+        "Chicago": 36.6,
+        "Indianapolis": 36.2,
+        "Philadelphia": 45.4
+      },
+      {
+        "Month": "Dec",
+        "Seattle": 45.5,
+        "Charlotte": 46,
+        "Houston": 57.2,
+        "Jacksonville": 58.4,
+        "NewYork": 40.8,
+        "Phoenix": 58,
+        "Caquetania": 59.3,
+        "Chicago": 34.9,
+        "Indianapolis": 33.6,
+        "Philadelphia": 41.3
+      }
+    ],
+    "type": "csv",
+    "sampleFileName": "Average Monthly Temperature"
+  },
+  "chart": {
+    "type": "line-chart",
+    "title": {
+      "text": "Average Monthly Temperature",
+      "fontFamily": "Roboto",
+      "fontSize": 20,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "width": 700,
+    "height": 400,
+    "xColumn": "Month",
+    "yColumns": [
+      "Caquetania",
+      "Houston"
+    ],
+    "xLabel": {
+      "text": "",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "yLabel": {
+      "text": "Temperature (F)",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "xScale": {
+      "type": "categorical"
+    },
+    "yScale": {
+      "min": 40,
+      "max": 85,
+      "type": "linear"
+    },
+    "legendLabel": {
+      "text": "Series",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "colors": [
+      "#66c2a5",
+      "#fc8d62",
+      "#8da0cb",
+      "#e78ac3",
+      "#a6d854",
+      "#ffd92f"
+    ]
+  },
+  "annotations": {
+    "annotations": [
+      {
+        "target": {
+          "_id": "_uniqueid_1140",
+          "type": "items",
+          "items": [
+            {
+              "elements": "E3",
+              "items": [
+                "[\"data\",\"index\",0]",
+                "[\"data\",\"index\",1]",
+                "[\"data\",\"index\",2]",
+                "[\"data\",\"index\",3]",
+                "[\"data\",\"index\",4]",
+                "[\"data\",\"index\",5]",
+                "[\"data\",\"index\",6]",
+                "[\"data\",\"index\",7]",
+                "[\"data\",\"index\",8]",
+                "[\"data\",\"index\",9]",
+                "[\"data\",\"index\",10]",
+                "[\"data\",\"index\",11]"
+              ]
+            },
+            {
+              "elements": "E2",
+              "items": [
+                "[\"data\",\"index\",0]",
+                "[\"data\",\"index\",1]",
+                "[\"data\",\"index\",2]",
+                "[\"data\",\"index\",3]",
+                "[\"data\",\"index\",4]",
+                "[\"data\",\"index\",5]",
+                "[\"data\",\"index\",6]",
+                "[\"data\",\"index\",7]",
+                "[\"data\",\"index\",8]",
+                "[\"data\",\"index\",9]",
+                "[\"data\",\"index\",10]",
+                "[\"data\",\"index\",11]"
+              ]
+            }
+          ]
+        },
+        "components": [
+          {
+            "type": "item-label",
+            "visible": false,
+            "style": {
+              "fill": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "paint_order": "stroke",
+              "stroke": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null,
+              "font_family": "Roboto",
+              "font_size": 14
+            },
+            "text": "{value}",
+            "anchor": "m,tt",
+            "anchor_offset": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "type": "highlight-line",
+            "visible": true,
+            "style": {
+              "fill": {
+                "mode": "brighter-darker",
+                "value": 0.48421052631578954
+              },
+              "stroke": {
+                "mode": "brighter-darker",
+                "value": -1
+              },
+              "stroke_width": 0,
+              "line_stroke": {
+                "mode": "brighter-darker",
+                "value": 0.2894736842105275
+              },
+              "line_stroke_width": 3
+            }
+          },
+          {
+            "type": "highlight",
+            "visible": true,
+            "style": {
+              "fill": {
+                "mode": "brighter-darker",
+                "value": 0.48421052631578954
+              },
+              "stroke": {
+                "mode": "brighter-darker",
+                "value": -1
+              },
+              "stroke_width": 0,
+              "line_stroke": {
+                "mode": "brighter-darker",
+                "value": 0.2894736842105275
+              },
+              "line_stroke_width": 3
+            }
+          },
+          {
+            "type": "trendline",
+            "visible": false,
+            "style": {
+              "fill": null,
+              "stroke": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null
+            }
+          }
+        ],
+        "visible": true,
+        "id": "#A1"
+      },
+      {
+        "target": {
+          "_id": "_uniqueid_1207",
+          "type": "items",
+          "items": [
+            {
+              "elements": "E3",
+              "items": [
+                "[\"data\",\"index\",2]",
+                "[\"data\",\"index\",3]"
+              ]
+            }
+          ]
+        },
+        "components": [
+          {
+            "type": "item-label",
+            "visible": true,
+            "style": {
+              "fill": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "paint_order": "stroke",
+              "stroke": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null,
+              "font_family": "Roboto",
+              "font_size": 14
+            },
+            "text": "{format(\".1f\", value)}",
+            "anchor": "m,tt",
+            "anchor_offset": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "type": "highlight-line",
+            "visible": true,
+            "style": {
+              "fill": {
+                "mode": "brighter-darker",
+                "value": 0.2
+              },
+              "stroke": {
+                "mode": "brighter-darker",
+                "value": -1
+              },
+              "stroke_width": 2,
+              "line_stroke": {
+                "mode": "brighter-darker",
+                "value": -0.2
+              },
+              "line_stroke_width": 3
+            }
+          },
+          {
+            "type": "highlight",
+            "visible": true,
+            "style": {
+              "fill": {
+                "mode": "brighter-darker",
+                "value": 0.2
+              },
+              "stroke": {
+                "mode": "brighter-darker",
+                "value": -1
+              },
+              "stroke_width": 2,
+              "line_stroke": {
+                "mode": "brighter-darker",
+                "value": -0.2
+              },
+              "line_stroke_width": 3
+            }
+          },
+          {
+            "type": "trendline",
+            "visible": false,
+            "style": {
+              "fill": null,
+              "stroke": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null
+            }
+          }
+        ],
+        "visible": true,
+        "id": "#A2"
+      },
+      {
+        "target": {
+          "_id": "_uniqueid_1234",
+          "type": "items",
+          "items": [
+            {
+              "elements": "E2",
+              "items": [
+                "[\"data\",\"index\",2]",
+                "[\"data\",\"index\",3]"
+              ]
+            }
+          ]
+        },
+        "components": [
+          {
+            "type": "item-label",
+            "visible": true,
+            "style": {
+              "fill": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "paint_order": "stroke",
+              "stroke": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null,
+              "font_family": "Roboto",
+              "font_size": 14
+            },
+            "text": "{format(\".1f\", value)}",
+            "anchor": "m,tt",
+            "anchor_offset": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "type": "highlight-line",
+            "visible": true,
+            "style": {
+              "fill": {
+                "mode": "brighter-darker",
+                "value": 0.2
+              },
+              "stroke": {
+                "mode": "brighter-darker",
+                "value": -1
+              },
+              "stroke_width": 2,
+              "line_stroke": {
+                "mode": "brighter-darker",
+                "value": -0.2
+              },
+              "line_stroke_width": 3
+            }
+          },
+          {
+            "type": "highlight",
+            "visible": true,
+            "style": {
+              "fill": {
+                "mode": "brighter-darker",
+                "value": 0.2
+              },
+              "stroke": {
+                "mode": "brighter-darker",
+                "value": -1
+              },
+              "stroke_width": 2,
+              "line_stroke": {
+                "mode": "brighter-darker",
+                "value": -0.2
+              },
+              "line_stroke_width": 3
+            }
+          },
+          {
+            "type": "trendline",
+            "visible": false,
+            "style": {
+              "fill": null,
+              "stroke": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null
+            }
+          }
+        ],
+        "visible": true,
+        "id": "#A3"
+      },
+      {
+        "target": {
+          "_id": "_uniqueid_1261",
+          "type": "items",
+          "items": [
+            {
+              "elements": "E3",
+              "items": [
+                "[\"data\",\"index\",7]"
+              ]
+            }
+          ]
+        },
+        "components": [
+          {
+            "type": "item-label",
+            "visible": true,
+            "style": {
+              "fill": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "paint_order": "stroke",
+              "stroke": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null,
+              "font_family": "Roboto",
+              "font_size": 14
+            },
+            "text": "{format(\".1f\", value)}",
+            "anchor": "m,bb",
+            "anchor_offset": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "type": "highlight-line",
+            "visible": true,
+            "style": {
+              "fill": {
+                "mode": "brighter-darker",
+                "value": 0.2
+              },
+              "stroke": {
+                "mode": "brighter-darker",
+                "value": -1
+              },
+              "stroke_width": 2,
+              "line_stroke": {
+                "mode": "brighter-darker",
+                "value": -0.2
+              },
+              "line_stroke_width": 3
+            }
+          },
+          {
+            "type": "highlight",
+            "visible": true,
+            "style": {
+              "fill": {
+                "mode": "brighter-darker",
+                "value": 0.2
+              },
+              "stroke": {
+                "mode": "brighter-darker",
+                "value": -1
+              },
+              "stroke_width": 2,
+              "line_stroke": {
+                "mode": "brighter-darker",
+                "value": -0.2
+              },
+              "line_stroke_width": 3
+            }
+          },
+          {
+            "type": "trendline",
+            "visible": false,
+            "style": {
+              "fill": null,
+              "stroke": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null
+            }
+          }
+        ],
+        "visible": true,
+        "id": "#A4"
+      },
+      {
+        "target": {
+          "_id": "_uniqueid_1288",
+          "type": "items",
+          "items": [
+            {
+              "elements": "E2",
+              "items": [
+                "[\"data\",\"index\",8]"
+              ]
+            }
+          ]
+        },
+        "components": [
+          {
+            "type": "item-label",
+            "visible": true,
+            "style": {
+              "fill": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "paint_order": "stroke",
+              "stroke": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null,
+              "font_family": "Roboto",
+              "font_size": 14
+            },
+            "text": "{format(\".1f\", value)}",
+            "anchor": "m,bb",
+            "anchor_offset": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "type": "highlight-line",
+            "visible": true,
+            "style": {
+              "fill": {
+                "mode": "brighter-darker",
+                "value": 0.2
+              },
+              "stroke": {
+                "mode": "brighter-darker",
+                "value": -1
+              },
+              "stroke_width": 2,
+              "line_stroke": {
+                "mode": "brighter-darker",
+                "value": -0.2
+              },
+              "line_stroke_width": 3
+            }
+          },
+          {
+            "type": "highlight",
+            "visible": true,
+            "style": {
+              "fill": {
+                "mode": "brighter-darker",
+                "value": 0.2
+              },
+              "stroke": {
+                "mode": "brighter-darker",
+                "value": -1
+              },
+              "stroke_width": 2,
+              "line_stroke": {
+                "mode": "brighter-darker",
+                "value": -0.2
+              },
+              "line_stroke_width": 3
+            }
+          },
+          {
+            "type": "trendline",
+            "visible": false,
+            "style": {
+              "fill": null,
+              "stroke": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null
+            }
+          }
+        ],
+        "visible": true,
+        "id": "#A5"
+      }
+    ]
+  },
+  "timestamp": 1548575872737
+}
