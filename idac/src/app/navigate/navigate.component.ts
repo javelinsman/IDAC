@@ -6,7 +6,6 @@ import { Chart } from '../chart';
 import { ChartExampleService } from '../chart-example.service';
 import { beep_error, beep_detect, speak, isAscendingArray, isDescendingArray } from '../utils';
 import { DescriptionComponent } from '../description/description.component';
-import { ChartDescription } from '../chart-structure/chart-description/chart-description';
 
 @Component({
   selector: 'app-navigate',
@@ -15,7 +14,7 @@ import { ChartDescription } from '../chart-structure/chart-description/chart-des
 })
 export class NavigateComponent implements OnInit {
 
-  @Input() info: ChartDescription;
+  @Input() info: any;
 
   chart: Chart;
   tags: any[];

@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ChartDescription } from '../chart-structure/chart-description/chart-description';
 
 @Component({
   selector: 'app-description',
@@ -8,7 +7,7 @@ import { ChartDescription } from '../chart-structure/chart-description/chart-des
 })
 export class DescriptionComponent implements OnInit {
 
-  @Input() info: ChartDescription;
+  @Input() info: any;
   @Input() tags: any[];
   @Input() getElement: any;
   @Input() element: any;

@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
-import { ChartDescription } from '../chart-structure/chart-description/chart-description';
 import { NavigateComponent } from '../navigate/navigate.component';
 import { ActivatedRoute } from '@angular/router';
 import { ChartExampleService } from '../chart-example.service';
@@ -17,6 +16,7 @@ import { HttpClient } from '@angular/common/http';
 export class MakeChartComponent implements OnInit {
   chart: Chart;
   chartAccent: ChartAccent;
+  chartSpec: ChartSpec;
 
   constructor(
       private chartExampleService: ChartExampleService,
@@ -34,6 +34,9 @@ export class MakeChartComponent implements OnInit {
 
     this.http.get<ChartAccent>(this.chart.src_json).subscribe(data => {
       this.chartAccent = data;
+      this.chartSpec = new ChartSpec();
+      this.chartSpec.fromChartAccent(this.chartAccent);
+      console.log(this.chartSpec);
     });
 
   }
