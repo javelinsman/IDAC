@@ -3,12 +3,14 @@ import { SpecTag } from './spec-tag';
 import { ChartSpec } from './chart-spec';
 import { Annotations } from './annotations';
 import { AttrInputSelect, AttrInput } from './attributes';
+import { CoordinateRange } from './coordinate-range';
+import { Item } from './legend';
 
 export class Highlight extends SpecTag {
     constructor(
-        private annotation: ChartAccent.Annotation,
+        protected annotation: ChartAccent.Annotation,
         public _root: ChartSpec,
-        public _parent: Annotations
+        public _parent: Annotations | CoordinateRange
     ) {
         super('Highlight');
         this.attributes = {
@@ -49,7 +51,7 @@ export class Highlight extends SpecTag {
         } else {
             this.attributes.highlight.value = 'off';
         }
-        const { target, numTargets } = this.makeTargetInfo(ca);
+        const { target, numTargets } = this.makeTargetInfo();
         this.properties = {
             targetDescription: () => target,
             numTargets: () => numTargets,
@@ -69,17 +71,26 @@ export class Highlight extends SpecTag {
         };
     }
 
-    makeTargetInfo(ca: ChartAccent.ChartAccent) {
+    getTargetLocation(): [Item, number[]][] {
+        const locations = [];
+        (this.annotation.target as ChartAccent.ItemsTarget).items.forEach(item => {
+          const seriesIndex = +item.elements.slice(1) - 2;
+          const borrowMarks = this._root.marks;
+          const series = borrowMarks.children[0].children[seriesIndex];
+          const indices = item.items.map(itemString => JSON.parse(itemString)[2]);
+          locations.push([series, indices]);
+        });
+        return locations;
+    }
+
+    makeTargetInfo() {
         const targets = [];
         let numTargets = 0;
-        (this.annotation.target as ChartAccent.ItemsTarget).items.forEach(item => {
-          const series = +item.elements.slice(1) - 2;
-          const borrowMarks = this._root.marks;
-          const seriesName = borrowMarks.children[0].children[series].properties.seriesName();
-          const indices = item.items.map(itemString => JSON.parse(itemString)[2]);
-          targets.push(`${indices.length === borrowMarks.children.length ?
-            'all bars' : `${indices.join(', ')}-th position`} in ${seriesName}`);
-          numTargets += indices.length;
+        this.getTargetLocation().forEach(([series, indices]) => {
+            const seriesName = series.properties.text();
+            targets.push(`${indices.length === this._root.marks.children.length ?
+                'all bars' : `${indices.map(i => i + 1).join(', ')}-th position`} in ${seriesName}`);
+            numTargets += indices.length;
         });
         return {
             target: targets.join(', and '),
