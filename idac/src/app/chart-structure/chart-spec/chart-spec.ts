@@ -1,3 +1,6 @@
+import { ChartAccent } from '../chart-accent/chart-accent';
+import { Title } from './title';
+
 export class ChartSpec {
     title = new Title(this);
     y = new Y(this);
@@ -6,7 +9,12 @@ export class ChartSpec {
     marks = new Marks(this);
     annotations = new Annotations(this);
 
+    fromChartAccent(ca: ChartAccent) {
+        this.title.fromChartAccent(ca);
+    }
+
     update() {
+    /*
         const ticks = this.x.ticks.value;
         const items = this.legend.items.value;
         const prev_values = {};
@@ -39,18 +47,12 @@ export class ChartSpec {
                 return bargroup;
             })
         };
+    */
     }
 
 }
 
-export class Title {
-    constructor(public _root: ChartSpec) {}
-    _tagname = 'Title';
-    title = {
-        type: 'input',
-        value: ''
-    };
-}
+
 
 export class Y  {
     constructor(public _root: ChartSpec) {}
