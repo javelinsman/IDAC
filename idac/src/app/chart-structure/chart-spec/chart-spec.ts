@@ -3,6 +3,7 @@ import { Title } from './title';
 import { Y } from './y';
 import { X, Tick } from './x';
 import { Legend, Item } from './legend';
+import { Marks, Bar } from './marks';
 
 export class ChartSpec {
     title = new Title(this);
@@ -17,6 +18,7 @@ export class ChartSpec {
         this.y.fromChartAccent(ca);
         this.x.fromChartAccent(ca);
         this.legend.fromChartAccent(ca);
+        this.marks.fromChartAccent(ca);
     }
 
     update() {
@@ -56,49 +58,6 @@ export class ChartSpec {
     */
     }
 
-}
-
-export class Marks {
-    constructor(public _root: ChartSpec) {}
-    _tagname = 'Marks';
-    bargroups = {
-        type: 'children',
-        value: [] as Bargroup[]
-    };
-    type = {
-        type: 'input-select',
-        candidates: ['grouped', 'stacked'],
-        value: 'grouped'
-    };
-}
-
-export class Bargroup {
-    constructor(public _root: ChartSpec, public _parent: Marks) {}
-    _tagname = 'Bargroup';
-    name = {
-        type: 'foreign',
-        value: null as Tick
-    };
-    bars =  {
-        type: 'children',
-        value: [] as Bar[]
-    };
-}
-
-export class Bar {
-    constructor(public _root: ChartSpec, public _parent: Bargroup) {}
-    _tagname = 'Bar';
-    key = {
-        type: 'foreign',
-        value: null as Item
-    };
-    value = {
-        type: 'input',
-        value: 0
-    };
-    _foreignRepr() {
-        // return `${this._parent.name.value.text.value}:${this.key.value.text.value}`;
-    }
 }
 
 export class Annotations {
@@ -156,10 +115,11 @@ export class Annotations {
 
 export class Highlight {
     constructor(public _root: ChartSpec, public _parent: Annotations) {}
+    /*
     _tagname = 'Highlight';
     target = {
         type: 'foreign-multiselect',
-        candidates: this._root.marks.bargroups.value
+        candidates: this._root.marks.children.value
             .map(bargroup => bargroup.bars.value)
             .reduce((a, b) => [...a, ...b], []),
         value: new Set() as Set<Bar>
@@ -191,7 +151,7 @@ export class Highlight {
         this._root.update();
         }
     };
-
+    */
 }
 
 export class CoordinateRange {
