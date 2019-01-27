@@ -42,7 +42,9 @@ export class SpecTag {
         if (args) {
         args.map(d => [d, d.slice(2, -1)])
             .forEach(([arg, strip]) =>
-            description = description.replace(arg, this.properties[strip]()));
+            description = description.replace(arg,
+                this.properties[strip] ? this.properties[strip]() : 'undefined'
+            ));
         }
         return description;
     }

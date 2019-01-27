@@ -1,5 +1,6 @@
 import { ChartAccent } from '../chart-accent/chart-accent';
 import { Title } from './title';
+import { Y } from './y';
 
 export class ChartSpec {
     title = new Title(this);
@@ -11,6 +12,7 @@ export class ChartSpec {
 
     fromChartAccent(ca: ChartAccent) {
         this.title.fromChartAccent(ca);
+        this.y.fromChartAccent(ca);
     }
 
     update() {
@@ -52,31 +54,6 @@ export class ChartSpec {
 
 }
 
-
-
-export class Y  {
-    constructor(public _root: ChartSpec) {}
-    _tagname = 'Y';
-    label = {
-        type: 'input',
-        value: '',
-    };
-    unit = {
-        type: 'input',
-        value: '',
-    };
-    rangeMin = {
-        type: 'input',
-        value: '',
-    };
-    rangeMax =  {
-        type: 'input',
-        value: '',
-    };
-    _foreignRepr() {
-        return this._tagname;
-    }
-}
 export class X {
     constructor(public _root: ChartSpec) {}
     _tagname = 'X';
