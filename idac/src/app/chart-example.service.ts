@@ -5,7 +5,7 @@ import { CHARTS } from './mock-charts';
 @Injectable({
   providedIn: 'root'
 })
-export class ChartService {
+export class ChartExampleService {
 
   constructor() { }
 

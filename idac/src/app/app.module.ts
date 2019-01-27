@@ -13,6 +13,7 @@ import { ChartSpecComponent } from './chart-spec/chart-spec.component';
 import { SpecTreeViewComponent } from './spec-tree-view/spec-tree-view.component';
 import { ChartViewComponent } from './chart-view/chart-view.component';
 import { MakeChartComponent } from './make-chart/make-chart.component';
+import { SvgContainerComponent } from './svg-container/svg-container.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { MakeChartComponent } from './make-chart/make-chart.component';
     ChartSpecComponent,
     SpecTreeViewComponent,
     ChartViewComponent,
-    MakeChartComponent
+    MakeChartComponent,
+    SvgContainerComponent
   ],
   imports: [
     BrowserModule,
