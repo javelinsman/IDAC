@@ -1,0 +1,440 @@
+{
+  "dataset": {
+    "columns": [
+      {
+        "name": "Country",
+        "type": "string"
+      },
+      {
+        "name": " Voltage",
+        "type": "integer",
+        "format": ".0f"
+      }
+    ],
+    "rawFile": "Country, Voltage\r\nA, 220\r\nB, 220\r\nC, 110\r\nD, 220\r\nE, 110\r\nF, 175\r\nG, 110\r\nH, 220\r\nI, 110\r\nJ, 220",
+    "fileName": "annotated_4.csv",
+    "rows": [
+      {
+        "Country": "A",
+        " Voltage": 220
+      },
+      {
+        "Country": "B",
+        " Voltage": 220
+      },
+      {
+        "Country": "C",
+        " Voltage": 110
+      },
+      {
+        "Country": "D",
+        " Voltage": 220
+      },
+      {
+        "Country": "E",
+        " Voltage": 110
+      },
+      {
+        "Country": "F",
+        " Voltage": 175
+      },
+      {
+        "Country": "G",
+        " Voltage": 110
+      },
+      {
+        "Country": "H",
+        " Voltage": 220
+      },
+      {
+        "Country": "I",
+        " Voltage": 110
+      },
+      {
+        "Country": "J",
+        " Voltage": 220
+      }
+    ],
+    "type": "csv"
+  },
+  "chart": {
+    "type": "bar-chart",
+    "title": {
+      "text": "",
+      "fontFamily": "Roboto",
+      "fontSize": 20,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "width": 700,
+    "height": 400,
+    "xColumn": "Country",
+    "yColumns": [
+      " Voltage"
+    ],
+    "xLabel": {
+      "text": "Country",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "yLabel": {
+      "text": "Voltage (V)",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "xScale": {
+      "type": "categorical"
+    },
+    "yScale": {
+      "min": 0,
+      "max": null,
+      "type": "linear"
+    },
+    "legendLabel": {
+      "text": "Series",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "colors": [
+      "#fbb4ae",
+      "#b3cde3",
+      "#ccebc5",
+      "#decbe4",
+      "#fed9a6",
+      "#ffffcc"
+    ]
+  },
+  "annotations": {
+    "annotations": [
+      {
+        "target": {
+          "_id": "_uniqueid_370",
+          "type": "items",
+          "items": [
+            {
+              "elements": "E2",
+              "items": [
+                "[\"data\",\"index\",0]",
+                "[\"data\",\"index\",1]",
+                "[\"data\",\"index\",3]",
+                "[\"data\",\"index\",7]",
+                "[\"data\",\"index\",9]"
+              ]
+            }
+          ]
+        },
+        "components": [
+          {
+            "type": "item-label",
+            "visible": false,
+            "style": {
+              "fill": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "paint_order": "stroke",
+              "stroke": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null,
+              "font_family": "Roboto",
+              "font_size": 14
+            },
+            "text": "{format(\".0f\", value)}",
+            "anchor": "m,tt",
+            "anchor_offset": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "type": "highlight",
+            "visible": true,
+            "style": {
+              "fill": {
+                "r": 92,
+                "g": 163,
+                "b": 209,
+                "a": 1
+              },
+              "stroke": {
+                "mode": "brighter-darker",
+                "value": -1
+              },
+              "stroke_width": 0,
+              "line_stroke": {
+                "mode": "brighter-darker",
+                "value": -0.2
+              },
+              "line_stroke_width": 3
+            }
+          },
+          {
+            "type": "trendline",
+            "visible": false,
+            "style": {
+              "fill": null,
+              "stroke": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null
+            }
+          }
+        ],
+        "visible": true,
+        "id": "#A1"
+      },
+      {
+        "target": {
+          "_id": "_uniqueid_371",
+          "type": "items",
+          "items": [
+            {
+              "elements": "E2",
+              "items": [
+                "[\"data\",\"index\",5]"
+              ]
+            }
+          ]
+        },
+        "components": [
+          {
+            "type": "item-label",
+            "visible": true,
+            "style": {
+              "fill": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "paint_order": "stroke",
+              "stroke": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null,
+              "font_family": "Roboto",
+              "font_size": 14
+            },
+            "text": "{format(\".0f\", value)}",
+            "anchor": "m,tt",
+            "anchor_offset": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "type": "highlight",
+            "visible": true,
+            "style": {
+              "fill": {
+                "r": 150,
+                "g": 179,
+                "b": 143,
+                "a": 1
+              },
+              "stroke": {
+                "mode": "brighter-darker",
+                "value": -1
+              },
+              "stroke_width": 0,
+              "line_stroke": {
+                "mode": "brighter-darker",
+                "value": -0.2
+              },
+              "line_stroke_width": 3
+            }
+          },
+          {
+            "type": "trendline",
+            "visible": false,
+            "style": {
+              "fill": null,
+              "stroke": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null
+            }
+          }
+        ],
+        "visible": true,
+        "id": "#A2"
+      },
+      {
+        "target": {
+          "_id": "_uniqueid_372",
+          "type": "freeform",
+          "rect": {
+            "x1": 377.0115661621094,
+            "y1": 113.03008270263672,
+            "x2": 392.0115661621094,
+            "y2": 126.03008270263672
+          }
+        },
+        "components": [
+          {
+            "type": "label",
+            "visible": false,
+            "style": {
+              "fill": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "stroke": null,
+              "stroke_width": 2,
+              "line_stroke": null,
+              "font_family": "Roboto",
+              "font_size": 14
+            },
+            "text": "Text",
+            "anchor": "m,m",
+            "anchor_offset": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "type": "shape.rect",
+            "visible": false,
+            "style": {
+              "fill": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0.1
+              },
+              "stroke": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "stroke_width": 5,
+              "line_stroke": null
+            }
+          }
+        ],
+        "visible": true,
+        "id": "#A3"
+      },
+      {
+        "target": {
+          "_id": "_uniqueid_373",
+          "type": "freeform",
+          "point": {
+            "x": 375.0115661621094,
+            "y": 107.84489440917969
+          }
+        },
+        "components": [
+          {
+            "type": "label",
+            "visible": true,
+            "style": {
+              "fill": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "stroke": null,
+              "stroke_width": 2,
+              "line_stroke": null,
+              "font_family": "Roboto",
+              "font_size": 14
+            },
+            "text": "*",
+            "anchor": "m,m",
+            "anchor_offset": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        ],
+        "visible": true,
+        "id": "#A5"
+      },
+      {
+        "target": {
+          "_id": "_uniqueid_374",
+          "type": "freeform",
+          "rect": {
+            "x1": 314.0115661621094,
+            "y1": 48.84489440917969,
+            "x2": 585.0115661621094,
+            "y2": 13.84489631652832
+          }
+        },
+        "components": [
+          {
+            "type": "label",
+            "visible": true,
+            "style": {
+              "fill": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "stroke": null,
+              "stroke_width": 2,
+              "line_stroke": null,
+              "font_family": "Roboto",
+              "font_size": 14
+            },
+            "text": "*) averaged due to multiple standards",
+            "anchor": "m,m",
+            "anchor_offset": {
+              "x": -1,
+              "y": -1
+            }
+          },
+          {
+            "type": "shape.rect",
+            "visible": true,
+            "style": {
+              "fill": null,
+              "stroke": {
+                "r": 117,
+                "g": 117,
+                "b": 117,
+                "a": 1
+              },
+              "stroke_width": 1,
+              "line_stroke": null
+            }
+          }
+        ],
+        "visible": true,
+        "id": "#A6"
+      }
+    ]
+  },
+  "timestamp": 1544140185531
+}
