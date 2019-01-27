@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="chart && chartAccent">
   <app-svg-container [src]="chart.src_svg"></app-svg-container>
   <!--
   <div class="row">
