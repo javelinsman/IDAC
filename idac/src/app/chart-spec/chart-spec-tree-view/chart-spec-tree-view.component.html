@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <section class="border {{ tag === currentTag ? 'border-primary' : 'bg-light' }} p-2 ml-{{indent}}">
+  <section class="border {{ tag === currentTag ? 'border-primary highlight' : 'bg-light' }} p-2 ml-{{indent}}">
     <div class="d-flex w-100 justify-content-between">
       <h5>{{ tag._tagname }}</h5>
       <p *ngIf="numAttributes"

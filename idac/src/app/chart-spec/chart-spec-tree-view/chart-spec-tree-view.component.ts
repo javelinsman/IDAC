@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 
 @Component({
@@ -23,5 +23,4 @@ export class ChartSpecTreeViewComponent implements OnInit {
     }
     this.numAttributes = Object.entries(this.tag.attributes).length;
   }
-
 }
