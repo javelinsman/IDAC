@@ -2,6 +2,12 @@ import { IAttribute, IProperty } from './attributes';
 import { ChartAccent } from '../chart-accent/chart-accent';
 import { ChartSpec } from './chart-spec';
 
+interface IEditorsNote {
+    text: string;
+    position: 'prepend' | 'replace' | 'append';
+    active: boolean;
+}
+
 export class SpecTag {
     constructor(protected _tagname: string) {
         this._id = SpecTag.idCount ++;
@@ -16,6 +22,12 @@ export class SpecTag {
     _id: number;
     _root: ChartSpec;
     _parent: SpecTag;
+
+    editorsNote: IEditorsNote = {
+        text: 'test',
+        position: 'append',
+        active: false,
+    };
 
     set properties(properties: IProperty) {
         this._properties = properties;
@@ -44,6 +56,17 @@ export class SpecTag {
 
     describe(info: ChartSpec, tags: any[], keyboardEvent: string, queryAnswer: string = null) {
         let description = this.descriptionRule;
+        if (this.editorsNote.active) {
+            const text = this.editorsNote.text;
+            const position = this.editorsNote.position;
+            if (position === 'append') {
+                description = `${description} ${text}`;
+            } else if (position === 'replace') {
+                description = text;
+            } else if (position === 'prepend') {
+                description = `${text} ${description}`;
+            }
+        }
         if (queryAnswer) {
             description = queryAnswer + ' ' + description;
             console.log(description);
