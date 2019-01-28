@@ -36,7 +36,6 @@ export class MakeChartComponent implements OnInit {
       this.chartAccent = data;
       this.chartSpec = new ChartSpec();
       this.chartSpec.fromChartAccent(this.chartAccent);
-      console.log(this.chartSpec);
     });
 
 

@@ -10,12 +10,12 @@ import { NavigateComponent } from './navigate/navigate.component';
 import { DescriptionComponent } from './description/description.component';
 import { KeyboardInputComponent } from './keyboard-input/keyboard-input.component';
 import { ChartSpecComponent } from './chart-spec/chart-spec.component';
-import { SpecTreeViewComponent } from './spec-tree-view/spec-tree-view.component';
 import { MakeChartComponent } from './make-chart/make-chart.component';
 import { SvgContainerComponent } from './svg-container/svg-container.component';
 import { DescriptionPanelComponent } from './panels/description-panel/description-panel.component';
 import { EditorsNotePanelComponent } from './panels/editors-note-panel/editors-note-panel.component';
 import { PropertiesPanelComponent } from './panels/properties-panel/properties-panel.component';
+import { ChartSpecTreeViewComponent } from './chart-spec/chart-spec-tree-view/chart-spec-tree-view.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { PropertiesPanelComponent } from './panels/properties-panel/properties-p
     DescriptionComponent,
     KeyboardInputComponent,
     ChartSpecComponent,
-    SpecTreeViewComponent,
+    ChartSpecTreeViewComponent,
     MakeChartComponent,
     SvgContainerComponent,
     DescriptionPanelComponent,

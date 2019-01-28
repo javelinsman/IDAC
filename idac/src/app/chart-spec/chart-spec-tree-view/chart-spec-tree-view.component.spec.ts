@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SpecTreeViewComponent } from './spec-tree-view.component';
+import { ChartSpecTreeViewComponent } from './chart-spec-tree-view.component';
 
-describe('SpecTreeViewComponent', () => {
-  let component: SpecTreeViewComponent;
-  let fixture: ComponentFixture<SpecTreeViewComponent>;
+describe('ChartSpecTreeViewComponent', () => {
+  let component: ChartSpecTreeViewComponent;
+  let fixture: ComponentFixture<ChartSpecTreeViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SpecTreeViewComponent ]
+      declarations: [ ChartSpecTreeViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SpecTreeViewComponent);
+    fixture = TestBed.createComponent(ChartSpecTreeViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
