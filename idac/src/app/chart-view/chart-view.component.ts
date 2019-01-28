@@ -23,8 +23,11 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
   svg: d3.Selection<SVGGElement, any, HTMLElement, any>;
   gClickHint: d3.Selection<any, any, any, any>;
   gHighlight: d3.Selection<any, any, any, any>;
+  gEditorsNote: d3.Selection<any, any, any, any>;
   elementLink = {};
   ready = false;
+
+  showEditorsNote = true;
 
   constructor() { }
 
@@ -36,7 +39,8 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     this.svg = d3.select(this.svgContainer.svgContainerDiv.nativeElement).select('svg');
 
     this.gHighlight = this.svg.append('g').classed('idac-highlights', true);
-    this.gClickHint = this.svg.append('g').classed('idac-click-hint', true);
+    this.gClickHint = this.svg.append('g').classed('idac-click-hints', true);
+    this.gEditorsNote = this.svg.append('g').classed('idac-editors-notes', true);
 
     const [annotationBackground, g2, annotationForeground] = d3AsSelectionArray(d3ImmediateChildren(this.svg, 'g'));
     const [title, legend, chart] = d3AsSelectionArray(d3ImmediateChildren(g2, 'g'));
@@ -102,6 +106,15 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       rect.on('mouseover', function() { d3.select(this).style('fill-opacity', 0.5); });
       rect.on('mouseout', function() { d3.select(this).style('fill-opacity', 0); });
       rect.on('click', () => this._currentTagChange(tag));
+
+      const editorsNoteRect = this.makeRectFromBoundingBox(this.getMergedBoundingBox(selection), this.gEditorsNote)
+        .style('fill-opacity', 0)
+        .style('stroke', 'red').style('stroke-width', 2).style('visibility', 'hidden')
+        .classed('idac-editors-note', true).data([tag]);
+      editorsNoteRect.on('mouseover', function() { d3.select(this).style('stroke-width', 3); });
+      editorsNoteRect.on('mouseout', function() { d3.select(this).style('stroke-width', 2); });
+      editorsNoteRect.on('click', () => this._currentTagChange(tag));
+
     });
   }
 
@@ -148,6 +161,10 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
         highlightRect.node().scrollIntoView({inline: 'center'});
         window.scroll(window.scrollX, prevY);
       }
+
+      d3.selectAll('.idac-editors-note')
+        .style('visibility', (tag: SpecTag) =>
+          this.showEditorsNote && tag.editorsNote.active ? 'visible' : 'hidden');
     }
   }
 
