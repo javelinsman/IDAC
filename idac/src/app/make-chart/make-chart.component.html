@@ -5,7 +5,8 @@
     </div>
   </div>
   <div class="row">
-    <app-svg-container class="col-4 border" [src]="chart.src_svg"></app-svg-container>
+    <app-chart-view class="col-4 border" [chartSpec]="chartSpec"
+      [src]="chart.src_svg" [(currentTag)]="currentTag"></app-chart-view>
     <div class="col-4 border">
       <div class="row">
         <div class="col-12">

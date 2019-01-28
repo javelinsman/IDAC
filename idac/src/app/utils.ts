@@ -1,3 +1,5 @@
+import * as d3 from 'd3';
+
 export function eqArray(a: any[], b: any[]) {
     if (a === b) {
       return true;
@@ -86,4 +88,14 @@ export function isDescendingArray(arr: any[]) {
     }
   }
   return true;
+}
+
+export function d3ImmediateChildren(selection: d3.Selection<any, any, any, any>, selector: string) {
+  return selection.selectAll(selector).filter(function() {
+    return (this as any).parentNode === selection.node();
+  });
+}
+
+export function d3AsSelectionArray(selection: d3.Selection<any, any, any, any>) {
+  return Array.from(selection.nodes()).map(d => d3.select(d));
 }
