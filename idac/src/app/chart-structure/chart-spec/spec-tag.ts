@@ -56,6 +56,17 @@ export class SpecTag {
 
     describe(info: ChartSpec, tags: any[], keyboardEvent: string, queryAnswer: string = null) {
         let description = this.descriptionRule;
+        if (this.editorsNote.active) {
+            const text = this.editorsNote.text;
+            const position = this.editorsNote.position;
+            if (position === 'append') {
+                description = `${description} ${text}`;
+            } else if (position === 'replace') {
+                description = text;
+            } else if (position === 'prepend') {
+                description = `${text} ${description}`;
+            }
+        }
         if (queryAnswer) {
             description = queryAnswer + ' ' + description;
             console.log(description);
