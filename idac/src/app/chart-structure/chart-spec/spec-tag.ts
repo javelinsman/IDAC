@@ -3,12 +3,19 @@ import { ChartAccent } from '../chart-accent/chart-accent';
 import { ChartSpec } from './chart-spec';
 
 export class SpecTag {
-    constructor(protected _tagname: string) { }
+    constructor(protected _tagname: string) {
+        this._id = SpecTag.idCount ++;
+    }
+    private static idCount = 0;
     public static _descriptionRule = '';
 
     attributes: IAttribute = {};
     _properties: IProperty = {};
     children: SpecTag[];
+
+    _id: number;
+    _root: ChartSpec;
+    _parent: SpecTag;
 
     set properties(properties: IProperty) {
         this._properties = properties;
@@ -56,5 +63,13 @@ export class SpecTag {
 
     foreignRepr(): string {
         return this._tagname;
+    }
+
+    flattenedTags(): SpecTag[] {
+        let ret: SpecTag[] = [this];
+        if (this.children && this.children.length) {
+            this.children.forEach(tag => ret = [...ret, ...tag.flattenedTags()]);
+        }
+        return ret;
     }
 }

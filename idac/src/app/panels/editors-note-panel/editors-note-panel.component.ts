@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 
 @Component({
   selector: 'app-editors-note-panel',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./editors-note-panel.component.scss']
 })
 export class EditorsNotePanelComponent implements OnInit {
+
+  @Input() tag: SpecTag;
 
   constructor() { }
 
