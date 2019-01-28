@@ -27,6 +27,8 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
   elementLink = {};
   ready = false;
 
+  showEditorsNote = true;
+
   constructor() { }
 
   ngOnInit() {
@@ -106,10 +108,11 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       rect.on('click', () => this._currentTagChange(tag));
 
       const editorsNoteRect = this.makeRectFromBoundingBox(this.getMergedBoundingBox(selection), this.gEditorsNote)
-        .style('fill', 'red').style('fill-opacity', 0.5).style('visibility', 'hidden')
+        .style('fill-opacity', 0)
+        .style('stroke', 'red').style('stroke-width', 2).style('visibility', 'hidden')
         .classed('idac-editors-note', true).data([tag]);
-      editorsNoteRect.on('mouseover', function() { d3.select(this).style('fill-opacity', 0.7); });
-      editorsNoteRect.on('mouseout', function() { d3.select(this).style('fill-opacity', 0.5); });
+      editorsNoteRect.on('mouseover', function() { d3.select(this).style('stroke-width', 3); });
+      editorsNoteRect.on('mouseout', function() { d3.select(this).style('stroke-width', 2); });
       editorsNoteRect.on('click', () => this._currentTagChange(tag));
 
     });
@@ -160,7 +163,8 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       }
 
       d3.selectAll('.idac-editors-note')
-        .style('visibility', (tag: SpecTag) => tag.editorsNote.active ? 'visible' : 'hidden');
+        .style('visibility', (tag: SpecTag) =>
+          this.showEditorsNote && tag.editorsNote.active ? 'visible' : 'hidden');
     }
   }
 
