@@ -1,6 +1,30 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="chart && chartAccent">
+  <div class="row" style="height: 300px; overflow-y: scroll">
+    <div class="col-12 border">
+      <app-chart-spec [chartSpec]="chartSpec" [(currentTag)]="currentTag"></app-chart-spec>
+    </div>
+  </div>
   <div class="row">
-    <app-chart-spec [chartSpec]="chartSpec"></app-chart-spec>
+    <app-chart-view class="col-4 border" [chartSpec]="chartSpec"
+      [src]="chart.src_svg" [(currentTag)]="currentTag"></app-chart-view>
+    <div class="col-4 border">
+      <div class="row">
+        <div class="col-12">
+          <app-description-panel [tag]="currentTag"></app-description-panel>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <app-editors-note-panel [tag]="currentTag"></app-editors-note-panel>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 border">
+      <app-properties-panel [tag]="currentTag"></app-properties-panel>
+    </div>
+  </div>
+  <!--
+  <div class="row">
   </div>
   <div class="row my-4 ">
     <button class="btn btn-info w-100" (click)="render()">Render</button>
@@ -16,4 +40,6 @@
   <div class="row my-4">
     <button class="btn btn-light w-100" disabled>Export</button>
   </div>
+  -->
 </div>
+<app-navigate [(tag)]="currentTag"></app-navigate>

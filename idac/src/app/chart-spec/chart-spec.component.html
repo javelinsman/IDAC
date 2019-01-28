@@ -1,19 +1,22 @@
-<div class="container-fluid">
+<div class="container-fluid" #container>
   <div class="row">
-    <div class="col-md-3 p-1">
-      <app-chart-view class="mx-auto" [chartSpec]="chartSpec"></app-chart-view>
+    <div class="col-md-4 p-0">
+      <app-chart-spec-tree-view [tag]="chartSpec.title"
+        [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)"></app-chart-spec-tree-view>
+      <app-chart-spec-tree-view [tag]="chartSpec.y"
+        [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)"></app-chart-spec-tree-view>
+      <app-chart-spec-tree-view [tag]="chartSpec.x"
+        [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)"></app-chart-spec-tree-view>
+      <app-chart-spec-tree-view [tag]="chartSpec.legend"
+        [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)"></app-chart-spec-tree-view>
     </div>
-    <div class="col-md-3 p-1">
-      <app-spec-tree-view [tag]="chartSpec.title"></app-spec-tree-view>
-      <app-spec-tree-view [tag]="chartSpec.y"></app-spec-tree-view>
-      <app-spec-tree-view [tag]="chartSpec.x"></app-spec-tree-view>
-      <app-spec-tree-view [tag]="chartSpec.legend"></app-spec-tree-view>
+    <div class="col-md-4 p-0">
+      <app-chart-spec-tree-view [tag]="chartSpec.marks"
+        [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)"></app-chart-spec-tree-view>
     </div>
-    <div class="col-md-3 p-1">
-      <app-spec-tree-view [tag]="chartSpec.marks"></app-spec-tree-view>
-    </div>
-    <div class="col-md-3 p-1">
-      <app-spec-tree-view [tag]="chartSpec.annotations"></app-spec-tree-view>
+    <div class="col-md-4 p-0">
+      <app-chart-spec-tree-view [tag]="chartSpec.annotations"
+        [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)"></app-chart-spec-tree-view>
     </div>
   </div>
 </div>

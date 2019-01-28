@@ -1,1 +1,7 @@
-<svg class="w-100" id="chart-view-svg-{{chartId}}"></svg>
+<app-svg-container [src]="src" (ready)="onSVGInit()"></app-svg-container>
+<div class="d-flex w-100 justify-content-center">
+  <div>
+    <input type="checkbox" class="form-check-input" [(ngModel)]="showEditorsNote">
+  </div>
+  <p>Display editor's note</p>
+</div>

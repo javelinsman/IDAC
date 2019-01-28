@@ -19,11 +19,11 @@
     <h1>Examples</h1>
     <hr class="mb-4">
     <div class="row">
-      <div class="col-md-4" *ngFor="let chartSpec of examples; let i = index">
-        <div class="card">
-          <app-chart-view class="card-img-top" [chartSpec]="chartSpec"></app-chart-view>
+      <div class="col-md-4" *ngFor="let chart of charts; let i = index">
+        <div class="card mb-2">
+          <img class="img-fluid" [src]="chart.src_png">
           <div class="card-body bg-light text-center">
-            <h5 class="card-text">{{ chartSpec.title.title.value }}</h5>
+            <h5 class="card-text">{{ chart.title }}</h5>
             <a class="card-link" routerLink="/make-chart/example/{{ i }}">Play with it</a>
           </div>
         </div>
