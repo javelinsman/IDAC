@@ -7,6 +7,7 @@ import * as d3 from 'd3';
 import { Chart } from '../chart';
 import { ChartAccent } from '../chart-structure/chart-accent/chart-accent';
 import { HttpClient } from '@angular/common/http';
+import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
 
 @Component({
   selector: 'app-make-chart',
@@ -17,6 +18,8 @@ export class MakeChartComponent implements OnInit {
   chart: Chart;
   chartAccent: ChartAccent;
   chartSpec: ChartSpec;
+
+  currentTag: SpecTag;
 
   constructor(
       private chartExampleService: ChartExampleService,
@@ -36,6 +39,8 @@ export class MakeChartComponent implements OnInit {
       this.chartAccent = data;
       this.chartSpec = new ChartSpec();
       this.chartSpec.fromChartAccent(this.chartAccent);
+      this.currentTag = this.chartSpec.findById(0);
+      console.log(this.currentTag);
     });
 
 

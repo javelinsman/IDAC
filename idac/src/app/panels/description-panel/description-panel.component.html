@@ -8,8 +8,8 @@
   </div>
   <div class="card-body">
     <h5 class="card-title">Text</h5>
-    <p class="card-text" *ngIf="!edit">Lorem Ipsum</p>
-    <textarea *ngIf="edit"
+    <p class="card-text" *ngIf="!edit">{{ tag.describe() }}</p>
+    <textarea *ngIf="edit" [(ngModel)]="tag.descriptionRule"
       class="form-control" id="description-rule-textarea" rows="3"></textarea>
   </div>
 </div>

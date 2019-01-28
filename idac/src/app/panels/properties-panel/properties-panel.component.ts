@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 
 @Component({
   selector: 'app-properties-panel',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./properties-panel.component.scss']
 })
 export class PropertiesPanelComponent implements OnInit {
+  @Input() tag: SpecTag;
 
   constructor() { }
 

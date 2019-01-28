@@ -5,6 +5,7 @@ import { X } from './x';
 import { Legend } from './legend';
 import { Marks } from './marks';
 import { Annotations } from './annotations';
+import { SpecTag } from './spec-tag';
 
 export class ChartSpec {
     title = new Title(this);
@@ -14,6 +15,8 @@ export class ChartSpec {
     marks = new Marks(this);
     annotations = new Annotations(this);
 
+    _flattendTags: SpecTag[];
+
     fromChartAccent(ca: ChartAccent) {
         this.title.fromChartAccent(ca);
         this.y.fromChartAccent(ca);
@@ -21,42 +24,27 @@ export class ChartSpec {
         this.legend.fromChartAccent(ca);
         this.marks.fromChartAccent(ca);
         this.annotations.fromChartAccent(ca);
+
+        // assure that flattend tags will be updated
+        this._flattendTags = null;
     }
 
-    update() {
-    /*
-        const ticks = this.x.ticks.value;
-        const items = this.legend.items.value;
-        const prev_values = {};
-        this.marks.bargroups.value.forEach(bargroup => {
-            const tick = bargroup.name.value.text.value;
-            prev_values[tick] = {};
-            bargroup.bars.value.forEach(bar => {
-                const item = bar.key.value.text.value;
-                prev_values[tick][item] = bar.value.value;
-            });
-        });
-        this.marks.bargroups = {
-            type: 'children',
-            value: ticks.map(tick => {
-                const bargroup = new Bargroup(this, this.marks);
-                bargroup.name.value = tick;
-                bargroup.bars = {
-                    type: 'children',
-                    value: items.map(item => {
-                        const bar = new Bar(this, bargroup);
-                        bar.key.value = item;
-                        if (prev_values[tick.text.value] && prev_values[tick.text.value][item.text.value]) {
-                            bar.value.value = prev_values[tick.text.value][item.text.value];
-                        } else {
-                            bar.value.value = 0;
-                        }
-                        return bar;
-                    })
-                };
-                return bargroup;
-            })
-        };
-    */
+    flattenedTags() {
+        if (!this._flattendTags) {
+            this._flattendTags = [
+                ...this.title.flattenedTags(),
+                ...this.y.flattenedTags(),
+                ...this.x.flattenedTags(),
+                ...this.legend.flattenedTags(),
+                ...this.marks.flattenedTags(),
+                ...this.annotations.flattenedTags()
+            ];
+        }
+        return this._flattendTags;
     }
+
+    findById(id: number) {
+        return this.flattenedTags().find(tag => tag._id === id);
+    }
+
 }

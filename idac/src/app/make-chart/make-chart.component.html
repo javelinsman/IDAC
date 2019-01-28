@@ -9,17 +9,17 @@
     <div class="col-4 border">
       <div class="row">
         <div class="col-12">
-          <app-description-panel></app-description-panel>
+          <app-description-panel [tag]="currentTag"></app-description-panel>
         </div>
       </div>
       <div class="row">
         <div class="col-12">
-          <app-editors-note-panel></app-editors-note-panel>
+          <app-editors-note-panel [tag]="currentTag"></app-editors-note-panel>
         </div>
       </div>
     </div>
     <div class="col-4 border">
-      <app-properties-panel></app-properties-panel>
+      <app-properties-panel [tag]="currentTag"></app-properties-panel>
     </div>
   </div>
   <!--
