@@ -74,7 +74,16 @@ export class RelationalHighlightRange extends Highlight {
             rangeStart: () => this._parent.properties.rangeStart(),
             rangeEnd: () => this._parent.properties.rangeEnd(),
         };
+    }
 
+    fromChartAccent(ca: ChartAccent.ChartAccent) {
+        super.fromChartAccent(ca);
+
+        this.properties = {
+            ...this.properties,
+            targetDescription: () => this.makeTargetInfo().target,
+            numTargets: () => this.makeTargetInfo().numTargets,
+        };
     }
 
     getTargetLocation(): [Item, number[]][] {
