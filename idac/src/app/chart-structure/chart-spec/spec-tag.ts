@@ -9,7 +9,7 @@ interface IEditorsNote {
 }
 
 export class SpecTag {
-    constructor(protected _tagname: string) {
+    constructor(public _tagname: string) {
         this._id = SpecTag.idCount ++;
     }
     private static idCount = 0;

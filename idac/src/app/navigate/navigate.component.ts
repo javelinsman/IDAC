@@ -169,6 +169,33 @@ export class NavigateComponent implements OnInit {
     this.focusHistory.pop();
   }
 
+  moveToNextDataPoint() {
+    const tags = this.tag._root.flattenedTags();
+    let index = tags.indexOf(this.tag);
+    while (index + 1 < tags.length) {
+      index += 1;
+      if (tags[index]._tagname === 'Bar') {
+        this.setFocus(tags[index]);
+        return;
+      }
+    }
+    return false;
+  }
+
+  moveToPreviousDataPoint() {
+    const tags = this.tag._root.flattenedTags();
+    let index = tags.indexOf(this.tag);
+    while (index - 1 >= 0) {
+      index -= 1;
+      if (tags[index]._tagname === 'Bar') {
+        this.setFocus(tags[index]);
+        return;
+      }
+    }
+    return false;
+  }
+
+
   /*
   moveToNextFrame() {
     let element = this.currentElement();
@@ -184,30 +211,6 @@ export class NavigateComponent implements OnInit {
       element = this.getElement(element.parentId);
     }
     return this.moveToPreviousSibling(element);
-  }
-
-  moveToNextDataPoint() {
-    let focus = this.getFocus();
-    while (focus + 1 < this.tags.length) {
-      focus += 1;
-      if (this.getElement(focus).tagname === 'bar') {
-        this.setFocus(focus);
-        return;
-      }
-    }
-    return false;
-  }
-
-  moveToPreviousDataPoint() {
-    let focus = this.getFocus();
-    while (focus - 1 >= 0) {
-      focus -= 1;
-      if (this.getElement(focus).tagname === 'bar') {
-        this.setFocus(focus);
-        return;
-      }
-    }
-    return false;
   }
 
   getAllBars(seriesIndex) {
