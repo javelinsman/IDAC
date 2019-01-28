@@ -1,3 +1,5 @@
+import * as d3 from 'd3';
+
 export function eqArray(a: any[], b: any[]) {
     if (a === b) {
       return true;
@@ -86,4 +88,48 @@ export function isDescendingArray(arr: any[]) {
     }
   }
   return true;
+}
+
+export function d3ImmediateChildren(selection: d3.Selection<any, any, any, any>, selector: string) {
+  return selection.selectAll(selector).filter(function() {
+    return (this as any).parentNode === selection.node();
+  });
+}
+
+export function d3AsSelectionArray(selection: d3.Selection<any, any, any, any>) {
+  return Array.from(selection.nodes()).map(d => d3.select(d));
+}
+
+export function makeAbsoluteContext(element, svgDocument) {
+  return function(x, y) {
+    const offset = svgDocument.getBoundingClientRect();
+    const matrix = element.getScreenCTM();
+    return {
+      x: (matrix.a * x) + (matrix.c * y) + matrix.e - offset.left,
+      y: (matrix.b * x) + (matrix.d * y) + matrix.f - offset.top
+    };
+  };
+}
+
+export function mergeBoundingBoxes(boundingBoxes: {x: number, y: number, width: number, height: number}[]) {
+  const left = [];
+  const right = [];
+  const top = [];
+  const bottom = [];
+  boundingBoxes.forEach(box => {
+    left.push(box.x);
+    right.push(box.x + box.width);
+    top.push(box.y);
+    bottom.push(box.y + box.height);
+  });
+  return {
+    x: d3.min(left),
+    y: d3.min(top),
+    width: d3.max(right) - d3.min(left),
+    height: d3.max(bottom) - d3.min(top),
+  };
+}
+
+export function zip(rows: any[][]) {
+  return rows[0].map((_, c) => rows.map(row => row[c]));
 }

@@ -2,12 +2,14 @@ import { ChartSpec } from './chart-spec';
 import { SpecTag } from './spec-tag';
 import * as ChartAccent from '../chart-accent/chart-accent';
 import { Highlight } from './highlight';
-import { CoordinateRange } from './coordinate-range';
-import { CoordinateLine } from './coordinate-line';
+import { CoordinateRange, RelationalHighlightRange } from './coordinate-range';
+import { CoordinateLine, RelationalHighlightLine } from './coordinate-line';
 
-type Annotation = Highlight; // | CoordinateRange | CoordinateLine;
+type Annotation = Highlight | CoordinateLine | CoordinateRange;
+type AllAnnotation = Annotation | RelationalHighlightLine | RelationalHighlightRange;
 
 export class Annotations extends SpecTag {
+    chartAccentAnnotations: ChartAccent.Annotation[];
     constructor(public _root: ChartSpec) {
         super('Annotations');
         this._parent = _root;
@@ -17,6 +19,7 @@ export class Annotations extends SpecTag {
         this.children = ca.annotations.annotations
             .filter(annotation => !annotation.target_inherit)
             .map(annotation => this.convertToAnnotation(annotation, ca.annotations.annotations, ca));
+        this.chartAccentAnnotations = ca.annotations.annotations;
     }
 
     convertToAnnotation(annotation: ChartAccent.Annotation,
@@ -36,5 +39,14 @@ export class Annotations extends SpecTag {
             highlight.fromChartAccent(ca);
             return highlight;
         }
+    }
+
+    findByAnnotation(annotation: ChartAccent.Annotation) {
+        return this.flattenedTags().slice(1).find((_annotation: AllAnnotation) =>
+            _annotation.annotation === annotation);
+    }
+
+    annotationInChartAccent(index: number) {
+        return this.chartAccentAnnotations[index];
     }
 }
