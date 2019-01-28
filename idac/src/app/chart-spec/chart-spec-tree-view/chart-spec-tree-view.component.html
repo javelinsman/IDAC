@@ -4,9 +4,14 @@
     class="border {{ tag === currentTag ? 'border-primary highlight' : 'bg-light' }} p-2 ml-{{indent}}">
     <div class="d-flex w-100 justify-content-between">
       <h5>{{ tag._tagname }}</h5>
-      <p *ngIf="numAttributes"
-        (click)="edit=!edit"
-        style="cursor: pointer" class="text-secondary">{{ edit ? 'Done' : 'Attributes' }}</p>
+      <div class="d-flex">
+        <p *ngIf="numAttributes" (click)="edit=!edit"
+          style="cursor: pointer" class="text-secondary">{{ edit ? 'Done' : 'Attributes' }}</p>
+        <h5 *ngIf="collapsable" (click)="collapseChildren=!collapseChildren"
+          style="cursor: pointer" class="text-secondary ml-1">
+          {{ collapseChildren ? '-' : '+' }}
+        </h5>
+      </div>
     </div>
     <div>
       <p>{{ tag.describe() }}</p>
@@ -30,11 +35,21 @@
         </div>
       </div>
     </div>
+    <div *ngIf="isCollapsed === false" class="d-flex justify-content-end">
+      <p (click)="1"
+        style="cursor: pointer" class="text-secondary">←</p>
+      <p>{{ siblingIndex + 1 }} / {{ siblingLength }}</p>
+      <p (click)="1"
+        style="cursor: pointer" class="text-secondary">→</p>
+    </div>
   </section>
   <div *ngIf="tag.children">
-    <div *ngFor="let childTag of tag.children">
-      <app-chart-spec-tree-view [tag]="childTag"
-        [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)" [indent]="indent + 2"></app-chart-spec-tree-view>
+    <div *ngFor="let childTag of tag.children; index as i">
+      <app-chart-spec-tree-view 
+        *ngIf="i === collapseIndex"
+        [tag]="childTag" [isCollapsed]="!collapsable || collapseChildren"
+        [siblingIndex]="i" [siblingLength]="tag.children.length"
+        [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)" [indent]="0"></app-chart-spec-tree-view>
     </div>
   <div>
 </div>

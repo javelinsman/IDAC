@@ -11,11 +11,18 @@ export class ChartSpecTreeViewComponent implements OnInit {
   @Input() tag: SpecTag;
   @Input() currentTag: SpecTag;
   @Input() indent: number;
+  @Input() isCollapsed: string;
+  @Input() siblingIndex: number;
+  @Input() siblingLength: number;
 
   @Output() currentTagChange: EventEmitter<SpecTag> = new EventEmitter();
 
   edit = false;
   numAttributes: number;
+
+  collapsable = false;
+  collapseChildren = false;
+  collapseIndex = 0;
 
   constructor() { }
 
@@ -24,6 +31,9 @@ export class ChartSpecTreeViewComponent implements OnInit {
       this.indent = 0;
     }
     this.numAttributes = Object.entries(this.tag.attributes).length;
+    if (this.tag.children && this.tag.children.length > 1) {
+      this.collapsable = true;
+    }
   }
 
   _currentTagChange(tag: SpecTag) {
