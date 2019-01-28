@@ -65,6 +65,9 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     });
     cs.marks.children.forEach((bargroup, i) => {
       pairs.push([bargroup, (bargroups as any)[i]]);
+      bargroup.children.forEach((bar, j) => {
+        pairs.push([bar, d3AsSelectionArray(bargroups[i])[j]]);
+      });
     });
     this.elementLink = pairs.reduce((accum, [k, v]: [SpecTag, any]) => {
       accum[k._id] = v;
