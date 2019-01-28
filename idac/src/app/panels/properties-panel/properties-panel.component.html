@@ -6,22 +6,14 @@
     <table class="table text-center">
       <thead>
         <tr>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
+          <th scope="col">Property</th>
+          <th scope="col">Value</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">Mark</th>
-          <td>Otto</td>
-        </tr>
-        <tr>
-          <th scope="row">Jacob</th>
-          <td>Thornton</td>
-        </tr>
-        <tr>
-          <th scope="row">Larry</th>
-          <td>the Bird</td>
+        <tr *ngFor="let prop of tag.properties | keyvalue">
+          <th scope="row">{{ prop.key }}</th>
+          <td>{{ prop.value() }}</td>
         </tr>
       </tbody>
     </table>
