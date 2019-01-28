@@ -9,7 +9,6 @@ import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
 export class ChartSpecComponent implements OnInit {
 
   @Input() chartSpec: ChartSpec;
-  renderList: any[];
 
   constructor() { }
 
@@ -18,10 +17,6 @@ export class ChartSpecComponent implements OnInit {
       this.chartSpec = new ChartSpec();
     }
     console.log(this.chartSpec);
-    const { title, y, x, legend, marks, annotations } = this.chartSpec;
-    this.renderList = [
-      title, y, x, legend, marks, annotations
-    ];
   }
 
 }
