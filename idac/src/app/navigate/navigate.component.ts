@@ -20,11 +20,11 @@ export class NavigateComponent implements OnInit {
   @Output() tagChange: EventEmitter<SpecTag> = new EventEmitter();
 
   focusBookmarks = {};
+  focusHistory: SpecTag[] = [];
 
   /*
   currentFocus: number;
   keyboardEventName = 'moveToNextElement';
-  focusHistory: number[] = [];
   focusFootprints = {
     title: -1,
     xAxis: -1,
@@ -53,6 +53,7 @@ export class NavigateComponent implements OnInit {
   }
 
   setFocus(tag: SpecTag) {
+    this.focusHistory.push(this.tag);
     this.tag = tag;
     this.tagChange.emit(this.tag);
   }
@@ -160,16 +161,15 @@ export class NavigateComponent implements OnInit {
     }
   }
 
-
-  /*
   moveToPreviouslyVisitedElement() {
-    if (this.focusHistory.length <= 1) {
+    if (!this.focusHistory.length) {
       return false;
     }
-    this.focusHistory.pop();
     this.setFocus(this.focusHistory.pop());
+    this.focusHistory.pop();
   }
 
+  /*
   moveToNextFrame() {
     let element = this.currentElement();
     while (element.parentId !== 0) {
