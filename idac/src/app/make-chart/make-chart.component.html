@@ -8,48 +8,17 @@
     <div class="col-4 border">
       <div class="row">
         <div class="col-12">
-          <div class="card">
-            <div class="card-header d-flex justify-content-between">
-              <h3>Description</h3>
-              <button class="btn btn-sm"
-                (click)="state['description-rule-text-edit'] = !state['description-rule-text-edit']">
-                {{ state['description-rule-text-edit'] ? 'Done' : 'Edit Rule' }}
-              </button>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Text</h5>
-              <p class="card-text" *ngIf="!state['description-rule-text-edit']">Lorem Ipsum</p>
-              <textarea *ngIf="state['description-rule-text-edit']"
-                class="form-control" id="description-rule-textarea" rows="3"></textarea>
-            </div>
-          </div>
+          <app-description-panel></app-description-panel>
         </div>
       </div>
       <div class="row">
         <div class="col-12">
-          <div class="card">
-            <div class="card-header d-flex justify-content-start">
-              <div class="form-check">
-                <input type="checkbox" class="form-control form-control-lg form-check-input my-auto"
-                  id="exampleCheck1" checked>
-              </div>
-              <h3 class="my-auto">Editor's Note</h3>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Text</h5>
-              <textarea class="form-control" id="description-rule-textarea" rows="3"></textarea>
-              <h5 class="card-title">Position</h5>
-              <div class="btn-group" role="group" aria-label="Basic example">
-                  <button type="button" class="btn btn-secondary active">prepend</button>
-                  <button type="button" class="btn btn-secondary">replace</button>
-                  <button type="button" class="btn btn-secondary">append</button>
-                </div>
-            </div>
-          </div>
+          <app-editors-note-panel></app-editors-note-panel>
         </div>
       </div>
     </div>
     <div class="col-4 border">
+      <app-properties-panel></app-properties-panel>
     </div>
   </div>
   <!--

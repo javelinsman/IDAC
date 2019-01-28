@@ -13,6 +13,9 @@ import { ChartSpecComponent } from './chart-spec/chart-spec.component';
 import { SpecTreeViewComponent } from './spec-tree-view/spec-tree-view.component';
 import { MakeChartComponent } from './make-chart/make-chart.component';
 import { SvgContainerComponent } from './svg-container/svg-container.component';
+import { DescriptionPanelComponent } from './panels/description-panel/description-panel.component';
+import { EditorsNotePanelComponent } from './panels/editors-note-panel/editors-note-panel.component';
+import { PropertiesPanelComponent } from './panels/properties-panel/properties-panel.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { SvgContainerComponent } from './svg-container/svg-container.component';
     ChartSpecComponent,
     SpecTreeViewComponent,
     MakeChartComponent,
-    SvgContainerComponent
+    SvgContainerComponent,
+    DescriptionPanelComponent,
+    EditorsNotePanelComponent,
+    PropertiesPanelComponent
   ],
   imports: [
     BrowserModule,
