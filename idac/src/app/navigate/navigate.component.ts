@@ -125,7 +125,7 @@ export class NavigateComponent implements OnInit {
   }
 
   moveToParent() {
-    if (!this.tag._parent) {
+    if (!this.tag._parent || this.tag._parent._id === 0) {
       return false;
     }
     this.focusBookmarks[this.tag._parent._id] = this.tag._id;

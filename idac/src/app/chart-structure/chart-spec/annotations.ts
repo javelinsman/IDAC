@@ -10,6 +10,7 @@ type Annotation = Highlight; // | CoordinateRange | CoordinateLine;
 export class Annotations extends SpecTag {
     constructor(public _root: ChartSpec) {
         super('Annotations');
+        this._parent = _root;
         this.children = [] as Annotation[];
     }
     fromChartAccent(ca: ChartAccent.ChartAccent) {

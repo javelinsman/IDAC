@@ -7,7 +7,7 @@ import { Marks } from './marks';
 import { Annotations } from './annotations';
 import { SpecTag } from './spec-tag';
 
-export class ChartSpec {
+export class ChartSpec extends SpecTag {
     title = new Title(this);
     y = new Y(this);
     x = new X(this);
@@ -17,16 +17,16 @@ export class ChartSpec {
 
     _flattendTags: SpecTag[];
 
-    fromChartAccent(ca: ChartAccent) {
-        this.title.fromChartAccent(ca);
-        this.y.fromChartAccent(ca);
-        this.x.fromChartAccent(ca);
-        this.legend.fromChartAccent(ca);
-        this.marks.fromChartAccent(ca);
-        this.annotations.fromChartAccent(ca);
+    constructor() {
+        super('ChartSpec');
+        this.children = [
+            this.title, this.y, this.x, this.legend, this.marks, this.annotations
+        ];
+    }
 
-        // assure that flattend tags will be updated
-        this._flattendTags = null;
+    fromChartAccent(ca: ChartAccent) {
+        this.children.forEach(tag => tag.fromChartAccent(ca));
+        this._flattendTags = null; // assure that flattend tags will be updated
     }
 
     flattenedTags() {
