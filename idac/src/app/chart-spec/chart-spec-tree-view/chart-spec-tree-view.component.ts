@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, EventEmitter, Output, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 
 @Component({
@@ -6,7 +6,7 @@ import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
   templateUrl: './chart-spec-tree-view.component.html',
   styleUrls: ['./chart-spec-tree-view.component.scss']
 })
-export class ChartSpecTreeViewComponent implements OnInit {
+export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
 
   @Input() tag: SpecTag;
   @Input() currentTag: SpecTag;
@@ -26,7 +26,9 @@ export class ChartSpecTreeViewComponent implements OnInit {
   collapseChildren = false;
   collapseIndex = 0;
 
-  constructor() { }
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
     if (!this.indent) {
@@ -35,6 +37,13 @@ export class ChartSpecTreeViewComponent implements OnInit {
     this.numAttributes = Object.entries(this.tag.attributes).length;
     if (this.tag.children && this.tag.children.length > 1) {
       this.collapsable = true;
+    }
+  }
+
+  ngAfterViewChecked() {
+    if (this.tag.flattenedTags().indexOf(this.currentTag) >= 0) {
+      this.parentCollapseIndexChange.emit(this.siblingIndex);
+      this.changeDetectorRef.detectChanges();
     }
   }
 
