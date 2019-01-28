@@ -1,0 +1,1828 @@
+{
+  "dataset": {
+    "columns": [
+      {
+        "name": "SepalLength",
+        "type": "number",
+        "format": ".1f"
+      },
+      {
+        "name": "SepalWidth",
+        "type": "number",
+        "format": ".1f"
+      },
+      {
+        "name": "PetalLength",
+        "type": "number",
+        "format": ".1f"
+      },
+      {
+        "name": "PetalWidth",
+        "type": "number",
+        "format": ".1f"
+      },
+      {
+        "name": "Species",
+        "type": "string"
+      }
+    ],
+    "rawFile": "SepalLength,SepalWidth,PetalLength,PetalWidth,Species\n5.1,3.5,1.4,0.2,setosa\n4.9,3.0,1.4,0.2,setosa\n4.7,3.2,1.3,0.2,setosa\n4.6,3.1,1.5,0.2,setosa\n5.0,3.6,1.4,0.2,setosa\n5.4,3.9,1.7,0.4,setosa\n4.6,3.4,1.4,0.3,setosa\n5.0,3.4,1.5,0.2,setosa\n4.4,2.9,1.4,0.2,setosa\n4.9,3.1,1.5,0.1,setosa\n5.4,3.7,1.5,0.2,setosa\n4.8,3.4,1.6,0.2,setosa\n4.8,3.0,1.4,0.1,setosa\n4.3,3.0,1.1,0.1,setosa\n5.8,4.0,1.2,0.2,setosa\n5.7,4.4,1.5,0.4,setosa\n5.4,3.9,1.3,0.4,setosa\n5.1,3.5,1.4,0.3,setosa\n5.7,3.8,1.7,0.3,setosa\n5.1,3.8,1.5,0.3,setosa\n5.4,3.4,1.7,0.2,setosa\n5.1,3.7,1.5,0.4,setosa\n4.6,3.6,1.0,0.2,setosa\n5.1,3.3,1.7,0.5,setosa\n4.8,3.4,1.9,0.2,setosa\n5.0,3.0,1.6,0.2,setosa\n5.0,3.4,1.6,0.4,setosa\n5.2,3.5,1.5,0.2,setosa\n5.2,3.4,1.4,0.2,setosa\n4.7,3.2,1.6,0.2,setosa\n4.8,3.1,1.6,0.2,setosa\n5.4,3.4,1.5,0.4,setosa\n5.2,4.1,1.5,0.1,setosa\n5.5,4.2,1.4,0.2,setosa\n4.9,3.1,1.5,0.2,setosa\n5.0,3.2,1.2,0.2,setosa\n5.5,3.5,1.3,0.2,setosa\n4.9,3.6,1.4,0.1,setosa\n4.4,3.0,1.3,0.2,setosa\n5.1,3.4,1.5,0.2,setosa\n5.0,3.5,1.3,0.3,setosa\n4.5,2.3,1.3,0.3,setosa\n4.4,3.2,1.3,0.2,setosa\n5.0,3.5,1.6,0.6,setosa\n5.1,3.8,1.9,0.4,setosa\n4.8,3.0,1.4,0.3,setosa\n5.1,3.8,1.6,0.2,setosa\n4.6,3.2,1.4,0.2,setosa\n5.3,3.7,1.5,0.2,setosa\n5.0,3.3,1.4,0.2,setosa\n7.0,3.2,4.7,1.4,versicolor\n6.4,3.2,4.5,1.5,versicolor\n6.9,3.1,4.9,1.5,versicolor\n5.5,2.3,4.0,1.3,versicolor\n6.5,2.8,4.6,1.5,versicolor\n5.7,2.8,4.5,1.3,versicolor\n6.3,3.3,4.7,1.6,versicolor\n4.9,2.4,3.3,1.0,versicolor\n6.6,2.9,4.6,1.3,versicolor\n5.2,2.7,3.9,1.4,versicolor\n5.0,2.0,3.5,1.0,versicolor\n5.9,3.0,4.2,1.5,versicolor\n6.0,2.2,4.0,1.0,versicolor\n6.1,2.9,4.7,1.4,versicolor\n5.6,2.9,3.6,1.3,versicolor\n6.7,3.1,4.4,1.4,versicolor\n5.6,3.0,4.5,1.5,versicolor\n5.8,2.7,4.1,1.0,versicolor\n6.2,2.2,4.5,1.5,versicolor\n5.6,2.5,3.9,1.1,versicolor\n5.9,3.2,4.8,1.8,versicolor\n6.1,2.8,4.0,1.3,versicolor\n6.3,2.5,4.9,1.5,versicolor\n6.1,2.8,4.7,1.2,versicolor\n6.4,2.9,4.3,1.3,versicolor\n6.6,3.0,4.4,1.4,versicolor\n6.8,2.8,4.8,1.4,versicolor\n6.7,3.0,5.0,1.7,versicolor\n6.0,2.9,4.5,1.5,versicolor\n5.7,2.6,3.5,1.0,versicolor\n5.5,2.4,3.8,1.1,versicolor\n5.5,2.4,3.7,1.0,versicolor\n5.8,2.7,3.9,1.2,versicolor\n6.0,2.7,5.1,1.6,versicolor\n5.4,3.0,4.5,1.5,versicolor\n6.0,3.4,4.5,1.6,versicolor\n6.7,3.1,4.7,1.5,versicolor\n6.3,2.3,4.4,1.3,versicolor\n5.6,3.0,4.1,1.3,versicolor\n5.5,2.5,4.0,1.3,versicolor\n5.5,2.6,4.4,1.2,versicolor\n6.1,3.0,4.6,1.4,versicolor\n5.8,2.6,4.0,1.2,versicolor\n5.0,2.3,3.3,1.0,versicolor\n5.6,2.7,4.2,1.3,versicolor\n5.7,3.0,4.2,1.2,versicolor\n5.7,2.9,4.2,1.3,versicolor\n6.2,2.9,4.3,1.3,versicolor\n5.1,2.5,3.0,1.1,versicolor\n5.7,2.8,4.1,1.3,versicolor\n6.3,3.3,6.0,2.5,virginica\n5.8,2.7,5.1,1.9,virginica\n7.1,3.0,5.9,2.1,virginica\n6.3,2.9,5.6,1.8,virginica\n6.5,3.0,5.8,2.2,virginica\n7.6,3.0,6.6,2.1,virginica\n4.9,2.5,4.5,1.7,virginica\n7.3,2.9,6.3,1.8,virginica\n6.7,2.5,5.8,1.8,virginica\n7.2,3.6,6.1,2.5,virginica\n6.5,3.2,5.1,2.0,virginica\n6.4,2.7,5.3,1.9,virginica\n6.8,3.0,5.5,2.1,virginica\n5.7,2.5,5.0,2.0,virginica\n5.8,2.8,5.1,2.4,virginica\n6.4,3.2,5.3,2.3,virginica\n6.5,3.0,5.5,1.8,virginica\n7.7,3.8,6.7,2.2,virginica\n7.7,2.6,6.9,2.3,virginica\n6.0,2.2,5.0,1.5,virginica\n6.9,3.2,5.7,2.3,virginica\n5.6,2.8,4.9,2.0,virginica\n7.7,2.8,6.7,2.0,virginica\n6.3,2.7,4.9,1.8,virginica\n6.7,3.3,5.7,2.1,virginica\n7.2,3.2,6.0,1.8,virginica\n6.2,2.8,4.8,1.8,virginica\n6.1,3.0,4.9,1.8,virginica\n6.4,2.8,5.6,2.1,virginica\n7.2,3.0,5.8,1.6,virginica\n7.4,2.8,6.1,1.9,virginica\n7.9,3.8,6.4,2.0,virginica\n6.4,2.8,5.6,2.2,virginica\n6.3,2.8,5.1,1.5,virginica\n6.1,2.6,5.6,1.4,virginica\n7.7,3.0,6.1,2.3,virginica\n6.3,3.4,5.6,2.4,virginica\n6.4,3.1,5.5,1.8,virginica\n6.0,3.0,4.8,1.8,virginica\n6.9,3.1,5.4,2.1,virginica\n6.7,3.1,5.6,2.4,virginica\n6.9,3.1,5.1,2.3,virginica\n5.8,2.7,5.1,1.9,virginica\n6.8,3.2,5.9,2.3,virginica\n6.7,3.3,5.7,2.5,virginica\n6.7,3.0,5.2,2.3,virginica\n6.3,2.5,5.0,1.9,virginica\n6.5,3.0,5.2,2.0,virginica\n6.2,3.4,5.4,2.3,virginica\n5.9,3.0,5.1,1.8,virginica\n",
+    "fileName": "iris.csv",
+    "rows": [
+      {
+        "SepalLength": 5.1,
+        "SepalWidth": 3.5,
+        "PetalLength": 1.4,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 4.9,
+        "SepalWidth": 3,
+        "PetalLength": 1.4,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 4.7,
+        "SepalWidth": 3.2,
+        "PetalLength": 1.3,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 4.6,
+        "SepalWidth": 3.1,
+        "PetalLength": 1.5,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5,
+        "SepalWidth": 3.6,
+        "PetalLength": 1.4,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.4,
+        "SepalWidth": 3.9,
+        "PetalLength": 1.7,
+        "PetalWidth": 0.4,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 4.6,
+        "SepalWidth": 3.4,
+        "PetalLength": 1.4,
+        "PetalWidth": 0.3,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5,
+        "SepalWidth": 3.4,
+        "PetalLength": 1.5,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 4.4,
+        "SepalWidth": 2.9,
+        "PetalLength": 1.4,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 4.9,
+        "SepalWidth": 3.1,
+        "PetalLength": 1.5,
+        "PetalWidth": 0.1,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.4,
+        "SepalWidth": 3.7,
+        "PetalLength": 1.5,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 4.8,
+        "SepalWidth": 3.4,
+        "PetalLength": 1.6,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 4.8,
+        "SepalWidth": 3,
+        "PetalLength": 1.4,
+        "PetalWidth": 0.1,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 4.3,
+        "SepalWidth": 3,
+        "PetalLength": 1.1,
+        "PetalWidth": 0.1,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.8,
+        "SepalWidth": 4,
+        "PetalLength": 1.2,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.7,
+        "SepalWidth": 4.4,
+        "PetalLength": 1.5,
+        "PetalWidth": 0.4,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.4,
+        "SepalWidth": 3.9,
+        "PetalLength": 1.3,
+        "PetalWidth": 0.4,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.1,
+        "SepalWidth": 3.5,
+        "PetalLength": 1.4,
+        "PetalWidth": 0.3,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.7,
+        "SepalWidth": 3.8,
+        "PetalLength": 1.7,
+        "PetalWidth": 0.3,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.1,
+        "SepalWidth": 3.8,
+        "PetalLength": 1.5,
+        "PetalWidth": 0.3,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.4,
+        "SepalWidth": 3.4,
+        "PetalLength": 1.7,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.1,
+        "SepalWidth": 3.7,
+        "PetalLength": 1.5,
+        "PetalWidth": 0.4,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 4.6,
+        "SepalWidth": 3.6,
+        "PetalLength": 1,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.1,
+        "SepalWidth": 3.3,
+        "PetalLength": 1.7,
+        "PetalWidth": 0.5,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 4.8,
+        "SepalWidth": 3.4,
+        "PetalLength": 1.9,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5,
+        "SepalWidth": 3,
+        "PetalLength": 1.6,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5,
+        "SepalWidth": 3.4,
+        "PetalLength": 1.6,
+        "PetalWidth": 0.4,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.2,
+        "SepalWidth": 3.5,
+        "PetalLength": 1.5,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.2,
+        "SepalWidth": 3.4,
+        "PetalLength": 1.4,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 4.7,
+        "SepalWidth": 3.2,
+        "PetalLength": 1.6,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 4.8,
+        "SepalWidth": 3.1,
+        "PetalLength": 1.6,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.4,
+        "SepalWidth": 3.4,
+        "PetalLength": 1.5,
+        "PetalWidth": 0.4,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.2,
+        "SepalWidth": 4.1,
+        "PetalLength": 1.5,
+        "PetalWidth": 0.1,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.5,
+        "SepalWidth": 4.2,
+        "PetalLength": 1.4,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 4.9,
+        "SepalWidth": 3.1,
+        "PetalLength": 1.5,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5,
+        "SepalWidth": 3.2,
+        "PetalLength": 1.2,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.5,
+        "SepalWidth": 3.5,
+        "PetalLength": 1.3,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 4.9,
+        "SepalWidth": 3.6,
+        "PetalLength": 1.4,
+        "PetalWidth": 0.1,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 4.4,
+        "SepalWidth": 3,
+        "PetalLength": 1.3,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.1,
+        "SepalWidth": 3.4,
+        "PetalLength": 1.5,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5,
+        "SepalWidth": 3.5,
+        "PetalLength": 1.3,
+        "PetalWidth": 0.3,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 4.5,
+        "SepalWidth": 2.3,
+        "PetalLength": 1.3,
+        "PetalWidth": 0.3,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 4.4,
+        "SepalWidth": 3.2,
+        "PetalLength": 1.3,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5,
+        "SepalWidth": 3.5,
+        "PetalLength": 1.6,
+        "PetalWidth": 0.6,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.1,
+        "SepalWidth": 3.8,
+        "PetalLength": 1.9,
+        "PetalWidth": 0.4,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 4.8,
+        "SepalWidth": 3,
+        "PetalLength": 1.4,
+        "PetalWidth": 0.3,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.1,
+        "SepalWidth": 3.8,
+        "PetalLength": 1.6,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 4.6,
+        "SepalWidth": 3.2,
+        "PetalLength": 1.4,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5.3,
+        "SepalWidth": 3.7,
+        "PetalLength": 1.5,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 5,
+        "SepalWidth": 3.3,
+        "PetalLength": 1.4,
+        "PetalWidth": 0.2,
+        "Species": "setosa"
+      },
+      {
+        "SepalLength": 7,
+        "SepalWidth": 3.2,
+        "PetalLength": 4.7,
+        "PetalWidth": 1.4,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6.4,
+        "SepalWidth": 3.2,
+        "PetalLength": 4.5,
+        "PetalWidth": 1.5,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6.9,
+        "SepalWidth": 3.1,
+        "PetalLength": 4.9,
+        "PetalWidth": 1.5,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.5,
+        "SepalWidth": 2.3,
+        "PetalLength": 4,
+        "PetalWidth": 1.3,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6.5,
+        "SepalWidth": 2.8,
+        "PetalLength": 4.6,
+        "PetalWidth": 1.5,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.7,
+        "SepalWidth": 2.8,
+        "PetalLength": 4.5,
+        "PetalWidth": 1.3,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6.3,
+        "SepalWidth": 3.3,
+        "PetalLength": 4.7,
+        "PetalWidth": 1.6,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 4.9,
+        "SepalWidth": 2.4,
+        "PetalLength": 3.3,
+        "PetalWidth": 1,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6.6,
+        "SepalWidth": 2.9,
+        "PetalLength": 4.6,
+        "PetalWidth": 1.3,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.2,
+        "SepalWidth": 2.7,
+        "PetalLength": 3.9,
+        "PetalWidth": 1.4,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5,
+        "SepalWidth": 2,
+        "PetalLength": 3.5,
+        "PetalWidth": 1,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.9,
+        "SepalWidth": 3,
+        "PetalLength": 4.2,
+        "PetalWidth": 1.5,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6,
+        "SepalWidth": 2.2,
+        "PetalLength": 4,
+        "PetalWidth": 1,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6.1,
+        "SepalWidth": 2.9,
+        "PetalLength": 4.7,
+        "PetalWidth": 1.4,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.6,
+        "SepalWidth": 2.9,
+        "PetalLength": 3.6,
+        "PetalWidth": 1.3,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6.7,
+        "SepalWidth": 3.1,
+        "PetalLength": 4.4,
+        "PetalWidth": 1.4,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.6,
+        "SepalWidth": 3,
+        "PetalLength": 4.5,
+        "PetalWidth": 1.5,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.8,
+        "SepalWidth": 2.7,
+        "PetalLength": 4.1,
+        "PetalWidth": 1,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6.2,
+        "SepalWidth": 2.2,
+        "PetalLength": 4.5,
+        "PetalWidth": 1.5,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.6,
+        "SepalWidth": 2.5,
+        "PetalLength": 3.9,
+        "PetalWidth": 1.1,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.9,
+        "SepalWidth": 3.2,
+        "PetalLength": 4.8,
+        "PetalWidth": 1.8,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6.1,
+        "SepalWidth": 2.8,
+        "PetalLength": 4,
+        "PetalWidth": 1.3,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6.3,
+        "SepalWidth": 2.5,
+        "PetalLength": 4.9,
+        "PetalWidth": 1.5,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6.1,
+        "SepalWidth": 2.8,
+        "PetalLength": 4.7,
+        "PetalWidth": 1.2,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6.4,
+        "SepalWidth": 2.9,
+        "PetalLength": 4.3,
+        "PetalWidth": 1.3,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6.6,
+        "SepalWidth": 3,
+        "PetalLength": 4.4,
+        "PetalWidth": 1.4,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6.8,
+        "SepalWidth": 2.8,
+        "PetalLength": 4.8,
+        "PetalWidth": 1.4,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6.7,
+        "SepalWidth": 3,
+        "PetalLength": 5,
+        "PetalWidth": 1.7,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6,
+        "SepalWidth": 2.9,
+        "PetalLength": 4.5,
+        "PetalWidth": 1.5,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.7,
+        "SepalWidth": 2.6,
+        "PetalLength": 3.5,
+        "PetalWidth": 1,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.5,
+        "SepalWidth": 2.4,
+        "PetalLength": 3.8,
+        "PetalWidth": 1.1,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.5,
+        "SepalWidth": 2.4,
+        "PetalLength": 3.7,
+        "PetalWidth": 1,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.8,
+        "SepalWidth": 2.7,
+        "PetalLength": 3.9,
+        "PetalWidth": 1.2,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6,
+        "SepalWidth": 2.7,
+        "PetalLength": 5.1,
+        "PetalWidth": 1.6,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.4,
+        "SepalWidth": 3,
+        "PetalLength": 4.5,
+        "PetalWidth": 1.5,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6,
+        "SepalWidth": 3.4,
+        "PetalLength": 4.5,
+        "PetalWidth": 1.6,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6.7,
+        "SepalWidth": 3.1,
+        "PetalLength": 4.7,
+        "PetalWidth": 1.5,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6.3,
+        "SepalWidth": 2.3,
+        "PetalLength": 4.4,
+        "PetalWidth": 1.3,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.6,
+        "SepalWidth": 3,
+        "PetalLength": 4.1,
+        "PetalWidth": 1.3,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.5,
+        "SepalWidth": 2.5,
+        "PetalLength": 4,
+        "PetalWidth": 1.3,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.5,
+        "SepalWidth": 2.6,
+        "PetalLength": 4.4,
+        "PetalWidth": 1.2,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6.1,
+        "SepalWidth": 3,
+        "PetalLength": 4.6,
+        "PetalWidth": 1.4,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.8,
+        "SepalWidth": 2.6,
+        "PetalLength": 4,
+        "PetalWidth": 1.2,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5,
+        "SepalWidth": 2.3,
+        "PetalLength": 3.3,
+        "PetalWidth": 1,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.6,
+        "SepalWidth": 2.7,
+        "PetalLength": 4.2,
+        "PetalWidth": 1.3,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.7,
+        "SepalWidth": 3,
+        "PetalLength": 4.2,
+        "PetalWidth": 1.2,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.7,
+        "SepalWidth": 2.9,
+        "PetalLength": 4.2,
+        "PetalWidth": 1.3,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6.2,
+        "SepalWidth": 2.9,
+        "PetalLength": 4.3,
+        "PetalWidth": 1.3,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.1,
+        "SepalWidth": 2.5,
+        "PetalLength": 3,
+        "PetalWidth": 1.1,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 5.7,
+        "SepalWidth": 2.8,
+        "PetalLength": 4.1,
+        "PetalWidth": 1.3,
+        "Species": "versicolor"
+      },
+      {
+        "SepalLength": 6.3,
+        "SepalWidth": 3.3,
+        "PetalLength": 6,
+        "PetalWidth": 2.5,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 5.8,
+        "SepalWidth": 2.7,
+        "PetalLength": 5.1,
+        "PetalWidth": 1.9,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 7.1,
+        "SepalWidth": 3,
+        "PetalLength": 5.9,
+        "PetalWidth": 2.1,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.3,
+        "SepalWidth": 2.9,
+        "PetalLength": 5.6,
+        "PetalWidth": 1.8,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.5,
+        "SepalWidth": 3,
+        "PetalLength": 5.8,
+        "PetalWidth": 2.2,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 7.6,
+        "SepalWidth": 3,
+        "PetalLength": 6.6,
+        "PetalWidth": 2.1,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 4.9,
+        "SepalWidth": 2.5,
+        "PetalLength": 4.5,
+        "PetalWidth": 1.7,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 7.3,
+        "SepalWidth": 2.9,
+        "PetalLength": 6.3,
+        "PetalWidth": 1.8,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.7,
+        "SepalWidth": 2.5,
+        "PetalLength": 5.8,
+        "PetalWidth": 1.8,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 7.2,
+        "SepalWidth": 3.6,
+        "PetalLength": 6.1,
+        "PetalWidth": 2.5,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.5,
+        "SepalWidth": 3.2,
+        "PetalLength": 5.1,
+        "PetalWidth": 2,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.4,
+        "SepalWidth": 2.7,
+        "PetalLength": 5.3,
+        "PetalWidth": 1.9,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.8,
+        "SepalWidth": 3,
+        "PetalLength": 5.5,
+        "PetalWidth": 2.1,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 5.7,
+        "SepalWidth": 2.5,
+        "PetalLength": 5,
+        "PetalWidth": 2,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 5.8,
+        "SepalWidth": 2.8,
+        "PetalLength": 5.1,
+        "PetalWidth": 2.4,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.4,
+        "SepalWidth": 3.2,
+        "PetalLength": 5.3,
+        "PetalWidth": 2.3,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.5,
+        "SepalWidth": 3,
+        "PetalLength": 5.5,
+        "PetalWidth": 1.8,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 7.7,
+        "SepalWidth": 3.8,
+        "PetalLength": 6.7,
+        "PetalWidth": 2.2,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 7.7,
+        "SepalWidth": 2.6,
+        "PetalLength": 6.9,
+        "PetalWidth": 2.3,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6,
+        "SepalWidth": 2.2,
+        "PetalLength": 5,
+        "PetalWidth": 1.5,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.9,
+        "SepalWidth": 3.2,
+        "PetalLength": 5.7,
+        "PetalWidth": 2.3,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 5.6,
+        "SepalWidth": 2.8,
+        "PetalLength": 4.9,
+        "PetalWidth": 2,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 7.7,
+        "SepalWidth": 2.8,
+        "PetalLength": 6.7,
+        "PetalWidth": 2,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.3,
+        "SepalWidth": 2.7,
+        "PetalLength": 4.9,
+        "PetalWidth": 1.8,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.7,
+        "SepalWidth": 3.3,
+        "PetalLength": 5.7,
+        "PetalWidth": 2.1,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 7.2,
+        "SepalWidth": 3.2,
+        "PetalLength": 6,
+        "PetalWidth": 1.8,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.2,
+        "SepalWidth": 2.8,
+        "PetalLength": 4.8,
+        "PetalWidth": 1.8,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.1,
+        "SepalWidth": 3,
+        "PetalLength": 4.9,
+        "PetalWidth": 1.8,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.4,
+        "SepalWidth": 2.8,
+        "PetalLength": 5.6,
+        "PetalWidth": 2.1,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 7.2,
+        "SepalWidth": 3,
+        "PetalLength": 5.8,
+        "PetalWidth": 1.6,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 7.4,
+        "SepalWidth": 2.8,
+        "PetalLength": 6.1,
+        "PetalWidth": 1.9,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 7.9,
+        "SepalWidth": 3.8,
+        "PetalLength": 6.4,
+        "PetalWidth": 2,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.4,
+        "SepalWidth": 2.8,
+        "PetalLength": 5.6,
+        "PetalWidth": 2.2,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.3,
+        "SepalWidth": 2.8,
+        "PetalLength": 5.1,
+        "PetalWidth": 1.5,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.1,
+        "SepalWidth": 2.6,
+        "PetalLength": 5.6,
+        "PetalWidth": 1.4,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 7.7,
+        "SepalWidth": 3,
+        "PetalLength": 6.1,
+        "PetalWidth": 2.3,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.3,
+        "SepalWidth": 3.4,
+        "PetalLength": 5.6,
+        "PetalWidth": 2.4,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.4,
+        "SepalWidth": 3.1,
+        "PetalLength": 5.5,
+        "PetalWidth": 1.8,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6,
+        "SepalWidth": 3,
+        "PetalLength": 4.8,
+        "PetalWidth": 1.8,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.9,
+        "SepalWidth": 3.1,
+        "PetalLength": 5.4,
+        "PetalWidth": 2.1,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.7,
+        "SepalWidth": 3.1,
+        "PetalLength": 5.6,
+        "PetalWidth": 2.4,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.9,
+        "SepalWidth": 3.1,
+        "PetalLength": 5.1,
+        "PetalWidth": 2.3,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 5.8,
+        "SepalWidth": 2.7,
+        "PetalLength": 5.1,
+        "PetalWidth": 1.9,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.8,
+        "SepalWidth": 3.2,
+        "PetalLength": 5.9,
+        "PetalWidth": 2.3,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.7,
+        "SepalWidth": 3.3,
+        "PetalLength": 5.7,
+        "PetalWidth": 2.5,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.7,
+        "SepalWidth": 3,
+        "PetalLength": 5.2,
+        "PetalWidth": 2.3,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.3,
+        "SepalWidth": 2.5,
+        "PetalLength": 5,
+        "PetalWidth": 1.9,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.5,
+        "SepalWidth": 3,
+        "PetalLength": 5.2,
+        "PetalWidth": 2,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 6.2,
+        "SepalWidth": 3.4,
+        "PetalLength": 5.4,
+        "PetalWidth": 2.3,
+        "Species": "virginica"
+      },
+      {
+        "SepalLength": 5.9,
+        "SepalWidth": 3,
+        "PetalLength": 5.1,
+        "PetalWidth": 1.8,
+        "Species": "virginica"
+      }
+    ],
+    "type": "csv",
+    "sampleFileName": "Iris Flowers"
+  },
+  "chart": {
+    "type": "scatterplot",
+    "title": {
+      "text": "Iris Flowers",
+      "fontFamily": "Roboto",
+      "fontSize": 20,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "width": 700,
+    "height": 400,
+    "xColumn": "PetalLength",
+    "yColumn": "PetalWidth",
+    "sizeColumn": null,
+    "groupColumn": "Species",
+    "nameColumn": "Species",
+    "xLabel": {
+      "text": "PetalLength",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "yLabel": {
+      "text": "PetalWidth",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "xScale": {
+      "type": "linear"
+    },
+    "yScale": {
+      "type": "linear"
+    },
+    "legendLabel": {
+      "text": "Series",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "colors": [
+      "#1b9e77",
+      "#d95f02",
+      "#7570b3",
+      "#e7298a",
+      "#66a61e",
+      "#e6ab02"
+    ]
+  },
+  "annotations": {
+    "annotations": [
+      {
+        "target": {
+          "_id": "_uniqueid_932",
+          "type": "items",
+          "items": [
+            {
+              "elements": "E2",
+              "items": [
+                "[\"data\",\"index\",0]",
+                "[\"data\",\"index\",1]",
+                "[\"data\",\"index\",2]",
+                "[\"data\",\"index\",3]",
+                "[\"data\",\"index\",4]",
+                "[\"data\",\"index\",5]",
+                "[\"data\",\"index\",6]",
+                "[\"data\",\"index\",7]",
+                "[\"data\",\"index\",8]",
+                "[\"data\",\"index\",9]",
+                "[\"data\",\"index\",10]",
+                "[\"data\",\"index\",11]",
+                "[\"data\",\"index\",12]",
+                "[\"data\",\"index\",13]",
+                "[\"data\",\"index\",14]",
+                "[\"data\",\"index\",15]",
+                "[\"data\",\"index\",16]",
+                "[\"data\",\"index\",17]",
+                "[\"data\",\"index\",18]",
+                "[\"data\",\"index\",19]",
+                "[\"data\",\"index\",20]",
+                "[\"data\",\"index\",21]",
+                "[\"data\",\"index\",22]",
+                "[\"data\",\"index\",23]",
+                "[\"data\",\"index\",24]",
+                "[\"data\",\"index\",25]",
+                "[\"data\",\"index\",26]",
+                "[\"data\",\"index\",27]",
+                "[\"data\",\"index\",28]",
+                "[\"data\",\"index\",29]",
+                "[\"data\",\"index\",30]",
+                "[\"data\",\"index\",31]",
+                "[\"data\",\"index\",32]",
+                "[\"data\",\"index\",33]",
+                "[\"data\",\"index\",34]",
+                "[\"data\",\"index\",35]",
+                "[\"data\",\"index\",36]",
+                "[\"data\",\"index\",37]",
+                "[\"data\",\"index\",38]",
+                "[\"data\",\"index\",39]",
+                "[\"data\",\"index\",40]",
+                "[\"data\",\"index\",41]",
+                "[\"data\",\"index\",42]",
+                "[\"data\",\"index\",43]",
+                "[\"data\",\"index\",44]",
+                "[\"data\",\"index\",45]",
+                "[\"data\",\"index\",46]",
+                "[\"data\",\"index\",47]",
+                "[\"data\",\"index\",48]",
+                "[\"data\",\"index\",49]",
+                "[\"data\",\"index\",50]",
+                "[\"data\",\"index\",51]",
+                "[\"data\",\"index\",52]",
+                "[\"data\",\"index\",53]",
+                "[\"data\",\"index\",54]",
+                "[\"data\",\"index\",55]",
+                "[\"data\",\"index\",56]",
+                "[\"data\",\"index\",57]",
+                "[\"data\",\"index\",58]",
+                "[\"data\",\"index\",59]",
+                "[\"data\",\"index\",60]",
+                "[\"data\",\"index\",61]",
+                "[\"data\",\"index\",62]",
+                "[\"data\",\"index\",63]",
+                "[\"data\",\"index\",64]",
+                "[\"data\",\"index\",65]",
+                "[\"data\",\"index\",66]",
+                "[\"data\",\"index\",67]",
+                "[\"data\",\"index\",68]",
+                "[\"data\",\"index\",69]",
+                "[\"data\",\"index\",70]",
+                "[\"data\",\"index\",71]",
+                "[\"data\",\"index\",72]",
+                "[\"data\",\"index\",73]",
+                "[\"data\",\"index\",74]",
+                "[\"data\",\"index\",75]",
+                "[\"data\",\"index\",76]",
+                "[\"data\",\"index\",77]",
+                "[\"data\",\"index\",78]",
+                "[\"data\",\"index\",79]",
+                "[\"data\",\"index\",80]",
+                "[\"data\",\"index\",81]",
+                "[\"data\",\"index\",82]",
+                "[\"data\",\"index\",83]",
+                "[\"data\",\"index\",84]",
+                "[\"data\",\"index\",85]",
+                "[\"data\",\"index\",86]",
+                "[\"data\",\"index\",87]",
+                "[\"data\",\"index\",88]",
+                "[\"data\",\"index\",89]",
+                "[\"data\",\"index\",90]",
+                "[\"data\",\"index\",91]",
+                "[\"data\",\"index\",92]",
+                "[\"data\",\"index\",93]",
+                "[\"data\",\"index\",94]",
+                "[\"data\",\"index\",95]",
+                "[\"data\",\"index\",96]",
+                "[\"data\",\"index\",97]",
+                "[\"data\",\"index\",98]",
+                "[\"data\",\"index\",99]",
+                "[\"data\",\"index\",100]",
+                "[\"data\",\"index\",101]",
+                "[\"data\",\"index\",102]",
+                "[\"data\",\"index\",103]",
+                "[\"data\",\"index\",104]",
+                "[\"data\",\"index\",105]",
+                "[\"data\",\"index\",106]",
+                "[\"data\",\"index\",107]",
+                "[\"data\",\"index\",108]",
+                "[\"data\",\"index\",109]",
+                "[\"data\",\"index\",110]",
+                "[\"data\",\"index\",111]",
+                "[\"data\",\"index\",112]",
+                "[\"data\",\"index\",113]",
+                "[\"data\",\"index\",114]",
+                "[\"data\",\"index\",115]",
+                "[\"data\",\"index\",116]",
+                "[\"data\",\"index\",117]",
+                "[\"data\",\"index\",118]",
+                "[\"data\",\"index\",119]",
+                "[\"data\",\"index\",120]",
+                "[\"data\",\"index\",121]",
+                "[\"data\",\"index\",122]",
+                "[\"data\",\"index\",123]",
+                "[\"data\",\"index\",124]",
+                "[\"data\",\"index\",125]",
+                "[\"data\",\"index\",126]",
+                "[\"data\",\"index\",127]",
+                "[\"data\",\"index\",128]",
+                "[\"data\",\"index\",129]",
+                "[\"data\",\"index\",130]",
+                "[\"data\",\"index\",131]",
+                "[\"data\",\"index\",132]",
+                "[\"data\",\"index\",133]",
+                "[\"data\",\"index\",134]",
+                "[\"data\",\"index\",135]",
+                "[\"data\",\"index\",136]",
+                "[\"data\",\"index\",137]",
+                "[\"data\",\"index\",138]",
+                "[\"data\",\"index\",139]",
+                "[\"data\",\"index\",140]",
+                "[\"data\",\"index\",141]",
+                "[\"data\",\"index\",142]",
+                "[\"data\",\"index\",143]",
+                "[\"data\",\"index\",144]",
+                "[\"data\",\"index\",145]",
+                "[\"data\",\"index\",146]",
+                "[\"data\",\"index\",147]",
+                "[\"data\",\"index\",148]",
+                "[\"data\",\"index\",149]"
+              ]
+            }
+          ]
+        },
+        "components": [
+          {
+            "type": "item-label",
+            "visible": false,
+            "style": {
+              "fill": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "paint_order": "stroke",
+              "stroke": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null,
+              "font_family": "Roboto",
+              "font_size": 14
+            },
+            "text": "{Species}",
+            "anchor": "m,tt",
+            "anchor_offset": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "type": "highlight",
+            "visible": true,
+            "style": {
+              "fill": {
+                "mode": "brighter-darker",
+                "value": 0.6631578947368411
+              },
+              "stroke": null,
+              "stroke_width": 2,
+              "line_stroke": {
+                "mode": "brighter-darker",
+                "value": 0
+              },
+              "line_stroke_width": 2
+            }
+          },
+          {
+            "type": "bubbleset",
+            "visible": false,
+            "style": {
+              "fill": {
+                "r": 136,
+                "g": 136,
+                "b": 136,
+                "a": 1
+              },
+              "stroke": null,
+              "stroke_width": 2,
+              "line_stroke": null
+            },
+            "sigma": 10
+          },
+          {
+            "type": "trendline",
+            "visible": false,
+            "style": {
+              "fill": null,
+              "stroke": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null
+            }
+          }
+        ],
+        "visible": true,
+        "id": "#A2"
+      },
+      {
+        "target": {
+          "_id": "_uniqueid_898",
+          "type": "items",
+          "items": [
+            {
+              "elements": "E2",
+              "items": [
+                "[\"data\",\"index\",100]",
+                "[\"data\",\"index\",101]",
+                "[\"data\",\"index\",102]",
+                "[\"data\",\"index\",103]",
+                "[\"data\",\"index\",104]",
+                "[\"data\",\"index\",105]",
+                "[\"data\",\"index\",106]",
+                "[\"data\",\"index\",107]",
+                "[\"data\",\"index\",108]",
+                "[\"data\",\"index\",109]",
+                "[\"data\",\"index\",110]",
+                "[\"data\",\"index\",111]",
+                "[\"data\",\"index\",112]",
+                "[\"data\",\"index\",113]",
+                "[\"data\",\"index\",114]",
+                "[\"data\",\"index\",115]",
+                "[\"data\",\"index\",116]",
+                "[\"data\",\"index\",117]",
+                "[\"data\",\"index\",118]",
+                "[\"data\",\"index\",119]",
+                "[\"data\",\"index\",120]",
+                "[\"data\",\"index\",121]",
+                "[\"data\",\"index\",122]",
+                "[\"data\",\"index\",123]",
+                "[\"data\",\"index\",124]",
+                "[\"data\",\"index\",125]",
+                "[\"data\",\"index\",126]",
+                "[\"data\",\"index\",127]",
+                "[\"data\",\"index\",128]",
+                "[\"data\",\"index\",129]",
+                "[\"data\",\"index\",130]",
+                "[\"data\",\"index\",131]",
+                "[\"data\",\"index\",132]",
+                "[\"data\",\"index\",133]",
+                "[\"data\",\"index\",134]",
+                "[\"data\",\"index\",135]",
+                "[\"data\",\"index\",136]",
+                "[\"data\",\"index\",137]",
+                "[\"data\",\"index\",138]",
+                "[\"data\",\"index\",139]",
+                "[\"data\",\"index\",140]",
+                "[\"data\",\"index\",141]",
+                "[\"data\",\"index\",142]",
+                "[\"data\",\"index\",143]",
+                "[\"data\",\"index\",144]",
+                "[\"data\",\"index\",145]",
+                "[\"data\",\"index\",146]",
+                "[\"data\",\"index\",147]",
+                "[\"data\",\"index\",148]",
+                "[\"data\",\"index\",149]"
+              ]
+            }
+          ]
+        },
+        "components": [
+          {
+            "type": "item-label",
+            "visible": false,
+            "style": {
+              "fill": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "paint_order": "stroke",
+              "stroke": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null,
+              "font_family": "Roboto",
+              "font_size": 14
+            },
+            "text": "{value}",
+            "anchor": "m,tt",
+            "anchor_offset": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "type": "highlight",
+            "visible": false,
+            "style": {
+              "fill": {
+                "mode": "brighter-darker",
+                "value": 0.2
+              },
+              "stroke": {
+                "mode": "brighter-darker",
+                "value": -1
+              },
+              "stroke_width": 0,
+              "line_stroke": {
+                "mode": "brighter-darker",
+                "value": -0.2
+              },
+              "line_stroke_width": 3
+            }
+          },
+          {
+            "type": "bubbleset",
+            "visible": false,
+            "style": {
+              "fill": {
+                "r": 117,
+                "g": 112,
+                "b": 179,
+                "a": 0.5
+              },
+              "stroke": null,
+              "stroke_width": 2,
+              "line_stroke": null
+            },
+            "sigma": 10
+          },
+          {
+            "type": "trendline",
+            "visible": true,
+            "style": {
+              "fill": null,
+              "stroke": {
+                "r": 117,
+                "g": 112,
+                "b": 179,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null
+            }
+          }
+        ],
+        "visible": true,
+        "id": "#A1"
+      },
+      {
+        "target": {
+          "_id": "_uniqueid_1086",
+          "type": "items",
+          "items": [
+            {
+              "elements": "E2",
+              "items": [
+                "[\"data\",\"index\",50]",
+                "[\"data\",\"index\",51]",
+                "[\"data\",\"index\",52]",
+                "[\"data\",\"index\",53]",
+                "[\"data\",\"index\",54]",
+                "[\"data\",\"index\",55]",
+                "[\"data\",\"index\",56]",
+                "[\"data\",\"index\",57]",
+                "[\"data\",\"index\",58]",
+                "[\"data\",\"index\",59]",
+                "[\"data\",\"index\",60]",
+                "[\"data\",\"index\",61]",
+                "[\"data\",\"index\",62]",
+                "[\"data\",\"index\",63]",
+                "[\"data\",\"index\",64]",
+                "[\"data\",\"index\",65]",
+                "[\"data\",\"index\",66]",
+                "[\"data\",\"index\",67]",
+                "[\"data\",\"index\",68]",
+                "[\"data\",\"index\",69]",
+                "[\"data\",\"index\",70]",
+                "[\"data\",\"index\",71]",
+                "[\"data\",\"index\",72]",
+                "[\"data\",\"index\",73]",
+                "[\"data\",\"index\",74]",
+                "[\"data\",\"index\",75]",
+                "[\"data\",\"index\",76]",
+                "[\"data\",\"index\",77]",
+                "[\"data\",\"index\",78]",
+                "[\"data\",\"index\",79]",
+                "[\"data\",\"index\",80]",
+                "[\"data\",\"index\",81]",
+                "[\"data\",\"index\",82]",
+                "[\"data\",\"index\",83]",
+                "[\"data\",\"index\",84]",
+                "[\"data\",\"index\",85]",
+                "[\"data\",\"index\",86]",
+                "[\"data\",\"index\",87]",
+                "[\"data\",\"index\",88]",
+                "[\"data\",\"index\",89]",
+                "[\"data\",\"index\",90]",
+                "[\"data\",\"index\",91]",
+                "[\"data\",\"index\",92]",
+                "[\"data\",\"index\",93]",
+                "[\"data\",\"index\",94]",
+                "[\"data\",\"index\",95]",
+                "[\"data\",\"index\",96]",
+                "[\"data\",\"index\",97]",
+                "[\"data\",\"index\",98]",
+                "[\"data\",\"index\",99]"
+              ]
+            }
+          ]
+        },
+        "components": [
+          {
+            "type": "item-label",
+            "visible": false,
+            "style": {
+              "fill": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "paint_order": "stroke",
+              "stroke": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null,
+              "font_family": "Roboto",
+              "font_size": 14
+            },
+            "text": "{value}",
+            "anchor": "m,tt",
+            "anchor_offset": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "type": "highlight",
+            "visible": false,
+            "style": {
+              "fill": {
+                "mode": "brighter-darker",
+                "value": 0.2
+              },
+              "stroke": {
+                "mode": "brighter-darker",
+                "value": -1
+              },
+              "stroke_width": 2,
+              "line_stroke": {
+                "mode": "brighter-darker",
+                "value": -0.2
+              },
+              "line_stroke_width": 3
+            }
+          },
+          {
+            "type": "bubbleset",
+            "visible": false,
+            "style": {
+              "fill": {
+                "r": 217,
+                "g": 95,
+                "b": 2,
+                "a": 0.5
+              },
+              "stroke": null,
+              "stroke_width": 2,
+              "line_stroke": null
+            },
+            "sigma": 10
+          },
+          {
+            "type": "trendline",
+            "visible": true,
+            "style": {
+              "fill": null,
+              "stroke": {
+                "r": 217,
+                "g": 95,
+                "b": 2,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null
+            }
+          }
+        ],
+        "visible": true,
+        "id": "#A3"
+      },
+      {
+        "target": {
+          "_id": "_uniqueid_1171",
+          "type": "items",
+          "items": [
+            {
+              "elements": "E2",
+              "items": [
+                "[\"data\",\"index\",0]",
+                "[\"data\",\"index\",1]",
+                "[\"data\",\"index\",2]",
+                "[\"data\",\"index\",3]",
+                "[\"data\",\"index\",4]",
+                "[\"data\",\"index\",5]",
+                "[\"data\",\"index\",6]",
+                "[\"data\",\"index\",7]",
+                "[\"data\",\"index\",8]",
+                "[\"data\",\"index\",9]",
+                "[\"data\",\"index\",10]",
+                "[\"data\",\"index\",11]",
+                "[\"data\",\"index\",12]",
+                "[\"data\",\"index\",13]",
+                "[\"data\",\"index\",14]",
+                "[\"data\",\"index\",15]",
+                "[\"data\",\"index\",16]",
+                "[\"data\",\"index\",17]",
+                "[\"data\",\"index\",18]",
+                "[\"data\",\"index\",19]",
+                "[\"data\",\"index\",20]",
+                "[\"data\",\"index\",21]",
+                "[\"data\",\"index\",22]",
+                "[\"data\",\"index\",23]",
+                "[\"data\",\"index\",24]",
+                "[\"data\",\"index\",25]",
+                "[\"data\",\"index\",26]",
+                "[\"data\",\"index\",27]",
+                "[\"data\",\"index\",28]",
+                "[\"data\",\"index\",29]",
+                "[\"data\",\"index\",30]",
+                "[\"data\",\"index\",31]",
+                "[\"data\",\"index\",32]",
+                "[\"data\",\"index\",33]",
+                "[\"data\",\"index\",34]",
+                "[\"data\",\"index\",35]",
+                "[\"data\",\"index\",36]",
+                "[\"data\",\"index\",37]",
+                "[\"data\",\"index\",38]",
+                "[\"data\",\"index\",39]",
+                "[\"data\",\"index\",40]",
+                "[\"data\",\"index\",41]",
+                "[\"data\",\"index\",42]",
+                "[\"data\",\"index\",43]",
+                "[\"data\",\"index\",44]",
+                "[\"data\",\"index\",45]",
+                "[\"data\",\"index\",46]",
+                "[\"data\",\"index\",47]",
+                "[\"data\",\"index\",48]",
+                "[\"data\",\"index\",49]"
+              ]
+            }
+          ]
+        },
+        "components": [
+          {
+            "type": "item-label",
+            "visible": false,
+            "style": {
+              "fill": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "paint_order": "stroke",
+              "stroke": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null,
+              "font_family": "Roboto",
+              "font_size": 14
+            },
+            "text": "{value}",
+            "anchor": "m,tt",
+            "anchor_offset": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "type": "highlight",
+            "visible": false,
+            "style": {
+              "fill": {
+                "mode": "brighter-darker",
+                "value": 0.2
+              },
+              "stroke": {
+                "mode": "brighter-darker",
+                "value": -1
+              },
+              "stroke_width": 2,
+              "line_stroke": {
+                "mode": "brighter-darker",
+                "value": -0.2
+              },
+              "line_stroke_width": 3
+            }
+          },
+          {
+            "type": "bubbleset",
+            "visible": false,
+            "style": {
+              "fill": {
+                "r": 27,
+                "g": 158,
+                "b": 119,
+                "a": 0.5
+              },
+              "stroke": null,
+              "stroke_width": 2,
+              "line_stroke": null
+            },
+            "sigma": 10
+          },
+          {
+            "type": "trendline",
+            "visible": true,
+            "style": {
+              "fill": null,
+              "stroke": {
+                "r": 102,
+                "g": 166,
+                "b": 30,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null
+            }
+          }
+        ],
+        "visible": true,
+        "id": "#A4"
+      }
+    ]
+  },
+  "timestamp": 1548572871074
+}

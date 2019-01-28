@@ -35,7 +35,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="isCollapsed === false" class="d-flex justify-content-end">
+    <div *ngIf="isCollapsed === 'false'" class="d-flex justify-content-end">
       <p (click)="siblingIndex > 0 ? parentCollapseIndexChange.emit(siblingIndex - 1) : ''"
         style="cursor: pointer" class="text-secondary">←</p>
       <p>{{ siblingIndex + 1 }} / {{ siblingLength }}</p>
