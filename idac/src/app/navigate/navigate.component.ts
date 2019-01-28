@@ -142,62 +142,26 @@ export class NavigateComponent implements OnInit {
     }
   }
 
+  moveToNextSibling() {
+    const { index, length } = this.getElementSiblingIndex();
+    if (index + 1 < length) {
+      this.setFocus(this.tag._parent.children[index + 1]);
+    } else {
+      return false;
+    }
+  }
+
+  moveToPreviousSibling() {
+    const { index, length } = this.getElementSiblingIndex();
+    if (index - 1 >= 0) {
+      this.setFocus(this.tag._parent.children[index - 1]);
+    } else {
+      return false;
+    }
+  }
+
+
   /*
-
-  moveToNextAnnotation() {
-    const nextAnnotation = this.tags.slice(this.getFocus() + 1)
-      .find(tag => tag._annotation);
-    if (nextAnnotation) {
-      this.setFocus(nextAnnotation._id);
-    } else {
-      return false;
-    }
-  }
-
-  moveToPreviousAnnotation() {
-    const prevAnnotation = this.tags.slice(0, this.getFocus())
-      .reverse().find(tag => tag._annotation);
-    if (prevAnnotation) {
-      this.setFocus(prevAnnotation._id);
-    } else {
-      return false;
-    }
-  }
-
-  moveToNextSibling(element) {
-    if (!element) {
-      element = this.currentElement();
-    }
-    const parent = this.getElement(element.parentId);
-    if (!parent) {
-      return false;
-    }
-    const element_index = parent.children.indexOf(element);
-    if (element_index + 1 < parent.children.length) {
-      const nextSibling = parent.children[element_index + 1];
-      this.setFocus(nextSibling._id);
-    } else {
-      return false;
-    }
-  }
-
-  moveToPreviousSibling(element) {
-    if (!element) {
-      element = this.currentElement();
-    }
-    const parent = this.getElement(element.parentId);
-    if (!parent) {
-      return;
-    }
-    const element_index = parent.children.indexOf(element);
-    if (element_index - 1 >= 0) {
-      const prevSibling = parent.children[element_index - 1];
-      this.setFocus(prevSibling._id);
-    } else {
-      return false;
-    }
-  }
-
   moveToPreviouslyVisitedElement() {
     if (this.focusHistory.length <= 1) {
       return false;
