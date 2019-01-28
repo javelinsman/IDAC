@@ -3,7 +3,7 @@
     (click)="_currentTagChange(tag)"
     class="border {{ tag === currentTag ? 'border-primary highlight' : 'bg-light' }} p-2 ml-{{indent}}">
     <div class="d-flex w-100 justify-content-between">
-      <h5>{{ tag._tagname }}</h5>
+      <h5><span class="text-danger">{{ tag.editorsNote.active ? '✓' : '' }}</span> {{ tag._tagname }}</h5>
       <div class="d-flex">
         <p *ngIf="numAttributes" (click)="edit=!edit"
           style="cursor: pointer" class="text-secondary">{{ edit ? 'Done' : 'Attributes' }}</p>
