@@ -14,8 +14,10 @@ export class ChartSpecTreeViewComponent implements OnInit {
   @Input() isCollapsed: string;
   @Input() siblingIndex: number;
   @Input() siblingLength: number;
+  @Input() parentCollapseIndex = 0;
 
   @Output() currentTagChange: EventEmitter<SpecTag> = new EventEmitter();
+  @Output() parentCollapseIndexChange: EventEmitter<number> = new EventEmitter();
 
   edit = false;
   numAttributes: number;
