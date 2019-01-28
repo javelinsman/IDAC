@@ -46,7 +46,7 @@
   <div *ngIf="tag.children">
     <div *ngFor="let childTag of tag.children; index as i">
       <app-chart-spec-tree-view 
-        class="{{ i === collapseIndex ? '' : 'd-none'}}"
+        class="{{ !collapsable || collapseChildren || i === collapseIndex ? '' : 'd-none'}}"
         [tag]="childTag" [isCollapsed]="!collapsable || collapseChildren"
         [siblingIndex]="i" [siblingLength]="tag.children.length" [(parentCollapseIndex)]="collapseIndex"
         [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)" [indent]="0"></app-chart-spec-tree-view>
