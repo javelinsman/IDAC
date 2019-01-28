@@ -10,7 +10,7 @@ import { Tick } from './x';
 
 export class CoordinateLine extends SpecTag {
     constructor(
-        private annotation: ChartAccent.Annotation,
+        public annotation: ChartAccent.Annotation,
         private annotations: ChartAccent.Annotation[],
         public _root: ChartSpec, public _parent: Annotations
     ) {

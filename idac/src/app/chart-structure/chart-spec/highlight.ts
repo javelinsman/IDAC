@@ -9,7 +9,7 @@ import { CoordinateLine } from './coordinate-line';
 
 export class Highlight extends SpecTag {
     constructor(
-        protected annotation: ChartAccent.Annotation,
+        public annotation: ChartAccent.Annotation,
         public _root: ChartSpec,
         public _parent: Annotations | CoordinateRange | CoordinateLine
     ) {

@@ -44,10 +44,21 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     const bargroups = rects.map((_, i) => this.svg.selectAll(`.idac-bargroup-${i}`));
     const xTicks = d3AsSelectionArray(x.selectAll('.tick'));
     const yTicks = d3AsSelectionArray(y.selectAll('.tick'));
-    const annotation = annotationBackground.merge(annotationForeground);
 
-    // annotationForeground.selectAll('._uniqueid_930').style('fill', 'green').selectAll('*').style('fill', 'green');
-    // annotationForeground.selectAll('._uniqueid_933').style('fill', 'pink').selectAll('*').style('fill', 'pink');
+    const annotationRenderingArea = d3AsSelectionArray(
+      d3ImmediateChildren(
+        d3ImmediateChildren(annotationForeground, 'g'),
+        'g')
+      )[0];
+    const renderedAnnotations = d3AsSelectionArray(d3ImmediateChildren(annotationRenderingArea, '*'));
+    const annotationIds = renderedAnnotations.map(d => d.attr('class').split(' ')[0]);
+    const uniqueAnnotationIds: string[] = annotationIds.reduce((accum, id) => {
+      if (!accum.includes(id)) {
+        accum.push(id);
+      }
+      return accum;
+    }, []);
+    const annotations = uniqueAnnotationIds.map(id => annotationForeground.selectAll(`.${id}`));
 
     const cs = this.chartSpec;
     const pairs = [
@@ -68,6 +79,10 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       bargroup.children.forEach((bar, j) => {
         pairs.push([bar, d3AsSelectionArray(bargroups[i])[j]]);
       });
+    });
+    annotations.forEach((annotation, i) => {
+      const tag = cs.annotations.findByAnnotation(cs.annotations.annotationInChartAccent(i));
+      pairs.push([tag, annotation]);
     });
     this.elementLink = pairs.reduce((accum, [k, v]: [SpecTag, any]) => {
       accum[k._id] = v;
@@ -95,6 +110,8 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
           };
         });
         const mergedBox = mergeBoundingBoxes(boundingBoxes);
+        mergedBox.width = Math.max(mergedBox.width, 5);
+        mergedBox.height = Math.max(mergedBox.height, 5);
 
         // make highlight rect
         const highlightRect = this.svg.append('rect').attr('transform', translate(mergedBox.x, mergedBox.y))
