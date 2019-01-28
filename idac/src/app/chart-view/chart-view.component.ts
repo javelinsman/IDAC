@@ -21,6 +21,8 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
   @ViewChild(SvgContainerComponent) svgContainer: SvgContainerComponent;
 
   svg: d3.Selection<SVGGElement, any, HTMLElement, any>;
+  gClickHint: d3.Selection<any, any, any, any>;
+  gHighlight: d3.Selection<any, any, any, any>;
   elementLink = {};
   ready = false;
 
@@ -32,6 +34,10 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
   onSVGInit() {
     this.ready = true;
     this.svg = d3.select(this.svgContainer.svgContainerDiv.nativeElement).select('svg');
+
+    this.gHighlight = this.svg.append('g').classed('idac-highlights', true);
+    this.gClickHint = this.svg.append('g').classed('idac-click-hint', true);
+
     const [annotationBackground, g2, annotationForeground] = d3AsSelectionArray(d3ImmediateChildren(this.svg, 'g'));
     const [title, legend, chart] = d3AsSelectionArray(d3ImmediateChildren(g2, 'g'));
     const items = d3AsSelectionArray(legend.selectAll('.legend'));
@@ -82,12 +88,49 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     });
     annotations.forEach((annotation, i) => {
       const tag = cs.annotations.findByAnnotation(cs.annotations.annotationInChartAccent(i));
-      pairs.push([tag, annotation]);
+      pairs.push([tag, annotation as any]);
     });
     this.elementLink = pairs.reduce((accum, [k, v]: [SpecTag, any]) => {
       accum[k._id] = v;
       return accum;
     }, {});
+
+    Object.entries(this.elementLink).forEach(([tagId, selection]: [string, d3.Selection<any, any, any, any>]) => {
+      const tag = this.chartSpec.findById(+tagId);
+      const rect = this.makeRectFromBoundingBox(this.getMergedBoundingBox(selection), this.gClickHint)
+        .style('fill', 'pink').style('fill-opacity', 0);
+      rect.on('mouseover', function() { d3.select(this).style('fill-opacity', 0.5); });
+      rect.on('mouseout', function() { d3.select(this).style('fill-opacity', 0); });
+      rect.on('click', () => this._currentTagChange(tag));
+    });
+  }
+
+  getMergedBoundingBox(selection: d3.Selection<any, any, any, any>) {
+    const boundingBoxes = [
+      ...selection.nodes().map(d => d3.select(d)),
+      ...d3AsSelectionArray(selection.selectAll('*'))
+    ].map(d => {
+      const elem = d.node();
+      const bbox = elem.getBBox();
+      const convert = makeAbsoluteContext(elem, this.svg.node());
+      return {
+        ...convert(bbox.x, bbox.y),
+        width: bbox.width,
+        height: bbox.height
+      };
+    });
+    const mergedBox = mergeBoundingBoxes(boundingBoxes);
+    mergedBox.width = Math.max(mergedBox.width, 5);
+    mergedBox.height = Math.max(mergedBox.height, 5);
+    return mergedBox;
+  }
+
+  makeRectFromBoundingBox(box: any, location = null) {
+    if (!location) {
+      location = this.svg;
+    }
+    return location.append('rect').attr('transform', translate(box.x, box.y))
+      .attr('width', box.width).attr('height', box.height);
   }
 
   ngAfterViewChecked() {
@@ -95,27 +138,8 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       this.svg.selectAll('.idac-highlight').remove();
       const target = this.elementLink[this.currentTag._id];
       if (target) {
-        // make bounding box
-        const boundingBoxes = [
-          ...target.nodes().map(d => d3.select(d)),
-          ...d3AsSelectionArray(target.selectAll('*'))
-        ].map(d => {
-          const elem = d.node();
-          const bbox = elem.getBBox();
-          const convert = makeAbsoluteContext(elem, this.svg.node());
-          return {
-            ...convert(bbox.x, bbox.y),
-            width: bbox.width,
-            height: bbox.height
-          };
-        });
-        const mergedBox = mergeBoundingBoxes(boundingBoxes);
-        mergedBox.width = Math.max(mergedBox.width, 5);
-        mergedBox.height = Math.max(mergedBox.height, 5);
-
-        // make highlight rect
-        const highlightRect = this.svg.append('rect').attr('transform', translate(mergedBox.x, mergedBox.y))
-          .attr('width', mergedBox.width).attr('height', mergedBox.height)
+        const mergedBox = this.getMergedBoundingBox(target);
+        const highlightRect = this.makeRectFromBoundingBox(mergedBox, this.gHighlight)
           .style('fill', 'rgba(255, 255, 0, 0.5)')
           .classed('idac-highlight', true);
 
