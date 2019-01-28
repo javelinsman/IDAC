@@ -73,6 +73,15 @@ export class RelationalHighlightLine extends Highlight {
 
     }
 
+    fromChartAccent(ca: ChartAccent.ChartAccent) {
+        super.fromChartAccent(ca);
+        this.properties = {
+            ...this.properties,
+            targetDescription: () => this.makeTargetInfo().target,
+            numTargets: () => this.makeTargetInfo().numTargets,
+        };
+    }
+
     getTargetLocation(): [Item, number[]][] {
         const seriesIndices = this.annotation.target_inherit.serieses.map(series => +series.slice(1) - 2);
         const locations = [];

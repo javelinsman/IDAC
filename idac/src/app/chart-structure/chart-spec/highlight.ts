@@ -54,6 +54,7 @@ export class Highlight extends SpecTag {
         }
         const { target, numTargets } = this.makeTargetInfo();
         this.properties = {
+            ...this.properties,
             targetDescription: () => target,
             numTargets: () => numTargets,
             itemLabel: () => this.attributes.itemLabel.value === 'on'
