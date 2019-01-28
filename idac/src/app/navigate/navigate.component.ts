@@ -91,11 +91,14 @@ export class NavigateComponent implements OnInit {
     return this.tag._root.findById(id);
   }
 
-  getElementSiblingIndex() {
-    if (this.tag._parent) {
+  getElementSiblingIndex(tag: SpecTag) {
+    if (!tag) {
+      tag = this.tag;
+    }
+    if (tag._parent) {
       return {
-        index: this.tag._parent.children.indexOf(this.tag),
-        length: this.tag._parent.children.length
+        index: tag._parent.children.indexOf(tag),
+        length: tag._parent.children.length
       };
     } else {
       return {
@@ -143,19 +146,25 @@ export class NavigateComponent implements OnInit {
     }
   }
 
-  moveToNextSibling() {
-    const { index, length } = this.getElementSiblingIndex();
+  moveToNextSibling(tag: SpecTag) {
+    if (!tag) {
+      tag = this.tag;
+    }
+    const { index, length } = this.getElementSiblingIndex(tag);
     if (index + 1 < length) {
-      this.setFocus(this.tag._parent.children[index + 1]);
+      this.setFocus(tag._parent.children[index + 1]);
     } else {
       return false;
     }
   }
 
-  moveToPreviousSibling() {
-    const { index, length } = this.getElementSiblingIndex();
+  moveToPreviousSibling(tag: SpecTag) {
+    if (!tag) {
+      tag = this.tag;
+    }
+    const { index, length } = this.getElementSiblingIndex(tag);
     if (index - 1 >= 0) {
-      this.setFocus(this.tag._parent.children[index - 1]);
+      this.setFocus(tag._parent.children[index - 1]);
     } else {
       return false;
     }
@@ -195,24 +204,23 @@ export class NavigateComponent implements OnInit {
     return false;
   }
 
-
-  /*
   moveToNextFrame() {
-    let element = this.currentElement();
-    while (element.parentId !== 0) {
-      element = this.getElement(element.parentId);
+    let tag = this.tag;
+    while (tag._parent._id !== 0) {
+      tag = tag._parent;
     }
-    return this.moveToNextSibling(element);
+    return this.moveToNextSibling(tag);
   }
 
   moveToPreviousFrame() {
-    let element = this.currentElement();
-    while (element.parentId !== 0) {
-      element = this.getElement(element.parentId);
+    let tag = this.tag;
+    while (tag._parent._id !== 0) {
+      tag = tag._parent;
     }
-    return this.moveToPreviousSibling(element);
+    return this.moveToPreviousSibling(tag);
   }
 
+  /*
   getAllBars(seriesIndex) {
     return this.getAllBargroups().map(d => d.children[seriesIndex]);
   }
