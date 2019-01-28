@@ -55,6 +55,11 @@ export class NavigateComponent implements OnInit {
     this.tagChange.emit(this.tag);
   }
 
+  checkCurrentElement() {
+    // this function should be empty.
+    return;
+  }
+
   moveToTitle() {
     this.setFocus(this.tag._root.title);
   }
@@ -67,32 +72,57 @@ export class NavigateComponent implements OnInit {
     this.setFocus(this.tag._root.x);
   }
 
+  moveToLegend() {
+    this.setFocus(this.tag._root.legend);
+  }
 
-  /*
+  moveToMarks() {
+    this.setFocus(this.tag._root.marks);
+  }
+
+  moveToAnnotations() {
+    this.setFocus(this.tag._root.annotations);
+  }
+
   getElement(id: number) {
-    return this.tags[id];
+    return this.tag._root.findById(id);
   }
 
   getElementSiblingIndex(id: number) {
-    const element = this.getElement(id);
-    const parent = this.getElement(element.parentId);
-    return parent.children.indexOf(element);
+    if (this.tag._parent) {
+      return {
+        index: this.tag._parent.children.indexOf(this.tag),
+        length: this.tag._parent.children.length
+      };
+    } else {
+      return {
+        index: 0,
+        length: 1
+      };
+    }
   }
 
 
   moveToNextElement() {
-    if (this.getFocus() + 1 >= this.tags.length) {
+    const tags = this.tag._root.flattenedTags();
+    const index = tags.indexOf(this.tag);
+    if (index + 1 >= tags.length) {
       return false;
     }
-    this.setFocus(this.getFocus() + 1);
+    this.setFocus(tags[index + 1]);
   }
 
   moveToPreviousElement() {
-    if (this.getFocus() - 1 < 1) {
+    const tags = this.tag._root.flattenedTags();
+    const index = tags.indexOf(this.tag);
+    if (index - 1 < 0) {
       return false;
     }
-    this.setFocus(this.getFocus() - 1);
+    this.setFocus(tags[index - 1]);
   }
+
+
+  /*
 
   moveToParent() {
     const element = this.currentElement();
@@ -193,30 +223,6 @@ export class NavigateComponent implements OnInit {
     return this.moveToPreviousSibling(element);
   }
 
-  moveToTitle() {
-    this.setFocus(this.getElement(0).children[0]._id);
-  }
-
-  moveToXAxis() {
-    this.setFocus(this.getElement(0).children[2]._id);
-  }
-
-  moveToYAxis() {
-    this.setFocus(this.getElement(0).children[1]._id);
-  }
-
-  moveToLegend() {
-    this.setFocus(this.getElement(0).children[3]._id);
-  }
-
-  moveToMarks() {
-    this.setFocus(this.getElement(0).children[4]._id);
-  }
-
-  moveToAnnotations() {
-    this.setFocus(this.getElement(0).children[5]._id);
-  }
-
   moveToNextDataPoint() {
     let focus = this.getFocus();
     while (focus + 1 < this.tags.length) {
@@ -239,11 +245,6 @@ export class NavigateComponent implements OnInit {
       }
     }
     return false;
-  }
-
-  checkCurrentElement() {
-    // this function should be empty.
-    return;
   }
 
   getAllBars(seriesIndex) {
