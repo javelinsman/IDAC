@@ -3,7 +3,7 @@ import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
 import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
 import * as d3 from 'd3';
 import { SvgContainerComponent } from '../svg-container/svg-container.component';
-import { d3ImmediateChildren, d3AsSelectionArray, makeAbsoluteContext, mergeBoundingBoxes } from '../utils';
+import { d3ImmediateChildren, d3AsSelectionArray, makeAbsoluteContext, mergeBoundingBoxes, zip } from '../utils';
 import { translate } from '../chartutils';
 
 @Component({
@@ -37,6 +37,11 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     const items = d3AsSelectionArray(legend.selectAll('.legend'));
     const [marks, x, y, yLabel, xLabel] = d3AsSelectionArray(d3ImmediateChildren(chart, 'g'));
     const serieses = d3AsSelectionArray(d3ImmediateChildren(marks, 'g'));
+    const rects = zip(serieses.map(d => d3AsSelectionArray(d3ImmediateChildren(d, 'rect'))));
+    rects.forEach((elem: d3.Selection<any, any, any, any>[], i) => {
+      elem.forEach(d => d.classed(`idac-bargroup-${i}`, true));
+    });
+    const bargroups = rects.map((_, i) => this.svg.select(`.idac-bargroup-${i}`));
     const xTicks = d3AsSelectionArray(x.selectAll('.tick'));
     const yTicks = d3AsSelectionArray(y.selectAll('.tick'));
     const annotation = annotationBackground.merge(annotationForeground);
@@ -58,11 +63,13 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     cs.legend.children.forEach((item, i) => {
       pairs.push([item, items[i]]);
     });
+    cs.marks.children.forEach((bargroup, i) => {
+      pairs.push([bargroup, (bargroups as any)[i]]);
+    });
     this.elementLink = pairs.reduce((accum, [k, v]: [SpecTag, any]) => {
       accum[k._id] = v;
       return accum;
     }, {});
-    console.log(this.elementLink);
   }
 
   ngAfterViewChecked() {
@@ -71,7 +78,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       const target = this.elementLink[this.currentTag._id];
       if (target) {
         // make bounding box
-        const boundingBoxes = d3AsSelectionArray(target.selectAll('*')).map(d => {
+        const boundingBoxes = [target, ...d3AsSelectionArray(target.selectAll('*'))].map(d => {
           const elem = d.node();
           const bbox = elem.getBBox();
           const convert = makeAbsoluteContext(elem, this.svg.node());

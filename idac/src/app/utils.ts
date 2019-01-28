@@ -129,3 +129,7 @@ export function mergeBoundingBoxes(boundingBoxes: {x: number, y: number, width: 
     height: d3.max(bottom) - d3.min(top),
   };
 }
+
+export function zip(rows: any[][]) {
+  return rows[0].map((_, c) => rows.map(row => row[c]));
+}
