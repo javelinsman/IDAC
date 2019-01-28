@@ -41,7 +41,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     rects.forEach((elem: d3.Selection<any, any, any, any>[], i) => {
       elem.forEach(d => d.classed(`idac-bargroup-${i}`, true));
     });
-    const bargroups = rects.map((_, i) => this.svg.select(`.idac-bargroup-${i}`));
+    const bargroups = rects.map((_, i) => this.svg.selectAll(`.idac-bargroup-${i}`));
     const xTicks = d3AsSelectionArray(x.selectAll('.tick'));
     const yTicks = d3AsSelectionArray(y.selectAll('.tick'));
     const annotation = annotationBackground.merge(annotationForeground);
@@ -81,7 +81,10 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       const target = this.elementLink[this.currentTag._id];
       if (target) {
         // make bounding box
-        const boundingBoxes = [target, ...d3AsSelectionArray(target.selectAll('*'))].map(d => {
+        const boundingBoxes = [
+          ...target.nodes().map(d => d3.select(d)),
+          ...d3AsSelectionArray(target.selectAll('*'))
+        ].map(d => {
           const elem = d.node();
           const bbox = elem.getBBox();
           const convert = makeAbsoluteContext(elem, this.svg.node());
