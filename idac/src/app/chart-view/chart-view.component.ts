@@ -82,7 +82,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     });
     annotations.forEach((annotation, i) => {
       const tag = cs.annotations.findByAnnotation(cs.annotations.annotationInChartAccent(i));
-      pairs.push([tag, annotation]);
+      pairs.push([tag, annotation as any]);
     });
     this.elementLink = pairs.reduce((accum, [k, v]: [SpecTag, any]) => {
       accum[k._id] = v;
