@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
+import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
 
 @Component({
   selector: 'app-chart-spec',
@@ -9,6 +10,7 @@ import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
 export class ChartSpecComponent implements OnInit {
 
   @Input() chartSpec: ChartSpec;
+  @Input() currentTag: SpecTag;
 
   constructor() { }
 
@@ -16,7 +18,6 @@ export class ChartSpecComponent implements OnInit {
     if (!this.chartSpec) {
       this.chartSpec = new ChartSpec();
     }
-    console.log(this.chartSpec);
   }
 
 }

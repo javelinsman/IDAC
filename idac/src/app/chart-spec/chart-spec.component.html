@@ -1,16 +1,16 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-3 p-1">
-      <app-chart-spec-tree-view [tag]="chartSpec.title"></app-chart-spec-tree-view>
-      <app-chart-spec-tree-view [tag]="chartSpec.y"></app-chart-spec-tree-view>
-      <app-chart-spec-tree-view [tag]="chartSpec.x"></app-chart-spec-tree-view>
-      <app-chart-spec-tree-view [tag]="chartSpec.legend"></app-chart-spec-tree-view>
+      <app-chart-spec-tree-view [tag]="chartSpec.title" [currentTag]="currentTag"></app-chart-spec-tree-view>
+      <app-chart-spec-tree-view [tag]="chartSpec.y" [currentTag]="currentTag"></app-chart-spec-tree-view>
+      <app-chart-spec-tree-view [tag]="chartSpec.x" [currentTag]="currentTag"></app-chart-spec-tree-view>
+      <app-chart-spec-tree-view [tag]="chartSpec.legend" [currentTag]="currentTag"></app-chart-spec-tree-view>
     </div>
     <div class="col-md-3 p-1">
-      <app-chart-spec-tree-view [tag]="chartSpec.marks"></app-chart-spec-tree-view>
+      <app-chart-spec-tree-view [tag]="chartSpec.marks" [currentTag]="currentTag"></app-chart-spec-tree-view>
     </div>
     <div class="col-md-3 p-1">
-      <app-chart-spec-tree-view [tag]="chartSpec.annotations"></app-chart-spec-tree-view>
+      <app-chart-spec-tree-view [tag]="chartSpec.annotations" [currentTag]="currentTag"></app-chart-spec-tree-view>
     </div>
   </div>
 </div>

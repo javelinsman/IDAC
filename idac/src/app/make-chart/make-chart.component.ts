@@ -42,8 +42,6 @@ export class MakeChartComponent implements OnInit {
       this.currentTag = this.chartSpec.findById(1);
     });
 
-    this.test();
-
   }
 
   fetchExampleChart(id: number) {
@@ -52,33 +50,6 @@ export class MakeChartComponent implements OnInit {
 
   fetchChart() {
     return this.chartExampleService.getCharts()[0];
-  }
-
-  test() {
-    class A {
-      _a: any;
-      constructor() {
-        this._a = {1: 2};
-      }
-      get a() {
-        return this._a;
-      }
-      set a(s) {
-        this._a = s;
-      }
-    }
-
-    class B extends A {
-      constructor() {
-        super();
-        this.a = {
-          ...this.a,
-          3: 4
-        };
-      }
-    }
-
-    console.log(new B());
   }
 
 }

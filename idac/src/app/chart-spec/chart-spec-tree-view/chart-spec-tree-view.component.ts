@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 
 @Component({
   selector: 'app-chart-spec-tree-view',
@@ -7,8 +8,10 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ChartSpecTreeViewComponent implements OnInit {
 
-  @Input() tag: any;
+  @Input() tag: SpecTag;
+  @Input() currentTag: SpecTag;
   @Input() indent: number;
+
   edit = false;
   numAttributes: number;
 
