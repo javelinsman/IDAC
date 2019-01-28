@@ -11,7 +11,7 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
   @Input() tag: SpecTag;
   @Input() currentTag: SpecTag;
   @Input() indent: number;
-  @Input() isCollapsed: string;
+  @Input() isCollapsed: any;
   @Input() siblingIndex: number;
   @Input() siblingLength: number;
   @Input() parentCollapseIndex = 0;
