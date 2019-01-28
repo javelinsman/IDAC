@@ -17,7 +17,6 @@ export class MakeChartComponent implements OnInit {
   chart: Chart;
   chartAccent: ChartAccent;
   chartSpec: ChartSpec;
-  state: any = {};
 
   constructor(
       private chartExampleService: ChartExampleService,
@@ -40,7 +39,6 @@ export class MakeChartComponent implements OnInit {
       console.log(this.chartSpec);
     });
 
-    this.state['description-rule-text-edit'] = false;
 
   }
 

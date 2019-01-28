@@ -1,0 +1,15 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between">
+    <h3>Description</h3>
+    <button class="btn btn-sm"
+      (click)="edit = !edit">
+      {{ edit ? 'Done' : 'Edit Rule' }}
+    </button>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Text</h5>
+    <p class="card-text" *ngIf="!edit">Lorem Ipsum</p>
+    <textarea *ngIf="edit"
+      class="form-control" id="description-rule-textarea" rows="3"></textarea>
+  </div>
+</div>
