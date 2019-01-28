@@ -39,7 +39,7 @@ export class MakeChartComponent implements OnInit {
       this.chartAccent = data;
       this.chartSpec = new ChartSpec();
       this.chartSpec.fromChartAccent(this.chartAccent);
-      this.currentTag = this.chartSpec.findById(0);
+      this.currentTag = this.chartSpec.findById(1);
     });
 
   }

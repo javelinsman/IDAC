@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
@@ -6,6 +6,8 @@ import { Chart } from '../chart';
 import { ChartExampleService } from '../chart-example.service';
 import { beep_error, beep_detect, speak, isAscendingArray, isDescendingArray } from '../utils';
 import { DescriptionComponent } from '../description/description.component';
+import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
+import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
 
 @Component({
   selector: 'app-navigate',
@@ -14,13 +16,15 @@ import { DescriptionComponent } from '../description/description.component';
 })
 export class NavigateComponent implements OnInit {
 
-  @Input() info: any;
+  @Input() tag: SpecTag;
+  @Output() tagChange: EventEmitter<SpecTag> = new EventEmitter();
 
-  chart: Chart;
-  tags: any[];
+  focusBookmarks = {};
+  focusHistory: SpecTag[] = [];
+
+  /*
   currentFocus: number;
   keyboardEventName = 'moveToNextElement';
-  focusHistory: number[] = [];
   focusFootprints = {
     title: -1,
     xAxis: -1,
@@ -29,222 +33,29 @@ export class NavigateComponent implements OnInit {
     marks: -1,
     dataPoints: -1
   };
+  */
 
-  @ViewChild(DescriptionComponent) description: DescriptionComponent;
 
-  constructor(
-    private route: ActivatedRoute,
-    private chartExampleService: ChartExampleService,
-    private http: HttpClient
-  ) { }
+  constructor() { }
 
   ngOnInit() {
-    this.tags = this.info.flattenedTags();
-    this.setFocus(1);
-    this.description.keyboardEventName = this.keyboardEventName;
-    speak(this.description.describe(this.currentElement()));
   }
-
-  setFocus(f, trace = true) {
-    if (trace) {
-      this.focusHistory.push(f);
-    }
-    this.currentFocus = f;
-  }
-
-  getFocus() {
-    return this.currentFocus;
-  }
-
-  currentElement() {
-    if (this.tags) {
-      return this.tags[this.currentFocus];
-    }
-  }
-
-  getElement(id: number) {
-    return this.tags[id];
-  }
-
-  getElementSiblingIndex(id: number) {
-    const element = this.getElement(id);
-    const parent = this.getElement(element.parentId);
-    return parent.children.indexOf(element);
-  }
-
 
   keyFire(eventName: string) {
+    console.log(`keyfire: ${eventName}`);
     if (this[eventName]() === false) {
       beep_error();
     } else {
-      this.keyboardEventName = eventName;
-      this.description.keyboardEventName = eventName;
-      speak(this.description.describe(this.currentElement()));
-      if (this.currentElement().children) {
+      if (this.tag.children && this.tag.children.length) {
         beep_detect();
       }
     }
   }
 
-  moveToNextElement() {
-    if (this.getFocus() + 1 >= this.tags.length) {
-      return false;
-    }
-    this.setFocus(this.getFocus() + 1);
-  }
-
-  moveToPreviousElement() {
-    if (this.getFocus() - 1 < 1) {
-      return false;
-    }
-    this.setFocus(this.getFocus() - 1);
-  }
-
-  moveToParent() {
-    const element = this.currentElement();
-    const parent = this.getElement(element.parentId);
-    if (!parent || parent._id === 0) {
-      return false;
-    }
-    const element_index = parent.children.indexOf(element);
-    parent['_bookmark'] = element_index;
-    this.setFocus(parent._id);
-  }
-
-  moveToChild() {
-    const element = this.currentElement();
-    if (!element.children) {
-      return false;
-    }
-    const bookmark = element._bookmark ? element._bookmark : 0;
-    const child = element.children[bookmark];
-    this.setFocus(child._id);
-  }
-
-  moveToNextAnnotation() {
-    const nextAnnotation = this.tags.slice(this.getFocus() + 1)
-      .find(tag => tag._annotation);
-    if (nextAnnotation) {
-      this.setFocus(nextAnnotation._id);
-    } else {
-      return false;
-    }
-  }
-
-  moveToPreviousAnnotation() {
-    const prevAnnotation = this.tags.slice(0, this.getFocus())
-      .reverse().find(tag => tag._annotation);
-    if (prevAnnotation) {
-      this.setFocus(prevAnnotation._id);
-    } else {
-      return false;
-    }
-  }
-
-  moveToNextSibling(element) {
-    if (!element) {
-      element = this.currentElement();
-    }
-    const parent = this.getElement(element.parentId);
-    if (!parent) {
-      return false;
-    }
-    const element_index = parent.children.indexOf(element);
-    if (element_index + 1 < parent.children.length) {
-      const nextSibling = parent.children[element_index + 1];
-      this.setFocus(nextSibling._id);
-    } else {
-      return false;
-    }
-  }
-
-  moveToPreviousSibling(element) {
-    if (!element) {
-      element = this.currentElement();
-    }
-    const parent = this.getElement(element.parentId);
-    if (!parent) {
-      return;
-    }
-    const element_index = parent.children.indexOf(element);
-    if (element_index - 1 >= 0) {
-      const prevSibling = parent.children[element_index - 1];
-      this.setFocus(prevSibling._id);
-    } else {
-      return false;
-    }
-  }
-
-  moveToPreviouslyVisitedElement() {
-    if (this.focusHistory.length <= 1) {
-      return false;
-    }
-    this.focusHistory.pop();
-    this.setFocus(this.focusHistory.pop());
-  }
-
-  moveToNextFrame() {
-    let element = this.currentElement();
-    while (element.parentId !== 0) {
-      element = this.getElement(element.parentId);
-    }
-    return this.moveToNextSibling(element);
-  }
-
-  moveToPreviousFrame() {
-    let element = this.currentElement();
-    while (element.parentId !== 0) {
-      element = this.getElement(element.parentId);
-    }
-    return this.moveToPreviousSibling(element);
-  }
-
-  moveToTitle() {
-    this.setFocus(this.getElement(0).children[0]._id);
-  }
-
-  moveToXAxis() {
-    this.setFocus(this.getElement(0).children[2]._id);
-  }
-
-  moveToYAxis() {
-    this.setFocus(this.getElement(0).children[1]._id);
-  }
-
-  moveToLegend() {
-    this.setFocus(this.getElement(0).children[3]._id);
-  }
-
-  moveToMarks() {
-    this.setFocus(this.getElement(0).children[4]._id);
-  }
-
-  moveToAnnotations() {
-    this.setFocus(this.getElement(0).children[5]._id);
-  }
-
-  moveToNextDataPoint() {
-    let focus = this.getFocus();
-    while (focus + 1 < this.tags.length) {
-      focus += 1;
-      if (this.getElement(focus).tagname === 'bar') {
-        this.setFocus(focus);
-        return;
-      }
-    }
-    return false;
-  }
-
-  moveToPreviousDataPoint() {
-    let focus = this.getFocus();
-    while (focus - 1 >= 0) {
-      focus -= 1;
-      if (this.getElement(focus).tagname === 'bar') {
-        this.setFocus(focus);
-        return;
-      }
-    }
-    return false;
+  setFocus(tag: SpecTag) {
+    this.focusHistory.push(this.tag);
+    this.tag = tag;
+    this.tagChange.emit(this.tag);
   }
 
   checkCurrentElement() {
@@ -252,6 +63,164 @@ export class NavigateComponent implements OnInit {
     return;
   }
 
+  moveToTitle() {
+    this.setFocus(this.tag._root.title);
+  }
+
+  moveToYAxis() {
+    this.setFocus(this.tag._root.y);
+  }
+
+  moveToXAxis() {
+    this.setFocus(this.tag._root.x);
+  }
+
+  moveToLegend() {
+    this.setFocus(this.tag._root.legend);
+  }
+
+  moveToMarks() {
+    this.setFocus(this.tag._root.marks);
+  }
+
+  moveToAnnotations() {
+    this.setFocus(this.tag._root.annotations);
+  }
+
+  getElement(id: number) {
+    return this.tag._root.findById(id);
+  }
+
+  getElementSiblingIndex(tag: SpecTag) {
+    if (!tag) {
+      tag = this.tag;
+    }
+    if (tag._parent) {
+      return {
+        index: tag._parent.children.indexOf(tag),
+        length: tag._parent.children.length
+      };
+    } else {
+      return {
+        index: 0,
+        length: 1
+      };
+    }
+  }
+
+
+  moveToNextElement() {
+    const tags = this.tag._root.flattenedTags();
+    const index = tags.indexOf(this.tag);
+    if (index + 1 >= tags.length) {
+      return false;
+    }
+    this.setFocus(tags[index + 1]);
+  }
+
+  moveToPreviousElement() {
+    const tags = this.tag._root.flattenedTags();
+    const index = tags.indexOf(this.tag);
+    if (index - 1 < 0) {
+      return false;
+    }
+    this.setFocus(tags[index - 1]);
+  }
+
+  moveToParent() {
+    if (!this.tag._parent || this.tag._parent._id === 0) {
+      return false;
+    }
+    this.focusBookmarks[this.tag._parent._id] = this.tag._id;
+    this.setFocus(this.tag._parent);
+  }
+
+  moveToChild() {
+    if (!this.tag.children || !this.tag.children.length) {
+      return false;
+    }
+    if (this.focusBookmarks[this.tag._id]) {
+      this.setFocus(this.getElement(this.focusBookmarks[this.tag._id]));
+    } else {
+      this.setFocus(this.tag.children[0]);
+    }
+  }
+
+  moveToNextSibling(tag: SpecTag) {
+    if (!tag) {
+      tag = this.tag;
+    }
+    const { index, length } = this.getElementSiblingIndex(tag);
+    if (index + 1 < length) {
+      this.setFocus(tag._parent.children[index + 1]);
+    } else {
+      return false;
+    }
+  }
+
+  moveToPreviousSibling(tag: SpecTag) {
+    if (!tag) {
+      tag = this.tag;
+    }
+    const { index, length } = this.getElementSiblingIndex(tag);
+    if (index - 1 >= 0) {
+      this.setFocus(tag._parent.children[index - 1]);
+    } else {
+      return false;
+    }
+  }
+
+  moveToPreviouslyVisitedElement() {
+    if (!this.focusHistory.length) {
+      return false;
+    }
+    this.setFocus(this.focusHistory.pop());
+    this.focusHistory.pop();
+  }
+
+  moveToNextDataPoint() {
+    const tags = this.tag._root.flattenedTags();
+    let index = tags.indexOf(this.tag);
+    while (index + 1 < tags.length) {
+      index += 1;
+      if (tags[index]._tagname === 'Bar') {
+        this.setFocus(tags[index]);
+        return;
+      }
+    }
+    return false;
+  }
+
+  moveToPreviousDataPoint() {
+    const tags = this.tag._root.flattenedTags();
+    let index = tags.indexOf(this.tag);
+    while (index - 1 >= 0) {
+      index -= 1;
+      if (tags[index]._tagname === 'Bar') {
+        this.setFocus(tags[index]);
+        return;
+      }
+    }
+    return false;
+  }
+
+  moveToNextFrame() {
+    let tag = this.tag;
+    while (tag._parent._id !== 0) {
+      tag = tag._parent;
+    }
+    return this.moveToNextSibling(tag);
+  }
+
+  moveToPreviousFrame() {
+    let tag = this.tag;
+    while (tag._parent._id !== 0) {
+      tag = tag._parent;
+    }
+    return this.moveToPreviousSibling(tag);
+  }
+
+  /*
   getAllBars(seriesIndex) {
     return this.getAllBargroups().map(d => d.children[seriesIndex]);
   }
@@ -336,6 +305,5 @@ export class NavigateComponent implements OnInit {
       }
     }
   }
-
-
+  */
 }

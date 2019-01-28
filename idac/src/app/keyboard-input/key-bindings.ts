@@ -1,8 +1,8 @@
 export const keyBindings = {
     moveToNextElement: new Set(['tab']),
     moveToPreviousElement: new Set(['shift', 'tab']),
-    moveToNextAnnotation: new Set(['d']),
-    moveToPreviousAnnotation: new Set(['shift', 'd']),
+    // moveToNextAnnotation: new Set(['d']),
+    // moveToPreviousAnnotation: new Set(['shift', 'd']),
     moveToNextSibling: new Set(['arrowdown']),
     moveToPreviousSibling: new Set(['arrowup']),
     moveToParent: new Set(['arrowleft']),

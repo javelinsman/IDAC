@@ -7,6 +7,7 @@ import { Item } from './legend';
 export class Marks extends SpecTag {
     constructor(public _root: ChartSpec) {
         super('Marks');
+        this._parent = _root;
         this.children = [] as Bargroup[];
         this.attributes = {
             type: new AttrInputSelect(['grouped', 'stacked'], 'grouped')
