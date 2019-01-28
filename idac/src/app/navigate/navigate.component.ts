@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
@@ -6,6 +6,8 @@ import { Chart } from '../chart';
 import { ChartExampleService } from '../chart-example.service';
 import { beep_error, beep_detect, speak, isAscendingArray, isDescendingArray } from '../utils';
 import { DescriptionComponent } from '../description/description.component';
+import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
+import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
 
 @Component({
   selector: 'app-navigate',
@@ -14,10 +16,10 @@ import { DescriptionComponent } from '../description/description.component';
 })
 export class NavigateComponent implements OnInit {
 
-  @Input() info: any;
+  @Input() tag: SpecTag;
+  @Output() tagChange: EventEmitter<SpecTag> = new EventEmitter();
 
-  chart: Chart;
-  tags: any[];
+  /*
   currentFocus: number;
   keyboardEventName = 'moveToNextElement';
   focusHistory: number[] = [];
@@ -29,39 +31,44 @@ export class NavigateComponent implements OnInit {
     marks: -1,
     dataPoints: -1
   };
+  */
 
-  @ViewChild(DescriptionComponent) description: DescriptionComponent;
 
-  constructor(
-    private route: ActivatedRoute,
-    private chartExampleService: ChartExampleService,
-    private http: HttpClient
-  ) { }
+  constructor() { }
 
   ngOnInit() {
-    this.tags = this.info.flattenedTags();
-    this.setFocus(1);
-    this.description.keyboardEventName = this.keyboardEventName;
-    speak(this.description.describe(this.currentElement()));
   }
 
-  setFocus(f, trace = true) {
-    if (trace) {
-      this.focusHistory.push(f);
-    }
-    this.currentFocus = f;
-  }
-
-  getFocus() {
-    return this.currentFocus;
-  }
-
-  currentElement() {
-    if (this.tags) {
-      return this.tags[this.currentFocus];
+  keyFire(eventName: string) {
+    console.log(`keyfire: ${eventName}`);
+    if (this[eventName]() === false) {
+      beep_error();
+    } else {
+      if (this.tag.children && this.tag.children.length) {
+        beep_detect();
+      }
     }
   }
 
+  setFocus(tag: SpecTag) {
+    this.tag = tag;
+    this.tagChange.emit(this.tag);
+  }
+
+  moveToTitle() {
+    this.setFocus(this.tag._root.title);
+  }
+
+  moveToYAxis() {
+    this.setFocus(this.tag._root.y);
+  }
+
+  moveToXAxis() {
+    this.setFocus(this.tag._root.x);
+  }
+
+
+  /*
   getElement(id: number) {
     return this.tags[id];
   }
@@ -72,19 +79,6 @@ export class NavigateComponent implements OnInit {
     return parent.children.indexOf(element);
   }
 
-
-  keyFire(eventName: string) {
-    if (this[eventName]() === false) {
-      beep_error();
-    } else {
-      this.keyboardEventName = eventName;
-      this.description.keyboardEventName = eventName;
-      speak(this.description.describe(this.currentElement()));
-      if (this.currentElement().children) {
-        beep_detect();
-      }
-    }
-  }
 
   moveToNextElement() {
     if (this.getFocus() + 1 >= this.tags.length) {
@@ -336,6 +330,5 @@ export class NavigateComponent implements OnInit {
       }
     }
   }
-
-
+  */
 }
