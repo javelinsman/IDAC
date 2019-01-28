@@ -1,27 +1,37 @@
-<div class="container-fluid border ml-{{indent}} p-2">
-  <div class="d-flex w-100">
-    <h5>{{ tag._tagname }}</h5>
-  </div>
-  <div class="mb-1" *ngFor="let attr of tag.attributes | keyvalue">
-    <div *ngIf="!attr.key.startsWith('_')">
-      <div class="d-flex" *ngIf="attr.value.type === 'input'">
-        {{ attr.key }}: <input class="border ml-1" style="width: 100%" [(ngModel)]="attr.value.value">
-      </div>
-      <div *ngIf="attr.value.type === 'input-select'">
-        {{ attr.key }}:
-        <div class="btn-group" role="group">
-          <button *ngFor="let cand of attr.value.candidates"
-            class="btn btn-sm {{ attr.value.value === cand ? 'btn-primary' : 'btn-secondary' }}"
-            (click)="attr.value.value = cand">
-            {{ cand }}
-          </button>
+<div class="container-fluid">
+  <section class="border p-2 ml-{{indent}}">
+    <div class="d-flex w-100 justify-content-between">
+      <h5>{{ tag._tagname }}</h5>
+      <p *ngIf="numAttributes"
+        (click)="edit=!edit"
+        style="cursor: pointer" class="text-secondary">{{ edit ? 'Done' : 'Attributes' }}</p>
+    </div>
+    <div>
+      <p>{{ tag.describe() }}</p>
+    </div>
+    <div *ngIf="edit">
+      <div class="mb-1" *ngFor="let attr of tag.attributes | keyvalue">
+        <div *ngIf="!attr.key.startsWith('_')">
+          <div class="d-flex" *ngIf="attr.value.type === 'input'">
+            {{ attr.key }}: <input class="border ml-1" style="width: 100%" [(ngModel)]="attr.value.value">
+          </div>
+          <div *ngIf="attr.value.type === 'input-select'">
+            {{ attr.key }}:
+            <div class="btn-group" role="group">
+              <button *ngFor="let cand of attr.value.candidates"
+                class="btn btn-sm {{ attr.value.value === cand ? 'btn-primary' : 'btn-secondary' }}"
+                (click)="attr.value.value = cand">
+                {{ cand }}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
   <div *ngIf="tag.children">
     <div *ngFor="let childTag of tag.children">
-      <app-chart-spec-tree-view [tag]="childTag" [indent]="indent + 1"></app-chart-spec-tree-view>
+      <app-chart-spec-tree-view [tag]="childTag" [indent]="indent + 2"></app-chart-spec-tree-view>
     </div>
   <div>
 </div>

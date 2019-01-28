@@ -9,6 +9,8 @@ export class ChartSpecTreeViewComponent implements OnInit {
 
   @Input() tag: any;
   @Input() indent: number;
+  edit = false;
+  numAttributes: number;
 
   constructor() { }
 
@@ -16,6 +18,7 @@ export class ChartSpecTreeViewComponent implements OnInit {
     if (!this.indent) {
       this.indent = 0;
     }
+    this.numAttributes = Object.entries(this.tag.attributes).length;
   }
 
 }
