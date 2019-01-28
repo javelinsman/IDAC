@@ -70,6 +70,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       this.svg.selectAll('.idac-highlight').remove();
       const target = this.elementLink[this.currentTag._id];
       if (target) {
+        // make bounding box
         const boundingBoxes = d3AsSelectionArray(target.selectAll('*')).map(d => {
           const elem = d.node();
           const bbox = elem.getBBox();
@@ -81,11 +82,17 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
           };
         });
         const mergedBox = mergeBoundingBoxes(boundingBoxes);
-        console.log(mergedBox);
-        this.svg.append('rect').attr('transform', translate(mergedBox.x, mergedBox.y))
+
+        // make highlight rect
+        const highlightRect = this.svg.append('rect').attr('transform', translate(mergedBox.x, mergedBox.y))
           .attr('width', mergedBox.width).attr('height', mergedBox.height)
           .style('fill', 'rgba(255, 255, 0, 0.5)')
           .classed('idac-highlight', true);
+
+        // scroll horizontally
+        const prevY = window.scrollY;
+        highlightRect.node().scrollIntoView({inline: 'center'});
+        window.scroll(window.scrollX, prevY);
       }
     }
   }
