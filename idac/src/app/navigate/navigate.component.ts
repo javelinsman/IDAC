@@ -19,6 +19,8 @@ export class NavigateComponent implements OnInit {
   @Input() tag: SpecTag;
   @Output() tagChange: EventEmitter<SpecTag> = new EventEmitter();
 
+  focusBookmarks = {};
+
   /*
   currentFocus: number;
   keyboardEventName = 'moveToNextElement';
@@ -88,7 +90,7 @@ export class NavigateComponent implements OnInit {
     return this.tag._root.findById(id);
   }
 
-  getElementSiblingIndex(id: number) {
+  getElementSiblingIndex() {
     if (this.tag._parent) {
       return {
         index: this.tag._parent.children.indexOf(this.tag),
@@ -121,29 +123,26 @@ export class NavigateComponent implements OnInit {
     this.setFocus(tags[index - 1]);
   }
 
-
-  /*
-
   moveToParent() {
-    const element = this.currentElement();
-    const parent = this.getElement(element.parentId);
-    if (!parent || parent._id === 0) {
+    if (!this.tag._parent) {
       return false;
     }
-    const element_index = parent.children.indexOf(element);
-    parent['_bookmark'] = element_index;
-    this.setFocus(parent._id);
+    this.focusBookmarks[this.tag._parent._id] = this.tag._id;
+    this.setFocus(this.tag._parent);
   }
 
   moveToChild() {
-    const element = this.currentElement();
-    if (!element.children) {
+    if (!this.tag.children || !this.tag.children.length) {
       return false;
     }
-    const bookmark = element._bookmark ? element._bookmark : 0;
-    const child = element.children[bookmark];
-    this.setFocus(child._id);
+    if (this.focusBookmarks[this.tag._id]) {
+      this.setFocus(this.getElement(this.focusBookmarks[this.tag._id]));
+    } else {
+      this.setFocus(this.tag.children[0]);
+    }
   }
+
+  /*
 
   moveToNextAnnotation() {
     const nextAnnotation = this.tags.slice(this.getFocus() + 1)
