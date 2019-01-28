@@ -24,8 +24,8 @@ export class SpecTag {
     _parent: SpecTag;
 
     editorsNote: IEditorsNote = {
-        text: 'test',
-        position: 'append',
+        text: '',
+        position: 'prepend',
         active: false,
     };
 
