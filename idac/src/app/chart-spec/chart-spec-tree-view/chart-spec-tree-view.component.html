@@ -1,5 +1,7 @@
 <div class="container-fluid">
-  <section class="border {{ tag === currentTag ? 'border-primary highlight' : 'bg-light' }} p-2 ml-{{indent}}">
+  <section 
+    (click)="_currentTagChange(tag)"
+    class="border {{ tag === currentTag ? 'border-primary highlight' : 'bg-light' }} p-2 ml-{{indent}}">
     <div class="d-flex w-100 justify-content-between">
       <h5>{{ tag._tagname }}</h5>
       <p *ngIf="numAttributes"
@@ -32,7 +34,7 @@
   <div *ngIf="tag.children">
     <div *ngFor="let childTag of tag.children">
       <app-chart-spec-tree-view [tag]="childTag"
-        [currentTag]="currentTag" [indent]="indent + 2"></app-chart-spec-tree-view>
+        [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)" [indent]="indent + 2"></app-chart-spec-tree-view>
     </div>
   <div>
 </div>
