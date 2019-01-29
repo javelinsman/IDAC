@@ -15,11 +15,12 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
   @Input() siblingIndex: number;
   @Input() siblingLength: number;
   @Input() parentCollapseIndex = 0;
+  @Input() edit: boolean;
 
   @Output() currentTagChange: EventEmitter<SpecTag> = new EventEmitter();
   @Output() parentCollapseIndexChange: EventEmitter<number> = new EventEmitter();
+  @Output() editChange: EventEmitter<boolean> = new EventEmitter();
 
-  edit = false;
   editPanel = 'template';
   numAttributes: number;
 
@@ -52,5 +53,10 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
     // console.log(`My name is ${this.tag._tagname} and I am changing currentTag into ${tag._tagname}`);
     this.currentTag = tag;
     this.currentTagChange.emit(this.currentTag);
+  }
+
+  _editChange(edit: boolean) {
+    this.edit = edit;
+    this.editChange.emit(edit);
   }
 }
