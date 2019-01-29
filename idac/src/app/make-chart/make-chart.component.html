@@ -1,26 +1,30 @@
 <div class="container-fluid" *ngIf="chart && chartAccent">
-  <div class="row" style="height: 300px; overflow-y: scroll">
-    <div class="col-12 border">
+  <div class="row" style="height: 950px">
+    <div class="col-4 border" style="overflow-y: scroll">
       <app-chart-spec [chartSpec]="chartSpec" [(currentTag)]="currentTag"></app-chart-spec>
     </div>
-  </div>
-  <div class="row">
-    <app-chart-view class="col-4 border" [chartSpec]="chartSpec"
-      [src]="chart.src_svg" [(currentTag)]="currentTag"></app-chart-view>
-    <div class="col-4 border">
-      <div class="row">
+    <div class="col-8 border" style="overflow-y: scroll">
+      <div class="row border">
+        <div class="col-12">
+          <app-chart-view [chartSpec]="chartSpec"
+            [src]="chart.src_svg" [(currentTag)]="currentTag"></app-chart-view>
+        </div>
+      </div>
+      <!--div class="row border">
         <div class="col-12">
           <app-description-panel [tag]="currentTag"></app-description-panel>
         </div>
-      </div>
-      <div class="row">
+      </div-->
+      <!--div class="row border">
         <div class="col-12">
           <app-editors-note-panel [tag]="currentTag"></app-editors-note-panel>
         </div>
-      </div>
-    </div>
-    <div class="col-4 border">
-      <app-properties-panel [tag]="currentTag"></app-properties-panel>
+      </div-->
+      <!--div class="row border">
+        <div class="col-12">
+          <app-properties-panel [tag]="currentTag"></app-properties-panel>
+        </div>
+      </div-->
     </div>
   </div>
   <!--
