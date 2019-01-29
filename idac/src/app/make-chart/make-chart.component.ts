@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
 import { NavigateComponent } from '../navigate/navigate.component';
 import { ActivatedRoute } from '@angular/router';
@@ -14,7 +14,7 @@ import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
   templateUrl: './make-chart.component.html',
   styleUrls: ['./make-chart.component.scss']
 })
-export class MakeChartComponent implements OnInit, AfterViewInit {
+export class MakeChartComponent implements OnInit, AfterViewChecked {
   chart: Chart;
   chartAccent: ChartAccent;
   chartSpec: ChartSpec;
@@ -43,7 +43,7 @@ export class MakeChartComponent implements OnInit, AfterViewInit {
       this.currentTag = this.chartSpec.findById(1);
     });
   }
-  ngAfterViewInit() {
+  ngAfterViewChecked() {
     d3.select(this.containerDiv.nativeElement).style('height', `${window.innerHeight - 20}px`);
   }
 
