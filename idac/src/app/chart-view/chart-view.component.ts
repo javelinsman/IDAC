@@ -164,7 +164,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
 
       d3.selectAll('.idac-editors-note')
         .style('visibility', (tag: SpecTag) =>
-          this.showEditorsNote && tag.editorsNote.active ? 'visible' : 'hidden');
+          tag.editorsNote.showInGraphView && tag.editorsNote.active ? 'visible' : 'hidden');
     }
   }
 

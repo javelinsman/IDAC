@@ -133,3 +133,7 @@ export function mergeBoundingBoxes(boundingBoxes: {x: number, y: number, width: 
 export function zip(rows: any[][]) {
   return rows[0].map((_, c) => rows.map(row => row[c]));
 }
+
+export function firstLetterUpperCase(s: string) {
+  return s[0].toUpperCase() + s.slice(1);
+}

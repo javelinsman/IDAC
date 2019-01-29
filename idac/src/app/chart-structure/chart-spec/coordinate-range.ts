@@ -7,6 +7,7 @@ import { Highlight } from './highlight';
 import { Item } from './legend';
 import { Bar } from './marks';
 import { Tick } from './x';
+import { firstLetterUpperCase } from 'src/app/utils';
 
 export class CoordinateRange extends SpecTag {
     constructor(
@@ -14,7 +15,7 @@ export class CoordinateRange extends SpecTag {
         private annotations: ChartAccent.Annotation[],
         public _root: ChartSpec, public _parent: Annotations
     ) {
-        super('CoordinateRange');
+        super('Range');
         this.attributes = {
             rangeStart: new AttrInput(0),
             rangeEnd: new AttrInput(0),
@@ -68,6 +69,7 @@ export class RelationalHighlightRange extends Highlight {
 
         const mode = this.annotation.target_inherit.mode;
         this.attributes.targetRelation.value = mode.startsWith('between') ? 'between' : 'outside';
+        // this._tagname = firstLetterUpperCase(this.attributes.targetRelation.value);
 
         this.properties = {
             ...this.properties,

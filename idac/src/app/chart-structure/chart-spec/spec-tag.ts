@@ -6,6 +6,7 @@ interface IEditorsNote {
     text: string;
     position: 'prepend' | 'replace' | 'append';
     active: boolean;
+    showInGraphView: boolean;
 }
 
 export class SpecTag {
@@ -25,8 +26,9 @@ export class SpecTag {
 
     editorsNote: IEditorsNote = {
         text: '',
-        position: 'prepend',
+        position: 'replace',
         active: false,
+        showInGraphView: false
     };
 
     set properties(properties: IProperty) {
@@ -54,7 +56,7 @@ export class SpecTag {
         return (this.constructor as any)._descriptionRule;
     }
 
-    describe(info: ChartSpec, tags: any[], keyboardEvent: string, queryAnswer: string = null) {
+    describe(info: ChartSpec = null, tags: any[] = null, keyboardEvent: string = null, queryAnswer: string = null) {
         let description = this.descriptionRule;
         if (this.editorsNote.active) {
             const text = this.editorsNote.text;

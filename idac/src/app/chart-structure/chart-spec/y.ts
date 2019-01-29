@@ -5,7 +5,7 @@ import { ChartAccent } from '../chart-accent/chart-accent';
 
 export class Y extends SpecTag {
     constructor(public _root: ChartSpec) {
-        super('Y');
+        super('Y Axis');
         this._parent = _root;
         this.attributes = {
             label: new AttrInput(),

@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 
 @Component({
-  selector: 'app-description-panel',
-  templateUrl: './description-panel.component.html',
-  styleUrls: ['./description-panel.component.scss']
+  selector: 'app-attributes-panel',
+  templateUrl: './attributes-panel.component.html',
+  styleUrls: ['./attributes-panel.component.scss']
 })
-export class DescriptionPanelComponent implements OnInit {
+export class AttributesPanelComponent implements OnInit {
 
   @Input() tag: SpecTag;
 

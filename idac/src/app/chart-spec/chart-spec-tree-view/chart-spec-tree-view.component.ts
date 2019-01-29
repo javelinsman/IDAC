@@ -11,15 +11,18 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
   @Input() tag: SpecTag;
   @Input() currentTag: SpecTag;
   @Input() indent: number;
-  @Input() isCollapsed: string;
+  @Input() isCollapsed: any;
   @Input() siblingIndex: number;
   @Input() siblingLength: number;
   @Input() parentCollapseIndex = 0;
+  @Input() edit: boolean;
+  @Input() viewOnly = false;
 
   @Output() currentTagChange: EventEmitter<SpecTag> = new EventEmitter();
   @Output() parentCollapseIndexChange: EventEmitter<number> = new EventEmitter();
+  @Output() editChange: EventEmitter<boolean> = new EventEmitter();
 
-  edit = false;
+  editPanel = 'template';
   numAttributes: number;
 
   collapsable = false;
@@ -52,4 +55,24 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
     this.currentTag = tag;
     this.currentTagChange.emit(this.currentTag);
   }
+
+  _editChange(edit: boolean) {
+    this.edit = edit;
+    this.editChange.emit(edit);
+  }
+
+  increase() {
+    if (this.siblingIndex + 1 < this.siblingLength) {
+      this._currentTagChange(this.tag._parent.children[this.siblingIndex + 1]);
+      // this.parentCollapseIndexChange.emit(this.siblingIndex);
+    }
+  }
+
+  decrease() {
+    if (this.siblingIndex - 1 >= 0) {
+      this._currentTagChange(this.tag._parent.children[this.siblingIndex - 1]);
+      // this.parentCollapseIndexChange.emit(this.siblingIndex);
+    }
+  }
+
 }
