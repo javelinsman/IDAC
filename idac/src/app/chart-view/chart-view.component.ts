@@ -157,9 +157,11 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
           .classed('idac-highlight', true);
 
         // scroll horizontally
+        /*
         const prevY = window.scrollY;
         highlightRect.node().scrollIntoView({inline: 'center'});
         window.scroll(window.scrollX, prevY);
+        */
       }
 
       d3.selectAll('.idac-editors-note')
