@@ -4,7 +4,7 @@ import { ChartSpec } from './chart-spec';
 
 interface IEditorsNote {
     text: string;
-    position: 'replace';
+    position: 'prepend' | 'replace' | 'append';
     active: boolean;
 }
 
