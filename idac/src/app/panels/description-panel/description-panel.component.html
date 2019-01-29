@@ -1,15 +1,3 @@
-<div class="card">
-  <div class="card-header d-flex justify-content-between">
-    <h3>Description</h3>
-    <button class="btn btn-sm"
-      (click)="edit = !edit">
-      {{ edit ? 'Done' : 'Edit Rule' }}
-    </button>
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">Text</h5>
-    <p class="card-text" *ngIf="!edit">{{ tag.describe() }}</p>
-    <textarea *ngIf="edit" [(ngModel)]="tag.descriptionRule"
-      class="form-control" id="description-rule-textarea" rows="3"></textarea>
-  </div>
-</div>
+<p class="font-weight-bold mb-1">Description</p>
+<textarea [(ngModel)]="tag.descriptionRule"
+  class="form-control" id="description-rule-textarea" rows="2"></textarea>

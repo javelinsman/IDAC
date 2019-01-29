@@ -20,6 +20,7 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
   @Output() parentCollapseIndexChange: EventEmitter<number> = new EventEmitter();
 
   edit = false;
+  editPanel = 'template';
   numAttributes: number;
 
   collapsable = false;

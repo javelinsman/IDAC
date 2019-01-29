@@ -10,12 +10,9 @@ export class DescriptionPanelComponent implements OnInit {
 
   @Input() tag: SpecTag;
 
-  edit: boolean;
-
   constructor() { }
 
   ngOnInit() {
-    this.edit = false;
   }
 
 }
