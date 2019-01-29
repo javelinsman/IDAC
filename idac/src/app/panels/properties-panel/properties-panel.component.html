@@ -6,9 +6,24 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let prop of tag.properties | keyvalue">
+    <tr *ngFor="let prop of tag.properties | keyvalue" class="{{ isAttribute(prop.key) ? '' : 'bg-light' }}">
       <th scope="row">{{ prop.key }}</th>
-      <td>{{ prop.value() }}</td>
+      <td *ngIf="!isAttribute(prop.key)">{{ prop.value() }}</td>
+      <td *ngIf="isAttribute(prop.key)">
+        <input *ngIf="tag.attributes[prop.key].type ==='input'" [(ngModel)]="tag.attributes[prop.key].value">
+        <div *ngIf="tag.attributes[prop.key].type === 'input-select'">
+          <div class="btn-group" role="group">
+            <button *ngFor="let cand of tag.attributes[prop.key].candidates"
+              class="btn btn-sm {{ tag.attributes[prop.key].value === cand ? 'btn-primary' : 'btn-secondary' }}"
+              (click)="tag.attributes[prop.key].value = cand">
+              {{ cand }}
+            </button>
+          </div>
+          <div *ngIf="tag.attributes[prop.key].value !== prop.value()">
+            {{ prop.value() }}
+          </div>
+        </div>
+      </td>
     </tr>
   </tbody>
 </table>
