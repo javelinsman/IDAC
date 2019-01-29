@@ -7,6 +7,7 @@ import { Highlight } from './highlight';
 import { Item } from './legend';
 import { Bar } from './marks';
 import { Tick } from './x';
+import { firstLetterUpperCase } from 'src/app/utils';
 
 export class CoordinateLine extends SpecTag {
     constructor(
@@ -14,7 +15,7 @@ export class CoordinateLine extends SpecTag {
         private annotations: ChartAccent.Annotation[],
         public _root: ChartSpec, public _parent: Annotations
     ) {
-        super('CoordinateLine');
+        super('Line');
         this.attributes = {
             range: new AttrInput(0),
             targetAxis: new AttrInputSelect(['x', 'y'], 'x'),
@@ -65,6 +66,7 @@ export class RelationalHighlightLine extends Highlight {
 
         const mode = this.annotation.target_inherit.mode;
         this.attributes.targetRelation.value = mode.startsWith('below') ? 'below' : 'above';
+        // this._tagname = firstLetterUpperCase(this.attributes.targetRelation.value);
 
         this.properties = {
             ...this.properties,

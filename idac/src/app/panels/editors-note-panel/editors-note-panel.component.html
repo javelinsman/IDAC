@@ -1,23 +1,9 @@
-<div class="card">
-  <div class="card-header d-flex justify-content-start">
-    <div class="form-check">
-      <input type="checkbox" class="form-control form-control-lg form-check-input my-auto"
-        [(ngModel)]="tag.editorsNote.active">
-    </div>
-    <h3 class="my-auto">Editor's Note</h3>
+<div class="d-flex">
+  <div class="form-check">
+    <input type="checkbox" class="form-control form-check-input my-auto"
+      [(ngModel)]="tag.editorsNote.active">
   </div>
-  <div class="card-body">
-    <h5 class="card-title">Text</h5>
-    <textarea class="form-control" id="description-rule-textarea" rows="3"
-      [(ngModel)]="tag.editorsNote.text"></textarea>
-    <h5 class="card-title">Position</h5>
-    <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" (click)="tag.editorsNote.position = 'prepend'"
-        class="btn btn-secondary {{ tag.editorsNote.position === 'prepend' ? 'active' : '' }}">prepend</button>
-      <button type="button" (click)="tag.editorsNote.position = 'replace'"
-        class="btn btn-secondary {{ tag.editorsNote.position === 'replace' ? 'active' : '' }}">replace</button>
-      <button type="button" (click)="tag.editorsNote.position = 'append'"
-        class="btn btn-secondary {{ tag.editorsNote.position === 'append' ? 'active' : '' }}">append</button>
-    </div>
-  </div>
+  <p class="font-weight-bold">Override</p>
 </div>
+<textarea class="form-control" id="description-rule-textarea" rows="3"
+  [(ngModel)]="tag.editorsNote.text"></textarea>

@@ -6,6 +6,7 @@ interface IEditorsNote {
     text: string;
     position: 'prepend' | 'replace' | 'append';
     active: boolean;
+    showInGraphView: boolean;
 }
 
 export class SpecTag {
@@ -25,8 +26,9 @@ export class SpecTag {
 
     editorsNote: IEditorsNote = {
         text: '',
-        position: 'prepend',
+        position: 'replace',
         active: false,
+        showInGraphView: false
     };
 
     set properties(properties: IProperty) {

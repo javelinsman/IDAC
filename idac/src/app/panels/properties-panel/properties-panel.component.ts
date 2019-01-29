@@ -11,6 +11,10 @@ export class PropertiesPanelComponent implements OnInit {
 
   constructor() { }
 
+  isAttribute(key: string) {
+    return Object.keys(this.tag.attributes).includes(key);
+  }
+
   ngOnInit() {
   }
 

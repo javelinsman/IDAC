@@ -16,6 +16,8 @@ export class ChartSpecComponent implements OnInit, AfterViewChecked {
 
   @ViewChild('container') containerDiv: ElementRef;
 
+  edit = false;
+
   constructor() { }
 
   ngOnInit() {

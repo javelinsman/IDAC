@@ -1,55 +1,49 @@
-<div class="container-fluid">
-  <section 
-    (click)="_currentTagChange(tag)"
-    class="border {{ tag === currentTag ? 'border-primary highlight' : 'bg-light' }} p-2 ml-{{indent}}">
-    <div class="d-flex w-100 justify-content-between">
-      <h5><span class="text-danger">{{ tag.editorsNote.active ? '✓' : '' }}</span> {{ tag._tagname }}</h5>
-      <div class="d-flex">
-        <p *ngIf="numAttributes" (click)="edit=!edit"
-          style="cursor: pointer" class="text-secondary">{{ edit ? 'Done' : 'Attributes' }}</p>
-        <h5 *ngIf="collapsable" (click)="collapseChildren=!collapseChildren"
-          style="cursor: pointer" class="text-secondary ml-1">
-          {{ collapseChildren ? '-' : '+' }}
-        </h5>
-      </div>
-    </div>
-    <div>
-      <p>{{ tag.describe() }}</p>
-    </div>
-    <div *ngIf="edit">
-      <div class="mb-1" *ngFor="let attr of tag.attributes | keyvalue">
-        <div *ngIf="!attr.key.startsWith('_')">
-          <div class="d-flex" *ngIf="attr.value.type === 'input'">
-            {{ attr.key }}: <input class="border ml-1" style="width: 100%" [(ngModel)]="attr.value.value">
-          </div>
-          <div *ngIf="attr.value.type === 'input-select'">
-            {{ attr.key }}:
-            <div class="btn-group" role="group">
-              <button *ngFor="let cand of attr.value.candidates"
-                class="btn btn-sm {{ attr.value.value === cand ? 'btn-primary' : 'btn-secondary' }}"
-                (click)="attr.value.value = cand">
-                {{ cand }}
-              </button>
-            </div>
-          </div>
+<div class="container-fluid p-0">
+  <section class="d-flex">
+    <div (click)="_currentTagChange(tag)" class="w-100  border {{ tag === currentTag ? 'border-primary highlight' : 'bg-light' }}">
+      <div class="d-flex justify-content-between">
+        <div class="d-flex">
+          <p class="font-weight-light">
+            <span class="text-danger"
+              (mouseover)="tag.editorsNote.showInGraphView = true"
+              (mouseout)="tag.editorsNote.showInGraphView = false">{{ tag.editorsNote.active ? '📝' : '' }}</span>
+            <span>{{ tag._tagname }}{{isCollapsed === false ? '[' + (siblingIndex + 1) + ']' : ''}}</span>
+          </p>
+          <p class="font-weight-normal ml-2">{{ tag.describe() }}</p>
         </div>
+        <p *ngIf="!viewOnly && tag === currentTag" (click)="_editChange(!edit)" style="cursor: pointer" class="text-secondary">{{ edit ? 'Done' : 'Edit' }}</p>
+      </div>
+      <div *ngIf="edit && tag === currentTag">
+        <div class="d-flex justify-content-end">
+          <p (click)="editPanel = 'override'" style="cursor: pointer" class="text-secondary mx-1">Override</p>
+          <p (click)="editPanel = 'template'" style="cursor: pointer" class="text-secondary mx-1">Template</p>
+          <!--p (click)="editPanel = 'attributes'" style="cursor: pointer" class="text-secondary mx-1">Attributes</p-->
+        </div>
+        <app-description-panel *ngIf="editPanel === 'template'" [tag]="tag"></app-description-panel>
+        <app-properties-panel *ngIf="editPanel === 'template'" [tag]="tag"></app-properties-panel>
+        <app-editors-note-panel *ngIf="editPanel === 'override'" [tag]="tag"></app-editors-note-panel>
+        <app-attributes-panel *ngIf="editPanel === 'attributes'" [tag]="tag"></app-attributes-panel>
       </div>
     </div>
-    <div *ngIf="isCollapsed === false" class="d-flex justify-content-end">
-      <p (click)="siblingIndex > 0 ? parentCollapseIndexChange.emit(siblingIndex - 1) : ''"
-        style="cursor: pointer" class="text-secondary">←</p>
-      <p>{{ siblingIndex + 1 }} / {{ siblingLength }}</p>
-      <p (click)="siblingIndex + 1 < siblingLength ? parentCollapseIndexChange.emit(siblingIndex + 1) : ''"
-        style="cursor: pointer" class="text-secondary">→</p>
+    <div *ngIf="isCollapsed === false">
+      <p (click)="decrease()" style="cursor: pointer" class="text-secondary">▲</p>
+      <p (click)="increase()" style="cursor: pointer" class="text-secondary">▼</p>
     </div>
   </section>
-  <div *ngIf="tag.children">
-    <div *ngFor="let childTag of tag.children; index as i">
-      <app-chart-spec-tree-view 
-        class="{{ !collapsable || collapseChildren || i === collapseIndex ? '' : 'd-none'}}"
-        [tag]="childTag" [isCollapsed]="!collapsable || collapseChildren"
-        [siblingIndex]="i" [siblingLength]="tag.children.length" [(parentCollapseIndex)]="collapseIndex"
-        [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)" [indent]="0"></app-chart-spec-tree-view>
+  <div class="d-flex" *ngIf="!viewOnly && tag.children">
+    <span *ngIf="true || collapsable" (click)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
+      style="width: 30px; cursor: pointer" class="badge badge-light my-2 indent-{{indent}} {{collapsable ? '' : 'invisible'}}">
+      {{ collapseChildren ? 'ㅡ' : tag.children.length }}
+    </span>
+    <div class="w-100">
+      <div *ngFor="let childTag of tag.children; index as i">
+        <app-chart-spec-tree-view
+          class="{{ !collapsable || collapseChildren || i === collapseIndex ? '' : 'd-none'}}"
+          [(edit)]="edit"
+          [tag]="childTag" [isCollapsed]="!collapsable || collapseChildren"
+          [siblingIndex]="i" [siblingLength]="tag.children.length" [(parentCollapseIndex)]="collapseIndex"
+          [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)" [indent]="indent + 1"></app-chart-spec-tree-view>
+      </div>
     </div>
   <div>
 </div>
