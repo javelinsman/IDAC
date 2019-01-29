@@ -43,10 +43,10 @@
     </div-->
   </section>
   <div class="d-flex" *ngIf="tag.children">
-    <p *ngIf="collapsable" (click)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
-      style="cursor: pointer" class="text-secondary my-2 indent-{{indent}}">
+    <span *ngIf="true || collapsable" (click)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
+      style="width: 30px; cursor: pointer" class="badge badge-light my-2 indent-{{indent}} {{collapsable ? '' : 'invisible'}}">
       {{ collapseChildren ? 'ㅡ' : tag.children.length }}
-    </p>
+    </span>
     <div class="w-100">
       <div *ngFor="let childTag of tag.children; index as i">
         <app-chart-spec-tree-view
