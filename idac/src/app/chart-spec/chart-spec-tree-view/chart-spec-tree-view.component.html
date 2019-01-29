@@ -1,33 +1,32 @@
 <div class="container-fluid p-0">
-  <section
-    (click)="_currentTagChange(tag)"
-    class="border {{ tag === currentTag ? 'border-primary highlight' : 'bg-light' }}">
-    <div class="d-flex justify-content-between">
-      <div class="d-flex">
-        <p class="font-weight-light"><span class="text-danger">{{ tag.editorsNote.active ? '✓' : '' }}</span> {{ tag._tagname }}</p>
-        <p class="font-weight-normal ml-2">{{ tag.describe() }}</p>
+  <section class="d-flex">
+    <div (click)="_currentTagChange(tag)" class="w-100  border {{ tag === currentTag ? 'border-primary highlight' : 'bg-light' }}">
+      <div class="d-flex justify-content-between">
+        <div class="d-flex">
+          <p class="font-weight-light">
+            <span class="text-danger">{{ tag.editorsNote.active ? '✓' : '' }}</span>
+            <span>{{ tag._tagname }}{{isCollapsed === false ? '[' + (siblingIndex + 1) + ']' : ''}}</span>
+          </p>
+          <p class="font-weight-normal ml-2">{{ tag.describe() }}</p>
+        </div>
+        <p *ngIf="tag === currentTag" (click)="_editChange(!edit)" style="cursor: pointer" class="text-secondary">{{ edit ? 'Done' : 'Edit' }}</p>
       </div>
-      <p *ngIf="tag === currentTag" (click)="_editChange(!edit)" style="cursor: pointer" class="text-secondary">{{ edit ? 'Done' : 'Edit' }}</p>
-    </div>
-    <div *ngIf="edit && tag === currentTag">
-      <div class="d-flex justify-content-end">
-        <p (click)="editPanel = 'override'" style="cursor: pointer" class="text-secondary mx-1">Override</p>
-        <p (click)="editPanel = 'template'" style="cursor: pointer" class="text-secondary mx-1">Template</p>
-        <!--p (click)="editPanel = 'attributes'" style="cursor: pointer" class="text-secondary mx-1">Attributes</p-->
+      <div *ngIf="edit && tag === currentTag">
+        <div class="d-flex justify-content-end">
+          <p (click)="editPanel = 'override'" style="cursor: pointer" class="text-secondary mx-1">Override</p>
+          <p (click)="editPanel = 'template'" style="cursor: pointer" class="text-secondary mx-1">Template</p>
+          <!--p (click)="editPanel = 'attributes'" style="cursor: pointer" class="text-secondary mx-1">Attributes</p-->
+        </div>
+        <app-description-panel *ngIf="editPanel === 'template'" [tag]="tag"></app-description-panel>
+        <app-properties-panel *ngIf="editPanel === 'template'" [tag]="tag"></app-properties-panel>
+        <app-editors-note-panel *ngIf="editPanel === 'override'" [tag]="tag"></app-editors-note-panel>
+        <app-attributes-panel *ngIf="editPanel === 'attributes'" [tag]="tag"></app-attributes-panel>
       </div>
-      <app-description-panel *ngIf="editPanel === 'template'" [tag]="tag"></app-description-panel>
-      <app-properties-panel *ngIf="editPanel === 'template'" [tag]="tag"></app-properties-panel>
-      <app-editors-note-panel *ngIf="editPanel === 'override'" [tag]="tag"></app-editors-note-panel>
-      <app-attributes-panel *ngIf="editPanel === 'attributes'" [tag]="tag"></app-attributes-panel>
     </div>
-
-    <!--div *ngIf="isCollapsed === false" class="d-flex justify-content-end">
-      <p (click)="siblingIndex > 0 ? parentCollapseIndexChange.emit(siblingIndex - 1) : ''"
-        style="cursor: pointer" class="text-secondary">←</p>
-      <p>{{ siblingIndex + 1 }} / {{ siblingLength }}</p>
-      <p (click)="siblingIndex + 1 < siblingLength ? parentCollapseIndexChange.emit(siblingIndex + 1) : ''"
-        style="cursor: pointer" class="text-secondary">→</p>
-    </div-->
+    <div *ngIf="isCollapsed === false">
+      <p (click)="decrease()" style="cursor: pointer" class="text-secondary">▲</p>
+      <p (click)="increase()" style="cursor: pointer" class="text-secondary">▼</p>
+    </div>
   </section>
   <div class="d-flex" *ngIf="tag.children">
     <span *ngIf="true || collapsable" (click)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"

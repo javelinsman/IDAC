@@ -59,4 +59,19 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
     this.edit = edit;
     this.editChange.emit(edit);
   }
+
+  increase() {
+    if (this.siblingIndex + 1 < this.siblingLength) {
+      this._currentTagChange(this.tag._parent.children[this.siblingIndex + 1]);
+      // this.parentCollapseIndexChange.emit(this.siblingIndex);
+    }
+  }
+
+  decrease() {
+    if (this.siblingIndex - 1 >= 0) {
+      this._currentTagChange(this.tag._parent.children[this.siblingIndex - 1]);
+      // this.parentCollapseIndexChange.emit(this.siblingIndex);
+    }
+  }
+
 }
