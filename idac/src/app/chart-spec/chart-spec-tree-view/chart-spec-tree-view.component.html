@@ -2,18 +2,12 @@
   <section
     (click)="_currentTagChange(tag)"
     class="border {{ tag === currentTag ? 'border-primary highlight' : 'bg-light' }}">
-    <div class="d-flex">
-      <p class="font-weight-light"><span class="text-danger">{{ tag.editorsNote.active ? '✓' : '' }}</span> {{ tag._tagname }}</p>
-      <p class="font-weight-normal ml-2">{{ tag.describe() }}</p>
-
-      <!--div class="d-flex">
-        <p *ngIf="numAttributes" (click)="edit=!edit"
-          style="cursor: pointer" class="text-secondary">{{ edit ? 'Done' : 'Attributes' }}</p>
-        <h5 *ngIf="collapsable" (click)="collapseChildren=!collapseChildren"
-          style="cursor: pointer" class="text-secondary ml-1">
-          {{ collapseChildren ? '-' : '+' }}
-        </h5>
-      </div-->
+    <div class="d-flex justify-content-between">
+      <div class="d-flex">
+        <p class="font-weight-light"><span class="text-danger">{{ tag.editorsNote.active ? '✓' : '' }}</span> {{ tag._tagname }}</p>
+        <p class="font-weight-normal ml-2">{{ tag.describe() }}</p>
+      </div>
+      <p (click)="edit=!edit" style="cursor: pointer" class="text-secondary">{{ edit ? 'Done' : 'Edit' }}</p>
     </div>
     <!--div *ngIf="edit">
       <div class="mb-1" *ngFor="let attr of tag.attributes | keyvalue">
