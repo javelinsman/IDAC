@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
 import { NavigateComponent } from '../navigate/navigate.component';
 import { ActivatedRoute } from '@angular/router';
@@ -14,12 +14,13 @@ import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
   templateUrl: './make-chart.component.html',
   styleUrls: ['./make-chart.component.scss']
 })
-export class MakeChartComponent implements OnInit {
+export class MakeChartComponent implements OnInit, AfterViewInit {
   chart: Chart;
   chartAccent: ChartAccent;
   chartSpec: ChartSpec;
 
   currentTag: SpecTag;
+  @ViewChild('container') containerDiv: ElementRef;
 
   constructor(
       private chartExampleService: ChartExampleService,
@@ -41,8 +42,11 @@ export class MakeChartComponent implements OnInit {
       this.chartSpec.fromChartAccent(this.chartAccent);
       this.currentTag = this.chartSpec.findById(1);
     });
-
   }
+  ngAfterViewInit() {
+    d3.select(this.containerDiv.nativeElement).style('height', `${window.innerHeight - 20}px`);
+  }
+
 
   fetchExampleChart(id: number) {
     return this.chartExampleService.getCharts()[id];
