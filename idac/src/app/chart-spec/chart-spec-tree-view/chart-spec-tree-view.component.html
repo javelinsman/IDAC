@@ -13,30 +13,14 @@
       <div class="d-flex justify-content-end">
         <p (click)="editPanel = 'override'" style="cursor: pointer" class="text-secondary mx-1">Override</p>
         <p (click)="editPanel = 'template'" style="cursor: pointer" class="text-secondary mx-1">Template</p>
-        <p (click)="editPanel = 'Attributes'" style="cursor: pointer" class="text-secondary mx-1">Attributes</p>
+        <p (click)="editPanel = 'attributes'" style="cursor: pointer" class="text-secondary mx-1">Attributes</p>
       </div>
       <app-description-panel *ngIf="editPanel === 'template'" [tag]="tag"></app-description-panel>
       <app-properties-panel *ngIf="editPanel === 'template'" [tag]="tag"></app-properties-panel>
+      <app-editors-note-panel *ngIf="editPanel === 'override'" [tag]="tag"></app-editors-note-panel>
+      <app-attributes-panel *ngIf="editPanel === 'attributes'" [tag]="tag"></app-attributes-panel>
     </div>
-    <!--div *ngIf="edit">
-      <div class="mb-1" *ngFor="let attr of tag.attributes | keyvalue">
-        <div *ngIf="!attr.key.startsWith('_')">
-          <div class="d-flex" *ngIf="attr.value.type === 'input'">
-            {{ attr.key }}: <input class="border ml-1" style="width: 100%" [(ngModel)]="attr.value.value">
-          </div>
-          <div *ngIf="attr.value.type === 'input-select'">
-            {{ attr.key }}:
-            <div class="btn-group" role="group">
-              <button *ngFor="let cand of attr.value.candidates"
-                class="btn btn-sm {{ attr.value.value === cand ? 'btn-primary' : 'btn-secondary' }}"
-                (click)="attr.value.value = cand">
-                {{ cand }}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div-->
+
     <!--div *ngIf="isCollapsed === false" class="d-flex justify-content-end">
       <p (click)="siblingIndex > 0 ? parentCollapseIndexChange.emit(siblingIndex - 1) : ''"
         style="cursor: pointer" class="text-secondary">←</p>

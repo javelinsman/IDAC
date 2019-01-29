@@ -17,6 +17,7 @@ import { EditorsNotePanelComponent } from './panels/editors-note-panel/editors-n
 import { PropertiesPanelComponent } from './panels/properties-panel/properties-panel.component';
 import { ChartSpecTreeViewComponent } from './chart-spec/chart-spec-tree-view/chart-spec-tree-view.component';
 import { ChartViewComponent } from './chart-view/chart-view.component';
+import { AttributesPanelComponent } from './panels/attributes-panel/attributes-panel.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ChartViewComponent } from './chart-view/chart-view.component';
     DescriptionPanelComponent,
     EditorsNotePanelComponent,
     PropertiesPanelComponent,
-    ChartViewComponent
+    ChartViewComponent,
+    AttributesPanelComponent
   ],
   imports: [
     BrowserModule,
