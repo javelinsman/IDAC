@@ -4,7 +4,9 @@
       <div class="d-flex justify-content-between">
         <div class="d-flex">
           <p class="font-weight-light">
-            <span class="text-danger">{{ tag.editorsNote.active ? '✓' : '' }}</span>
+            <span class="text-danger"
+              (mouseover)="tag.editorsNote.showInGraphView = true"
+              (mouseout)="tag.editorsNote.showInGraphView = false">{{ tag.editorsNote.active ? '📝' : '' }}</span>
             <span>{{ tag._tagname }}{{isCollapsed === false ? '[' + (siblingIndex + 1) + ']' : ''}}</span>
           </p>
           <p class="font-weight-normal ml-2">{{ tag.describe() }}</p>

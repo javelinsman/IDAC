@@ -31,7 +31,7 @@ export class Bargroup extends SpecTag {
     borrowY = this._root.y;
     borrowLegend = this._root.legend;
     constructor(private row: Row, index: number, public _root: ChartSpec, public _parent: Marks) {
-        super('Bargroup');
+        super('Bar Group');
         this.properties = {
             name: () => this.borrowX.children[index].attributes.text.value,
             numBars: () => this.children.length,
