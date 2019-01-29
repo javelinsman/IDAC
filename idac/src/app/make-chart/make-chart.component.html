@@ -10,9 +10,13 @@
             [src]="chart.src_svg" [(currentTag)]="currentTag"></app-chart-view>
         </div>
       </div>
+      <div class="row border">
+        <div class="col-12">
+          <app-filter-view [(currentTag)]="currentTag"></app-filter-view>
+        </div>
+      </div>
       <!--div class="row border">
         <div class="col-12">
-          <app-description-panel [tag]="currentTag"></app-description-panel>
         </div>
       </div-->
       <!--div class="row border">

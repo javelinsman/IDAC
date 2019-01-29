@@ -16,6 +16,7 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
   @Input() siblingLength: number;
   @Input() parentCollapseIndex = 0;
   @Input() edit: boolean;
+  @Input() viewOnly = false;
 
   @Output() currentTagChange: EventEmitter<SpecTag> = new EventEmitter();
   @Output() parentCollapseIndexChange: EventEmitter<number> = new EventEmitter();

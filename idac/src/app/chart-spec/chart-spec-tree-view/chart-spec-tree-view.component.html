@@ -11,7 +11,7 @@
           </p>
           <p class="font-weight-normal ml-2">{{ tag.describe() }}</p>
         </div>
-        <p *ngIf="tag === currentTag" (click)="_editChange(!edit)" style="cursor: pointer" class="text-secondary">{{ edit ? 'Done' : 'Edit' }}</p>
+        <p *ngIf="!viewOnly && tag === currentTag" (click)="_editChange(!edit)" style="cursor: pointer" class="text-secondary">{{ edit ? 'Done' : 'Edit' }}</p>
       </div>
       <div *ngIf="edit && tag === currentTag">
         <div class="d-flex justify-content-end">
@@ -30,7 +30,7 @@
       <p (click)="increase()" style="cursor: pointer" class="text-secondary">▼</p>
     </div>
   </section>
-  <div class="d-flex" *ngIf="tag.children">
+  <div class="d-flex" *ngIf="!viewOnly && tag.children">
     <span *ngIf="true || collapsable" (click)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
       style="width: 30px; cursor: pointer" class="badge badge-light my-2 indent-{{indent}} {{collapsable ? '' : 'invisible'}}">
       {{ collapseChildren ? 'ㅡ' : tag.children.length }}
