@@ -10,7 +10,7 @@
       <th scope="row">{{ prop.key }}</th>
       <td *ngIf="!isAttribute(prop.key)">{{ prop.value() }}</td>
       <td *ngIf="isAttribute(prop.key)">
-        <input *ngIf="tag.attributes[prop.key].type ==='input'" [(ngModel)]="tag.attributes[prop.key].value">
+        <input *ngIf="tag.attributes[prop.key].type ==='input'" [(ngModel)]="tag.attributes[prop.key].value" class="text-center w-100">
         <div *ngIf="tag.attributes[prop.key].type === 'input-select'">
           <div class="btn-group" role="group">
             <button *ngFor="let cand of tag.attributes[prop.key].candidates"
