@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 import * as FuzzySearch from 'fuzzy-search';
+import { Textcomplete, Textarea } from 'textcomplete';
 
 
 @Component({
@@ -8,7 +9,7 @@ import * as FuzzySearch from 'fuzzy-search';
   templateUrl: './description-panel.component.html',
   styleUrls: ['./description-panel.component.scss']
 })
-export class DescriptionPanelComponent implements OnInit {
+export class DescriptionPanelComponent implements OnInit, AfterViewInit {
 
   @Input() tag: SpecTag;
 
@@ -20,13 +21,22 @@ export class DescriptionPanelComponent implements OnInit {
 
   ngOnInit() {
     const keys = Object.keys(this.tag.properties);
-    this.fuzzySearcher = new FuzzySearch(keys.map(key => ({ key })), ['key']);
+    this.fuzzySearcher = new FuzzySearch(keys.map(key => ({ key })), ['key'], { sort: true });
+  }
+
+  ngAfterViewInit() {
+    const editor = new Textarea(this.textarea.nativeElement);
+    const textComplete = new Textcomplete(editor);
+    textComplete.register([{
+      match: /(^|\s)\$\(([a-zA-Z0-9+\-\_]*)$/,
+      search: (term, callback) => callback(this.searchKeyword(term)),
+      replace: (name) => `$1$(${name}) `
+    }]);
   }
 
   searchKeyword(keyword: string): string[] {
     return this.fuzzySearcher.search(keyword).map(({key}) => key);
   }
-
 
   onInput() {
     const content = this.textarea.nativeElement.value;
