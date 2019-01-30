@@ -19,7 +19,7 @@ export class PropertiesPanelComponent implements OnInit {
   }
 
   onDragStart(event: DragEvent) {
-    event.dataTransfer.setData('text/plain', (event.target as HTMLElement).innerText);
+    event.dataTransfer.setData('text/plain', `$(${(event.target as HTMLElement).innerText})`);
   }
 
 }

@@ -45,7 +45,16 @@ export class DescriptionPanelComponent implements OnInit, AfterViewInit {
     const pos = textarea.selectionStart;
     const leftContent = content.slice(0, pos),
           rightContent = content.slice(pos);
-    textarea.value = `${leftContent}$(${propName})${rightContent}`;
+    // textarea.value = `${leftContent}$(${propName})${rightContent}`;
+    textarea.focus();
+    textarea.selectionStart += 1;
+  }
+
+  onDragOver(event: DragEvent) {
+    /*
+    const textarea = this.textarea.nativeElement;
+    console.log(textarea.);
+    */
   }
 
 }
