@@ -1,5 +1,6 @@
 <p class="font-weight-bold mb-1">Description</p>
 
 <textarea [(ngModel)]="tag.descriptionRule"
+  (drop)="onDrop($event)" (dragover)="onDragOver($event)"
   class="form-control" id="description-rule-textarea" rows="2" #input>
 </textarea>

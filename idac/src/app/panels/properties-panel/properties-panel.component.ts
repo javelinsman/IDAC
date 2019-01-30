@@ -18,4 +18,8 @@ export class PropertiesPanelComponent implements OnInit {
   ngOnInit() {
   }
 
+  onDragStart(event: DragEvent) {
+    event.dataTransfer.setData('text/plain', `$(${(event.target as HTMLElement).innerText})`);
+  }
+
 }
