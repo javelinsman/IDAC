@@ -7,7 +7,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let prop of tag.properties | keyvalue" class="{{ isAttribute(prop.key) ? '' : 'bg-light' }}">
-      <th scope="row">{{ prop.key }}</th>
+      <th scope="row"><p draggable="true" (dragstart)="onDragStart($event)">{{ prop.key }}</p></th>
       <td *ngIf="!isAttribute(prop.key)">{{ prop.value() }}</td>
       <td *ngIf="isAttribute(prop.key)">
         <input *ngIf="tag.attributes[prop.key].type ==='input'" [(ngModel)]="tag.attributes[prop.key].value" class="text-center w-100">

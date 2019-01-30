@@ -38,17 +38,14 @@ export class DescriptionPanelComponent implements OnInit, AfterViewInit {
     return this.fuzzySearcher.search(keyword).map(({key}) => key);
   }
 
-  onInput() {
-    const content = this.textarea.nativeElement.value;
-    const pos = this.textarea.nativeElement.selectionStart;
+  onDrop(event: DragEvent) {
+    const textarea = this.textarea.nativeElement;
+    const propName = event.dataTransfer.getData('text');
+    const content = textarea.value;
+    const pos = textarea.selectionStart;
     const leftContent = content.slice(0, pos),
           rightContent = content.slice(pos);
-    const regexIsOpen = /^([^\$\(\)]*\$\([^\$\(\)]*\)[^\$\(\)]*)*[^\$\(\)]*\$\((?<cand>[^\$\(\)]*)$/;
-    const match = leftContent.match(regexIsOpen);
-    if (match) {
-      const keyword = match.groups.cand + rightContent.split(' ')[0].split(')')[0];
-      console.log(this.searchKeyword(keyword));
-    }
+    textarea.value = `${leftContent}$(${propName})${rightContent}`;
   }
 
 }
