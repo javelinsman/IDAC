@@ -12,9 +12,10 @@
               (mouseout)="tag.editorsNote.showInGraphView = false">{{ tag.editorsNote.active ? '📝' : '' }}</span>
             <span class="{{ tag === currentTag ? 'text-primary' : '' }}">{{ tag._tagname }}{{isCollapsed === false ? '[' + (siblingIndex + 1) + ']' : ''}}</span>
           </p>
-          <p class="font-weight-normal ml-2">{{ tag.describe() }}</p>
+          <p (click)="!viewOnly && tag === currentTag ? _editChange(true) : ''"
+            [class.cursor-pointer]="!viewOnly && tag === currentTag"
+            class="font-weight-normal ml-2">{{ tag.describe() }}</p>
         </div>
-        <p *ngIf="!viewOnly && tag === currentTag" (click)="_editChange(!edit)" style="cursor: pointer" class="text-secondary">{{ edit ? 'Done' : 'Edit' }}</p>
       </div>
       <ng-container *ngIf="edit && tag === currentTag">
         <div class="d-flex justify-content-end">
@@ -27,6 +28,9 @@
         <app-editors-note-panel *ngIf="editPanel === 'override'" [tag]="tag"></app-editors-note-panel>
         <app-attributes-panel *ngIf="editPanel === 'attributes'" [tag]="tag"></app-attributes-panel>
       </ng-container>
+      <p *ngIf="!viewOnly && tag === currentTag && edit"
+        (click)="_editChange(false)"
+        class="text-secondary cursor-pointer">Done</p>
     </div>
     <div *ngIf="false && isCollapsed === false">
       <p (click)="decrease()" style="cursor: pointer" class="text-secondary">▲</p>
@@ -35,7 +39,8 @@
   </section>
   <div class="d-flex" *ngIf="!viewOnly && tag.children">
     <span *ngIf="true || collapsable" (click)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
-      style="width: 30px; cursor: pointer" class="badge badge-light my-2 pt-2 mr-2 {{collapsable ? '' : 'invisible'}}">
+      style="width: 30px; cursor: pointer" class="badge badge-light my-2 pt-2 mr-2"
+      [class.invisible]="!collapsable">
       {{ collapseChildren ? 'ㅡ' : tag.children.length }}
     </span>
     <div class="w-100">
