@@ -1,0 +1,35 @@
+@import "../theme.scss";
+
+:host /deep/ .event-box {
+  fill: transparent;
+}
+
+:host /deep/ .idac-elem-mark {
+  fill: lighten($variable1-highlight-color, 0%);
+  opacity: 0;
+}
+
+:host /deep/ .idac-elem-mark.highlighted {
+  fill: lighten($variable1-highlight-color, 0%);
+  opacity: 0.2;
+}
+
+:host /deep/ .idac-click-hint {
+  fill: lighten($variable1-highlight-color, 20%);
+  opacity: 0;
+}
+
+:host /deep/ .idac-click-hint.highlighted {
+  fill: lighten($variable1-highlight-color, 20%);
+  opacity: 0.2;
+}
+
+:host /deep/ .idac-editors-note {
+  fill: lighten($variable2-highlight-color, 0%);
+  opacity: 0;
+}
+
+:host /deep/ .idac-editors-note.highlighted {
+  fill: lighten($variable2-highlight-color, 0%);
+  opacity: 0.2;
+}

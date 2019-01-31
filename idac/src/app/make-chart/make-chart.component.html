@@ -1,16 +1,18 @@
 <div class="container-fluid" #container>
   <div class="row h-100" *ngIf="chart && chartAccent">
-    <div class="col-4 border h-100" style="overflow-y: scroll">
+    <div class="col-4 border h-100 styled-scroll" style="overflow-y: scroll">
       <app-chart-spec [chartSpec]="chartSpec" [(currentTag)]="currentTag"></app-chart-spec>
     </div>
-    <div class="col-8 border" style="overflow-y: scroll">
-      <div class="row border">
+    <div class="col-8 border styled-scroll" style="overflow-y: scroll">
+      <div class="row">
         <div class="col-12">
           <app-chart-view [chartSpec]="chartSpec"
             [src]="chart.src_svg" [(currentTag)]="currentTag"></app-chart-view>
         </div>
       </div>
-      <div class="row border">
+      <hr>
+        <p class="variable1 highlighted">Test</p>
+      <div class="row">
         <div class="col-12">
           <app-filter-view [(currentTag)]="currentTag"></app-filter-view>
         </div>
