@@ -16,7 +16,7 @@ export class Y extends SpecTag {
         this.descriptionRule = [
             'Y axis with label name $(label).',
             'The unit of measurement is $(unit).',
-            'The range is from $(min) to $(max).',
+            'The range is from $(rangeMin) to $(rangeMax).',
             ].join(' ');
     }
     fromChartAccent(ca: ChartAccent) {
