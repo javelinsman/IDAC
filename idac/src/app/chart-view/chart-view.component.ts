@@ -138,13 +138,6 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     return mergedBox;
   }
 
-  enlargeBox(box: any) {
-    box.width += 30;
-    box.height += 30;
-    box.x -= 15;
-    box.y -= 15;
-  }
-
   makeRectFromBoundingBox(box: any, location = null) {
     if (!location) {
       location = this.svg;

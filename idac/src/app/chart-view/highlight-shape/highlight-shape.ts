@@ -67,7 +67,24 @@ class Title extends HighlightShape { }
 class Y extends HighlightShape { }
 class X extends HighlightShape { }
 class Tick extends HighlightShape { }
-class Legend extends HighlightShape { }
+class Legend extends HighlightShape {
+
+  makeShell({ x, y, width, height }: { [k: string]: number }) {
+    const w = width, h = height, d = 15;
+    const path = `M0 0 h${w} v${h} h${-w}z`
+      + `M${-d} ${-d} v${h + 2 * d} h${w + 2 * d} v${-h - 2 * d}z`;
+    return d3.select(createSVGElement('path'))
+      .attr('d', path)
+      .attr('fill-rule', 'evenodd')
+      .attr('transform', translate(x, y));
+  }
+
+  elemMark() {
+    const boundingBox = this.getMergedBoundingBox(this.associatedElement);
+    return this.makeShell(boundingBox).node();
+
+  }
+}
 class Item extends HighlightShape { }
 class Marks extends HighlightShape { }
 class BarGroup extends HighlightShape { }
