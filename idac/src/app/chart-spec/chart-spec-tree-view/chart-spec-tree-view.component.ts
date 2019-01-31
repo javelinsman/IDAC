@@ -52,13 +52,16 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
 
   _currentTagChange(tag: SpecTag) {
     // console.log(`My name is ${this.tag._tagname} and I am changing currentTag into ${tag._tagname}`);
+    if (this.currentTag !== tag) {
+      this.edit = false;
+    }
     this.currentTag = tag;
     this.currentTagChange.emit(this.currentTag);
   }
 
   _editChange(edit: boolean) {
     this.edit = edit;
-    this.editChange.emit(edit);
+    // this.editChange.emit(edit);
   }
 
   increase() {
