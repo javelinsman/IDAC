@@ -138,6 +138,13 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     return mergedBox;
   }
 
+  enlargeBox(box: any) {
+    box.width += 30;
+    box.height += 30;
+    box.x -= 15;
+    box.y -= 15;
+  }
+
   makeRectFromBoundingBox(box: any, location = null) {
     if (!location) {
       location = this.svg;
@@ -152,6 +159,9 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       const target = this.elementLink[this.currentTag._id];
       if (target) {
         const mergedBox = this.getMergedBoundingBox(target);
+        if (this.currentTag._tagname === 'legend') {
+          this.enlargeBox(mergedBox);
+        }
         const highlightRect = this.makeRectFromBoundingBox(mergedBox, this.gHighlight)
           .style('fill', 'rgba(255, 255, 0, 0.5)')
           .classed('idac-highlight', true);
