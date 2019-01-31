@@ -1,5 +1,5 @@
-<h3>All {{ currentTag._tagname }} Tags</h3>
-<div *ngIf="currentTag">
+<h3 class="my-3 mx-3 py-2" [style.border-bottom]="'1px solid #aaa'">All {{ currentTag._tagname }} Tags</h3>
+<div *ngIf="currentTag" class="px-3">
   <app-chart-spec-tree-view *ngFor="let sameTag of getAllTags()" [tag]="sameTag" [edit]="false" [viewOnly]="true"
     [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)"></app-chart-spec-tree-view>
 </div>
