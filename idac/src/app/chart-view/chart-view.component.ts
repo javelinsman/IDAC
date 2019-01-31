@@ -5,6 +5,7 @@ import * as d3 from 'd3';
 import { SvgContainerComponent } from '../svg-container/svg-container.component';
 import { d3ImmediateChildren, d3AsSelectionArray, makeAbsoluteContext, mergeBoundingBoxes, zip } from '../utils';
 import { translate } from '../chartutils';
+import { HighlightShape } from './highlight-shape/highlight-shape';
 
 @Component({
   selector: 'app-chart-view',
@@ -20,10 +21,9 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
 
   @ViewChild(SvgContainerComponent) svgContainer: SvgContainerComponent;
 
-  svg: d3.Selection<SVGGElement, any, HTMLElement, any>;
-  gClickHint: d3.Selection<any, any, any, any>;
-  gHighlight: d3.Selection<any, any, any, any>;
-  gEditorsNote: d3.Selection<any, any, any, any>;
+  svg: d3.Selection<SVGSVGElement, any, HTMLElement, any>;
+  gElemMarks: d3.Selection<any, any, any, any>;
+  gEditorsNotes: d3.Selection<any, any, any, any>;
   elementLink = {};
   ready = false;
 
@@ -34,14 +34,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
   }
 
-  onSVGInit() {
-    this.ready = true;
-    this.svg = d3.select(this.svgContainer.svgContainerDiv.nativeElement).select('svg');
-
-    this.gHighlight = this.svg.append('g').classed('idac-highlights', true);
-    this.gClickHint = this.svg.append('g').classed('idac-click-hints', true);
-    this.gEditorsNote = this.svg.append('g').classed('idac-editors-notes', true);
-
+  associateElements() {
     const [annotationBackground, g2, annotationForeground] = d3AsSelectionArray(d3ImmediateChildren(this.svg, 'g'));
     const [title, legend, chart] = d3AsSelectionArray(d3ImmediateChildren(g2, 'g'));
     const items = d3AsSelectionArray(legend.selectAll('.legend'));
@@ -54,7 +47,6 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     const bargroups = rects.map((_, i) => this.svg.selectAll(`.idac-bargroup-${i}`));
     const xTicks = d3AsSelectionArray(x.selectAll('.tick'));
     const yTicks = d3AsSelectionArray(y.selectAll('.tick'));
-
     const annotationRenderingArea = d3AsSelectionArray(
       d3ImmediateChildren(
         d3ImmediateChildren(annotationForeground, 'g'),
@@ -69,7 +61,6 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       return accum;
     }, []);
     const annotations = uniqueAnnotationIds.map(id => annotationForeground.selectAll(`.${id}`));
-
     const cs = this.chartSpec;
     const pairs = [
       [cs.title, title],
@@ -94,24 +85,35 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       const tag = cs.annotations.findByAnnotation(cs.annotations.annotationInChartAccent(i));
       pairs.push([tag, annotation as any]);
     });
-    this.elementLink = pairs.reduce((accum, [k, v]: [SpecTag, any]) => {
-      accum[k._id] = v;
+    this.elementLink = pairs.reduce((accum, [tag, associatedElement]: [SpecTag, any]) => {
+      accum[tag._id] = {
+        tag, associatedElement,
+        highlightShape: HighlightShape.getShape(tag, associatedElement, this.svg)
+      };
       return accum;
     }, {});
+  }
 
-    Object.entries(this.elementLink).forEach(([tagId, selection]: [string, d3.Selection<any, any, any, any>]) => {
-      const tag = this.chartSpec.findById(+tagId);
-      const rect = this.makeRectFromBoundingBox(this.getMergedBoundingBox(selection), this.gClickHint)
-        .classed('idac-click-hint', true);
-      rect.on('mouseover', function() { d3.select(this).classed('highlighted', true); });
-      rect.on('mouseout', function() { d3.select(this).classed('highlighted', false); });
-      rect.on('click', () => this._currentTagChange(tag));
+  onSVGInit() {
+    this.ready = true;
+    this.svg = d3.select(this.svgContainer.svgContainerDiv.nativeElement).select('svg');
+    this.associateElements();
 
-      const editorsNoteRect = this.makeRectFromBoundingBox(this.getMergedBoundingBox(selection), this.gEditorsNote)
-        .classed('idac-editors-note', true).data([tag]);
-      editorsNoteRect.on('mouseover', function() { d3.select(this).style('stroke-width', 3); });
-      editorsNoteRect.on('mouseout', function() { d3.select(this).style('stroke-width', 2); });
-      editorsNoteRect.on('click', () => this._currentTagChange(tag));
+    this.gElemMarks = this.svg.append('g').classed('idac-elem-marks', true);
+    this.gEditorsNotes = this.svg.append('g').classed('idac-editors-notes', true);
+
+    Object.values(this.elementLink).forEach(({ tag, associatedElement, highlightShape }) => {
+      const elemMark = d3.select(this.gElemMarks.node().appendChild(highlightShape.elemMark()))
+        .classed('idac-elem-mark', true).data([tag]);
+      elemMark.on('mouseover', function() { d3.select(this).classed('hover', true); });
+      elemMark.on('mouseout', function() { d3.select(this).classed('hover', false); });
+      elemMark.on('click', () => this._currentTagChange(tag));
+
+      const bookmark = d3.select(this.gEditorsNotes.node().appendChild(highlightShape.bookmark()))
+        .classed('idac-bookmark', true).data([tag]);
+      bookmark.on('mouseover', function() { d3.select(this).classed('hover', true); });
+      bookmark.on('mouseout', function() { d3.select(this).classed('hover', false); });
+      bookmark.on('click', () => this._currentTagChange(tag));
 
     });
   }
@@ -146,23 +148,20 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked() {
     if (this.ready) {
-      this.svg.selectAll('.idac-elem-mark').remove();
-      const target = this.elementLink[this.currentTag._id];
-      if (target) {
-        const mergedBox = this.getMergedBoundingBox(target);
-        const highlightRect = this.makeRectFromBoundingBox(mergedBox, this.gHighlight)
-          .classed('idac-elem-mark highlighted', true);
+      d3.selectAll('.idac-elem-mark')
+        .classed('highlighted', (tag: SpecTag) => tag === this.currentTag);
 
-        // scroll horizontally
-        /*
-        const prevY = window.scrollY;
-        highlightRect.node().scrollIntoView({inline: 'center'});
-        window.scroll(window.scrollX, prevY);
-        */
-      }
+      d3.selectAll('.idac-bookmark')
+        .classed('active', (tag: SpecTag) => tag.editorsNote.active);
+        // .classed('highlighted', (tag: SpecTag) => tag.editorsNote.showInGraphView && tag.editorsNote.active);
 
-      d3.selectAll('.idac-editors-note')
-        .classed('highlighted', (tag: SpecTag) => tag.editorsNote.showInGraphView && tag.editorsNote.active);
+      /*
+      // scroll horizontally
+      const prevY = window.scrollY;
+      highlightRect.node().scrollIntoView({inline: 'center'});
+      window.scroll(window.scrollX, prevY);
+      */
+
     }
   }
 
