@@ -1,4 +1,4 @@
-<div class="container-fluid" #container>
+<div class="container-fluid" #container (window:resize)="onWindowResize()">
   <div class="row h-100" *ngIf="chart && chartAccent">
     <div class="col-4 border h-100 styled-scroll" style="overflow-y: scroll">
       <app-chart-spec [chartSpec]="chartSpec" [(currentTag)]="currentTag"></app-chart-spec>
