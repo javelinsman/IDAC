@@ -27,11 +27,27 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
   elementLink = {};
   ready = false;
 
+  originalSVGSize = {
+    width: 0,
+    height: 0
+  };
+
+  allSVGElementsAreDrawn = false;
+
   showEditorsNote = true;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  resizeSVG() {
+    const container = this.svgContainer.svgContainerDiv.nativeElement as HTMLElement;
+    const containerWidth = container.offsetWidth, containerHeight = container.offsetHeight;
+    console.log(containerWidth, containerHeight);
+    this.svg.attr('viewBox', `0 0 ${this.originalSVGSize.width} ${this.originalSVGSize.height}`);
+    this.svg.attr('width', containerWidth);
+    this.svg.attr('height', containerHeight);
   }
 
   associateElements() {
@@ -97,6 +113,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
   onSVGInit() {
     this.ready = true;
     this.svg = d3.select(this.svgContainer.svgContainerDiv.nativeElement).select('svg');
+
     this.associateElements();
 
     this.gElemMarks = this.svg.append('g').classed('idac-elem-marks', true);
@@ -116,6 +133,11 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       bookmark.on('click', () => this._currentTagChange(tag));
 
     });
+
+    this.allSVGElementsAreDrawn = true;
+    this.originalSVGSize.width = +this.svg.attr('width');
+    this.originalSVGSize.height = +this.svg.attr('height');
+    this.resizeSVG();
   }
 
   getMergedBoundingBox(selection: d3.Selection<any, any, any, any>) {
@@ -162,6 +184,13 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       window.scroll(window.scrollX, prevY);
       */
 
+    }
+  }
+
+  onWindowResize() {
+    if (this.allSVGElementsAreDrawn) {
+      console.log('hihihi');
+      this.resizeSVG();
     }
   }
 

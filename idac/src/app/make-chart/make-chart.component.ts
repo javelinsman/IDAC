@@ -14,7 +14,7 @@ import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
   templateUrl: './make-chart.component.html',
   styleUrls: ['./make-chart.component.scss']
 })
-export class MakeChartComponent implements OnInit, AfterViewChecked {
+export class MakeChartComponent implements OnInit {
   chart: Chart;
   chartAccent: ChartAccent;
   chartSpec: ChartSpec;
@@ -43,7 +43,7 @@ export class MakeChartComponent implements OnInit, AfterViewChecked {
       this.currentTag = this.chartSpec.findById(1);
     });
   }
-  ngAfterViewChecked() {
+  onWindowResize() {
     d3.select(this.containerDiv.nativeElement).style('height', `${window.innerHeight - 20}px`);
   }
 
@@ -55,5 +55,4 @@ export class MakeChartComponent implements OnInit, AfterViewChecked {
   fetchChart() {
     return this.chartExampleService.getCharts()[0];
   }
-
 }
