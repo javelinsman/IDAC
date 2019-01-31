@@ -12,9 +12,12 @@
               (mouseout)="tag.editorsNote.showInGraphView = false">{{ tag.editorsNote.active ? '📝' : '' }}</span>
             <span class="{{ tag === currentTag ? 'text-primary' : '' }}">{{ tag._tagname }}{{isCollapsed === false ? '[' + (siblingIndex + 1) + ']' : ''}}</span>
           </p>
-          <p (click)="!viewOnly && tag === currentTag ? _editChange(true) : ''"
+          <p (click)="!viewOnly && tag === currentTag ? _editChange(!edit) : ''"
+            [class.cursor-default]="viewOnly || tag !== currentTag"
             [class.cursor-pointer]="!viewOnly && tag === currentTag"
-            class="font-weight-normal ml-2">{{ tag.describe() }}</p>
+            [class.text-muted]="!tag.describe().length"
+            [class.font-italic]="!tag.describe().length"
+            class="font-weight-normal text-unselectable ml-2">{{ tag.describe().length ? tag.describe() : '(No description)' }}</p>
         </div>
       </div>
       <ng-container *ngIf="edit && tag === currentTag">
