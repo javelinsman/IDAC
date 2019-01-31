@@ -42,10 +42,9 @@ export class MakeChartComponent implements OnInit {
       this.chartSpec.fromChartAccent(this.chartAccent);
       this.currentTag = this.chartSpec.findById(1);
     });
-    this.onWindowResize();
   }
   onWindowResize() {
-    d3.select(this.containerDiv.nativeElement).style('height', `${window.innerHeight - 20 - 50}px`);
+    d3.select(this.containerDiv.nativeElement).style('height', `${window.innerHeight - 20}px`);
   }
 
 
