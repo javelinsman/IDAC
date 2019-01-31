@@ -27,9 +27,11 @@ export class ChartSpecComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked() {
+    /*
     const elem = this.containerDiv.nativeElement as any;
     Array.from(elem.getElementsByClassName('highlight'))
       .forEach((dom: any) => dom.scrollIntoView({block: 'center'}));
+    */
   }
 
   _currentTagChange(tag: SpecTag) {
