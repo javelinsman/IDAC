@@ -33,8 +33,8 @@ export class Y extends SpecTag {
       const allValues = this._root.marks.children.map(bargroup => bargroup.children.map(bar => bar.properties.value() as number))
         .reduce((a, b) => [...a, ...b]);
       if (!this.attributes.rangeMax || !this.attributes.rangeMin) {
-        this.attributes.rangeMax = Math.max(...allValues);
-        this.attributes.rangeMin = Math.min(...allValues);
+        this.properties.rangeMax = () => Math.ceil(Math.max(...allValues));
+        this.attributes.rangeMin = () => Math.floor(Math.min(...allValues));
       }
 
     }
