@@ -44,7 +44,6 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
   resizeSVG() {
     const container = this.svgContainer.svgContainerDiv.nativeElement as HTMLElement;
     const containerWidth = container.offsetWidth, containerHeight = container.offsetHeight;
-    console.log(containerWidth, containerHeight);
     this.svg.attr('viewBox', `0 0 ${this.originalSVGSize.width} ${this.originalSVGSize.height}`);
     this.svg.attr('width', containerWidth);
     this.svg.attr('height', containerHeight);
@@ -189,7 +188,6 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
 
   onWindowResize() {
     if (this.allSVGElementsAreDrawn) {
-      console.log('hihihi');
       this.resizeSVG();
     }
   }
