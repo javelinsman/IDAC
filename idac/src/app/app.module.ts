@@ -19,6 +19,7 @@ import { ChartSpecTreeViewComponent } from './chart-spec/chart-spec-tree-view/ch
 import { ChartViewComponent } from './chart-view/chart-view.component';
 import { AttributesPanelComponent } from './panels/attributes-panel/attributes-panel.component';
 import { FilterViewComponent } from './filter-view/filter-view.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { FilterViewComponent } from './filter-view/filter-view.component';
     PropertiesPanelComponent,
     ChartViewComponent,
     AttributesPanelComponent,
-    FilterViewComponent
+    FilterViewComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
