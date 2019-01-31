@@ -82,8 +82,14 @@ class Legend extends HighlightShape {
   elemMark() {
     const boundingBox = this.getMergedBoundingBox(this.associatedElement);
     return this.makeShell(boundingBox).node();
-
   }
+
+  bookmark() {
+    const boundingBox = this.getMergedBoundingBox(this.associatedElement);
+    return this.makeShell(boundingBox).node();
+  }
+
+
 }
 class Item extends HighlightShape { }
 class Marks extends HighlightShape { }

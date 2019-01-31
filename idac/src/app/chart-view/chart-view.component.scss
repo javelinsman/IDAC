@@ -25,13 +25,13 @@
 }
 
 :host /deep/ .idac-bookmark.active {
-  fill: lighten($variable2-highlight-color, 0%);
+  fill: lighten($variable2-highlight-color, 20%);
   visibility: visible;
-  opacity: 0;
+  opacity: 0.2;
 }
 
 :host /deep/ .idac-bookmark.active.hover {
-  fill: lighten($variable2-highlight-color, 20%);
+  fill: lighten($variable2-highlight-color, 0%);
   opacity: 0.2;
 }
 
