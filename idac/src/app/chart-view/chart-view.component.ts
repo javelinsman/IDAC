@@ -102,14 +102,12 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     Object.entries(this.elementLink).forEach(([tagId, selection]: [string, d3.Selection<any, any, any, any>]) => {
       const tag = this.chartSpec.findById(+tagId);
       const rect = this.makeRectFromBoundingBox(this.getMergedBoundingBox(selection), this.gClickHint)
-        .style('fill', 'pink').style('fill-opacity', 0);
-      rect.on('mouseover', function() { d3.select(this).style('fill-opacity', 0.5); });
-      rect.on('mouseout', function() { d3.select(this).style('fill-opacity', 0); });
+        .classed('idac-click-hint', true);
+      rect.on('mouseover', function() { d3.select(this).classed('highlighted', true); });
+      rect.on('mouseout', function() { d3.select(this).classed('highlighted', false); });
       rect.on('click', () => this._currentTagChange(tag));
 
       const editorsNoteRect = this.makeRectFromBoundingBox(this.getMergedBoundingBox(selection), this.gEditorsNote)
-        .style('fill-opacity', 0)
-        .style('stroke', 'red').style('stroke-width', 2).style('visibility', 'hidden')
         .classed('idac-editors-note', true).data([tag]);
       editorsNoteRect.on('mouseover', function() { d3.select(this).style('stroke-width', 3); });
       editorsNoteRect.on('mouseout', function() { d3.select(this).style('stroke-width', 2); });
@@ -148,13 +146,12 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked() {
     if (this.ready) {
-      this.svg.selectAll('.idac-highlight').remove();
+      this.svg.selectAll('.idac-elem-mark').remove();
       const target = this.elementLink[this.currentTag._id];
       if (target) {
         const mergedBox = this.getMergedBoundingBox(target);
         const highlightRect = this.makeRectFromBoundingBox(mergedBox, this.gHighlight)
-          .style('fill', 'rgba(255, 255, 0, 0.5)')
-          .classed('idac-highlight', true);
+          .classed('idac-elem-mark highlighted', true);
 
         // scroll horizontally
         /*
@@ -165,8 +162,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       }
 
       d3.selectAll('.idac-editors-note')
-        .style('visibility', (tag: SpecTag) =>
-          tag.editorsNote.showInGraphView && tag.editorsNote.active ? 'visible' : 'hidden');
+        .classed('highlighted', (tag: SpecTag) => tag.editorsNote.showInGraphView && tag.editorsNote.active);
     }
   }
 
