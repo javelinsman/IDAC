@@ -9,27 +9,34 @@
   opacity: 0;
 }
 
+:host /deep/ .idac-elem-mark.hover {
+  fill: lighten($variable1-highlight-color, 20%);
+  opacity: 0.2;
+}
+
+
 :host /deep/ .idac-elem-mark.highlighted {
   fill: lighten($variable1-highlight-color, 0%);
   opacity: 0.2;
 }
 
-:host /deep/ .idac-click-hint {
-  fill: lighten($variable1-highlight-color, 20%);
+:host /deep/ .idac-bookmark {
+  visibility: hidden;
+}
+
+:host /deep/ .idac-bookmark.active {
+  fill: lighten($variable2-highlight-color, 0%);
+  visibility: visible;
   opacity: 0;
 }
 
-:host /deep/ .idac-click-hint.highlighted {
-  fill: lighten($variable1-highlight-color, 20%);
+:host /deep/ .idac-bookmark.active.hover {
+  fill: lighten($variable2-highlight-color, 20%);
   opacity: 0.2;
 }
 
-:host /deep/ .idac-editors-note {
-  fill: lighten($variable2-highlight-color, 0%);
-  opacity: 0;
-}
 
-:host /deep/ .idac-editors-note.highlighted {
+:host /deep/ .idac-bookmark.active.highlighted {
   fill: lighten($variable2-highlight-color, 0%);
   opacity: 0.2;
 }

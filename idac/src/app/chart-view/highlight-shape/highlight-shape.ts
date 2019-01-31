@@ -3,12 +3,26 @@ import * as d3 from 'd3';
 import { d3AsSelectionArray, makeAbsoluteContext, mergeBoundingBoxes } from 'src/app/utils';
 import { translate } from 'src/app/chartutils';
 
-class HighlightShape {
+function createSVGElement(tagname: string) {
+  const namespace = d3.namespace('svg') as d3.NamespaceLocalObject;
+  return document.createElementNS(namespace.space, tagname);
+}
+
+export class HighlightShape {
   constructor(
-    public tag: SpecTag,
+      public tag: SpecTag,
       public associatedElement: d3.Selection<any, any, any, any>,
       public svg: d3.Selection<SVGSVGElement, any, any, any>
   ) { }
+
+  static getShape (
+      tag: SpecTag,
+      associatedElement: d3.Selection<any, any, any, any>,
+      svg: d3.Selection<SVGSVGElement, any, any, any>
+    ) {
+      const _class = getHighlightShapeClass(tag._tagname);
+      return new _class(tag, associatedElement, svg);
+  }
 
   getMergedBoundingBox(selection: d3.Selection<any, any, any, any>) {
     const boundingBoxes = [
@@ -31,21 +45,20 @@ class HighlightShape {
   }
 
   makeRectFromBoundingBox(box: any) {
-    return this.location.append('rect').attr('transform', translate(box.x, box.y))
+    const a = d3.select(createSVGElement('rect'));
+    return d3.select(createSVGElement('rect'))
+      .attr('transform', translate(box.x, box.y))
       .attr('width', box.width).attr('height', box.height);
   }
 
-
-  clickHint() {
-      return this.makeRectFromBoundingBox(
-          this.getMergedBoundingBox(this.associatedElement)
-        ).style('fill', 'pink').style('fill-opacity', 0);
-  }
-
-  highlight() {
+  elemMark() {
+    const boundingBox = this.getMergedBoundingBox(this.associatedElement);
+    return this.makeRectFromBoundingBox(boundingBox).node();
   }
 
   bookmark() {
+    const boundingBox = this.getMergedBoundingBox(this.associatedElement);
+    return this.makeRectFromBoundingBox(boundingBox).node();
   }
 
 }
@@ -101,13 +114,4 @@ function getHighlightShapeClass(tagname: string) {
     default:
       return HighlightShape;
   }
-}
-
-export function getHighlightShape(
-    tag: SpecTag,
-    associatedElement: d3.Selection<any, any, any, any>,
-    svg: d3.Selection<SVGSVGElement, any, any, any>
-  ) {
-    const _class = getHighlightShapeClass(tag._tagname);
-    return new _class(tag, associatedElement, svg);
 }
