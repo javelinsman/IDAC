@@ -137,3 +137,21 @@ export function zip(rows: any[][]) {
 export function firstLetterUpperCase(s: string) {
   return s[0].toUpperCase() + s.slice(1);
 }
+
+export function OnClickOutside(element, callback) {
+  const outsideClickListener = event => {
+      if (!element.contains(event.target) && isVisible(element)) { // or use: event.target.closest(selector) === null
+        callback();
+        removeClickListener();
+      }
+  };
+
+  const removeClickListener = () => {
+      document.removeEventListener('click', outsideClickListener);
+  };
+
+  document.addEventListener('click', outsideClickListener);
+}
+
+// source (2018-03-11): https://github.com/jquery/jquery/blob/master/src/css/hiddenVisibleSelectors.js
+const isVisible = elem => !!elem && !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length );

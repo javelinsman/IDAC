@@ -1,5 +1,5 @@
 <div class="container-fluid p-0">
-  <section class="d-flex">
+  <section class="d-flex" #tagSection>
     <div (click)="_currentTagChange(tag)" class="w-100 border-bottom pl-1 pt-3 pb-3 pr-3"
       style="border: 1px solid transparent"
       [class.border-primary]="tag === currentTag"

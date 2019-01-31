@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, OnChanges, EventEmitter, Output, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, EventEmitter, Output, AfterViewChecked, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
+import { OnClickOutside } from 'src/app/utils';
 
 @Component({
   selector: 'app-chart-spec-tree-view',
@@ -21,6 +22,9 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
   @Output() currentTagChange: EventEmitter<SpecTag> = new EventEmitter();
   @Output() parentCollapseIndexChange: EventEmitter<number> = new EventEmitter();
   @Output() editChange: EventEmitter<boolean> = new EventEmitter();
+
+  @ViewChild('tagSection') tagSection: ElementRef;
+
 
   editPanel = 'template';
   numAttributes: number;
@@ -61,7 +65,15 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
 
   _editChange(edit: boolean) {
     this.edit = edit;
+    if (edit) {
+      OnClickOutside(this.tagSection.nativeElement, () => {
+        this._editChange(false);
+      });
+    }
     // this.editChange.emit(edit);
+  }
+
+  onSectionClick() {
   }
 
   increase() {
