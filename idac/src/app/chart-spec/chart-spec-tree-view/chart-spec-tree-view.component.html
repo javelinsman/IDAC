@@ -10,7 +10,9 @@
             <span class="text-danger"
               (mouseover)="tag.editorsNote.showInGraphView = true"
               (mouseout)="tag.editorsNote.showInGraphView = false">{{ tag.editorsNote.active ? '📝' : '' }}</span>
-            <span class="{{ tag === currentTag ? 'text-primary' : '' }}">{{ tag._tagname }}{{isCollapsed === false ? '[' + (siblingIndex + 1) + ']' : ''}}</span>
+            <span
+              [style.white-space]="'nowrap'"
+              [class.text-primary]="tag === currentTag" >{{ tag._tagname }}{{isCollapsed === false ? '[' + (siblingIndex + 1) + ']' : ''}}</span>
           </p>
           <p (click)="!viewOnly && tag === currentTag ? _editChange(!edit) : ''"
             [class.cursor-default]="viewOnly || tag !== currentTag"
