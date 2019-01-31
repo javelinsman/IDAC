@@ -28,7 +28,7 @@ export class DescriptionPanelComponent implements OnInit, AfterViewInit {
     const editor = new Textarea(this.textarea.nativeElement);
     const textComplete = new Textcomplete(editor);
     textComplete.register([{
-      match: /(^|\s)\$\(([a-zA-Z0-9+\-\_]*)$/,
+      match: /()\$\(([a-zA-Z0-9+\-\_]*)$/,
       search: (term, callback) => callback(this.searchKeyword(term)),
       replace: (name) => `$1$(${name}) `
     }]);
