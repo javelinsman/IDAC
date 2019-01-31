@@ -85,6 +85,7 @@ export class SpecTag {
     }
 
     fromChartAccent(ca: ChartAccent): void {}
+    afterFromChartAccent(): void {}
 
     foreignRepr(): string {
         return this._tagname;
