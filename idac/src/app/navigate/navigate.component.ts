@@ -8,6 +8,7 @@ import { beep_error, beep_detect, speak, isAscendingArray, isDescendingArray } f
 import { DescriptionComponent } from '../description/description.component';
 import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
 import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-navigate',
@@ -36,7 +37,7 @@ export class NavigateComponent implements OnInit {
   */
 
 
-  constructor() { }
+  constructor(private messageService: MessageService) { }
 
   ngOnInit() {
   }
@@ -56,6 +57,7 @@ export class NavigateComponent implements OnInit {
     this.focusHistory.push(this.tag);
     this.tag = tag;
     this.tagChange.emit(this.tag);
+    this.messageService.shouldScroll = true;
   }
 
   checkCurrentElement() {
