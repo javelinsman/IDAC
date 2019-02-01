@@ -128,7 +128,12 @@ class Y extends HighlightShape {
     this.enlargeBoxBy(this.boundingBox, d, d, 0, 0);
   }
 }
-class X extends HighlightShape { }
+class X extends HighlightShape {
+  onInit() {
+    const d = this.boundingBox.height * 0.2;
+    this.enlargeBoxBy(this.boundingBox, 0, 0, 0, d);
+  }
+}
 class Tick extends HighlightShape { }
 class Legend extends HighlightShape {
   elemMark() {

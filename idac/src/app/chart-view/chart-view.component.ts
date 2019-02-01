@@ -44,9 +44,8 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
   resizeSVG() {
     const container = this.svgContainer.svgContainerDiv.nativeElement as HTMLElement;
     const containerWidth = container.offsetWidth, containerHeight = container.offsetHeight;
-    this.svg.attr('viewBox', `0 0 ${this.originalSVGSize.width} ${this.originalSVGSize.height}`);
-    this.svg.attr('width', containerWidth);
-    this.svg.attr('height', containerHeight);
+    this.svg.attr('viewBox', `0 0 ${this.originalSVGSize.width} ${this.originalSVGSize.height + 20}`);
+    this.svg.attr('width', '100%');
   }
 
   associateElements() {
@@ -55,7 +54,13 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     const items = d3AsSelectionArray(legend.selectAll('.legend'));
     const [marks, x, y, yLabel, xLabel] = d3AsSelectionArray(d3ImmediateChildren(chart, 'g'));
     y.classed('idac-y-axis', true);
-    yLabel.classed('idac-y-axis', true);
+    if (yLabel) {
+      yLabel.classed('idac-y-axis', true);
+    }
+    x.classed('idac-x-axis', true);
+    if (xLabel) {
+      xLabel.classed('idac-x-axis', true);
+    }
     const serieses = d3AsSelectionArray(d3ImmediateChildren(marks, 'g'));
     const rects = zip(serieses.map(d => d3AsSelectionArray(d3ImmediateChildren(d, 'rect'))));
     rects.forEach((elem: d3.Selection<any, any, any, any>[], i) => {
@@ -82,7 +87,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     const pairs = [
       [cs.title, title],
       [cs.y, d3.selectAll('.idac-y-axis')],
-      [cs.x, x],
+      [cs.x, d3.selectAll('.idac-x-axis')],
       [cs.legend, legend],
       [cs.marks, marks],
     ];
