@@ -171,7 +171,7 @@ class Marks extends HighlightShape {
   onInit() {
   }
   elemMark() {
-    const yBBox = this.getMergedBoundingBox(this.elementLink[this.tag._root.y._id].associatedElements);
+    const yBBox = this.elementLink[this.tag._root.y._id].highlightShape.boundingBox;
     const dx = this.boundingBox.x - (yBBox.x + yBBox.width);
     const dy = this.boundingBox.y - yBBox.y;
     return this.makeShell(this.boundingBox, dx, dy, dx, 0);
