@@ -100,14 +100,24 @@ export function d3AsSelectionArray(selection: d3.Selection<any, any, any, any>) 
   return Array.from(selection.nodes()).map(d => d3.select(d));
 }
 
-export function makeAbsoluteContext(element, svgDocument) {
-  return function(x, y) {
-    const offset = svgDocument.getBoundingClientRect();
-    const matrix = element.getScreenCTM();
+export function makeAbsoluteContext(element: SVGGraphicsElement, svgDocument: SVGSVGElement) {
+  return function(x: number, y: number) {
+    const point = svgDocument.createSVGPoint();
+    point.x = x; point.y = y;
+    const transformedPoint = point.matrixTransform(element.getCTM());
     return {
-      x: (matrix.a * x) + (matrix.c * y) + matrix.e - offset.left,
-      y: (matrix.b * x) + (matrix.d * y) + matrix.f - offset.top
+      x: transformedPoint.x,
+      y: transformedPoint.y
     };
+
+    /*
+    const offset = svgDocument.getBoundingClientRect();
+    const matrix = element.getCTM();
+    return {
+      x: (matrix.a * x) + (matrix.c * y) + matrix.e, // - offset.left,
+      y: (matrix.b * x) + (matrix.d * y) + matrix.f // - offset.top
+    };
+    */
   };
 }
 
