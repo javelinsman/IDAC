@@ -65,7 +65,6 @@ export class HighlightShape {
       };
     });
     const mergedBox = mergeBoundingBoxes(boundingBoxes);
-    console.log(selection, boundingBoxes, mergedBox);
     mergedBox.width = Math.max(mergedBox.width, 5);
     mergedBox.height = Math.max(mergedBox.height, 5);
     return mergedBox;
@@ -94,11 +93,11 @@ export class HighlightShape {
       .attr('width', box.width).attr('height', box.height).node() as SVGRectElement;
   }
 
-  enlargeBoxBy(box: IBox, dx: number, dy: number = dx) {
-    box.width += 2 * dx;
-    box.height += 2 * dy;
-    box.x -= dx;
-    box.y -= dy;
+  enlargeBoxBy(box: IBox, dl: number, dt: number = dl, dr: number = dl, db: number = dt) {
+    box.width += dl + dr;
+    box.height += dt + db;
+    box.x -= dl;
+    box.y -= dt;
   }
 
   enlargeBoxByMult(box: IBox, mx: number, my: number = mx) {
@@ -124,7 +123,10 @@ class Title extends HighlightShape {
 }
 
 class Y extends HighlightShape {
-
+  onInit() {
+    const d = this.boundingBox.width * 0.2;
+    this.enlargeBoxBy(this.boundingBox, d, d, 0, 0);
+  }
 }
 class X extends HighlightShape { }
 class Tick extends HighlightShape { }
@@ -140,10 +142,7 @@ class BarGroup extends HighlightShape { }
 class Bar extends HighlightShape {
   onInit() {
     const d = this.boundingBox.width * 0.2;
-    this.boundingBox.width += 2 * d;
-    this.boundingBox.height += d;
-    this.boundingBox.x -= d;
-    this.boundingBox.y -= d;
+    this.enlargeBoxBy(this.boundingBox, d, d, d, 0);
   }
 }
 class Annotations extends HighlightShape { }
@@ -157,9 +156,9 @@ function getHighlightShapeClass(tagname: string) {
   switch (tagname) {
     case 'Title':
       return Title;
-    case 'Y':
+    case 'Y Axis':
       return Y;
-    case 'X':
+    case 'X Axis':
       return X;
     case 'Tick':
       return Tick;
