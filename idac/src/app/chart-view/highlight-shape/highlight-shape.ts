@@ -147,12 +147,24 @@ class Tick extends HighlightShape {
   }
 }
 class Legend extends HighlightShape {
+  onInit() {
+    this.enlargeBoxBy(this.boundingBox, 10, 0, 10, 0);
+  }
   elemMark() {
     return this.makeShell(this.boundingBox, 15);
   }
+  bookmark() {
+    const outerBox = { ...this.boundingBox };
+    this.enlargeBoxBy(outerBox, 15);
+    return this.makeShell(outerBox, 5);
+  }
 
 }
-class Item extends HighlightShape { }
+class Item extends HighlightShape {
+  onInit() {
+    this.enlargeBoxBy(this.boundingBox, 10, 1, 10, 1);
+  }
+}
 class Marks extends HighlightShape { }
 class BarGroup extends HighlightShape { }
 class Bar extends HighlightShape {
