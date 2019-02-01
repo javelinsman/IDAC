@@ -127,9 +127,9 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
 
       const bookmark = d3.select(this.gEditorsNotes.node().appendChild(highlightShape.bookmark()))
         .classed('idac-bookmark', true).data([tag]);
-      bookmark.on('mouseover', function() { d3.select(this).classed('hover', true); });
-      bookmark.on('mouseout', function() { d3.select(this).classed('hover', false); });
-      bookmark.on('click', () => this._currentTagChange(tag));
+      // bookmark.on('mouseover', function() { d3.select(this).classed('hover', true); });
+      // bookmark.on('mouseout', function() { d3.select(this).classed('hover', false); });
+      // bookmark.on('click', () => this._currentTagChange(tag));
 
     });
 
@@ -173,8 +173,8 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
         .classed('highlighted', (tag: SpecTag) => tag === this.currentTag);
 
       d3.selectAll('.idac-bookmark')
-        .classed('active', (tag: SpecTag) => tag.editorsNote.active);
-        // .classed('highlighted', (tag: SpecTag) => tag.editorsNote.showInGraphView && tag.editorsNote.active);
+        // .classed('active', (tag: SpecTag) => tag.editorsNote.active);
+        .classed('highlighted', (tag: SpecTag) => tag.editorsNote.showInGraphView && tag.editorsNote.active);
 
       /*
       // scroll horizontally
