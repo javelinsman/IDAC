@@ -134,7 +134,18 @@ class X extends HighlightShape {
     this.enlargeBoxBy(this.boundingBox, 0, 0, 0, d);
   }
 }
-class Tick extends HighlightShape { }
+class Tick extends HighlightShape {
+  textBoundingBox: IBox;
+  onInit() {
+    this.textBoundingBox = this.getMergedBoundingBox(this.associatedElements.selectAll('text'));
+  }
+  elemMark() {
+    return this.makeRectFromBoundingBox(this.textBoundingBox);
+  }
+  bookmark() {
+    return this.makeShell(this.textBoundingBox, this.textBoundingBox.y - this.boundingBox.y);
+  }
+}
 class Legend extends HighlightShape {
   elemMark() {
     return this.makeShell(this.boundingBox, 15);
