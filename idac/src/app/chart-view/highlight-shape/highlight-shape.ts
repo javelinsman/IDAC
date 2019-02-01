@@ -16,11 +16,15 @@ export interface IBox {
 }
 
 export class HighlightShape {
+  boundingBox: IBox;
   constructor(
       public tag: SpecTag,
       public associatedElement: d3.Selection<any, any, any, any>,
       public svg: d3.Selection<SVGSVGElement, any, any, any>
-  ) { }
+  ) {
+    this.boundingBox = this.getMergedBoundingBox(this.associatedElement);
+    this.onInit();
+  }
 
   static getShape (
       tag: SpecTag,
@@ -30,6 +34,8 @@ export class HighlightShape {
       const _class = getHighlightShapeClass(tag._tagname);
       return new _class(tag, associatedElement, svg);
   }
+
+  onInit() { }
 
   getMergedBoundingBox(selection: d3.Selection<any, any, any, any>): IBox {
     const boundingBoxes: IBox[] = [
@@ -51,6 +57,23 @@ export class HighlightShape {
     return mergedBox;
   }
 
+  makeCircle(x: number, y: number, r: number) {
+    return d3.select(createSVGElement('circle'))
+      .attr('cx', x).attr('cy', y).attr('r', r).node() as SVGCircleElement;
+  }
+
+  makeShell({ x, y, width, height }: IBox, d: number = 15) {
+    const w = width, h = height;
+    const path = `M0 0 h${w} v${h} h${-w}z`
+      + `M${-d} ${-d} v${h + 2 * d} h${w + 2 * d} v${-h - 2 * d}z`;
+    return d3.select(createSVGElement('path'))
+      .attr('d', path)
+      .attr('fill-rule', 'evenodd')
+      .attr('transform', translate(x, y))
+      .node();
+  }
+
+
   makeRectFromBoundingBox(box: IBox) {
     return d3.select(createSVGElement('rect'))
       .attr('transform', translate(box.x, box.y))
@@ -71,56 +94,42 @@ export class HighlightShape {
 
 
   elemMark(): Element {
-    const boundingBox = this.getMergedBoundingBox(this.associatedElement);
-    return this.makeRectFromBoundingBox(boundingBox);
+    return this.makeRectFromBoundingBox(this.boundingBox);
   }
 
   bookmark(): Element {
-    const boundingBox = this.getMergedBoundingBox(this.associatedElement);
-    return this.makeRectFromBoundingBox(boundingBox);
+    return this.makeShell(this.boundingBox, 5);
   }
 
 }
 
 class Title extends HighlightShape {
-  elemMark() {
-    const boundingBox = this.getMergedBoundingBox(this.associatedElement);
-    this.enlargeBoxByMult(boundingBox, 1.05);
-    return this.makeRectFromBoundingBox(boundingBox);
+  onInit() {
+    this.enlargeBoxByMult(this.boundingBox, 1.05);
   }
 }
+
 class Y extends HighlightShape { }
 class X extends HighlightShape { }
 class Tick extends HighlightShape { }
 class Legend extends HighlightShape {
-
-  makeShell({ x, y, width, height }: IBox) {
-    const w = width, h = height, d = 15;
-    const path = `M0 0 h${w} v${h} h${-w}z`
-      + `M${-d} ${-d} v${h + 2 * d} h${w + 2 * d} v${-h - 2 * d}z`;
-    return d3.select(createSVGElement('path'))
-      .attr('d', path)
-      .attr('fill-rule', 'evenodd')
-      .attr('transform', translate(x, y))
-      .node();
-  }
-
   elemMark() {
-    const boundingBox = this.getMergedBoundingBox(this.associatedElement);
-    return this.makeShell(boundingBox);
+    return this.makeShell(this.boundingBox, 15);
   }
-
-  bookmark() {
-    const boundingBox = this.getMergedBoundingBox(this.associatedElement);
-    return this.makeShell(boundingBox);
-  }
-
 
 }
 class Item extends HighlightShape { }
 class Marks extends HighlightShape { }
 class BarGroup extends HighlightShape { }
-class Bar extends HighlightShape { }
+class Bar extends HighlightShape {
+  onInit() {
+    const d = this.boundingBox.width * 0.2;
+    this.boundingBox.width += 2 * d;
+    this.boundingBox.height += d;
+    this.boundingBox.x -= d;
+    this.boundingBox.y -= d;
+  }
+}
 class Annotations extends HighlightShape { }
 class Highlight extends HighlightShape { }
 class Line extends HighlightShape { }
