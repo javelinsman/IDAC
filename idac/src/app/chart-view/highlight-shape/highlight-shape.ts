@@ -20,7 +20,8 @@ export class HighlightShape {
   constructor(
       public tag: SpecTag,
       public associatedElements: d3.Selection<any, any, any, any>,
-      public svg: d3.Selection<SVGSVGElement, any, any, any>
+      public svg: d3.Selection<SVGSVGElement, any, any, any>,
+      public elementLink: any
   ) {
     this.boundingBox = this.getMergedBoundingBox(this.associatedElements);
     this.onInit();
@@ -28,11 +29,12 @@ export class HighlightShape {
 
   static getShape (
       tag: SpecTag,
-      associatedElement: d3.Selection<any, any, any, any>,
-      svg: d3.Selection<SVGSVGElement, any, any, any>
+      associatedElements: d3.Selection<any, any, any, any>,
+      svg: d3.Selection<SVGSVGElement, any, any, any>,
+      elementLink: any
     ) {
       const _class = getHighlightShapeClass(tag._tagname);
-      return new _class(tag, associatedElement, svg);
+      return new _class(tag, associatedElements, svg, elementLink);
   }
 
   onInit() { }
@@ -75,10 +77,10 @@ export class HighlightShape {
       .attr('cx', x).attr('cy', y).attr('r', r).node() as SVGCircleElement;
   }
 
-  makeShell({ x, y, width, height }: IBox, d: number = 15) {
+  makeShell({ x, y, width, height }: IBox, dl: number = 5, dt: number = dl, dr: number = dl, db: number = dt) {
     const w = width, h = height;
     const path = `M0 0 h${w} v${h} h${-w}z`
-      + `M${-d} ${-d} v${h + 2 * d} h${w + 2 * d} v${-h - 2 * d}z`;
+      + `M${-dl} ${-dt} v${h + dt + db} h${w + dl + dr} v${-h - dt - db}z`;
     return d3.select(createSVGElement('path'))
       .attr('d', path)
       .attr('fill-rule', 'evenodd')
@@ -165,7 +167,16 @@ class Item extends HighlightShape {
     this.enlargeBoxBy(this.boundingBox, 10, 1, 10, 1);
   }
 }
-class Marks extends HighlightShape { }
+class Marks extends HighlightShape {
+  onInit() {
+  }
+  elemMark() {
+    const yBBox = this.getMergedBoundingBox(this.elementLink[this.tag._root.y._id].associatedElements);
+    const dx = this.boundingBox.x - (yBBox.x + yBBox.width);
+    const dy = this.boundingBox.y - yBBox.y;
+    return this.makeShell(this.boundingBox, dx, dy, dx, 0);
+  }
+}
 class BarGroup extends HighlightShape { }
 class Bar extends HighlightShape {
   onInit() {

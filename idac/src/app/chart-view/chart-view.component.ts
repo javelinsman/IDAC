@@ -43,7 +43,6 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
 
   resizeSVG() {
     const container = this.svgContainer.svgContainerDiv.nativeElement as HTMLElement;
-    const containerWidth = container.offsetWidth, containerHeight = container.offsetHeight;
     this.svg.attr('viewBox', `0 0 ${this.originalSVGSize.width} ${this.originalSVGSize.height + 20}`);
     this.svg.attr('width', '100%');
   }
@@ -107,13 +106,13 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       const tag = cs.annotations.findByAnnotation(cs.annotations.annotationInChartAccent(i));
       pairs.push([tag, annotation as any]);
     });
-    this.elementLink = pairs.reduce((accum, [tag, associatedElement]: [SpecTag, any]) => {
-      accum[tag._id] = {
-        tag, associatedElement,
-        highlightShape: HighlightShape.getShape(tag, associatedElement, this.svg)
+    this.elementLink = {};
+    pairs.forEach(([tag, associatedElements]: [SpecTag, any]) => {
+      this.elementLink[tag._id] = {
+        tag, associatedElements,
+        highlightShape: HighlightShape.getShape(tag, associatedElements, this.svg, this.elementLink)
       };
-      return accum;
-    }, {});
+    });
   }
 
   onSVGInit() {
