@@ -19,10 +19,10 @@ export class HighlightShape {
   boundingBox: IBox;
   constructor(
       public tag: SpecTag,
-      public associatedElement: d3.Selection<any, any, any, any>,
+      public associatedElements: d3.Selection<any, any, any, any>,
       public svg: d3.Selection<SVGSVGElement, any, any, any>
   ) {
-    this.boundingBox = this.getMergedBoundingBox(this.associatedElement);
+    this.boundingBox = this.getMergedBoundingBox(this.associatedElements);
     this.onInit();
   }
 
@@ -45,13 +45,27 @@ export class HighlightShape {
       const elem = d.node();
       const bbox = elem.getBBox();
       const convert = makeAbsoluteContext(elem, this.svg.node());
+      const fourPoints = [
+        { ...convert(bbox.x, bbox.y) },
+        { ...convert(bbox.x + bbox.width, bbox.y) },
+        { ...convert(bbox.x, bbox.y + bbox.height) },
+        { ...convert(bbox.x + bbox.width, bbox.y + bbox.height) },
+      ];
+      const bounds = {
+        minX: Math.min(...fourPoints.map(p => p.x)),
+        minY: Math.min(...fourPoints.map(p => p.y)),
+        maxX: Math.max(...fourPoints.map(p => p.x)),
+        maxY: Math.max(...fourPoints.map(p => p.y)),
+      };
       return {
-        ...convert(bbox.x, bbox.y),
-        width: bbox.width,
-        height: bbox.height
+        x: bounds.minX,
+        y: bounds.minY,
+        width: bounds.maxX - bounds.minX,
+        height: bounds.maxY - bounds.minY,
       };
     });
     const mergedBox = mergeBoundingBoxes(boundingBoxes);
+    console.log(selection, boundingBoxes, mergedBox);
     mergedBox.width = Math.max(mergedBox.width, 5);
     mergedBox.height = Math.max(mergedBox.height, 5);
     return mergedBox;
@@ -109,7 +123,9 @@ class Title extends HighlightShape {
   }
 }
 
-class Y extends HighlightShape { }
+class Y extends HighlightShape {
+
+}
 class X extends HighlightShape { }
 class Tick extends HighlightShape { }
 class Legend extends HighlightShape {

@@ -54,6 +54,8 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     const [title, legend, chart] = d3AsSelectionArray(d3ImmediateChildren(g2, 'g'));
     const items = d3AsSelectionArray(legend.selectAll('.legend'));
     const [marks, x, y, yLabel, xLabel] = d3AsSelectionArray(d3ImmediateChildren(chart, 'g'));
+    y.classed('idac-y-axis', true);
+    yLabel.classed('idac-y-axis', true);
     const serieses = d3AsSelectionArray(d3ImmediateChildren(marks, 'g'));
     const rects = zip(serieses.map(d => d3AsSelectionArray(d3ImmediateChildren(d, 'rect'))));
     rects.forEach((elem: d3.Selection<any, any, any, any>[], i) => {
@@ -79,7 +81,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     const cs = this.chartSpec;
     const pairs = [
       [cs.title, title],
-      [cs.y, y],
+      [cs.y, d3.selectAll('.idac-y-axis')],
       [cs.x, x],
       [cs.legend, legend],
       [cs.marks, marks],
