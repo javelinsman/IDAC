@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, AfterViewChecked, Input } from '@angular/core';
 import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
 import { NavigateComponent } from '../navigate/navigate.component';
 import { ActivatedRoute } from '@angular/router';
@@ -15,6 +15,8 @@ import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
   styleUrls: ['./make-chart.component.scss']
 })
 export class MakeChartComponent implements OnInit {
+  @Input() exampleId: number;
+
   chart: Chart;
   chartAccent: ChartAccent;
   chartSpec: ChartSpec;
@@ -30,9 +32,9 @@ export class MakeChartComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    const exampleId = +this.route.snapshot.paramMap.get('exampleId');
-    if (exampleId) {
-      this.chart = this.fetchExampleChart(exampleId);
+    console.log(this.exampleId, this.currentTag);
+    if (this.exampleId) {
+      this.chart = this.fetchExampleChart(this.exampleId);
     } else {
       this.chart = this.fetchChart();
     }

@@ -21,6 +21,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { PropertiesPanelPopupComponent } from './panels/properties-panel/properties-panel-popup/properties-panel-popup.component';
 import { MasterPanelComponent } from './panels/master-panel/master-panel.component';
 import { KeyboardPanelComponent } from './keyboard-input/keyboard-panel/keyboard-panel.component';
+import { LoadDataComponent } from './load-data/load-data.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { KeyboardPanelComponent } from './keyboard-input/keyboard-panel/keyboard
     NavBarComponent,
     PropertiesPanelPopupComponent,
     MasterPanelComponent,
-    KeyboardPanelComponent
+    KeyboardPanelComponent,
+    LoadDataComponent
   ],
   imports: [
     BrowserModule,

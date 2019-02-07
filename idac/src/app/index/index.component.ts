@@ -3,23 +3,31 @@ import { Chart } from '../chart';
 import { ChartExampleService } from '../chart-example.service';
 import { HttpClient } from '@angular/common/http';
 
+export enum Stage {
+  load,
+  describe,
+  export
+}
+
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
-
-  charts: Chart[];
-  svgRawStrings: string[];
+  Stage = Stage;
+  exampleId: number;
+  currentStage = Stage.load;
 
   constructor(
-    private chartExampleService: ChartExampleService,
-    private http: HttpClient
   ) { }
 
   ngOnInit() {
-    this.charts = this.chartExampleService.getCharts();
+  }
+
+  _exampleIdChange(event) {
+    this.exampleId = event;
+    this.currentStage = Stage.describe;
   }
 
 }
