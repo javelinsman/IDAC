@@ -15,31 +15,23 @@ export class Trendline extends SpecTag {
     ) {
         super('Trendline');
         this.attributes = {
-            trendline: new AttrInputSelect(['on', 'off'], 'off'),
             label: new AttrInput()
         };
         this.properties = {
             targetDescription: () => '',
             numTargets: () => '',
-            trendline: () => '',
         };
         this.descriptionRule = [
             'The annotation on $(numTargets) bar\'s on $(targetDescription).',
-            '$(trendline)',
         ].join(' ');
     }
 
     fromChartAccent(ca: ChartAccent.ChartAccent) {
-        const trendline = this.annotation.components.find(d => d.type === 'trendline');
-        this.attributes.trendline.value = trendline.visible ? 'on' : 'off';
-
         const { target, numTargets } = this.makeTargetInfo();
         this.properties = {
             ...this.properties,
             targetDescription: () => target,
             numTargets: () => numTargets,
-            trendline: () => this.attributes.trendline.value === 'on'
-                ? 'A trendline is drawn.' : '',
         };
     }
 
