@@ -17,7 +17,6 @@ import { EditorsNotePanelComponent } from './panels/editors-note-panel/editors-n
 import { PropertiesPanelComponent } from './panels/properties-panel/properties-panel.component';
 import { ChartSpecTreeViewComponent } from './chart-spec/chart-spec-tree-view/chart-spec-tree-view.component';
 import { ChartViewComponent } from './chart-view/chart-view.component';
-import { AttributesPanelComponent } from './panels/attributes-panel/attributes-panel.component';
 import { FilterViewComponent } from './filter-view/filter-view.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { PropertiesPanelPopupComponent } from './panels/properties-panel/properties-panel-popup/properties-panel-popup.component';
@@ -37,7 +36,6 @@ import { PropertiesPanelPopupComponent } from './panels/properties-panel/propert
     EditorsNotePanelComponent,
     PropertiesPanelComponent,
     ChartViewComponent,
-    AttributesPanelComponent,
     FilterViewComponent,
     NavBarComponent,
     PropertiesPanelPopupComponent
