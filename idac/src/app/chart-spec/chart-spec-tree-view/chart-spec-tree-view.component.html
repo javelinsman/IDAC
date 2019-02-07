@@ -10,9 +10,13 @@
       <div class="d-flex justify-content-between">
         <div class="d-flex">
           <p class="font-weight-light">
-            <span class="text-danger"
+            <span *ngIf="tag.editorsNote.active"
+              class="mr-1"
               (mouseover)="tag.editorsNote.showInGraphView = true"
-              (mouseout)="tag.editorsNote.showInGraphView = false">{{ tag.editorsNote.active ? '📝' : '' }}</span>
+              (mouseout)="tag.editorsNote.showInGraphView = false">
+              <i class="d-inline fas fa-book"
+                [class.text-primary]="tag === currentTag" ></i>
+            </span>
             <span
               [style.white-space]="'nowrap'"
               [class.text-primary]="tag === currentTag" >{{ tag._tagname }}{{isCollapsed === false ? '[' + (siblingIndex + 1) + ']' : ''}}</span>
