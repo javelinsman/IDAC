@@ -28,9 +28,6 @@
       <div class="ml-2" *ngIf="edit && tag === currentTag">
         <app-master-panel [tag]="tag"></app-master-panel>
       </div>
-      <p *ngIf="!viewOnly && tag === currentTag && edit"
-        (click)="_editChange(false)"
-        class="text-secondary cursor-pointer">Done</p>
     </div>
     <div *ngIf="false && isCollapsed === false">
       <p (click)="decrease()" style="cursor: pointer" class="text-secondary">▲</p>
