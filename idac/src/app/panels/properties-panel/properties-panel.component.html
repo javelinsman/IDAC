@@ -3,13 +3,14 @@
     <tr>
       <th scope="col">Property</th>
       <th scope="col">Value</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let prop of tag.properties | keyvalue" class="{{ isAttribute(prop.key) ? '' : 'bg-light' }}">
       <th scope="row"><p draggable="true" (dragstart)="onDragStart($event)">{{ prop.key }}</p></th>
-      <td *ngIf="!isAttribute(prop.key)">{{ prop.value() }}</td>
-      <td *ngIf="isAttribute(prop.key)">
+      <td *ngIf="!isAttribute(prop.key) || !edit[prop.key]">{{ prop.value() }}</td>
+      <td *ngIf="isAttribute(prop.key) && edit[prop.key]">
         <input *ngIf="tag.attributes[prop.key].type ==='input'" [(ngModel)]="tag.attributes[prop.key].value" class="text-center w-100">
         <div *ngIf="tag.attributes[prop.key].type === 'input-select'">
           <div class="btn-group" role="group">
@@ -23,6 +24,9 @@
             {{ prop.value() }}
           </div>
         </div>
+      </td>
+      <td>
+        <a *ngIf="isAttribute(prop.key)" (click)="edit[prop.key] = !edit[prop.key]"><i class="fas fa-edit"></i></a>
       </td>
     </tr>
   </tbody>
