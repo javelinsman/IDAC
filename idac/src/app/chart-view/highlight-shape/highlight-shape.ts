@@ -193,6 +193,28 @@ class Bar extends HighlightShape {
 }
 class Annotations extends HighlightShape { }
 class Highlight extends HighlightShape { }
+class TrendLine extends HighlightShape {
+  trendLine: d3.Selection<any, any, any, any>;
+  onInit() {
+    this.trendLine = this.associatedElements.filter('.trendline');
+  }
+  makeLine(strokeWidth: number) {
+    return d3.select(createSVGElement('line'))
+      .attr('x1', this.trendLine.attr('x1'))
+      .attr('x2', this.trendLine.attr('x2'))
+      .attr('y1', this.trendLine.attr('y1'))
+      .attr('y2', this.trendLine.attr('y2'))
+      .attr('stroke-linecap', 'round')
+      .style('stroke-width', strokeWidth)
+      .node();
+  }
+  elemMark() {
+    return this.makeLine(15);
+  }
+  bookmark() {
+    return this.makeLine(7);
+  }
+}
 class Line extends HighlightShape { }
 class Range extends HighlightShape { }
 class RelationalHighlightLine extends HighlightShape { }
@@ -222,6 +244,8 @@ function getHighlightShapeClass(tagname: string) {
       return Annotations;
     case 'Highlight':
       return Highlight;
+    case 'Trend Line':
+      return TrendLine;
     case 'Line':
       return Line;
     case 'Range':
