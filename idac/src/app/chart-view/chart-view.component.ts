@@ -6,6 +6,7 @@ import { SvgContainerComponent } from '../svg-container/svg-container.component'
 import { d3ImmediateChildren, d3AsSelectionArray, makeAbsoluteContext, mergeBoundingBoxes, zip } from '../utils';
 import { translate } from '../chartutils';
 import { HighlightShape } from './highlight-shape/highlight-shape';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-chart-view',
@@ -36,7 +37,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
 
   showEditorsNote = true;
 
-  constructor() { }
+  constructor(private messageService: MessageService) { }
 
   ngOnInit() {
   }
@@ -201,6 +202,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
   _currentTagChange(tag: SpecTag) {
     this.currentTag = tag;
     this.currentTagChange.emit(this.currentTag);
+    this.messageService.shouldScroll = true;
   }
 
 }
