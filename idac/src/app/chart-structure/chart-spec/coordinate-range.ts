@@ -24,7 +24,6 @@ export class CoordinateRange extends SpecTag {
         };
         this.properties = {
             numChildren: () => this.children.length,
-            listOfChildren: () => this.children.map(d => d.foreignRepr()).join(', ')
         };
         this.children = [] as RelationalHighlightRange[];
         this.descriptionRule =
@@ -61,14 +60,14 @@ export class RelationalHighlightRange extends Highlight {
         _root: ChartSpec, _parent: CoordinateRange
     ) {
         super(annotation, _root, _parent);
-        this._tagname = 'Between or Outside';
+        this._tagname = 'Within or Outside';
         this.attributes = {
             ...this.attributes,
-            relation: new AttrInputSelect(['between', 'outside'], 'between')
+            relation: new AttrInputSelect(['within', 'outside'], 'within')
         };
 
         const mode = this.annotation.target_inherit.mode;
-        this.attributes.relation.value = mode.startsWith('between') ? 'between' : 'outside';
+        this.attributes.relation.value = mode.startsWith('within') ? 'within' : 'outside';
         // this._tagname = firstLetterUpperCase(this.attributes.relation.value);
 
         this.properties = {
@@ -108,7 +107,7 @@ export class RelationalHighlightRange extends Highlight {
                     return tick.properties.text() === rangeTo;
                 })[1] as number;
                 indices = [];
-                if (mode === 'between') {
+                if (mode === 'within') {
                     for (let i = rangeFromIndex; i <= rangeToIndex; i++) {
                         indices.push(i);
                     }
@@ -122,7 +121,7 @@ export class RelationalHighlightRange extends Highlight {
             } else {
                 indices = bars.map((bar, i) => [bar, i]).filter(([bar, i]: [Bar, number]) => {
                     const value = bar.properties.value();
-                    if (mode === 'between') {
+                    if (mode === 'within') {
                         return rangeFrom <= value && value <= rangeTo;
                     } else {
                         return rangeFrom > value || value > rangeTo;

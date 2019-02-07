@@ -83,7 +83,7 @@ export class Highlight extends SpecTag {
         this.getTargetLocation().forEach(([series, indices]) => {
             const seriesName = series.properties.text();
             targets.push(`${indices.length === this._root.marks.children.length ?
-                'all bars' : `${indices.map(i => i + 1).join(', ')}-th position`} in ${seriesName}`);
+                'all bars' : `${indices.map(i => i + 1).join(', ')}-th bar`} in ${seriesName}`);
             numTargets += indices.length;
         });
         return {
