@@ -9,6 +9,7 @@ import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 export class PropertiesPanelPopupComponent implements OnInit {
 
   @Input() tag: SpecTag;
+  activeTag: SpecTag;
   @ViewChild('cardSection') cardSection: ElementRef;
   edit = {};
   dragging = false;
@@ -22,11 +23,15 @@ export class PropertiesPanelPopupComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.initForActiveTag();
+    this.activeTag = this.tag;
+  }
+
+  initForActiveTag() {
+    this.edit = {};
     Object.keys(this.tag.attributes).forEach(key => {
       this.edit[key] = false;
     });
-    this.cardSection.nativeElement.style.left = '300px';
-    this.cardSection.nativeElement.style.top = '300px';
   }
 
   toggle(popupParent: HTMLElement = null) {

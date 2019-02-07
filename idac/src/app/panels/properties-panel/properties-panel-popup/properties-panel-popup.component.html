@@ -11,11 +11,17 @@
     <p class="card-text">Drag and drop properties names</p>
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link active">{{ tag._tagname }}</a>
+        <a class="nav-link" style="cursor: pointer"
+          (click)="activeTag = tag"
+          [class.text-info]="tag === activeTag"
+          [class.active]="tag === activeTag">{{ tag._tagname }}</a>
       </li>
       <ng-container *ngFor="let ptag of tag._root.children">
         <li *ngIf="ptag._tagname !== tag._tagname" class="nav-item">
-          <a class="nav-link text-dark" style="cursor: pointer">{{ ptag._tagname }}</a>
+          <a class="nav-link"
+            [class.text-info]="ptag === activeTag"
+            [class.active]="ptag === activeTag"
+            style="cursor: pointer" (click)="activeTag = ptag">{{ ptag._tagname }}</a>
         </li>
       </ng-container>
     </ul>
@@ -28,7 +34,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let prop of tag.properties | keyvalue">
+        <tr *ngFor="let prop of activeTag.properties | keyvalue">
           <th class="align-middle" scope="row">
             <h5 style="cursor: pointer" class="m-0" draggable="true" (dragstart)="onDragStart($event)">
               <span class="badge badge-pill badge-dark">
@@ -40,16 +46,16 @@
             <p class="m-0" style="padding-top: 1px; padding-bottom: 1px; border: 2px solid transparent">{{ prop.value() }}</p>
           </td>
           <td class="align-middle" *ngIf="isAttribute(prop.key) && edit[prop.key]">
-            <input *ngIf="tag.attributes[prop.key].type ==='input'" [(ngModel)]="tag.attributes[prop.key].value" class="text-center w-100">
-            <div *ngIf="tag.attributes[prop.key].type === 'input-select'">
+            <input *ngIf="activeTag.attributes[prop.key].type ==='input'" [(ngModel)]="activeTag.attributes[prop.key].value" class="text-center w-100">
+            <div *ngIf="activeTag.attributes[prop.key].type === 'input-select'">
               <div class="btn-group" role="group">
-                <button *ngFor="let cand of tag.attributes[prop.key].candidates"
-                  class="btn btn-sm {{ tag.attributes[prop.key].value === cand ? 'btn-primary' : 'btn-secondary' }}"
-                  (click)="tag.attributes[prop.key].value = cand">
+                <button *ngFor="let cand of activeTag.attributes[prop.key].candidates"
+                  class="btn btn-sm {{ activeTag.attributes[prop.key].value === cand ? 'btn-primary' : 'btn-secondary' }}"
+                  (click)="activeTag.attributes[prop.key].value = cand">
                   {{ cand }}
                 </button>
               </div>
-              <div *ngIf="tag.attributes[prop.key].value !== prop.value()">
+              <div *ngIf="activeTag.attributes[prop.key].value !== prop.value()">
                 {{ prop.value() }}
               </div>
             </div>
