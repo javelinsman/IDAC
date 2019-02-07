@@ -20,6 +20,7 @@ import { ChartViewComponent } from './chart-view/chart-view.component';
 import { AttributesPanelComponent } from './panels/attributes-panel/attributes-panel.component';
 import { FilterViewComponent } from './filter-view/filter-view.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { PropertiesPanelPopupComponent } from './panels/properties-panel/properties-panel-popup/properties-panel-popup.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     ChartViewComponent,
     AttributesPanelComponent,
     FilterViewComponent,
-    NavBarComponent
+    NavBarComponent,
+    PropertiesPanelPopupComponent
   ],
   imports: [
     BrowserModule,
