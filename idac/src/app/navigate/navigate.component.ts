@@ -206,6 +206,32 @@ export class NavigateComponent implements OnInit {
     return false;
   }
 
+  moveToNextAnnotation() {
+    const tags = this.tag._root.flattenedTags();
+    let index = tags.indexOf(this.tag);
+    while (index + 1 < tags.length) {
+      index += 1;
+      if (tags[index]._parent && tags[index]._parent._tagname === 'Annotations') {
+        this.setFocus(tags[index]);
+        return;
+      }
+    }
+    return false;
+  }
+  moveToPreviousAnnotation() {
+    const tags = this.tag._root.flattenedTags();
+    let index = tags.indexOf(this.tag);
+    while (index - 1 >= 0) {
+      index -= 1;
+      if (tags[index]._parent && tags[index]._parent._tagname === 'Annotations') {
+        this.setFocus(tags[index]);
+        return;
+      }
+    }
+    return false;
+  }
+
+
   moveToNextFrame() {
     let tag = this.tag;
     while (tag._parent._id !== 0) {
