@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
+import { PropertiesPanelPopupComponent } from './properties-panel-popup/properties-panel-popup.component';
 
 @Component({
   selector: 'app-properties-panel',
@@ -8,6 +9,7 @@ import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 })
 export class PropertiesPanelComponent implements OnInit {
   @Input() tag: SpecTag;
+  @ViewChild(PropertiesPanelPopupComponent) propertiesPanelPopupComponent: PropertiesPanelPopupComponent;
   edit = {};
 
   constructor() { }

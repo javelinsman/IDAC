@@ -1,9 +1,12 @@
 <app-properties-panel-popup [tag]="tag"></app-properties-panel-popup>
-<section class="my-2">
+<section class="my-2" #popupParent>
 
   <div class="d-flex justify-content-between">
     <p class="font-weight-bold mb-1">Properties</p>
-    <p class="text-secondary" style="cursor: pointer">Show all properties</p>
+    <p class="text-secondary" style="cursor: pointer"
+      (click)="propertiesPanelPopupComponent.toggle(popupParent)">
+      Show all properties
+    </p>
   </div>
 
   <table class="table table-sm text-center">

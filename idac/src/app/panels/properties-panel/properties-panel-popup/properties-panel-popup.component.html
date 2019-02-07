@@ -1,8 +1,11 @@
-<section class="card" #cardSection>
-  <div class="card-header" style="cursor: pointer" draggable="true" 
+<section class="card" #cardSection [class.invisible]="!show">
+  <div class="d-flex justify-content-between card-header" style="cursor: pointer" draggable="true" 
     (mousedown)="onPanelMousedown($event)"
     (mouseup)="onPanelMouseup($event)">
-    All Properties
+    <span>All Properties</span>
+    <button type="button" class="close" aria-label="Close" (click)="toggle()">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
   <div class="card-body">
     <p class="card-text">Drag and drop properties names</p>

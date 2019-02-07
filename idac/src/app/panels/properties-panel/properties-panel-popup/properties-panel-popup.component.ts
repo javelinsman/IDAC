@@ -12,6 +12,8 @@ export class PropertiesPanelPopupComponent implements OnInit {
   @ViewChild('cardSection') cardSection: ElementRef;
   edit = {};
   dragging = false;
+  show = false;
+
   offset = {
     x: 0,
     y: 0
@@ -25,6 +27,22 @@ export class PropertiesPanelPopupComponent implements OnInit {
     });
     this.cardSection.nativeElement.style.left = '300px';
     this.cardSection.nativeElement.style.top = '300px';
+  }
+
+  toggle(popupParent: HTMLElement = null) {
+    this.show = !this.show;
+    if (this.show) {
+      const bBox = popupParent.getBoundingClientRect();
+      this.cardSection.nativeElement.style.left =
+        `${bBox.left + bBox.width + 20}px`;
+      this.cardSection.nativeElement.style.top =
+        `${bBox.top - 110}px`;
+
+      const bBoxThis = this.cardSection.nativeElement.getBoundingClientRect();
+      if (bBoxThis.top + bBoxThis.height > window.innerHeight) {
+        this.cardSection.nativeElement.style.top = `${window.innerHeight - bBoxThis.height}px`;
+      }
+    }
   }
 
   isAttribute(key: string) {
