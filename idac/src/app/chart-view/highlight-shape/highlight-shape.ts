@@ -193,8 +193,22 @@ class Bar extends HighlightShape {
 }
 class Annotations extends HighlightShape { }
 class Highlight extends HighlightShape {
-
-
+  paths: d3.Selection<any, any, any, any>;
+  onInit() {
+    this.paths = this.associatedElements.selectAll('path');
+  }
+  elemMarks() {
+    const rects = this.paths.nodes().map(path =>
+      this.makeRectFromBoundingBox(
+        this.getMergedBoundingBox(d3.select(path))
+      )
+    );
+    console.log(rects);
+    return rects;
+  }
+  bookmarks() {
+    return this.elemMarks();
+  }
 }
 class TrendLine extends HighlightShape {
   trendLine: d3.Selection<any, any, any, any>;

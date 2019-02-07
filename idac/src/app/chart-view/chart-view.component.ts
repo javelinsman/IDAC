@@ -128,18 +128,17 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     Object.values(this.elementLink).forEach(({ tag, associatedElement, highlightShape }) => {
       const elemMarks = d3.selectAll(
         highlightShape.elemMarks().map(elemMark => this.gElemMarks.node().appendChild(elemMark))
-      ).classed('idac-elem-mark', true).data([tag]);
+      );
+      elemMarks.classed('idac-elem-mark', true).data(Array.from(Array(elemMarks.size())).map(_ => tag));
 
-      elemMarks.on('mouseover', function() { d3.select(this).classed('hover', true); });
-      elemMarks.on('mouseout', function() { d3.select(this).classed('hover', false); });
+      elemMarks.on('mouseover', function() { elemMarks.classed('hover', true); });
+      elemMarks.on('mouseout', function() { elemMarks.classed('hover', false); });
       elemMarks.on('click', () => this._currentTagChange(tag));
 
       const bookmarks = d3.selectAll(
         highlightShape.bookmarks().map(bookmark => this.gElemMarks.node().appendChild(bookmark))
-      ).classed('idac-bookmark', true).data([tag]);
-      // bookmarks.on('mouseover', function() { d3.select(this).classed('hover', true); });
-      // bookmarks.on('mouseout', function() { d3.select(this).classed('hover', false); });
-      // bookmarks.on('click', () => this._currentTagChange(tag));
+      );
+      bookmarks.classed('idac-bookmark', true).data(Array.from(Array(bookmarks.size())).map(_ => tag));
 
     });
 
