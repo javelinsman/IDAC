@@ -58,14 +58,14 @@ export class RelationalHighlightLine extends Highlight {
         _root: ChartSpec, _parent: CoordinateLine
     ) {
         super(annotation, _root, _parent);
-        this._tagname = 'RelationalHighlightLine';
+        this._tagname = 'Below or Above';
         this.attributes = {
             ...this.attributes,
-            targetRelation: new AttrInputSelect(['below', 'above'], 'below')
+            relation: new AttrInputSelect(['below', 'above'], 'below')
         };
 
         const mode = this.annotation.target_inherit.mode;
-        this.attributes.targetRelation.value = mode.startsWith('below') ? 'below' : 'above';
+        this.attributes.relation.value = mode.startsWith('below') ? 'below' : 'above';
         // this._tagname = firstLetterUpperCase(this.attributes.targetRelation.value);
 
         this.properties = {
@@ -92,7 +92,7 @@ export class RelationalHighlightLine extends Highlight {
             const series = this._root.legend.children[seriesIndex];
             const bars = this._root.marks.children.map(bargroup => bargroup.children[seriesIndex]) as Bar[];
             const range = this.properties.range();
-            const mode = this.attributes.targetRelation.value;
+            const mode = this.attributes.relation.value;
             let indices: number[];
             if (axis === 'x') {
                 const ticks = this._root.x.children.map((tick, i) => [tick, i]);

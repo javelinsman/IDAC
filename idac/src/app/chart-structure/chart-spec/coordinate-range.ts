@@ -17,8 +17,8 @@ export class CoordinateRange extends SpecTag {
     ) {
         super('Range');
         this.attributes = {
-            rangeStart: new AttrInput(0),
-            rangeEnd: new AttrInput(0),
+            rangeFrom: new AttrInput(0),
+            rangeTo: new AttrInput(0),
             targetAxis: new AttrInputSelect(['x', 'y'], 'x'),
             label: new AttrInput(''),
         };
@@ -28,15 +28,15 @@ export class CoordinateRange extends SpecTag {
         };
         this.children = [] as RelationalHighlightRange[];
         this.descriptionRule =
-            'The range from $(rangeStart) to $(rangeEnd) on $(targetAxis) axis are marked: $(label)';
+            'The range from $(rangeFrom) to $(rangeTo) on $(targetAxis) axis are marked: $(label)';
     }
     fromChartAccent(ca: ChartAccent.ChartAccent) {
-        // rangeStart, rangeEnd
+        // rangeFrom, rangeTo
         const range = (this.annotation.target as ChartAccent.RangeTarget).range;
-        const [rangeStart, rangeEnd] = JSON.parse(
+        const [rangeFrom, rangeTo] = JSON.parse(
             '[' + range.slice(6, -1).split(',').slice(0, 2).join(',') + ']');
-        this.attributes.rangeStart.value = rangeStart;
-        this.attributes.rangeEnd.value = rangeEnd;
+        this.attributes.rangeFrom.value = rangeFrom;
+        this.attributes.rangeTo.value = rangeTo;
         // label
         const label = this.annotation.components.find(d => d.type === 'label');
         this.attributes.label.value = label.visible ? label.text : '';
@@ -61,20 +61,20 @@ export class RelationalHighlightRange extends Highlight {
         _root: ChartSpec, _parent: CoordinateRange
     ) {
         super(annotation, _root, _parent);
-        this._tagname = 'RelationalHighlightRange';
+        this._tagname = 'Between or Outside';
         this.attributes = {
             ...this.attributes,
-            targetRelation: new AttrInputSelect(['between', 'outside'], 'between')
+            relation: new AttrInputSelect(['between', 'outside'], 'between')
         };
 
         const mode = this.annotation.target_inherit.mode;
-        this.attributes.targetRelation.value = mode.startsWith('between') ? 'between' : 'outside';
-        // this._tagname = firstLetterUpperCase(this.attributes.targetRelation.value);
+        this.attributes.relation.value = mode.startsWith('between') ? 'between' : 'outside';
+        // this._tagname = firstLetterUpperCase(this.attributes.relation.value);
 
         this.properties = {
             ...this.properties,
-            rangeStart: () => this._parent.properties.rangeStart(),
-            rangeEnd: () => this._parent.properties.rangeEnd(),
+            rangeFrom: () => this._parent.properties.rangeFrom(),
+            rangeTo: () => this._parent.properties.rangeTo(),
         };
     }
 
@@ -95,26 +95,26 @@ export class RelationalHighlightRange extends Highlight {
         seriesIndices.forEach(seriesIndex => {
             const series = this._root.legend.children[seriesIndex];
             const bars = this._root.marks.children.map(bargroup => bargroup.children[seriesIndex]) as Bar[];
-            const rangeStart = this.properties.rangeStart();
-            const rangeEnd = this.properties.rangeEnd();
-            const mode = this.attributes.targetRelation.value;
+            const rangeFrom = this.properties.rangeFrom();
+            const rangeTo = this.properties.rangeTo();
+            const mode = this.attributes.relation.value;
             let indices: number[];
             if (axis === 'x') {
                 const ticks = this._root.x.children.map((tick, i) => [tick, i]);
-                const rangeStartIndex = ticks.find(([tick, i]: [Tick, number]) => {
-                    return tick.properties.text() === rangeStart;
+                const rangeFromIndex = ticks.find(([tick, i]: [Tick, number]) => {
+                    return tick.properties.text() === rangeFrom;
                 })[1] as number;
-                const rangeEndIndex = ticks.find(([tick, i]: [Tick, number]) => {
-                    return tick.properties.text() === rangeEnd;
+                const rangeToIndex = ticks.find(([tick, i]: [Tick, number]) => {
+                    return tick.properties.text() === rangeTo;
                 })[1] as number;
                 indices = [];
                 if (mode === 'between') {
-                    for (let i = rangeStartIndex; i <= rangeEndIndex; i++) {
+                    for (let i = rangeFromIndex; i <= rangeToIndex; i++) {
                         indices.push(i);
                     }
                 } else {
                     for (let i = 0; i < ticks.length; i++) {
-                        if (i < rangeStartIndex || rangeEndIndex < i) {
+                        if (i < rangeFromIndex || rangeToIndex < i) {
                             indices.push(i);
                         }
                     }
@@ -123,9 +123,9 @@ export class RelationalHighlightRange extends Highlight {
                 indices = bars.map((bar, i) => [bar, i]).filter(([bar, i]: [Bar, number]) => {
                     const value = bar.properties.value();
                     if (mode === 'between') {
-                        return rangeStart <= value && value <= rangeEnd;
+                        return rangeFrom <= value && value <= rangeTo;
                     } else {
-                        return rangeStart > value || value > rangeEnd;
+                        return rangeFrom > value || value > rangeTo;
                     }
                 }).map(([bar, i]: [Bar, number]) => i);
             }
