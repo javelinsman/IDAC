@@ -7,13 +7,13 @@ import { CoordinateRange } from './coordinate-range';
 import { Item } from './legend';
 import { CoordinateLine } from './coordinate-line';
 
-export class Trendline extends SpecTag {
+export class TrendLine extends SpecTag {
     constructor(
         public annotation: ChartAccent.Annotation,
         public _root: ChartSpec,
         public _parent: Annotations | CoordinateRange | CoordinateLine
     ) {
-        super('Trendline');
+        super('Trend Line');
         this.attributes = {
             label: new AttrInput()
         };

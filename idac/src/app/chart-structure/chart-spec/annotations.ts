@@ -4,9 +4,9 @@ import * as ChartAccent from '../chart-accent/chart-accent';
 import { Highlight } from './highlight';
 import { CoordinateRange, RelationalHighlightRange } from './coordinate-range';
 import { CoordinateLine, RelationalHighlightLine } from './coordinate-line';
-import { Trendline } from './trendline';
+import { TrendLine } from './trend-line';
 
-type Annotation = Highlight | Trendline | CoordinateLine | CoordinateRange;
+type Annotation = Highlight | TrendLine | CoordinateLine | CoordinateRange;
 type AllAnnotation = Annotation | RelationalHighlightLine | RelationalHighlightRange;
 
 export class Annotations extends SpecTag {
@@ -18,7 +18,7 @@ export class Annotations extends SpecTag {
         this.properties = {
             numChildren: () => this.children.length,
             numHighlights: () => this.children.filter(tag => tag._tagname === 'Highlight').length,
-            numTrendlines: () => this.children.filter(tag => tag._tagname === 'Trendline').length,
+            numTrendlines: () => this.children.filter(tag => tag._tagname === 'Trend Line').length,
             numLines: () => this.children.filter(tag => tag._tagname === 'Line').length,
             numRanges: () => this.children.filter(tag => tag._tagname === 'Range').length,
         };
@@ -57,9 +57,9 @@ export class Annotations extends SpecTag {
             }
             const _trendline = annotation.components.find(d => d.type === 'trendline');
             if (_trendline.visible) {
-                const trendline = new Trendline(annotation, this._root, this);
-                trendline.fromChartAccent(ca);
-                ret.push(trendline);
+                const trendLine = new TrendLine(annotation, this._root, this);
+                trendLine.fromChartAccent(ca);
+                ret.push(trendLine);
             }
             return ret;
         }
