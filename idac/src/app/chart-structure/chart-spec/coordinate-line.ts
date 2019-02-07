@@ -18,13 +18,12 @@ export class CoordinateLine extends SpecTag {
         super('Line');
         this.attributes = {
             range: new AttrInput(0),
-            targetAxis: new AttrInputSelect(['x', 'y'], 'x'),
             label: new AttrInput(''),
         };
         this.properties = {
             numChildren: () => this.children.length,
-            listOfChildren: () => this.children.map(d => d.foreignRepr()).join(', '),
-            orientation: () => this.attributes.targetAxis.value === 'x' ? 'vertical' : 'horizontal',
+            orientation: () => this.properties.targetAxis() === 'x' ? 'vertical' : 'horizontal',
+            targetAxis: () => 'x'
         };
         this.children = [] as RelationalHighlightLine[];
         this.descriptionRule =
@@ -38,7 +37,7 @@ export class CoordinateLine extends SpecTag {
         const label = this.annotation.components.find(d => d.type === 'label');
         this.attributes.label.value = label.visible ? label.text : '';
         // targetAxis
-        this.attributes.targetAxis.value = (this.annotation.target as ChartAccent.RangeTarget).axis === 'E0' ? 'x' : 'y';
+        this.properties.targetAxis = () => (this.annotation.target as ChartAccent.RangeTarget).axis === 'E0' ? 'x' : 'y';
 
         // children
         const relatedAnnotations = this.annotations.filter(_annotation =>
