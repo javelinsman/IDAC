@@ -223,7 +223,6 @@ class Highlight extends HighlightShape {
         this.getMergedBoundingBox(d3.select(path))
       )
     );
-    console.log(rects);
     return rects;
   }
   bookmarks() {
@@ -306,9 +305,9 @@ function getHighlightShapeClass(tagname: string) {
     case 'Range':
       return Range;
     case 'Below or Above':
-      return RelationalHighlightLine;
+      return Highlight; // RelationalHighlightLine;
     case 'Within or Outside':
-      return RelationalHighlightRange;
+      return Highlight; // RelationalHighlightRange;
     default:
       return HighlightShape;
   }
