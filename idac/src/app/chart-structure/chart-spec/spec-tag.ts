@@ -53,7 +53,7 @@ export class SpecTag {
         for (let tag = this._parent; tag._tagname !== 'ChartSpec'; tag = tag._parent) {
             ret.push(tag);
         }
-        this._root.children.filter(tag => tag._tagname !== this._tagname).forEach(tag => ret.push(tag));
+        this._root.children.filter(tag => !ret.includes(tag)).forEach(tag => ret.push(tag));
         return ret;
     }
 

@@ -51,7 +51,7 @@ export class PropertiesPanelPopupComponent implements OnInit {
   }
 
   isAttribute(key: string) {
-    return Object.keys(this.tag.attributes).includes(key);
+    return Object.keys(this.activeTag.attributes).includes(key);
   }
 
   onPropertyNameDragStart(event: DragEvent) {
