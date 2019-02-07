@@ -126,17 +126,20 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     this.gEditorsNotes = this.svg.append('g').classed('idac-editors-notes', true);
 
     Object.values(this.elementLink).forEach(({ tag, associatedElement, highlightShape }) => {
-      const elemMark = d3.select(this.gElemMarks.node().appendChild(highlightShape.elemMark()))
-        .classed('idac-elem-mark', true).data([tag]);
-      elemMark.on('mouseover', function() { d3.select(this).classed('hover', true); });
-      elemMark.on('mouseout', function() { d3.select(this).classed('hover', false); });
-      elemMark.on('click', () => this._currentTagChange(tag));
+      const elemMarks = d3.selectAll(
+        highlightShape.elemMarks().map(elemMark => this.gElemMarks.node().appendChild(elemMark))
+      ).classed('idac-elem-mark', true).data([tag]);
 
-      const bookmark = d3.select(this.gEditorsNotes.node().appendChild(highlightShape.bookmark()))
-        .classed('idac-bookmark', true).data([tag]);
-      // bookmark.on('mouseover', function() { d3.select(this).classed('hover', true); });
-      // bookmark.on('mouseout', function() { d3.select(this).classed('hover', false); });
-      // bookmark.on('click', () => this._currentTagChange(tag));
+      elemMarks.on('mouseover', function() { d3.select(this).classed('hover', true); });
+      elemMarks.on('mouseout', function() { d3.select(this).classed('hover', false); });
+      elemMarks.on('click', () => this._currentTagChange(tag));
+
+      const bookmarks = d3.selectAll(
+        highlightShape.bookmarks().map(bookmark => this.gElemMarks.node().appendChild(bookmark))
+      ).classed('idac-bookmark', true).data([tag]);
+      // bookmarks.on('mouseover', function() { d3.select(this).classed('hover', true); });
+      // bookmarks.on('mouseout', function() { d3.select(this).classed('hover', false); });
+      // bookmarks.on('click', () => this._currentTagChange(tag));
 
     });
 

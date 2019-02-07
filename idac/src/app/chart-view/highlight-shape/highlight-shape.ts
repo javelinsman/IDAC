@@ -108,12 +108,12 @@ export class HighlightShape {
   }
 
 
-  elemMark(): Element {
-    return this.makeRectFromBoundingBox(this.boundingBox);
+  elemMarks(): Element[] {
+    return [this.makeRectFromBoundingBox(this.boundingBox)];
   }
 
-  bookmark(): Element {
-    return this.makeShell(this.boundingBox, 5);
+  bookmarks(): Element[] {
+    return [this.makeShell(this.boundingBox, 5)];
   }
 
 }
@@ -141,24 +141,24 @@ class Tick extends HighlightShape {
   onInit() {
     this.textBoundingBox = this.getMergedBoundingBox(this.associatedElements.selectAll('text'));
   }
-  elemMark() {
-    return this.makeRectFromBoundingBox(this.textBoundingBox);
+  elemMarks() {
+    return [this.makeRectFromBoundingBox(this.textBoundingBox)];
   }
-  bookmark() {
-    return this.makeShell(this.textBoundingBox, this.textBoundingBox.y - this.boundingBox.y);
+  bookmarks() {
+    return [this.makeShell(this.textBoundingBox, this.textBoundingBox.y - this.boundingBox.y)];
   }
 }
 class Legend extends HighlightShape {
   onInit() {
     this.enlargeBoxBy(this.boundingBox, 10, 0, 10, 0);
   }
-  elemMark() {
-    return this.makeShell(this.boundingBox, 15);
+  elemMarks() {
+    return [this.makeShell(this.boundingBox, 15)];
   }
-  bookmark() {
+  bookmarks() {
     const outerBox = { ...this.boundingBox };
     this.enlargeBoxBy(outerBox, 15);
-    return this.makeShell(outerBox, 5);
+    return [this.makeShell(outerBox, 5)];
   }
 
 }
@@ -170,11 +170,11 @@ class Item extends HighlightShape {
 class Marks extends HighlightShape {
   onInit() {
   }
-  elemMark() {
+  elemMarks() {
     const yBBox = this.elementLink[this.tag._root.y._id].highlightShape.boundingBox;
     const dx = this.boundingBox.x - (yBBox.x + yBBox.width);
     const dy = this.boundingBox.y - yBBox.y;
-    return this.makeShell(this.boundingBox, dx, dy, dx, 0);
+    return [this.makeShell(this.boundingBox, dx, dy, dx, 0)];
   }
 }
 class BarGroup extends HighlightShape {
@@ -192,7 +192,10 @@ class Bar extends HighlightShape {
   }
 }
 class Annotations extends HighlightShape { }
-class Highlight extends HighlightShape { }
+class Highlight extends HighlightShape {
+
+
+}
 class TrendLine extends HighlightShape {
   trendLine: d3.Selection<any, any, any, any>;
   onInit() {
@@ -208,11 +211,11 @@ class TrendLine extends HighlightShape {
       .style('stroke-width', strokeWidth)
       .node();
   }
-  elemMark() {
-    return this.makeLine(15);
+  elemMarks() {
+    return [this.makeLine(15)];
   }
-  bookmark() {
-    return this.makeLine(7);
+  bookmarks() {
+    return [this.makeLine(7)];
   }
 }
 class Line extends HighlightShape { }
