@@ -39,6 +39,8 @@ export class HighlightShape {
 
   onInit() { }
 
+  afterAllRendered() { }
+
   getMergedBoundingBox(selection: d3.Selection<any, any, any, any>): IBox {
     const boundingBoxes: IBox[] = [
       ...selection.nodes().map(d => d3.select(d)),
@@ -85,6 +87,24 @@ export class HighlightShape {
       .attr('d', path)
       .attr('fill-rule', 'evenodd')
       .attr('transform', translate(x, y))
+      .node();
+  }
+
+  makeLine(line: d3.Selection<any, any, any, any>, strokeWidth: number) {
+    return d3.select(createSVGElement('line'))
+      .attr('x1', line.attr('x1'))
+      .attr('x2', line.attr('x2'))
+      .attr('y1', line.attr('y1'))
+      .attr('y2', line.attr('y2'))
+      .attr('stroke-linecap', 'round')
+      .style('stroke-width', strokeWidth)
+      .node();
+  }
+
+  makePath(path: d3.Selection<any, any, any, any>, strokeWidth: number) {
+    return d3.select(createSVGElement('path'))
+      .attr('d', path.attr('d'))
+      .style('stroke-width', strokeWidth)
       .node();
   }
 
@@ -215,26 +235,44 @@ class TrendLine extends HighlightShape {
   onInit() {
     this.trendLine = this.associatedElements.filter('.trendline');
   }
-  makeLine(strokeWidth: number) {
-    return d3.select(createSVGElement('line'))
-      .attr('x1', this.trendLine.attr('x1'))
-      .attr('x2', this.trendLine.attr('x2'))
-      .attr('y1', this.trendLine.attr('y1'))
-      .attr('y2', this.trendLine.attr('y2'))
-      .attr('stroke-linecap', 'round')
-      .style('stroke-width', strokeWidth)
-      .node();
-  }
   elemMarks() {
-    return [this.makeLine(15)];
+    return [this.makeLine(this.trendLine, 15)];
   }
   bookmarks() {
-    return [this.makeLine(7)];
+    return [this.makeLine(this.trendLine, 7)];
   }
 }
 class Line extends HighlightShape { }
 class Range extends HighlightShape { }
-class RelationalHighlightLine extends HighlightShape { }
+class RelationalHighlightLine extends HighlightShape {
+  path: d3.Selection<any, any, any, any>;
+  afterAllRendered() {
+    this.path = this.elementLink[this.tag._parent._id].associatedElements.filter('path');
+  }
+  elemMarks() {
+    const box = this.getMergedBoundingBox(this.path);
+    const arrowWidth = 15;
+    const marksBBox = this.elementLink[this.tag._root.marks._id].highlightShape.boundingBox;
+    const yBBox = this.elementLink[this.tag._root.y._id].highlightShape.boundingBox;
+    let rect: SVGRectElement;
+    if (this.tag.properties.relation() === 'above') {
+      rect = this.makeRectFromBoundingBox({
+        x: box.x + box.width - arrowWidth,
+        y: yBBox.y,
+        width: arrowWidth,
+        height: box.y - yBBox.y
+      });
+    } else {
+      rect = this.makeRectFromBoundingBox({
+        x: box.x + box.width - arrowWidth,
+        y: box.y + box.height,
+        width: arrowWidth,
+        height: marksBBox.y + marksBBox.height - box.y - box.height
+      });
+    }
+    return [this.makePath(this.path, 15), rect];
+  }
+}
 class RelationalHighlightRange extends HighlightShape { }
 
 function getHighlightShapeClass(tagname: string) {
@@ -267,9 +305,9 @@ function getHighlightShapeClass(tagname: string) {
       return Line;
     case 'Range':
       return Range;
-    case 'RelationalHighlightLine':
+    case 'Below or Above':
       return RelationalHighlightLine;
-    case 'RelationalHighlightRange':
+    case 'Within or Outside':
       return RelationalHighlightRange;
     default:
       return HighlightShape;

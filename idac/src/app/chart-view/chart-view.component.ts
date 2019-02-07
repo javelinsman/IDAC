@@ -25,7 +25,13 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
   svg: d3.Selection<SVGSVGElement, any, HTMLElement, any>;
   gElemMarks: d3.Selection<any, any, any, any>;
   gEditorsNotes: d3.Selection<any, any, any, any>;
-  elementLink = {};
+  elementLink: {
+    [key: number]: {
+      tag: SpecTag, associatedElements: d3.Selection<any, any, any, any>,
+      highlightShape: HighlightShape
+    }
+  };
+
   ready = false;
 
   originalSVGSize = {
@@ -114,6 +120,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
         highlightShape: HighlightShape.getShape(tag, associatedElements, this.svg, this.elementLink)
       };
     });
+    Object.values(this.elementLink).forEach(val => val.highlightShape.afterAllRendered());
   }
 
   onSVGInit() {
@@ -125,7 +132,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     this.gElemMarks = this.svg.append('g').classed('idac-elem-marks', true);
     this.gEditorsNotes = this.svg.append('g').classed('idac-editors-notes', true);
 
-    Object.values(this.elementLink).forEach(({ tag, associatedElement, highlightShape }) => {
+    Object.values(this.elementLink).forEach(({ tag, highlightShape }) => {
       const elemMarks = d3.selectAll(
         highlightShape.elemMarks().map(elemMark => this.gElemMarks.node().appendChild(elemMark))
       );
