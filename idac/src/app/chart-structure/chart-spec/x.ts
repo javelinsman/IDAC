@@ -14,12 +14,12 @@ export class X extends SpecTag {
         this.children = [] as Tick[];
         this.properties = {
             numChildren: () => this.children.length,
-            listOfChildren: () => this.children.map(d => d.foreignRepr()).join(', ')
+            children: () => this.children.map(d => d.foreignRepr()).join(', ')
         };
         this.descriptionRule = [
             'X axis with label name $(label).',
             'The unit of measurement is $(unit).',
-            'There are $(numChildren) tick marks: $(listOfChildren).',
+            'There are $(numChildren) tick marks: $(children).',
         ].join(' ');
 
     }
@@ -41,9 +41,8 @@ export class Tick extends SpecTag {
             text: new AttrInput(tick)
         };
         this.properties = {
-            unit: () => this._parent.attributes.unit.value
         };
-        this.descriptionRule = '$(text) $(unit)';
+        this.descriptionRule = '$(text) $(X Axis: unit)';
     }
 
     foreignRepr() {

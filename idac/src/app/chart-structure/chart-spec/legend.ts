@@ -12,10 +12,10 @@ export class Legend extends SpecTag {
         };
         this.properties = {
             numChildren: () => this.children.length,
-            listOfChildren: () => this.children.map(d => d.foreignRepr()).join(', ')
+            children: () => this.children.map(d => d.foreignRepr()).join(', ')
         };
         this.children = [] as Item[];
-        this.descriptionRule = '$(numChildren) legend items: $(listOfChildren).';
+        this.descriptionRule = '$(numChildren) legend items: $(children).';
     }
     fromChartAccent(ca: ChartAccent) {
         this.children = ca.chart.yColumns.map((item, index) => new Item(item, this._root, this));

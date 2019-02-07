@@ -10,16 +10,16 @@ export class Marks extends SpecTag {
         this._parent = _root;
         this.children = [] as Bargroup[];
         this.attributes = {
-            type: new AttrInputSelect(['grouped', 'stacked'], 'grouped')
+            // type: new AttrInputSelect(['grouped', 'stacked'], 'grouped')
         };
         this.properties = {
-            numBargroups: () => this.children.length,
+            numBarGroups: () => this.children.length,
             numBars: () => this.children.length ? this.children[0].children.length : 0,
         };
         this.descriptionRule = [
-            'There are $(numBargroups) bargroups.',
+            'There are $(numBarGroups) bargroups.',
             'Each bargroup contains $(numBars) bars.'
-          ].join(' ');
+        ].join(' ');
     }
     fromChartAccent(ca: ChartAccent) {
         this.children = ca.dataset.rows.map((row, index) => new Bargroup(row, index, this._root, this));
@@ -37,11 +37,7 @@ export class Bargroup extends SpecTag {
             numBars: () => this.children.length,
             sumOfBarValues: () => Math.round(
                     10 * this.children.map(d => d.properties.value() as number).reduce((a, b) => a + b)
-                ) / 10,
-            xLabel: () => this.borrowX.attributes.label.value,
-            xUnit: () => this.borrowX.attributes.unit.value,
-            yLabel: () => this.borrowY.attributes.label.value,
-            yUnit: () => this.borrowY.attributes.unit.value,
+                ) / 10
         };
         this.children = this.borrowLegend.children.map((item: Item, index2: number) => {
             const key = item;
@@ -52,7 +48,7 @@ export class Bargroup extends SpecTag {
             'A group of bar in $(name).',
             'It contains $(numBars) bars.',
             'The sum of all bars inside is $(sumOfBarValues) $(yUnit).',
-          ].join(' ');
+        ].join(' ');
     }
 }
 
@@ -64,16 +60,11 @@ export class Bar extends SpecTag {
         };
         this.properties = {
             seriesName: () => key.attributes.text.value,
-            bargroupName: this._parent.properties.name,
-            xLabel: this._parent.properties.xLabel,
-            xUnit: this._parent.properties.xUnit,
-            yLabel: this._parent.properties.yLabel,
-            yUnit: this._parent.properties.yUnit,
         };
-        this.descriptionRule = '$(value) at the bar series $(seriesName) in $(bargroupName).';
+        this.descriptionRule = '$(value) at the bar series $(seriesName) in $(Bar Group: name).';
     }
 
     foreignRepr() {
-        return `${this.properties.bargroupName()}:${this.properties.key()}`;
+        return `${this.properties.seriesName()}:${this.properties.key()}`;
     }
 }
