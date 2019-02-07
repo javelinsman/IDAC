@@ -76,10 +76,18 @@ export class SpecTag {
         const args = description.match(/\$\(([^)]*)\)/g);
         if (args) {
         args.map(d => [d, d.slice(2, -1)])
-            .forEach(([arg, strip]) =>
-            description = description.replace(arg, '' +
-                (this.properties[strip] ? this.properties[strip]() : 'undefined')
-            ));
+            .forEach(([arg, strip]) => {
+                let value = 'undefined';
+                if (strip.split(':').length > 1) {
+                    const tagName = strip.split(':')[0].trim();
+                    const keyName = strip.split(':')[1].trim();
+                    const tag = this._root.flattenedTags().find(_tag => _tag._tagname === tagName);
+                    if (tag.properties[keyName]) { value = '' + tag.properties[keyName](); }
+                } else {
+                    if (this.properties[strip]) { value = '' + this.properties[strip](); }
+                }
+                description = description.replace(arg, value);
+            });
         }
         return description;
     }

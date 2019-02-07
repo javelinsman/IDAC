@@ -54,6 +54,11 @@ export class PropertiesPanelPopupComponent implements OnInit {
     return Object.keys(this.tag.attributes).includes(key);
   }
 
+  onPropertyNameDragStart(event: DragEvent) {
+    const prefix = this.tag === this.activeTag ? '' : `${this.activeTag._tagname}: `;
+    event.dataTransfer.setData('text/plain', `$(${prefix + (event.target as HTMLElement).innerText})`);
+  }
+
   onPanelMousedown(event: MouseEvent) {
     event.preventDefault();
     this.dragging = true;

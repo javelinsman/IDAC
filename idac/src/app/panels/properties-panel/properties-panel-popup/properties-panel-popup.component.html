@@ -36,7 +36,7 @@
       <tbody>
         <tr *ngFor="let prop of activeTag.properties | keyvalue">
           <th class="align-middle" scope="row">
-            <h5 style="cursor: pointer" class="m-0" draggable="true" (dragstart)="onDragStart($event)">
+            <h5 style="cursor: pointer" class="m-0" draggable="true" (dragstart)="onPropertyNameDragStart($event)">
               <span class="badge badge-pill badge-dark">
                 {{ prop.key }}
               </span>
