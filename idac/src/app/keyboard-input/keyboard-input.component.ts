@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { eqSet } from '../utils';
 import { keyBindings } from './key-bindings';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-keyboard-input',
@@ -16,7 +17,9 @@ export class KeyboardInputComponent implements OnInit {
   currentKeybinding: Set<string>;
   currentEventName: string;
 
-  constructor() { }
+  constructor(
+    private messageService: MessageService
+  ) { }
 
   ngOnInit() {
     this.keydowns = new Set();
@@ -59,6 +62,7 @@ export class KeyboardInputComponent implements OnInit {
       if (eqSet(this.keydowns, keyBinding)) {
         this.currentEventName = eventName;
         this.currentKeybinding = keyBinding;
+        this.messageService.keyboardEventName = eventName;
         this.keyFire.emit(eventName);
         return;
       }

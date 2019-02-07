@@ -15,4 +15,12 @@ export class MessageService {
     return this._shouldScroll;
   }
 
+  private _keyboardEventName = '';
+  set keyboardEventName(s: string) {
+    this._keyboardEventName = s;
+  }
+  get keyboardEventName() {
+    return this._keyboardEventName;
+  }
+
 }

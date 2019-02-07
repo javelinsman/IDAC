@@ -20,6 +20,7 @@ import { FilterViewComponent } from './filter-view/filter-view.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { PropertiesPanelPopupComponent } from './panels/properties-panel/properties-panel-popup/properties-panel-popup.component';
 import { MasterPanelComponent } from './panels/master-panel/master-panel.component';
+import { KeyboardPanelComponent } from './keyboard-input/keyboard-panel/keyboard-panel.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { MasterPanelComponent } from './panels/master-panel/master-panel.compone
     FilterViewComponent,
     NavBarComponent,
     PropertiesPanelPopupComponent,
-    MasterPanelComponent
+    MasterPanelComponent,
+    KeyboardPanelComponent
   ],
   imports: [
     BrowserModule,
