@@ -145,7 +145,7 @@ export function zip(rows: any[][]) {
 }
 
 export function firstLetterUpperCase(s: string) {
-  return s[0].toUpperCase() + s.slice(1);
+  return s.length ? s[0].toUpperCase() + s.slice(1) : '';
 }
 
 export function OnClickOutside(element, callback) {
