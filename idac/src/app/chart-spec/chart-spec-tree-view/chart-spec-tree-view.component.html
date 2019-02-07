@@ -25,18 +25,9 @@
             class="font-weight-normal text-unselectable ml-2">{{ tag.describe().length ? tag.describe() : '(No description)' }}</p>
         </div>
       </div>
-      <ng-container *ngIf="edit && tag === currentTag">
-        <div class="d-flex justify-content-end">
-          <p (click)="editPanel = 'override'" style="cursor: pointer" class="text-secondary mx-1">Override</p>
-          <p (click)="editPanel = 'template'" style="cursor: pointer" class="text-secondary mx-1">Template</p>
-          <!--p (click)="editPanel = 'attributes'" style="cursor: pointer" class="text-secondary mx-1">Attributes</p-->
-        </div>
-        <div class="ml-2">
-          <app-description-panel *ngIf="editPanel === 'template'" [tag]="tag"></app-description-panel>
-          <app-properties-panel *ngIf="editPanel === 'template'" [tag]="tag"></app-properties-panel>
-          <app-editors-note-panel *ngIf="editPanel === 'override'" [tag]="tag"></app-editors-note-panel>
-        </div>
-      </ng-container>
+      <div class="ml-2" *ngIf="edit && tag === currentTag">
+        <app-master-panel [tag]="tag"></app-master-panel>
+      </div>
       <p *ngIf="!viewOnly && tag === currentTag && edit"
         (click)="_editChange(false)"
         class="text-secondary cursor-pointer">Done</p>

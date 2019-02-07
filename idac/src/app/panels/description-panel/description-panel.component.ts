@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 import * as FuzzySearch from 'fuzzy-search';
 import { Textcomplete, Textarea } from 'textcomplete';
@@ -12,6 +12,8 @@ import { Textcomplete, Textarea } from 'textcomplete';
 export class DescriptionPanelComponent implements OnInit, AfterViewInit {
 
   @Input() tag: SpecTag;
+  @Input() overrideDescription: boolean;
+  @Output() overrideDescriptionChange: EventEmitter<boolean> = new EventEmitter();
 
   @ViewChild('input') textarea: ElementRef<HTMLTextAreaElement>;
 
@@ -52,6 +54,15 @@ export class DescriptionPanelComponent implements OnInit, AfterViewInit {
     const textarea = this.textarea.nativeElement;
     console.log(textarea.);
     */
+  }
+
+  _overrideDescriptionChange(override: boolean) {
+    this.overrideDescription = override;
+    this.overrideDescriptionChange.emit(override);
+    if (override)  {
+      this.tag.editorsNote.text = this.tag.describe();
+    }
+    this.tag.editorsNote.active = override;
   }
 
 }

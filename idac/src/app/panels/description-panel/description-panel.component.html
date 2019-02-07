@@ -1,7 +1,19 @@
 <section class="my-3">
-  <p class="font-weight-bold mb-1">Description</p>
-  <textarea [(ngModel)]="tag.descriptionRule"
+  <div class="d-flex justify-content-between">
+    <p class="font-weight-bold">{{ overrideDescription ? 'Description': 'Template' }}</p>
+    <p class="text-secondary" style="cursor: pointer"
+      (click)="_overrideDescriptionChange(!overrideDescription)">
+      {{ overrideDescription ? 'Reset to use template' : 'Describe without template' }}
+    </p>
+  </div>
+
+  <textarea *ngIf="!overrideDescription" [(ngModel)]="tag.descriptionRule"
     (drop)="onDrop($event)" (dragover)="onDragOver($event)"
-    class="form-control" id="description-rule-textarea" rows="2" #input>
+    class="form-control" id="description-rule-textarea" rows="3" #input>
   </textarea>
+
+  <textarea *ngIf="overrideDescription" class="form-control" id="description-rule-textarea" rows="3"
+    [(ngModel)]="tag.editorsNote.text"></textarea>
+
+
 </section>

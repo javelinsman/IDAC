@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditorsNotePanelComponent } from './editors-note-panel.component';
+import { MasterPanelComponent } from './master-panel.component';
 
-describe('EditorsNotePanelComponent', () => {
-  let component: EditorsNotePanelComponent;
-  let fixture: ComponentFixture<EditorsNotePanelComponent>;
+describe('MasterPanelComponent', () => {
+  let component: MasterPanelComponent;
+  let fixture: ComponentFixture<MasterPanelComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditorsNotePanelComponent ]
+      declarations: [ MasterPanelComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditorsNotePanelComponent);
+    fixture = TestBed.createComponent(MasterPanelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
