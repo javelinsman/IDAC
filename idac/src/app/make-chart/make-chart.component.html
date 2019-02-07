@@ -13,7 +13,24 @@
       <hr>
       <div class="row">
         <div class="col-12">
-          <app-filter-view [(currentTag)]="currentTag"></app-filter-view>
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link" style="cursor: pointer"
+                [class.active]="rightPanel === 'filter'"
+                [class.text-primary]="rightPanel !== 'filter'"
+                (click)="rightPanel = 'filter'"
+              >Tags of the Same Kind</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" style="cursor: pointer"
+                [class.active]="rightPanel === 'keyboard'"
+                [class.text-primary]="rightPanel !== 'keyboard'"
+                (click)="rightPanel = 'keyboard'"
+              >Keyboard Navigation</a>
+            </li>
+          </ul>
+          <app-filter-view *ngIf="rightPanel === 'filter'" [(currentTag)]="currentTag"></app-filter-view>
+          <app-keyboard-input *ngIf="rightPanel === 'keyboard'"></app-keyboard-input>
         </div>
       </div>
       <!--div class="row border">

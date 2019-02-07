@@ -20,6 +20,7 @@ export class MakeChartComponent implements OnInit {
   chartSpec: ChartSpec;
 
   currentTag: SpecTag;
+  rightPanel = 'filter';
   @ViewChild('container') containerDiv: ElementRef;
 
   constructor(
