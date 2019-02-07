@@ -18,17 +18,18 @@ export class CoordinateLine extends SpecTag {
         super('Line');
         this.attributes = {
             range: new AttrInput(0),
-            targetAxis: new AttrInputSelect(['x', 'y'], 'x'),
             label: new AttrInput(''),
         };
         this.properties = {
             numChildren: () => this.children.length,
-            listOfChildren: () => this.children.map(d => d.foreignRepr()).join(', '),
-            orientation: () => this.attributes.targetAxis.value === 'x' ? 'vertical' : 'horizontal',
+            orientation: () => this.properties.targetAxis() === 'x' ? 'vertical' : 'horizontal',
+            targetAxis: () => 'x'
         };
         this.children = [] as RelationalHighlightLine[];
-        this.descriptionRule =
-            'The point at $(range) on $(targetAxis) axis are marked with $(orientation) line: $(label)';
+        this.descriptionRule =  [
+            'A $(orientation) line passes through the point at $(range) on $(targetAxis) axis, labeled as "$(label)".'
+        ].join(' ');
+
     }
     fromChartAccent(ca: ChartAccent.ChartAccent) {
         // rangeStart, rangeEnd
@@ -38,7 +39,7 @@ export class CoordinateLine extends SpecTag {
         const label = this.annotation.components.find(d => d.type === 'label');
         this.attributes.label.value = label.visible ? label.text : '';
         // targetAxis
-        this.attributes.targetAxis.value = (this.annotation.target as ChartAccent.RangeTarget).axis === 'E0' ? 'x' : 'y';
+        this.properties.targetAxis = () => (this.annotation.target as ChartAccent.RangeTarget).axis === 'E0' ? 'x' : 'y';
 
         // children
         const relatedAnnotations = this.annotations.filter(_annotation =>
@@ -58,14 +59,17 @@ export class RelationalHighlightLine extends Highlight {
         _root: ChartSpec, _parent: CoordinateLine
     ) {
         super(annotation, _root, _parent);
-        this._tagname = 'RelationalHighlightLine';
+        this._tagname = 'Below or Above';
         this.attributes = {
             ...this.attributes,
-            targetRelation: new AttrInputSelect(['below', 'above'], 'below')
+            relation: new AttrInputSelect(['below', 'above'], 'below')
         };
 
         const mode = this.annotation.target_inherit.mode;
-        this.attributes.targetRelation.value = mode.startsWith('below') ? 'below' : 'above';
+        this.attributes.relation.value = mode.startsWith('below') ? 'below' : 'above';
+        this.descriptionRule = [
+            '$(relation) the line are $(numTargets) bars. $(highlight) $(itemLabel) Specifically, targets are $(targetDescription).'
+        ].join(' ');
         // this._tagname = firstLetterUpperCase(this.attributes.targetRelation.value);
 
         this.properties = {
@@ -92,7 +96,7 @@ export class RelationalHighlightLine extends Highlight {
             const series = this._root.legend.children[seriesIndex];
             const bars = this._root.marks.children.map(bargroup => bargroup.children[seriesIndex]) as Bar[];
             const range = this.properties.range();
-            const mode = this.attributes.targetRelation.value;
+            const mode = this.attributes.relation.value;
             let indices: number[];
             if (axis === 'x') {
                 const ticks = this._root.x.children.map((tick, i) => [tick, i]);

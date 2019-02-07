@@ -1,8 +1,8 @@
 export const keyBindings = {
     moveToNextElement: new Set(['tab']),
     moveToPreviousElement: new Set(['shift', 'tab']),
-    // moveToNextAnnotation: new Set(['d']),
-    // moveToPreviousAnnotation: new Set(['shift', 'd']),
+    moveToNextAnnotation: new Set(['d']),
+    moveToPreviousAnnotation: new Set(['shift', 'd']),
     moveToNextSibling: new Set(['arrowdown']),
     moveToPreviousSibling: new Set(['arrowup']),
     moveToParent: new Set(['arrowleft']),
@@ -19,8 +19,8 @@ export const keyBindings = {
     moveToNextDataPoint: new Set(['p']),
     moveToPreviousDataPoint: new Set(['shift', 'p']),
     checkCurrentElement: new Set(['enter']),
-    queryMaximum: new Set(['q', 'h']),
-    queryMinimum: new Set(['q', 'j']),
-    queryAverage: new Set(['q', 'k']),
-    queryTendency: new Set(['q', 'l']),
+    // queryMaximum: new Set(['q', 'h']),
+    // queryMinimum: new Set(['q', 'j']),
+    // queryAverage: new Set(['q', 'k']),
+    // queryTendency: new Set(['q', 'l']),
 };

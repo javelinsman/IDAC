@@ -1,29 +1,54 @@
-<table class="table table-sm text-center">
-  <thead>
-    <tr>
-      <th scope="col">Property</th>
-      <th scope="col">Value</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let prop of tag.properties | keyvalue" class="{{ isAttribute(prop.key) ? '' : 'bg-light' }}">
-      <th scope="row">{{ prop.key }}</th>
-      <td *ngIf="!isAttribute(prop.key)">{{ prop.value() }}</td>
-      <td *ngIf="isAttribute(prop.key)">
-        <input *ngIf="tag.attributes[prop.key].type ==='input'" [(ngModel)]="tag.attributes[prop.key].value" class="text-center w-100">
-        <div *ngIf="tag.attributes[prop.key].type === 'input-select'">
-          <div class="btn-group" role="group">
-            <button *ngFor="let cand of tag.attributes[prop.key].candidates"
-              class="btn btn-sm {{ tag.attributes[prop.key].value === cand ? 'btn-primary' : 'btn-secondary' }}"
-              (click)="tag.attributes[prop.key].value = cand">
-              {{ cand }}
-            </button>
+<app-properties-panel-popup [tag]="tag"></app-properties-panel-popup>
+<section class="my-3" #popupParent>
+
+  <div class="d-flex justify-content-between">
+    <p class="font-weight-bold mb-1">Properties</p>
+    <p class="text-secondary" style="cursor: pointer"
+      (click)="propertiesPanelPopupComponent.toggle(popupParent)">
+      Show all available properties
+    </p>
+  </div>
+
+  <table class="table table-sm text-center">
+    <thead>
+      <tr>
+        <th scope="col" style="width: 40%">Name</th>
+        <th scope="col" style="width: 50%">Value</th>
+        <th scope="col" style="width: 10%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prop of tag.properties | keyvalue">
+        <th class="align-middle" scope="row">
+          <h5 style="cursor: pointer" class="m-0" draggable="true" (dragstart)="onDragStart($event)">
+            <span class="badge badge-pill badge-dark">
+              {{ prop.key }}
+            </span>
+          </h5>
+        </th>
+        <td class="align-middle" *ngIf="!isAttribute(prop.key) || !edit[prop.key]">
+          <p class="m-0" style="padding-top: 1px; padding-bottom: 1px; border: 2px solid transparent">{{ prop.value() }}</p>
+        </td>
+        <td class="align-middle" *ngIf="isAttribute(prop.key) && edit[prop.key]">
+          <input *ngIf="tag.attributes[prop.key].type ==='input'" [(ngModel)]="tag.attributes[prop.key].value" class="text-center w-100">
+          <div *ngIf="tag.attributes[prop.key].type === 'input-select'">
+            <div class="btn-group" role="group">
+              <button *ngFor="let cand of tag.attributes[prop.key].candidates"
+                class="btn btn-sm {{ tag.attributes[prop.key].value === cand ? 'btn-primary' : 'btn-secondary' }}"
+                (click)="tag.attributes[prop.key].value = cand">
+                {{ cand }}
+              </button>
+            </div>
+            <div *ngIf="tag.attributes[prop.key].value !== prop.value()">
+              {{ prop.value() }}
+            </div>
           </div>
-          <div *ngIf="tag.attributes[prop.key].value !== prop.value()">
-            {{ prop.value() }}
-          </div>
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
+        </td>
+        <td class="align-middle">
+          <a style="cursor: pointer" *ngIf="isAttribute(prop.key)" (click)="edit[prop.key] = !edit[prop.key]"><i class="fas fa-edit text-secondary"></i></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</section>

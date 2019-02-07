@@ -5,6 +5,8 @@ import * as d3 from 'd3';
 import { SvgContainerComponent } from '../svg-container/svg-container.component';
 import { d3ImmediateChildren, d3AsSelectionArray, makeAbsoluteContext, mergeBoundingBoxes, zip } from '../utils';
 import { translate } from '../chartutils';
+import { HighlightShape } from './highlight-shape/highlight-shape';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-chart-view',
@@ -20,32 +22,51 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
 
   @ViewChild(SvgContainerComponent) svgContainer: SvgContainerComponent;
 
-  svg: d3.Selection<SVGGElement, any, HTMLElement, any>;
-  gClickHint: d3.Selection<any, any, any, any>;
-  gHighlight: d3.Selection<any, any, any, any>;
-  gEditorsNote: d3.Selection<any, any, any, any>;
-  elementLink = {};
+  svg: d3.Selection<SVGSVGElement, any, HTMLElement, any>;
+  gElemMarks: d3.Selection<any, any, any, any>;
+  gEditorsNotes: d3.Selection<any, any, any, any>;
+  elementLink: {
+    [key: number]: {
+      tag: SpecTag, associatedElements: d3.Selection<any, any, any, any>,
+      highlightShape: HighlightShape
+    }
+  };
+
   ready = false;
+
+  originalSVGSize = {
+    width: 0,
+    height: 0
+  };
+
+  allSVGElementsAreDrawn = false;
 
   showEditorsNote = true;
 
-  constructor() { }
+  constructor(private messageService: MessageService) { }
 
   ngOnInit() {
   }
 
-  onSVGInit() {
-    this.ready = true;
-    this.svg = d3.select(this.svgContainer.svgContainerDiv.nativeElement).select('svg');
+  resizeSVG() {
+    const container = this.svgContainer.svgContainerDiv.nativeElement as HTMLElement;
+    this.svg.attr('viewBox', `0 0 ${this.originalSVGSize.width} ${this.originalSVGSize.height + 20}`);
+    this.svg.attr('width', '100%');
+  }
 
-    this.gHighlight = this.svg.append('g').classed('idac-highlights', true);
-    this.gClickHint = this.svg.append('g').classed('idac-click-hints', true);
-    this.gEditorsNote = this.svg.append('g').classed('idac-editors-notes', true);
-
+  associateElements() {
     const [annotationBackground, g2, annotationForeground] = d3AsSelectionArray(d3ImmediateChildren(this.svg, 'g'));
     const [title, legend, chart] = d3AsSelectionArray(d3ImmediateChildren(g2, 'g'));
     const items = d3AsSelectionArray(legend.selectAll('.legend'));
     const [marks, x, y, yLabel, xLabel] = d3AsSelectionArray(d3ImmediateChildren(chart, 'g'));
+    y.classed('idac-y-axis', true);
+    if (yLabel) {
+      yLabel.classed('idac-y-axis', true);
+    }
+    x.classed('idac-x-axis', true);
+    if (xLabel) {
+      xLabel.classed('idac-x-axis', true);
+    }
     const serieses = d3AsSelectionArray(d3ImmediateChildren(marks, 'g'));
     const rects = zip(serieses.map(d => d3AsSelectionArray(d3ImmediateChildren(d, 'rect'))));
     rects.forEach((elem: d3.Selection<any, any, any, any>[], i) => {
@@ -54,7 +75,6 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     const bargroups = rects.map((_, i) => this.svg.selectAll(`.idac-bargroup-${i}`));
     const xTicks = d3AsSelectionArray(x.selectAll('.tick'));
     const yTicks = d3AsSelectionArray(y.selectAll('.tick'));
-
     const annotationRenderingArea = d3AsSelectionArray(
       d3ImmediateChildren(
         d3ImmediateChildren(annotationForeground, 'g'),
@@ -69,12 +89,11 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       return accum;
     }, []);
     const annotations = uniqueAnnotationIds.map(id => annotationForeground.selectAll(`.${id}`));
-
     const cs = this.chartSpec;
     const pairs = [
       [cs.title, title],
-      [cs.y, y],
-      [cs.x, x],
+      [cs.y, d3.selectAll('.idac-y-axis')],
+      [cs.x, d3.selectAll('.idac-x-axis')],
       [cs.legend, legend],
       [cs.marks, marks],
     ];
@@ -94,28 +113,46 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       const tag = cs.annotations.findByAnnotation(cs.annotations.annotationInChartAccent(i));
       pairs.push([tag, annotation as any]);
     });
-    this.elementLink = pairs.reduce((accum, [k, v]: [SpecTag, any]) => {
-      accum[k._id] = v;
-      return accum;
-    }, {});
+    this.elementLink = {};
+    pairs.forEach(([tag, associatedElements]: [SpecTag, any]) => {
+      this.elementLink[tag._id] = {
+        tag, associatedElements,
+        highlightShape: HighlightShape.getShape(tag, associatedElements, this.svg, this.elementLink)
+      };
+    });
+    Object.values(this.elementLink).forEach(val => val.highlightShape.afterAllRendered());
+  }
 
-    Object.entries(this.elementLink).forEach(([tagId, selection]: [string, d3.Selection<any, any, any, any>]) => {
-      const tag = this.chartSpec.findById(+tagId);
-      const rect = this.makeRectFromBoundingBox(this.getMergedBoundingBox(selection), this.gClickHint)
-        .style('fill', 'pink').style('fill-opacity', 0);
-      rect.on('mouseover', function() { d3.select(this).style('fill-opacity', 0.5); });
-      rect.on('mouseout', function() { d3.select(this).style('fill-opacity', 0); });
-      rect.on('click', () => this._currentTagChange(tag));
+  onSVGInit() {
+    this.ready = true;
+    this.svg = d3.select(this.svgContainer.svgContainerDiv.nativeElement).select('svg');
 
-      const editorsNoteRect = this.makeRectFromBoundingBox(this.getMergedBoundingBox(selection), this.gEditorsNote)
-        .style('fill-opacity', 0)
-        .style('stroke', 'red').style('stroke-width', 2).style('visibility', 'hidden')
-        .classed('idac-editors-note', true).data([tag]);
-      editorsNoteRect.on('mouseover', function() { d3.select(this).style('stroke-width', 3); });
-      editorsNoteRect.on('mouseout', function() { d3.select(this).style('stroke-width', 2); });
-      editorsNoteRect.on('click', () => this._currentTagChange(tag));
+    this.associateElements();
+
+    this.gElemMarks = this.svg.append('g').classed('idac-elem-marks', true);
+    this.gEditorsNotes = this.svg.append('g').classed('idac-editors-notes', true);
+
+    Object.values(this.elementLink).forEach(({ tag, highlightShape }) => {
+      const elemMarks = d3.selectAll(
+        highlightShape.elemMarks().map(elemMark => this.gElemMarks.node().appendChild(elemMark))
+      );
+      elemMarks.classed('idac-elem-mark', true).data(Array.from(Array(elemMarks.size())).map(_ => tag));
+
+      elemMarks.on('mouseover', function() { elemMarks.classed('hover', true); });
+      elemMarks.on('mouseout', function() { elemMarks.classed('hover', false); });
+      elemMarks.on('click', () => this._currentTagChange(tag));
+
+      const bookmarks = d3.selectAll(
+        highlightShape.bookmarks().map(bookmark => this.gElemMarks.node().appendChild(bookmark))
+      );
+      bookmarks.classed('idac-bookmark', true).data(Array.from(Array(bookmarks.size())).map(_ => tag));
 
     });
+
+    this.allSVGElementsAreDrawn = true;
+    this.originalSVGSize.width = +this.svg.attr('width');
+    this.originalSVGSize.height = +this.svg.attr('height');
+    this.resizeSVG();
   }
 
   getMergedBoundingBox(selection: d3.Selection<any, any, any, any>) {
@@ -148,31 +185,33 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked() {
     if (this.ready) {
-      this.svg.selectAll('.idac-highlight').remove();
-      const target = this.elementLink[this.currentTag._id];
-      if (target) {
-        const mergedBox = this.getMergedBoundingBox(target);
-        const highlightRect = this.makeRectFromBoundingBox(mergedBox, this.gHighlight)
-          .style('fill', 'rgba(255, 255, 0, 0.5)')
-          .classed('idac-highlight', true);
+      d3.selectAll('.idac-elem-mark')
+        .classed('highlighted', (tag: SpecTag) => tag === this.currentTag);
 
-        // scroll horizontally
-        /*
-        const prevY = window.scrollY;
-        highlightRect.node().scrollIntoView({inline: 'center'});
-        window.scroll(window.scrollX, prevY);
-        */
-      }
+      d3.selectAll('.idac-bookmark')
+        // .classed('active', (tag: SpecTag) => tag.editorsNote.active);
+        .classed('highlighted', (tag: SpecTag) => tag.editorsNote.showInGraphView && tag.editorsNote.active);
 
-      d3.selectAll('.idac-editors-note')
-        .style('visibility', (tag: SpecTag) =>
-          tag.editorsNote.showInGraphView && tag.editorsNote.active ? 'visible' : 'hidden');
+      /*
+      // scroll horizontally
+      const prevY = window.scrollY;
+      highlightRect.node().scrollIntoView({inline: 'center'});
+      window.scroll(window.scrollX, prevY);
+      */
+
+    }
+  }
+
+  onWindowResize() {
+    if (this.allSVGElementsAreDrawn) {
+      this.resizeSVG();
     }
   }
 
   _currentTagChange(tag: SpecTag) {
     this.currentTag = tag;
     this.currentTagChange.emit(this.currentTag);
+    this.messageService.shouldScroll = true;
   }
 
 }

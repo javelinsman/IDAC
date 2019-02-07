@@ -10,16 +10,16 @@ export class Marks extends SpecTag {
         this._parent = _root;
         this.children = [] as Bargroup[];
         this.attributes = {
-            type: new AttrInputSelect(['grouped', 'stacked'], 'grouped')
+            // type: new AttrInputSelect(['grouped', 'stacked'], 'grouped')
         };
         this.properties = {
-            numBargroups: () => this.children.length,
+            numBarGroups: () => this.children.length,
             numBars: () => this.children.length ? this.children[0].children.length : 0,
         };
         this.descriptionRule = [
-            'There are $(numBargroups) bargroups.',
-            'Each bargroup contains $(numBars) bars.'
-          ].join(' ');
+            'There are $(numBarGroups) bar groups, which correspond to each $(X Axis: label).',
+            'And each bar group contains $(numBars) bars, which correspond to each series of $(Legend: label).'
+        ].join(' ');
     }
     fromChartAccent(ca: ChartAccent) {
         this.children = ca.dataset.rows.map((row, index) => new Bargroup(row, index, this._root, this));
@@ -38,42 +38,37 @@ export class Bargroup extends SpecTag {
             sumOfBarValues: () => Math.round(
                     10 * this.children.map(d => d.properties.value() as number).reduce((a, b) => a + b)
                 ) / 10,
-            xLabel: () => this.borrowX.attributes.label.value,
-            xUnit: () => this.borrowX.attributes.unit.value,
-            yLabel: () => this.borrowY.attributes.label.value,
-            yUnit: () => this.borrowY.attributes.unit.value,
+            index0: () => index,
+            index1: () => index + 1,
         };
         this.children = this.borrowLegend.children.map((item: Item, index2: number) => {
             const key = item;
             const value = +row[key.attributes.text.value];
-            return new Bar(key, value, this._root, this);
+            return new Bar(key, value, index2, this._root, this);
         });
         this.descriptionRule = [
-            'A group of bar in $(name).',
+            'A bar group in $(name).',
             'It contains $(numBars) bars.',
-            'The sum of all bars inside is $(sumOfBarValues) $(yUnit).',
-          ].join(' ');
+            'The sum of all bars inside is $(sumOfBarValues) $(Y Axis: unit), indicating $(Y Axis: label).'
+        ].join(' ');
     }
 }
 
 export class Bar extends SpecTag {
-    constructor(key: Item, value: number, public _root: ChartSpec, public _parent: Bargroup) {
+    constructor(key: Item, value: number, index: number, public _root: ChartSpec, public _parent: Bargroup) {
         super('Bar');
         this.attributes = {
             value: new AttrInput(value)
         };
         this.properties = {
             seriesName: () => key.attributes.text.value,
-            bargroupName: this._parent.properties.name,
-            xLabel: this._parent.properties.xLabel,
-            xUnit: this._parent.properties.xUnit,
-            yLabel: this._parent.properties.yLabel,
-            yUnit: this._parent.properties.yUnit,
+            index0: () => index,
+            index1: () => index + 1
         };
-        this.descriptionRule = '$(value) at the bar series $(seriesName) in $(bargroupName).';
+        this.descriptionRule = '$(value) $(Y Axis: unit) for $(seriesName) in $(Bar Group: name).';
     }
 
     foreignRepr() {
-        return `${this.properties.bargroupName()}:${this.properties.key()}`;
+        return `${this.properties.seriesName()}:${this.properties.key()}`;
     }
 }

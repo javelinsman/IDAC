@@ -1,18 +1,36 @@
-<div class="container-fluid" #container>
+<div class="container-fluid" #container (window:resize)="onWindowResize()">
   <div class="row h-100" *ngIf="chart && chartAccent">
-    <div class="col-4 border h-100" style="overflow-y: scroll">
+    <div class="col-4 border h-100 styled-scroll" style="overflow-y: scroll">
       <app-chart-spec [chartSpec]="chartSpec" [(currentTag)]="currentTag"></app-chart-spec>
     </div>
-    <div class="col-8 border" style="overflow-y: scroll">
-      <div class="row border">
+    <div class="col-8 border h-100 styled-scroll" style="overflow-y: scroll">
+      <div class="row">
         <div class="col-12">
           <app-chart-view [chartSpec]="chartSpec"
             [src]="chart.src_svg" [(currentTag)]="currentTag"></app-chart-view>
         </div>
       </div>
-      <div class="row border">
+      <hr>
+      <div class="row">
         <div class="col-12">
-          <app-filter-view [(currentTag)]="currentTag"></app-filter-view>
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link" style="cursor: pointer"
+                [class.active]="rightPanel === 'filter'"
+                [class.text-primary]="rightPanel !== 'filter'"
+                (click)="rightPanel = 'filter'"
+              >Tags of the Same Kind</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" style="cursor: pointer"
+                [class.active]="rightPanel === 'keyboard'"
+                [class.text-primary]="rightPanel !== 'keyboard'"
+                (click)="rightPanel = 'keyboard'"
+              >Keyboard Navigation</a>
+            </li>
+          </ul>
+          <app-filter-view *ngIf="rightPanel === 'filter'" [(currentTag)]="currentTag"></app-filter-view>
+          <app-keyboard-panel *ngIf="rightPanel === 'keyboard'"></app-keyboard-panel>
         </div>
       </div>
       <!--div class="row border">

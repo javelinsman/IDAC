@@ -17,29 +17,25 @@ export class Highlight extends SpecTag {
         this.attributes = {
             itemLabel: new AttrInputSelect(['on', 'off'], 'off'),
             highlight: new AttrInputSelect(['emphasize', 'de-emphasize', 'off'], 'off'),
-            trendline: new AttrInputSelect(['on', 'off'], 'off'),
             label: new AttrInput()
         };
         this.properties = {
             targetDescription: () => '',
             numTargets: () => '',
             itemLabel: () => '',
-            trendline: () => '',
             highlight: () => ''
         };
         this.descriptionRule = [
-            'The annotation on $(numTargets) bar\'s on $(targetDescription).',
+            '$(numTargets) bars are annotated, labeled as "$(label)".',
             '$(highlight)',
             '$(itemLabel)',
-            '$(trendline)',
-          ].join(' ');
+            'Specifically, targets are $(targetDescription).'
+        ].join(' ');
     }
 
     fromChartAccent(ca: ChartAccent.ChartAccent) {
         const itemLabel = this.annotation.components.find(d => d.type === 'item-label');
         this.attributes.itemLabel.value = itemLabel.visible ? 'on' : 'off';
-        const trendline = this.annotation.components.find(d => d.type === 'trendline');
-        this.attributes.trendline.value = trendline.visible ? 'on' : 'off';
         const highlight = this.annotation.components.find(d => d.type === 'highlight');
         if (highlight.visible) {
             if (highlight.style.fill.value < 0 || highlight.style.stroke_width > 0) {
@@ -59,8 +55,6 @@ export class Highlight extends SpecTag {
             numTargets: () => numTargets,
             itemLabel: () => this.attributes.itemLabel.value === 'on'
                 ? 'Item labels are marked on them.' : '',
-            trendline: () => this.attributes.trendline.value === 'on'
-                ? 'A trendline is drawn.' : '',
             highlight: () => {
                 if (this.attributes.highlight.value === 'emphasize') {
                     return 'They are highlighted.';
@@ -90,7 +84,7 @@ export class Highlight extends SpecTag {
         this.getTargetLocation().forEach(([series, indices]) => {
             const seriesName = series.properties.text();
             targets.push(`${indices.length === this._root.marks.children.length ?
-                'all bars' : `${indices.map(i => i + 1).join(', ')}-th position`} in ${seriesName}`);
+                'all bars' : `${indices.map(i => i + 1).join(', ')}-th bar`} in ${seriesName}`);
             numTargets += indices.length;
         });
         return {

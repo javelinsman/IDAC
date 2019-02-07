@@ -1,33 +1,4 @@
-<div class="container pb-5">
-  <div class="jumbotron jumbotron-fluid">
-    <div class="conatiner p-5">
-      <h1 class="display-4">
-        <img class="d-inline" width="64" src="./assets/charteller.png" alt="charteller logo">
-        IDAC
-      </h1>
-      <p class="lead">
-        Interactive Description for Annotated Charts
-      </p>
-      <hr class="my-4">
-      <p>Make your charts auditorily navigable with rich supports for annotations!</p>
-      <a class="btn btn-primary btn-lg mx-2" href="#examples" role="button">Play with examples</a>
-      <a class="btn btn-primary btn-lg mx-2" routerLink="/make-chart" role="button">Start an empty project</a>
-      <a class="btn btn-secondary btn-lg disabled" href="#" role="button" aria-disabled="true">Convert from ChartAccent.json</a>
-    </div>
-  </div>
-  <section id="examples">
-    <h1>Examples</h1>
-    <hr class="mb-4">
-    <div class="row">
-      <div class="col-md-4" *ngFor="let chart of charts; let i = index">
-        <div class="card mb-2">
-          <img class="img-fluid" [src]="chart.src_png">
-          <div class="card-body bg-light text-center">
-            <h5 class="card-text">{{ chart.title }}</h5>
-            <a class="card-link" routerLink="/make-chart/example/{{ i }}">Play with it</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
+<app-nav-bar [(stage)]="currentStage"></app-nav-bar>
+<app-load-data *ngIf="currentStage === Stage.load"
+  (exampleIdChange)="_exampleIdChange($event)"></app-load-data>
+<app-make-chart *ngIf="currentStage === Stage.describe" [exampleId]="exampleId"></app-make-chart>

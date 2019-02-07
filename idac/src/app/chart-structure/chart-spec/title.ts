@@ -10,7 +10,8 @@ export class Title extends SpecTag {
         this.attributes = {
             title: new AttrInput()
         };
-        this.descriptionRule = 'Chart title: $(title).';
+        this.descriptionRule =
+            'This is a vertical bar chart titled "$(title)", measuring $(Y Axis: label) for $(X Axis: numChildren)  $(X Axis: label)s.';
     }
     fromChartAccent(ca: ChartAccent) {
         this.attributes = {

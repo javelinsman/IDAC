@@ -14,12 +14,10 @@ export class X extends SpecTag {
         this.children = [] as Tick[];
         this.properties = {
             numChildren: () => this.children.length,
-            listOfChildren: () => this.children.map(d => d.foreignRepr()).join(', ')
+            children: () => this.children.map(d => d.foreignRepr()).join(', ')
         };
         this.descriptionRule = [
-            'X axis with label name $(label).',
-            'The unit of measurement is $(unit).',
-            'There are $(numChildren) tick marks: $(listOfChildren).',
+            'X axis indicates $(X Axis: label) in $(X Axis: unit), measuring $(numChildren) bar groups as follows: $(children).'
         ].join(' ');
 
     }
@@ -30,20 +28,21 @@ export class X extends SpecTag {
             .slice(1).join('(').slice(0, -1).split(':').slice(1).join(':').trim())
         };
         this.children = ca.dataset.rows.map((row, index) => new Tick(
-            row[ca.dataset.columns[0].name], this._root, this));
+            row[ca.dataset.columns[0].name], index, this._root, this));
     }
 }
 
 export class Tick extends SpecTag {
-    constructor(tick: string | number, public _root: ChartSpec, public _parent: X) {
+    constructor(tick: string | number, index: number, public _root: ChartSpec, public _parent: X) {
         super('Tick');
         this.attributes = {
-            text: new AttrInput(tick)
+            text: new AttrInput(tick),
         };
         this.properties = {
-            unit: () => this._parent.attributes.unit.value
+            index0: () => index,
+            index1: () => index + 1
         };
-        this.descriptionRule = '$(text) $(unit)';
+        this.descriptionRule = '$(text) $(X Axis: unit), which indicates $(X Axis: label).';
     }
 
     foreignRepr() {

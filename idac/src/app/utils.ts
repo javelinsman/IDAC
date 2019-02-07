@@ -100,14 +100,24 @@ export function d3AsSelectionArray(selection: d3.Selection<any, any, any, any>) 
   return Array.from(selection.nodes()).map(d => d3.select(d));
 }
 
-export function makeAbsoluteContext(element, svgDocument) {
-  return function(x, y) {
-    const offset = svgDocument.getBoundingClientRect();
-    const matrix = element.getScreenCTM();
+export function makeAbsoluteContext(element: SVGGraphicsElement, svgDocument: SVGSVGElement) {
+  return function(x: number, y: number) {
+    const point = svgDocument.createSVGPoint();
+    point.x = x; point.y = y;
+    const transformedPoint = point.matrixTransform(element.getCTM());
     return {
-      x: (matrix.a * x) + (matrix.c * y) + matrix.e - offset.left,
-      y: (matrix.b * x) + (matrix.d * y) + matrix.f - offset.top
+      x: transformedPoint.x,
+      y: transformedPoint.y
     };
+
+    /*
+    const offset = svgDocument.getBoundingClientRect();
+    const matrix = element.getCTM();
+    return {
+      x: (matrix.a * x) + (matrix.c * y) + matrix.e, // - offset.left,
+      y: (matrix.b * x) + (matrix.d * y) + matrix.f // - offset.top
+    };
+    */
   };
 }
 
@@ -135,5 +145,23 @@ export function zip(rows: any[][]) {
 }
 
 export function firstLetterUpperCase(s: string) {
-  return s[0].toUpperCase() + s.slice(1);
+  return s.length ? s[0].toUpperCase() + s.slice(1) : '';
 }
+
+export function OnClickOutside(element, callback) {
+  const outsideClickListener = event => {
+      if (!element.contains(event.target) && isVisible(element)) { // or use: event.target.closest(selector) === null
+        callback();
+        removeClickListener();
+      }
+  };
+
+  const removeClickListener = () => {
+      document.removeEventListener('click', outsideClickListener);
+  };
+
+  document.addEventListener('click', outsideClickListener);
+}
+
+// source (2018-03-11): https://github.com/jquery/jquery/blob/master/src/css/hiddenVisibleSelectors.js
+const isVisible = elem => !!elem && !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length );

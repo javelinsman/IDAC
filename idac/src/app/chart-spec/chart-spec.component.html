@@ -1,4 +1,5 @@
-<div class="container-fluid" #container>
+<h3 class="my-3 mx-3 py-2" [style.border-bottom]="'1px solid #aaa'">Chart Description</h3>
+<div class="container-fluid styled-scroll" #container>
   <app-chart-spec-tree-view [tag]="chartSpec.title" [(edit)]="edit"
     [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)"></app-chart-spec-tree-view>
   <app-chart-spec-tree-view [tag]="chartSpec.y" [(edit)]="edit"

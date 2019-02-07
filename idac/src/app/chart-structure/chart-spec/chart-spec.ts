@@ -26,6 +26,7 @@ export class ChartSpec extends SpecTag {
 
     fromChartAccent(ca: ChartAccent) {
         this.children.forEach(tag => tag.fromChartAccent(ca));
+        this.children.forEach(tag => tag.afterFromChartAccent());
         this._flattendTags = null; // assure that flattend tags will be updated
     }
 

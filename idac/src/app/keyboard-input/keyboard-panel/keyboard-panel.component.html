@@ -1,0 +1,22 @@
+<table class="table table-sm text-center">
+  <thead>
+    <tr>
+      <th scope="col">Key</th>
+      <th scope="col">Function</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let kv of keyBindings"
+      [class.font-weight-bold]="kv.key === messageService.keyboardEventName"
+    >
+      <th class="align-middle" scope="row">
+        <h5 style="cursor: pointer" class="m-0">
+          <span *ngFor="let key of kv.value; let last=last">{{ key }}{{ last ? '' : '+' }}</span>
+        </h5>
+      </th>
+      <td class="align-middle">
+        <p class="m-0" style="padding-top: 1px; padding-bottom: 1px; border: 2px solid transparent">{{ kv.key }}</p>
+      </td>
+    </tr>
+  </tbody>
+</table>

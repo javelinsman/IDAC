@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditorsNotePanelComponent } from './editors-note-panel.component';
+import { LoadDataComponent } from './load-data.component';
 
-describe('EditorsNotePanelComponent', () => {
-  let component: EditorsNotePanelComponent;
-  let fixture: ComponentFixture<EditorsNotePanelComponent>;
+describe('LoadDataComponent', () => {
+  let component: LoadDataComponent;
+  let fixture: ComponentFixture<LoadDataComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditorsNotePanelComponent ]
+      declarations: [ LoadDataComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditorsNotePanelComponent);
+    fixture = TestBed.createComponent(LoadDataComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -13,12 +13,15 @@ import { ChartSpecComponent } from './chart-spec/chart-spec.component';
 import { MakeChartComponent } from './make-chart/make-chart.component';
 import { SvgContainerComponent } from './svg-container/svg-container.component';
 import { DescriptionPanelComponent } from './panels/description-panel/description-panel.component';
-import { EditorsNotePanelComponent } from './panels/editors-note-panel/editors-note-panel.component';
 import { PropertiesPanelComponent } from './panels/properties-panel/properties-panel.component';
 import { ChartSpecTreeViewComponent } from './chart-spec/chart-spec-tree-view/chart-spec-tree-view.component';
 import { ChartViewComponent } from './chart-view/chart-view.component';
-import { AttributesPanelComponent } from './panels/attributes-panel/attributes-panel.component';
 import { FilterViewComponent } from './filter-view/filter-view.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { PropertiesPanelPopupComponent } from './panels/properties-panel/properties-panel-popup/properties-panel-popup.component';
+import { MasterPanelComponent } from './panels/master-panel/master-panel.component';
+import { KeyboardPanelComponent } from './keyboard-input/keyboard-panel/keyboard-panel.component';
+import { LoadDataComponent } from './load-data/load-data.component';
 
 @NgModule({
   declarations: [
@@ -32,11 +35,14 @@ import { FilterViewComponent } from './filter-view/filter-view.component';
     MakeChartComponent,
     SvgContainerComponent,
     DescriptionPanelComponent,
-    EditorsNotePanelComponent,
     PropertiesPanelComponent,
     ChartViewComponent,
-    AttributesPanelComponent,
-    FilterViewComponent
+    FilterViewComponent,
+    NavBarComponent,
+    PropertiesPanelPopupComponent,
+    MasterPanelComponent,
+    KeyboardPanelComponent,
+    LoadDataComponent
   ],
   imports: [
     BrowserModule,

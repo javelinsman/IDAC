@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, OnChanges, EventEmitter, Output, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, AfterViewChecked, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
+import { OnClickOutside } from 'src/app/utils';
 
 @Component({
   selector: 'app-chart-spec-tree-view',
@@ -22,6 +23,9 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
   @Output() parentCollapseIndexChange: EventEmitter<number> = new EventEmitter();
   @Output() editChange: EventEmitter<boolean> = new EventEmitter();
 
+  @ViewChild('tagSection') tagSection: ElementRef;
+
+
   editPanel = 'template';
   numAttributes: number;
 
@@ -41,6 +45,8 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
     if (this.tag.children && this.tag.children.length > 1) {
       this.collapsable = true;
     }
+    this.siblingIndex = this.tag._parent.children.indexOf(this.tag);
+    this.siblingLength = this.tag._parent.children.length;
   }
 
   ngAfterViewChecked() {
@@ -52,13 +58,24 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
 
   _currentTagChange(tag: SpecTag) {
     // console.log(`My name is ${this.tag._tagname} and I am changing currentTag into ${tag._tagname}`);
+    if (this.currentTag !== tag) {
+      this.edit = false;
+    }
     this.currentTag = tag;
     this.currentTagChange.emit(this.currentTag);
   }
 
   _editChange(edit: boolean) {
     this.edit = edit;
-    this.editChange.emit(edit);
+    if (edit) {
+      OnClickOutside(this.tagSection.nativeElement, () => {
+        this._editChange(false);
+      });
+    }
+    // this.editChange.emit(edit);
+  }
+
+  onSectionClick() {
   }
 
   increase() {

@@ -374,7 +374,7 @@
           "_id": "_uniqueid_581",
           "type": "range",
           "axis": "E1",
-          "range": "avg@(Charlotte)"
+          "range": "60.9"
         },
         "target_inherit": {
           "mode": "above",
@@ -457,7 +457,7 @@
           "_id": "_uniqueid_581",
           "type": "range",
           "axis": "E1",
-          "range": "avg@(Charlotte)"
+          "range": "60.9"
         },
         "target_inherit": {
           "mode": "below-or-equal",
@@ -540,7 +540,7 @@
           "_id": "_uniqueid_581",
           "type": "range",
           "axis": "E1",
-          "range": "avg@(Charlotte)"
+          "range": "60.9"
         },
         "components": [
           {
@@ -559,7 +559,7 @@
               "font_family": "Roboto",
               "font_size": 14
             },
-            "text": "Chartlotte Average: {format(\".1f\", value)}",
+            "text": "Chartlotte Average: 60.9",
             "anchor": "r,tt",
             "anchor_offset": {
               "x": 0,

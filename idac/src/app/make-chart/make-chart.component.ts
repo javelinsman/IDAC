@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, AfterViewChecked, Input } from '@angular/core';
 import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
 import { NavigateComponent } from '../navigate/navigate.component';
 import { ActivatedRoute } from '@angular/router';
@@ -14,12 +14,15 @@ import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
   templateUrl: './make-chart.component.html',
   styleUrls: ['./make-chart.component.scss']
 })
-export class MakeChartComponent implements OnInit, AfterViewChecked {
+export class MakeChartComponent implements OnInit {
+  @Input() exampleId: number;
+
   chart: Chart;
   chartAccent: ChartAccent;
   chartSpec: ChartSpec;
 
   currentTag: SpecTag;
+  rightPanel = 'filter';
   @ViewChild('container') containerDiv: ElementRef;
 
   constructor(
@@ -29,9 +32,9 @@ export class MakeChartComponent implements OnInit, AfterViewChecked {
     ) { }
 
   ngOnInit() {
-    const exampleId = +this.route.snapshot.paramMap.get('exampleId');
-    if (exampleId) {
-      this.chart = this.fetchExampleChart(exampleId);
+    console.log(this.exampleId, this.currentTag);
+    if (this.exampleId) {
+      this.chart = this.fetchExampleChart(this.exampleId);
     } else {
       this.chart = this.fetchChart();
     }
@@ -42,9 +45,10 @@ export class MakeChartComponent implements OnInit, AfterViewChecked {
       this.chartSpec.fromChartAccent(this.chartAccent);
       this.currentTag = this.chartSpec.findById(1);
     });
+    this.onWindowResize();
   }
-  ngAfterViewChecked() {
-    d3.select(this.containerDiv.nativeElement).style('height', `${window.innerHeight - 20}px`);
+  onWindowResize() {
+    d3.select(this.containerDiv.nativeElement).style('height', `${window.innerHeight - 20 - 50}px`);
   }
 
 
@@ -55,5 +59,4 @@ export class MakeChartComponent implements OnInit, AfterViewChecked {
   fetchChart() {
     return this.chartExampleService.getCharts()[0];
   }
-
 }

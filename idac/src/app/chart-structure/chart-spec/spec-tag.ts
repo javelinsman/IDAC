@@ -1,6 +1,7 @@
 import { IAttribute, IProperty } from './attributes';
 import { ChartAccent } from '../chart-accent/chart-accent';
 import { ChartSpec } from './chart-spec';
+import { firstLetterUpperCase } from 'src/app/utils';
 
 interface IEditorsNote {
     text: string;
@@ -48,6 +49,15 @@ export class SpecTag {
         });
     }
 
+    peekableTags() {
+        const ret: SpecTag[] = [this];
+        for (let tag = this._parent; tag._tagname !== 'ChartSpec'; tag = tag._parent) {
+            ret.push(tag);
+        }
+        this._root.children.filter(tag => !ret.includes(tag)).forEach(tag => ret.push(tag));
+        return ret;
+    }
+
     set descriptionRule(descriptionRule: string) {
         (this.constructor as any)._descriptionRule = descriptionRule;
     }
@@ -77,15 +87,24 @@ export class SpecTag {
         const args = description.match(/\$\(([^)]*)\)/g);
         if (args) {
         args.map(d => [d, d.slice(2, -1)])
-            .forEach(([arg, strip]) =>
-            description = description.replace(arg, '' +
-                (this.properties[strip] ? this.properties[strip]() : 'undefined')
-            ));
+            .forEach(([arg, strip]) => {
+                let value = 'undefined';
+                if (strip.split(':').length > 1) {
+                    const tagName = strip.split(':')[0].trim();
+                    const keyName = strip.split(':')[1].trim();
+                    const tag = this.peekableTags().find(_tag => _tag._tagname === tagName);
+                    if (tag.properties[keyName]) { value = '' + tag.properties[keyName](); }
+                } else {
+                    if (this.properties[strip]) { value = '' + this.properties[strip](); }
+                }
+                description = description.replace(arg, value);
+            });
         }
-        return description;
+        return firstLetterUpperCase(description);
     }
 
     fromChartAccent(ca: ChartAccent): void {}
+    afterFromChartAccent(): void {}
 
     foreignRepr(): string {
         return this._tagname;
