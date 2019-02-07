@@ -6,8 +6,10 @@ import { AttrInputSelect, AttrInput } from './attributes';
 import { CoordinateRange } from './coordinate-range';
 import { Item } from './legend';
 import { CoordinateLine } from './coordinate-line';
+import { Bar } from './marks';
 
 export class TrendLine extends SpecTag {
+    targets: Bar[] = [];
     constructor(
         public annotation: ChartAccent.Annotation,
         public _root: ChartSpec,
@@ -19,19 +21,38 @@ export class TrendLine extends SpecTag {
         };
         this.properties = {
             targetDescription: () => '',
-            numTargets: () => '',
+            numTargets: () => ''
         };
         this.descriptionRule = [
-            'The annotation on $(numTargets) bar\'s on $(targetDescription).',
+            'A trend line goes $(trend) on $(numTargets) bars, labeled as "$(label)".',
+            'Specifically, the line is drawn over $(targetDescription).'
         ].join(' ');
     }
 
     fromChartAccent(ca: ChartAccent.ChartAccent) {
-        const { target, numTargets } = this.makeTargetInfo();
+        const { targets, targetDescriptions, numTargets } = this.makeTargetInfo();
+        this.targets = targets;
         this.properties = {
             ...this.properties,
-            targetDescription: () => target,
+            targetDescription: () => targetDescriptions,
             numTargets: () => numTargets,
+        };
+    }
+
+    afterFromChartAccent() {
+        console.log(1);
+        this.properties = {
+            ...this.properties,
+            trend: () => {
+                const values = this.targets.map(bar => +bar.properties.value());
+                const diff = values.slice(-1)[0] - values[0];
+                const rate = diff / (+this._root.y.properties.rangeTo() - +this._root.y.properties.rangeFrom());
+                if (rate >= 0.1) {
+                    return 'upward';
+                } else if (rate <= -0.1) {
+                    return 'downward';
+                } else { return 'constant'; }
+            }
         };
     }
 
@@ -48,15 +69,18 @@ export class TrendLine extends SpecTag {
 
     makeTargetInfo() {
         const targets = [];
+        const targetDescriptions = [];
         let numTargets = 0;
         this.getTargetLocation().forEach(([series, indices]) => {
+            indices.forEach(index => targets.push(this._root.marks.children[index].children[series.properties.index0()]));
             const seriesName = series.properties.text();
-            targets.push(`${indices.length === this._root.marks.children.length ?
+            targetDescriptions.push(`${indices.length === this._root.marks.children.length ?
                 'all bars' : `${indices.map(i => i + 1).join(', ')}-th position`} in ${seriesName}`);
             numTargets += indices.length;
         });
         return {
-            target: targets.join(', and '),
+            targets,
+            targetDescriptions: targetDescriptions.join(', and '),
             numTargets
         };
     }

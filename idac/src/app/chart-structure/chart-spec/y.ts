@@ -14,11 +14,11 @@ export class Y extends SpecTag {
       rangeTo: new AttrInput(),
     };
     this.descriptionRule = [
-      'Y axis with label name $(label).',
-      'The unit of measurement is $(unit).',
-      'The range is from $(rangeFrom) to $(rangeTo).',
-      ].join(' ');
+      'Y axis indicates $(Y Axis: label)  in $(Y Axis: unit).',
+      'The data range from $(Y Axis: rangeFrom) to $(Y Axis: rangeTo)  $(Y Axis: unit).'
+    ].join(' ');
   }
+
   fromChartAccent(ca: ChartAccent) {
     this.attributes = {
       label: new AttrInput(ca.chart.yLabel.text.split('(')[0].trim()),
@@ -31,10 +31,10 @@ export class Y extends SpecTag {
 
   afterFromChartAccent() {
     const allValues = this._root.marks.children.map(bargroup => bargroup.children.map(bar => bar.properties.value() as number))
-    .reduce((a, b) => [...a, ...b]);
+      .reduce((a, b) => [...a, ...b]);
     if (!this.attributes.rangeFrom || !this.attributes.rangeTo) {
       this.properties.rangeTo = () => Math.ceil(Math.max(...allValues));
-      this.attributes.rangeFrom = () => Math.floor(Math.min(...allValues));
+      this.properties.rangeFrom = () => Math.floor(Math.min(...allValues));
     }
 
   }

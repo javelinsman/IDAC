@@ -15,20 +15,25 @@ export class Legend extends SpecTag {
             children: () => this.children.map(d => d.foreignRepr()).join(', ')
         };
         this.children = [] as Item[];
-        this.descriptionRule = '$(numChildren) legend items: $(children).';
+        this.descriptionRule =
+            'The legend indicates $(label), and there are $(numChildren) series in the chart, named as follows: $(children).';
     }
     fromChartAccent(ca: ChartAccent) {
-        this.children = ca.chart.yColumns.map((item, index) => new Item(item, this._root, this));
+        this.children = ca.chart.yColumns.map((item, index) => new Item(item, index, this._root, this));
     }
 }
 
 export class Item extends SpecTag {
-    constructor(text: string | number, public _root: ChartSpec, public _parent: Legend) {
+    constructor(text: string | number, index: number, public _root: ChartSpec, public _parent: Legend) {
         super('Item');
         this.attributes = {
-            text: new AttrInput(text)
+            text: new AttrInput(text),
         };
-        this.descriptionRule = '$(text)';
+        this.properties = {
+            index0: () => index,
+            index1: () => index + 1
+        };
+        this.descriptionRule = '$(text), which indicates $(Legend: label).';
     }
     foreignRepr() {
         return this.attributes.text.value;

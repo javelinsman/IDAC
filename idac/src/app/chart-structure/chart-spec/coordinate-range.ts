@@ -27,7 +27,7 @@ export class CoordinateRange extends SpecTag {
         };
         this.children = [] as RelationalHighlightRange[];
         this.descriptionRule =
-            'The range from $(rangeFrom) to $(rangeTo) on $(targetAxis) axis are marked: $(label)';
+            'An interval ranges from $(rangeFrom) to $(rangeTo) on $(targetAxis) axis, labeled as "$(label)".';
     }
     fromChartAccent(ca: ChartAccent.ChartAccent) {
         // rangeFrom, rangeTo
@@ -69,6 +69,9 @@ export class RelationalHighlightRange extends Highlight {
         const mode = this.annotation.target_inherit.mode;
         this.attributes.relation.value = mode.startsWith('within') ? 'within' : 'outside';
         // this._tagname = firstLetterUpperCase(this.attributes.relation.value);
+        this.descriptionRule = [
+            '$(relation) the range are $(numTargets) bars. $(highlight) $(itemLabel) Specifically, targets are $(targetDescription).'
+        ].join(' ');
 
         this.properties = {
             ...this.properties,

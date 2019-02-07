@@ -22,6 +22,13 @@ export class Annotations extends SpecTag {
             numLines: () => this.children.filter(tag => tag._tagname === 'Line').length,
             numRanges: () => this.children.filter(tag => tag._tagname === 'Range').length,
         };
+        this.descriptionRule = [
+            'There are total of $(numChildren) annotations,',
+            'which consists of $(numHighlights) highlights,',
+            '$(numTrendlines) trend lines,',
+            '$(numLines) lines,',
+            'and $(numRanges) ranges.'
+        ].join(' ');
     }
     fromChartAccent(ca: ChartAccent.ChartAccent) {
         this.children = [];
@@ -40,10 +47,12 @@ export class Annotations extends SpecTag {
             if (annotation.target.range.startsWith('range')) {
                 const coordinateRange = new CoordinateRange(annotation, annotations, this._root, this);
                 coordinateRange.fromChartAccent(ca);
+                coordinateRange.afterFromChartAccent();
                 return [coordinateRange];
             } else {
                 const coordinateLine = new CoordinateLine(annotation, annotations, this._root, this);
                 coordinateLine.fromChartAccent(ca);
+                coordinateLine.afterFromChartAccent();
                 return [coordinateLine];
             }
         } else {
@@ -53,12 +62,14 @@ export class Annotations extends SpecTag {
             if (_itemLabel.visible || _highlight.visible) {
                 const highlight = new Highlight(annotation, this._root, this);
                 highlight.fromChartAccent(ca);
+                highlight.afterFromChartAccent();
                 ret.push(highlight);
             }
             const _trendline = annotation.components.find(d => d.type === 'trendline');
             if (_trendline.visible) {
                 const trendLine = new TrendLine(annotation, this._root, this);
                 trendLine.fromChartAccent(ca);
+                trendLine.afterFromChartAccent();
                 ret.push(trendLine);
             }
             return ret;

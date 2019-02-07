@@ -26,10 +26,11 @@ export class Highlight extends SpecTag {
             highlight: () => ''
         };
         this.descriptionRule = [
-            'The annotation on $(numTargets) bar\'s on $(targetDescription).',
+            '$(numTargets) bars are annotated, labeled as "$(label)".',
             '$(highlight)',
             '$(itemLabel)',
-          ].join(' ');
+            'Specifically, targets are $(targetDescription).'
+        ].join(' ');
     }
 
     fromChartAccent(ca: ChartAccent.ChartAccent) {
