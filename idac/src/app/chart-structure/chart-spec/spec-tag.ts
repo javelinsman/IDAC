@@ -1,6 +1,7 @@
 import { IAttribute, IProperty } from './attributes';
 import { ChartAccent } from '../chart-accent/chart-accent';
 import { ChartSpec } from './chart-spec';
+import { firstLetterUpperCase } from 'src/app/utils';
 
 interface IEditorsNote {
     text: string;
@@ -98,7 +99,7 @@ export class SpecTag {
                 description = description.replace(arg, value);
             });
         }
-        return description;
+        return firstLetterUpperCase(description);
     }
 
     fromChartAccent(ca: ChartAccent): void {}
