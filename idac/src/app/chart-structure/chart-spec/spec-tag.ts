@@ -48,6 +48,15 @@ export class SpecTag {
         });
     }
 
+    peekableTags() {
+        const ret: SpecTag[] = [this];
+        for (let tag = this._parent; tag._tagname !== 'ChartSpec'; tag = tag._parent) {
+            ret.push(tag);
+        }
+        this._root.children.filter(tag => tag._tagname !== this._tagname).forEach(tag => ret.push(tag));
+        return ret;
+    }
+
     set descriptionRule(descriptionRule: string) {
         (this.constructor as any)._descriptionRule = descriptionRule;
     }
@@ -81,7 +90,7 @@ export class SpecTag {
                 if (strip.split(':').length > 1) {
                     const tagName = strip.split(':')[0].trim();
                     const keyName = strip.split(':')[1].trim();
-                    const tag = this._root.flattenedTags().find(_tag => _tag._tagname === tagName);
+                    const tag = this.peekableTags().find(_tag => _tag._tagname === tagName);
                     if (tag.properties[keyName]) { value = '' + tag.properties[keyName](); }
                 } else {
                     if (this.properties[strip]) { value = '' + this.properties[strip](); }

@@ -20,7 +20,10 @@ export class DescriptionPanelComponent implements OnInit, AfterViewInit {
   constructor() { }
 
   ngOnInit() {
-    const keys = Object.keys(this.tag.properties);
+    let keys = Object.keys(this.tag.properties);
+    this.tag.peekableTags().forEach(tag => {
+        keys = [...keys, ...Object.keys(tag.properties).map(key => `${tag._tagname}: ${key}`)];
+      });
     this.fuzzySearcher = new FuzzySearch(keys.map(key => ({ key })), ['key'], { sort: true });
   }
 

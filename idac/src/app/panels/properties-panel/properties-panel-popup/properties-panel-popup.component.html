@@ -10,14 +10,8 @@
   <div class="card-body">
     <p class="card-text">Drag and drop properties names</p>
     <ul class="nav nav-tabs">
-      <li class="nav-item">
-        <a class="nav-link" style="cursor: pointer"
-          (click)="activeTag = tag"
-          [class.text-info]="tag === activeTag"
-          [class.active]="tag === activeTag">{{ tag._tagname }}</a>
-      </li>
-      <ng-container *ngFor="let ptag of tag._root.children">
-        <li *ngIf="ptag._tagname !== tag._tagname" class="nav-item">
+      <ng-container *ngFor="let ptag of tag.peekableTags()">
+        <li class="nav-item">
           <a class="nav-link"
             [class.text-info]="ptag === activeTag"
             [class.active]="ptag === activeTag"
