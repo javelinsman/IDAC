@@ -1,5 +1,14 @@
 <h3 class="my-3 mx-3 py-2" [style.border-bottom]="'1px solid #aaa'">All {{ currentTag._tagname }} Tags</h3>
 <div *ngIf="currentTag" class="px-3">
-  <app-chart-spec-tree-view *ngFor="let sameTag of getAllTags()" [tag]="sameTag" [edit]="false" [viewOnly]="true"
-    [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)"></app-chart-spec-tree-view>
+  <ng-container *ngFor="let sameTags of getAllTags(); index as i">
+    <div *ngIf="parents.length > 1">
+      <p class="text-info mt-3 mb-2 small">
+        • {{ parents[i]._tagname }} [{{ i + 1 }}/{{parents.length}}]
+      </p>
+    </div>
+    <div [class.ml-4]="parents.length > 1">
+      <app-chart-spec-tree-view *ngFor="let sameTag of sameTags" [tag]="sameTag" [edit]="false" [viewOnly]="true"
+        [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)"></app-chart-spec-tree-view>
+    </div>
+  </ng-container>
 </div>
