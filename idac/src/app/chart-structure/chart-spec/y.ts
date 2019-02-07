@@ -16,7 +16,7 @@ export class Y extends SpecTag {
     this.descriptionRule = [
       'Y axis with label name $(label).',
       'The unit of measurement is $(unit).',
-      'The range is from $(rangeMin) to $(rangeMax).',
+      'The range is from $(rangeFrom) to $(rangeTo).',
       ].join(' ');
   }
   fromChartAccent(ca: ChartAccent) {
@@ -32,9 +32,9 @@ export class Y extends SpecTag {
   afterFromChartAccent() {
     const allValues = this._root.marks.children.map(bargroup => bargroup.children.map(bar => bar.properties.value() as number))
     .reduce((a, b) => [...a, ...b]);
-    if (!this.attributes.rangeMax || !this.attributes.rangeMin) {
-    this.properties.rangeTo = () => Math.ceil(Math.max(...allValues));
-    this.attributes.rangeFrom = () => Math.floor(Math.min(...allValues));
+    if (!this.attributes.rangeFrom || !this.attributes.rangeTo) {
+      this.properties.rangeTo = () => Math.ceil(Math.max(...allValues));
+      this.attributes.rangeFrom = () => Math.floor(Math.min(...allValues));
     }
 
   }
