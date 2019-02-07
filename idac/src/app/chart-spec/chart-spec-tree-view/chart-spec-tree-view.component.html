@@ -9,18 +9,29 @@
       >
       <div class="d-flex justify-content-between">
         <div class="d-flex">
-          <p class="font-weight-light">
-            <span *ngIf="tag.editorsNote.active"
-              class="mr-1"
-              (mouseover)="tag.editorsNote.showInGraphView = true"
-              (mouseout)="tag.editorsNote.showInGraphView = false">
-              <i class="d-inline fas fa-book"
-                [class.text-primary]="tag === currentTag" ></i>
-            </span>
-            <span
-              [style.white-space]="'nowrap'"
-              [class.text-primary]="tag === currentTag" >{{ tag._tagname }}{{isCollapsed === false ? '[' + (siblingIndex + 1) + ']' : ''}}</span>
-          </p>
+          <div [class.d-flex]="viewOnly">
+            <div>
+              <p class="font-weight-light">
+                <span *ngIf="tag.editorsNote.active"
+                  class="mr-1"
+                  (mouseover)="tag.editorsNote.showInGraphView = true"
+                  (mouseout)="tag.editorsNote.showInGraphView = false">
+                  <i class="d-inline fas fa-book"
+                    [class.text-primary]="tag === currentTag" ></i>
+                </span>
+                <span
+                  [style.white-space]="'nowrap'"
+                  [class.text-primary]="tag === currentTag" >
+                  {{ tag._tagname }}
+                </span>
+              </p>
+            </div>
+            <p *ngIf="tag._parent._tagname !== 'ChartSpec' && siblingLength > 1"
+              [class.ml-1]="viewOnly" [class.small]="!viewOnly"
+              class="font-weight-light text-secondary" [style.white-space]="'nowrap'">
+              [{{ siblingIndex + 1 }} / {{ siblingLength }}]
+            </p>
+          </div>
           <p (click)="!viewOnly && tag === currentTag ? _editChange(!edit) : ''"
             [class.cursor-default]="viewOnly || tag !== currentTag"
             [class.cursor-pointer]="!viewOnly && tag === currentTag"
@@ -42,7 +53,9 @@
     <span *ngIf="true || collapsable" (click)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
       style="width: 30px; cursor: pointer" class="badge badge-light my-2 pt-2 mr-2"
       [class.invisible]="!collapsable">
-      {{ collapseChildren ? 'ㅡ' : tag.children.length }}
+      <i class="fas text-secondary"
+        [class.fa-minus]="collapseChildren"
+        [class.fa-plus]="!collapseChildren"></i>
     </span>
     <div class="w-100">
       <div *ngFor="let childTag of tag.children; index as i">

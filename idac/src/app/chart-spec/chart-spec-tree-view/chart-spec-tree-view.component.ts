@@ -45,6 +45,8 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
     if (this.tag.children && this.tag.children.length > 1) {
       this.collapsable = true;
     }
+    this.siblingIndex = this.tag._parent.children.indexOf(this.tag);
+    this.siblingLength = this.tag._parent.children.length;
   }
 
   ngAfterViewChecked() {
