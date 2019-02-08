@@ -19,6 +19,12 @@ export class KeyboardPanelComponent implements OnInit {
     this.keyBindings = Object.entries(keyBindings).map(d => ({
       key: d[0], value: d[1]
     }));
+
+    this.messageService.keyboardEventNameObservable
+      .subscribe((eventName: string) => {
+        this.currentKeyboardEventName = eventName;
+      });
   }
+
 
 }
