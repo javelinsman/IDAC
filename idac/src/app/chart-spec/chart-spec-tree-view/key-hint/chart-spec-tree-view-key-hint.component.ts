@@ -18,6 +18,7 @@ export class ChartSpecTreeViewKeyHintComponent implements OnInit, AfterContentCh
   keyBindings: KeyBindings = keyBindings;
 
   reachableKeys: string[];
+  tooltipDescriptions: string[];
 
   constructor() { }
 
@@ -26,6 +27,7 @@ export class ChartSpecTreeViewKeyHintComponent implements OnInit, AfterContentCh
 
   ngAfterContentChecked() {
     this.reachableKeys =[];
+    this.tooltipDescriptions =[];
     if (this.tag === this.currentTag) {
       // this.reachableKeys.push('⏎');
     } else {
@@ -34,6 +36,7 @@ export class ChartSpecTreeViewKeyHintComponent implements OnInit, AfterContentCh
         this.navigateComponent[methodName]();
         if(this.navigateComponent.tag === this.tag) {
           this.reachableKeys.push(this.shorten(Array.from(keyBinding).join('+')));
+          this.tooltipDescriptions.push(this.tooltipDescription(methodName, keyBinding));
         }
       });
       this.reachableKeys = this.reachableKeys.slice(0, 5);
@@ -53,6 +56,12 @@ export class ChartSpecTreeViewKeyHintComponent implements OnInit, AfterContentCh
       default:
         return keyBinding.toLocaleUpperCase().replace('SHIFT+', '⇧ ');
     }
+  }
+
+  tooltipDescription(methodName, keyBinding) {
+    return `Press [${
+      Array.from(keyBinding).join(' and ').toLocaleUpperCase().replace('ARROW', '')
+    }] key to go to ${this.tag._tagname}`;
   }
 
 }
