@@ -34,6 +34,8 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
   collapseChildren = false;
   collapseIndex = 0;
 
+  hover: boolean;
+
   constructor(
     private changeDetectorRef: ChangeDetectorRef
   ) { }

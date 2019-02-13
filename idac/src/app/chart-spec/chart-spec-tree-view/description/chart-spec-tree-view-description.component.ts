@@ -14,6 +14,8 @@ export class ChartSpecTreeViewDescriptionComponent implements OnInit {
   @Input() edit: boolean;
   @Input() _editChange: any;
 
+  hover: boolean;
+
   constructor() { }
 
   ngOnInit() {
