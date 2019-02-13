@@ -5,11 +5,11 @@ import { Textcomplete, Textarea } from 'textcomplete';
 
 
 @Component({
-  selector: 'app-description-panel',
-  templateUrl: './description-panel.component.html',
-  styleUrls: ['./description-panel.component.scss']
+  selector: 'app-edit-description-panel',
+  templateUrl: './edit-description-panel.component.html',
+  styleUrls: ['./edit-description-panel.component.scss']
 })
-export class DescriptionPanelComponent implements OnInit, AfterViewInit {
+export class EditDescriptionPanelComponent implements OnInit, AfterViewInit {
 
   @Input() tag: SpecTag;
   @Input() overrideDescription: boolean;
