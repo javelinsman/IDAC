@@ -17,7 +17,6 @@ export class FilterViewComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.getAllTags());
   }
 
   getAllTags() {

@@ -32,7 +32,6 @@ export class MakeChartComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    console.log(this.exampleId, this.currentTag);
     if (this.exampleId) {
       this.chart = this.fetchExampleChart(this.exampleId);
     } else {
