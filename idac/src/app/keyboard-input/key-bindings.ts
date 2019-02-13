@@ -1,4 +1,8 @@
-export const keyBindings = {
+export interface KeyBindings {
+  [key: string]: Set<string>
+}
+
+export const keyBindings: KeyBindings = {
     moveToNextElement: new Set(['tab']),
     moveToPreviousElement: new Set(['shift', 'tab']),
     moveToNextAnnotation: new Set(['d']),
