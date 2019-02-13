@@ -1,7 +1,7 @@
 <section class="my-3">
   <div class="d-flex justify-content-between">
     <p class="font-weight-bold">{{ overrideDescription ? 'Description': 'Template' }}</p>
-    <p class="text-secondary" style="cursor: pointer"
+    <p class="text-secondary text-as-button"
       (click)="_overrideDescriptionChange(!overrideDescription)">
       {{ overrideDescription ? 'Reset to use template' : 'Describe without template' }}
     </p>

@@ -44,7 +44,7 @@ $constant-highlight-color: #303f9f;
   cursor: text;
 }
 
-.text-unselectable {
+%text-unselectable {
   -webkit-user-select: none; /* Chrome/Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+ */
@@ -52,4 +52,17 @@ $constant-highlight-color: #303f9f;
   /* Rules below not implemented in browsers yet */
   -o-user-select: none;
   user-select: none;
+}
+
+.text-unselectable {
+  @extend %text-unselectable;
+}
+
+.text-as-button {
+  @extend %text-unselectable;
+  cursor: pointer;
+  color: $secondary;
+  &:hover {
+    color: $primary !important;
+  }
 }
