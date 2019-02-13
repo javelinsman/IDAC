@@ -2,8 +2,11 @@
   <section class="d-flex tagcard" #tagSection>
 
     <div (click)="_currentTagChange(tag)"
+      (mouseover)="hover = true" (mouseout)="hover = false"
       class="w-100 border-bottom pl-1 pt-3 pb-3 pr-3"
       style="border: 1px solid transparent"
+      [class.hover-highlighted]="tag !== currentTag && hover"
+      [class.cursor-pointer]="tag !== currentTag"
       [class.border]="false || (edit && tag === currentTag)"
       [class.highlighted]="tag === currentTag"
       [class.spec-tag]="!viewOnly"
