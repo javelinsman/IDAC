@@ -1,5 +1,7 @@
+export type KeyBinding = Set<string>;
+
 export interface KeyBindings {
-  [key: string]: Set<string>
+  [key: string]: KeyBinding;
 }
 
 export const keyBindings: KeyBindings = {
