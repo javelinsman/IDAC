@@ -16,12 +16,10 @@
     <hr class="mb-4">
     <div class="row">
       <div class="col-md-4" *ngFor="let chart of charts; let i = index">
-        <div class="card mb-2">
+        <div class="card mb-2" (click)="_exampleIdChange(i)">
           <img class="img-fluid" [src]="chart.src_png">
           <div class="card-body bg-light text-center">
             <h5 class="card-text">{{ chart.title }}</h5>
-            <a class="card-link text-primary" style="cursor: pointer" (click)="_exampleIdChange(i)"
-            >Play with it</a>
           </div>
         </div>
       </div>
