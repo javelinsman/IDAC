@@ -2,7 +2,7 @@
   [class.active]="tag === currentTag"
 >
   <ul class="d-flex justify-content-end p-0">
-    <li *ngIf="edit" class="mx-2">
+    <li [class.invisible]="!edit" class="mx-2">
       <i class="fas fa-play text-secondary text-as-button"></i>
     </li>
     <li *ngIf="tag._parent._tagname !== 'ChartSpec' && siblingLength > 1"
