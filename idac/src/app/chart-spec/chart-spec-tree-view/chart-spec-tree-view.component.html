@@ -33,7 +33,7 @@
             [isCollapsed]="isCollapsed"
             [_collapseToggle]="_collapseToggle.bind(this)"
           ></app-chart-spec-tree-view-bar-utils>
-          <div class="mx-2" *ngIf="tag._tagname.length > 5">
+          <div class="mx-2" *ngIf="tag.describe().indexOf('undefined') >= 0">
             <i class="fas fa-exclamation-circle text-danger"></i>
           </div>
         </div>
