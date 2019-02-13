@@ -6,7 +6,7 @@
 <div class="d-flex flex-column py-3">
   <ng-container *ngFor="let reachableKey of reachableKeys; index as i">
     <span
-      class="badge badge-info mx-auto my-1 font-weight-light"
+      class="badge badge-info mx-auto my-1 font-weight-light cursor-default"
       placement="right" [ngbTooltip]="tooltipDescriptions[i]" container="body"
       >{{ reachableKey }}</span>
   </ng-container>
