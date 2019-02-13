@@ -40,7 +40,6 @@ export class TrendLine extends SpecTag {
     }
 
     afterFromChartAccent() {
-        console.log(1);
         this.properties = {
             ...this.properties,
             trend: () => {

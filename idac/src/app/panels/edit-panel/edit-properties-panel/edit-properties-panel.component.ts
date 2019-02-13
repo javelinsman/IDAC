@@ -3,11 +3,11 @@ import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 import { PropertiesPanelPopupComponent } from './properties-panel-popup/properties-panel-popup.component';
 
 @Component({
-  selector: 'app-properties-panel',
-  templateUrl: './properties-panel.component.html',
-  styleUrls: ['./properties-panel.component.scss']
+  selector: 'app-edit-properties-panel',
+  templateUrl: './edit-properties-panel.component.html',
+  styleUrls: ['./edit-properties-panel.component.scss']
 })
-export class PropertiesPanelComponent implements OnInit {
+export class EditPropertiesPanelComponent implements OnInit {
   @Input() tag: SpecTag;
   @ViewChild(PropertiesPanelPopupComponent) propertiesPanelPopupComponent: PropertiesPanelPopupComponent;
   edit = {};

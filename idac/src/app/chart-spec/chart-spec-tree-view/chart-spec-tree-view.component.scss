@@ -3,3 +3,16 @@
 p {
   margin: 0;
 }
+
+.tagcard {
+
+}
+
+.tagname {
+  background-color: $gray-200;
+}
+
+.tagname.highlighted {
+  background-color: lighten($primary, 20%);
+  color: white;
+}

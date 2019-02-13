@@ -1,9 +1,9 @@
 <div class="container-fluid p-0">
-  <section class="d-flex" #tagSection>
+  <section class="d-flex tagcard" #tagSection>
     <div (click)="_currentTagChange(tag)" class="w-100 border-bottom pl-1 pt-3 pb-3 pr-3"
       style="border: 1px solid transparent"
-      [class.border-primary]="tag === currentTag"
-      [class.border]="tag === currentTag"
+      [class.border-primary]="false && tag === currentTag"
+      [class.border]="false && tag === currentTag"
       [class.highlighted]="tag === currentTag"
       [class.spec-tag]="!viewOnly"
       >
@@ -20,10 +20,17 @@
                     [class.text-primary]="tag === currentTag" ></i>
                 </span>
                 <span
-                  [style.white-space]="'nowrap'"
-                  [class.text-primary]="tag === currentTag" >
+                  class="p-1 rounded tagname"
+                  [class.highlighted]="currentTag === tag"
+                  [style.white-space]="'nowrap'">
                   {{ tag._tagname }}
                 </span>
+                <!-->span class="badge"
+                  [style.white-space]="'nowrap'"
+                  [class.badge-primary]="tag === currentTag"
+                  [class.badge-light]="tag !== currentTag" >
+                  {{ tag._tagname }}
+                </span-->
               </p>
             </div>
             <p *ngIf="tag._parent._tagname !== 'ChartSpec' && siblingLength > 1"
@@ -41,7 +48,7 @@
         </div>
       </div>
       <div class="ml-2" *ngIf="edit && tag === currentTag">
-        <app-master-panel [tag]="tag"></app-master-panel>
+        <app-edit-panel [tag]="tag"></app-edit-panel>
       </div>
     </div>
     <div *ngIf="false && isCollapsed === false">
