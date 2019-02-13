@@ -21,7 +21,7 @@
       <tr *ngFor="let prop of tag.properties | keyvalue">
         <th class="align-middle" scope="row">
           <h5 style="cursor: pointer" class="m-0" draggable="true" (dragstart)="onDragStart($event)">
-            <span class="badge badge-pill badge-dark">
+            <span class="badge badge-pill badge-secondary font-weight-light">
               {{ prop.key }}
             </span>
           </h5>
