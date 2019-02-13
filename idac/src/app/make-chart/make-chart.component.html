@@ -17,14 +17,16 @@
             <li class="nav-item">
               <a class="nav-link" style="cursor: pointer"
                 [class.active]="rightPanel === 'filter'"
-                [class.text-primary]="rightPanel !== 'filter'"
+                [class.text-dark]="rightPanel === 'filter'"
+                [class.text-muted]="rightPanel !== 'filter'"
                 (click)="rightPanel = 'filter'"
               >Tags of the Same Kind</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" style="cursor: pointer"
                 [class.active]="rightPanel === 'keyboard'"
-                [class.text-primary]="rightPanel !== 'keyboard'"
+                [class.text-dark]="rightPanel === 'keyboard'"
+                [class.text-muted]="rightPanel !== 'keyboard'"
                 (click)="rightPanel = 'keyboard'"
               >Keyboard Navigation</a>
             </li>
