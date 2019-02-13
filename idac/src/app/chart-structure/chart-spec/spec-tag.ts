@@ -92,10 +92,11 @@ export class SpecTag {
                     const tagName = strip.split(':')[0].trim();
                     const keyName = strip.split(':')[1].trim();
                     const tag = this.peekableTags().find(_tag => _tag._tagname === tagName);
-                    if (tag.properties[keyName]) { value = '' + tag.properties[keyName](); }
+                    if (tag && tag.properties[keyName]) { value = '' + tag.properties[keyName](); }
                 } else {
                     if (this.properties[strip]) { value = '' + this.properties[strip](); }
                 }
+                if (!value.length) { value = 'undefined'; }
                 description = description.replace(arg, value);
             });
         }
