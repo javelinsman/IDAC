@@ -1,0 +1,18 @@
+<div *ngIf="!viewOnly" class="bar-utils"
+  [class.active]="tag === currentTag"
+>
+  <ul class="d-flex justify-content-end p-0">
+    <li *ngIf="edit" class="mx-2">
+      <i class="fas fa-play text-secondary" style="cursor: pointer"></i>
+    </li>
+    <li *ngIf="tag._parent._tagname !== 'ChartSpec' && siblingLength > 1"
+      class="mx-2"
+    >
+      <i class="far fa-plus-square text-secondary"
+        [class.fa-plus-square]="!isCollapsed"
+        [class.fa-minus-square]="isCollapsed"
+        (click)="_collapseToggle()"
+        style="cursor: pointer"></i>
+    </li>
+  </ul>
+</div>

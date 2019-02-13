@@ -1,0 +1,10 @@
+<p (click)="!viewOnly && tag === currentTag ? _editChange(!edit) : ''"
+  [class.cursor-default]="viewOnly || tag !== currentTag"
+  [class.cursor-pointer]="!viewOnly && tag === currentTag"
+  [class.text-muted]="!tag.describe().length"
+  [class.font-italic]="!tag.describe().length"
+  [class.ml-2]="viewOnly"
+  class="font-weight-normal text-unselectable"
+>
+  {{ tag.describe().length ? tag.describe() : '(No description)' }}
+</p>

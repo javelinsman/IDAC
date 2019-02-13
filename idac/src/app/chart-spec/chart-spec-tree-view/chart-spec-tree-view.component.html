@@ -1,70 +1,47 @@
 <div class="container-fluid p-0">
   <section class="d-flex tagcard" #tagSection>
+
     <div (click)="_currentTagChange(tag)"
       class="w-100 border-bottom pl-1 pt-3 pb-3 pr-3"
       style="border: 1px solid transparent"
-      [class.border]="edit && tag === currentTag"
+      [class.border]="false || (edit && tag === currentTag)"
       [class.highlighted]="tag === currentTag"
       [class.spec-tag]="!viewOnly"
     >
-      <div [class.d-flex]="viewOnly">
-        <div class="top-bar d-flex justify-content-between mb-1">
-          <div class="d-flex">
-            <p class="font-weight-light">
-              <span *ngIf="tag.editorsNote.active"
-                class="mr-1"
-                (mouseover)="tag.editorsNote.showInGraphView = true"
-                (mouseout)="tag.editorsNote.showInGraphView = false"
-              >
-                <i class="d-inline fas fa-book"
-                  [class.text-primary]="tag === currentTag" ></i>
-              </span>
-              <span
-                class="p-1 rounded tagname"
-                [class.highlighted]="currentTag === tag"
-                [style.white-space]="'nowrap'"
-              >
-                {{ tag._tagname }}
-              </span>
-            </p>
-            <p *ngIf="tag._parent._tagname !== 'ChartSpec' && siblingLength > 1"
-              [class.ml-1]="true || viewOnly" [class.small]="!viewOnly"
-              class="font-weight-light text-secondary" [style.white-space]="'nowrap'">
-              [{{ siblingIndex + 1 }} / {{ siblingLength }}]
-            </p>
-          </div>
-          <div *ngIf="!viewOnly" class="bar-utils"
-            [class.active]="tag === currentTag"
-          >
-            <ul class="nav">
-              <li class="nav-item mx-2">
-                <i *ngIf="tag._parent._tagname !== 'ChartSpec' && siblingLength > 1"
-                  class="far fa-plus-square text-secondary"
-                  [class.fa-plus-square]="!isCollapsed"
-                  [class.fa-minus-square]="isCollapsed"
-                  (click)="_collapseToggle()"
-                  style="cursor: pointer"></i>
-              </li>
-              <li class="nav-item mx-2">
-                <i class="fas fa-play text-secondary" style="cursor: pointer"></i>
-              </li>
-            </ul>
+      <div class="d-flex">
+        <div class="flex-grow-1">
+          <app-chart-spec-tree-view-tagname
+            [tag]="tag"
+            [currentTag]="currentTag"
+            [siblingIndex]="siblingIndex"
+            [siblingLength]="siblingLength"
+          ></app-chart-spec-tree-view-tagname>
+          <app-chart-spec-tree-view-description
+            [viewOnly]="viewOnly"
+            [tag]="tag" [currentTag]="currentTag"
+            [edit]="edit" [_editChange]="_editChange.bind(this)"
+          ></app-chart-spec-tree-view-description>
+        </div>
+        <div class="d-flex flex-column justify-content-between align-items-end">
+          <app-chart-spec-tree-view-bar-utils
+            [tag]="tag"
+            [edit]="edit"
+            [siblingLength]="siblingLength"
+            [isCollapsed]="isCollapsed"
+            [_collapseToggle]="_collapseToggle.bind(this)"
+          ></app-chart-spec-tree-view-bar-utils>
+          <div class="mx-2" *ngIf="tag._tagname.length > 5">
+            <i class="fas fa-exclamation-circle text-danger"></i>
           </div>
         </div>
-        <p (click)="!viewOnly && tag === currentTag ? _editChange(!edit) : ''"
-          [class.cursor-default]="viewOnly || tag !== currentTag"
-          [class.cursor-pointer]="!viewOnly && tag === currentTag"
-          [class.text-muted]="!tag.describe().length"
-          [class.font-italic]="!tag.describe().length"
-          [class.ml-2]="viewOnly"
-          class="font-weight-normal text-unselectable"
-        >
-          {{ tag.describe().length ? tag.describe() : '(No description)' }}
-        </p>
       </div>
       <div class="ml-2" *ngIf="edit && tag === currentTag">
         <app-edit-panel [tag]="tag"></app-edit-panel>
       </div>
+    </div>
+    <div class="" style="width: 2em">
+      <app-chart-spec-tree-view-key-hint
+      ></app-chart-spec-tree-view-key-hint>
     </div>
   </section>
   <div class="d-flex" *ngIf="!viewOnly && tag.children">

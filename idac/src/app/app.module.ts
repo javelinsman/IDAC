@@ -22,6 +22,10 @@ import { PropertiesPanelPopupComponent } from './panels/edit-panel/edit-properti
 import { EditPanelComponent } from './panels/edit-panel/edit-panel.component';
 import { KeyboardPanelComponent } from './keyboard-input/keyboard-panel/keyboard-panel.component';
 import { LoadDataComponent } from './load-data/load-data.component';
+import { ChartSpecTreeViewTagnameComponent } from './chart-spec/chart-spec-tree-view/tagname/chart-spec-tree-view-tagname.component';
+import { ChartSpecTreeViewKeyHintComponent } from './chart-spec/chart-spec-tree-view/key-hint/chart-spec-tree-view-key-hint.component';
+import { ChartSpecTreeViewDescriptionComponent } from './chart-spec/chart-spec-tree-view/description/chart-spec-tree-view-description.component';
+import { ChartSpecTreeViewBarUtilsComponent } from './chart-spec/chart-spec-tree-view/bar-utils/chart-spec-tree-view-bar-utils.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +46,11 @@ import { LoadDataComponent } from './load-data/load-data.component';
     PropertiesPanelPopupComponent,
     EditPanelComponent,
     KeyboardPanelComponent,
-    LoadDataComponent
+    LoadDataComponent,
+    ChartSpecTreeViewTagnameComponent,
+    ChartSpecTreeViewKeyHintComponent,
+    ChartSpecTreeViewDescriptionComponent,
+    ChartSpecTreeViewBarUtilsComponent
   ],
   imports: [
     BrowserModule,

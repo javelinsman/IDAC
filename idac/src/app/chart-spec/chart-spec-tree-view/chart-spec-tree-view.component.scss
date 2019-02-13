@@ -4,27 +4,9 @@ p {
   margin: 0;
 }
 
-.tagcard {
-  .bar-utils {
-    visibility: hidden;
-  }
-  .bar-utils.active {
-    // visibility: visible;
-  }
+:host /deep/ .tagcard .show-on-hover {
+  visibility: hidden;
 }
-
-.tagcard:hover {
-  .bar-utils {
-    visibility: visible;
-  }
-}
-
-
-.tagname {
-  background-color: $gray-200;
-}
-
-.tagname.highlighted {
-  background-color: lighten($primary, 15%);
-  color: white;
+:host /deep/ .tagcard:hover .show-on-hover {
+  visibility: visible;
 }
