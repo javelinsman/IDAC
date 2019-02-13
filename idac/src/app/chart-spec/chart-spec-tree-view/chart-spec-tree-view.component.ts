@@ -22,6 +22,7 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
   @Output() currentTagChange: EventEmitter<SpecTag> = new EventEmitter();
   @Output() parentCollapseIndexChange: EventEmitter<number> = new EventEmitter();
   @Output() editChange: EventEmitter<boolean> = new EventEmitter();
+  @Output() collapseToggle: EventEmitter<boolean> = new EventEmitter();
 
   @ViewChild('tagSection') tagSection: ElementRef;
 
@@ -90,6 +91,10 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
       this._currentTagChange(this.tag._parent.children[this.siblingIndex - 1]);
       // this.parentCollapseIndexChange.emit(this.siblingIndex);
     }
+  }
+
+  _collapseToggle() {
+    this.collapseToggle.emit(!this.isCollapsed);
   }
 
 }

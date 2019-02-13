@@ -5,8 +5,20 @@ p {
 }
 
 .tagcard {
-
+  .bar-utils {
+    visibility: hidden;
+  }
+  .bar-utils.active {
+    // visibility: visible;
+  }
 }
+
+.tagcard:hover {
+  .bar-utils {
+    visibility: visible;
+  }
+}
+
 
 .tagname {
   background-color: $gray-200;
