@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterContentChecked } from '@angular/core';
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 import { SpeakingService } from 'src/app/speaking.service';
 
@@ -7,8 +7,9 @@ import { SpeakingService } from 'src/app/speaking.service';
   templateUrl: './chart-spec-tree-view-bar-utils.component.html',
   styleUrls: ['./chart-spec-tree-view-bar-utils.component.scss']
 })
-export class ChartSpecTreeViewBarUtilsComponent implements OnInit {
+export class ChartSpecTreeViewBarUtilsComponent implements OnInit, AfterContentChecked {
   @Input() tag: SpecTag;
+  @Input() currentTag: SpecTag;
   @Input() siblingLength: number;
   @Input() isCollapsed: boolean;
   @Input() _collapseToggle: any;
@@ -20,6 +21,12 @@ export class ChartSpecTreeViewBarUtilsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  ngAfterContentChecked() {
+    if (this.tag !== this.currentTag) {
+      this.edit = false;
+    }
   }
 
   play() {
