@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, AfterViewChecked, AfterContentChec
 import { keyBindings, KeyBindings, KeyBinding } from 'src/app/keyboard-input/key-bindings';
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 import { NavigateComponent } from 'src/app/navigate/navigate.component';
+import { firstLetterUpperCase } from 'src/app/utils';
 
 @Component({
   selector: 'app-chart-spec-tree-view-key-hint',
@@ -41,7 +42,7 @@ export class ChartSpecTreeViewKeyHintComponent implements OnInit, AfterContentCh
         this.navigateComponent[methodName]();
         if(this.navigateComponent.tag === this.tag) {
           this.reachableKeys.push({
-            key: this.shorten(Array.from(keyBinding).join('+')),
+            key: keyBinding.keyNameShort,
             tooltip: this.tooltipDescription(methodName, keyBinding)
           });
         }
@@ -50,25 +51,8 @@ export class ChartSpecTreeViewKeyHintComponent implements OnInit, AfterContentCh
     }
   }
 
-  shorten(keyBinding: string) {
-    switch (keyBinding) {
-      case 'arrowdown':
-        return '↓';
-      case 'arrowup':
-        return '↑';
-      case 'arrowleft':
-        return '←';
-      case 'arrowright':
-        return '→';
-      default:
-        return keyBinding.toLocaleUpperCase().replace('SHIFT+', '⇧ ');
-    }
-  }
-
   tooltipDescription(methodName: string, keyBinding: KeyBinding) {
-    return `Press [${
-      Array.from(keyBinding).join('+').toLocaleUpperCase().replace('ARROW', '')
-    }] key to go to ${this.tag._tagname}`;
+    return `[${keyBinding.keyName}] ${keyBinding.description}`;
   }
 
 }

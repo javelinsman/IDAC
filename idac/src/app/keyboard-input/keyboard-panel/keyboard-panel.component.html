@@ -11,11 +11,15 @@
     >
       <th class="align-middle" scope="row">
         <h5 style="cursor: pointer" class="m-0">
-          <span *ngFor="let key of kv.value; let last=last">{{ key }}{{ last ? '' : '+' }}</span>
+          <span>{{ kv.value.keyName }}</span>
         </h5>
       </th>
-      <td class="align-middle" style="word-break: break-all">
-        <p class="m-0" style="padding-top: 1px; padding-bottom: 1px; border: 2px solid transparent">{{ kv.key }}</p>
+      <td class="align-middle text-left" style="word-break: break-all">
+        <p class="m-0"
+          style="padding-top: 1px; padding-bottom: 1px; border: 2px solid transparent"
+        >
+          {{ kv.value.description }}
+        </p>
       </td>
     </tr>
   </tbody>
