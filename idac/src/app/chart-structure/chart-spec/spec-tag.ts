@@ -10,12 +10,21 @@ interface IEditorsNote {
     showInGraphView: boolean;
 }
 
+class SpecTagCache {
+  descriptionRule: string;
+  renderedText: string;
+}
+
 export class SpecTag {
     constructor(public _tagname: string) {
         this._id = SpecTag.idCount ++;
     }
     private static idCount = 0;
     public static _descriptionRule = '';
+    public static cache: SpecTagCache = {
+      descriptionRule: null,
+      renderedText: null
+    }
 
     attributes: IAttribute = {};
     _properties: IProperty = {};
@@ -66,41 +75,48 @@ export class SpecTag {
         return (this.constructor as any)._descriptionRule;
     }
 
+    get cache(): SpecTagCache {
+        return (this.constructor as any).cache;
+    }
+
     describe(info: ChartSpec = null, tags: any[] = null, keyboardEvent: string = null, queryAnswer: string = null) {
         let description = this.descriptionRule;
-        if (this.editorsNote.active) {
-            const text = this.editorsNote.text;
-            const position = this.editorsNote.position;
-            if (position === 'append') {
-                description = `${description} ${text}`;
-            } else if (position === 'replace') {
-                description = text;
-            } else if (position === 'prepend') {
-                description = `${text} ${description}`;
-            }
+        if (this.cache.descriptionRule !== this.descriptionRule) {
+          if (this.editorsNote.active) {
+              const text = this.editorsNote.text;
+              const position = this.editorsNote.position;
+              if (position === 'append') {
+                  description = `${description} ${text}`;
+              } else if (position === 'replace') {
+                  description = text;
+              } else if (position === 'prepend') {
+                  description = `${text} ${description}`;
+              }
+          }
+          const args = description.match(/\$\(([^)]*)\)/g);
+          if (args) {
+          args.map(d => [d, d.slice(2, -1)])
+              .forEach(([arg, strip]) => {
+                  let value = 'undefined';
+                  if (strip.split(':').length > 1) {
+                      const tagName = strip.split(':')[0].trim();
+                      const keyName = strip.split(':')[1].trim();
+                      const tag = this.peekableTags().find(_tag => _tag._tagname === tagName);
+                      if (tag && tag.properties[keyName]) { value = '' + tag.properties[keyName](); }
+                  } else {
+                      if (this.properties[strip]) { value = '' + this.properties[strip](); }
+                  }
+                  if (!value.length) { value = 'undefined'; }
+                  description = description.replace(arg, value);
+              });
+          }
+          if (queryAnswer) {
+              description = queryAnswer + ' ' + description;
+          }
+          this.cache.descriptionRule = this.descriptionRule;
+          this.cache.renderedText = firstLetterUpperCase(description);
         }
-        if (queryAnswer) {
-            description = queryAnswer + ' ' + description;
-            console.log(description);
-        }
-        const args = description.match(/\$\(([^)]*)\)/g);
-        if (args) {
-        args.map(d => [d, d.slice(2, -1)])
-            .forEach(([arg, strip]) => {
-                let value = 'undefined';
-                if (strip.split(':').length > 1) {
-                    const tagName = strip.split(':')[0].trim();
-                    const keyName = strip.split(':')[1].trim();
-                    const tag = this.peekableTags().find(_tag => _tag._tagname === tagName);
-                    if (tag && tag.properties[keyName]) { value = '' + tag.properties[keyName](); }
-                } else {
-                    if (this.properties[strip]) { value = '' + this.properties[strip](); }
-                }
-                if (!value.length) { value = 'undefined'; }
-                description = description.replace(arg, value);
-            });
-        }
-        return firstLetterUpperCase(description);
+        return this.cache.renderedText;
     }
 
     fromChartAccent(ca: ChartAccent): void {}
