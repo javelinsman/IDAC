@@ -36,11 +36,10 @@ export class StageStateService {
     this.settings = this.stageState.describe.settings
     this.audioControl = this.settings.audioControl;
     this.keyboardNavigation = this.settings.keyboardNavigation;
-    console.log(this);
   }
 
   get stage() { return this.stageState.stage.getValue(); }
-  set stage(stage) { this.stageState.stage.next(stage); console.log('set stage', stage);}
+  set stage(stage) { this.stageState.stage.next(stage); }
   get stageObservable() { return this.stageState.stage.asObservable(); }
 
   get toolbarSetting() { return this.stageState.describe.toolbarSetting.getValue(); }

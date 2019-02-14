@@ -1,4 +1,4 @@
-<!-- <div class="card h-100">
+<div class="card h-100">
   <div class="card-header">
     Settings
   </div>
@@ -7,39 +7,39 @@
     <h5 class="card-title">Audio Control</h5>
     <div class="d-flex align-items-center my-2">
       <p class="mb-0 mr-3">Read aloud elements</p>
-      <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+      <div class="btn-group btn-group-sm" role="group">
         <button type="button" class="btn"
-          [class.btn-light]="!audioControl.readAloudElements"
-          [class.btn-primary]="audioControl.readAloudElements"
-          (click)="audioControl.readAloudElements = true"
+          [class.btn-light]="!readAloudElements"
+          [class.btn-primary]="readAloudElements"
+          (click)="stageStateService.readAloudElements = true"
         >On</button>
         <button type="button" class="btn"
-          [class.btn-light]="audioControl.readAloudElements"
-          [class.btn-secondary]="!audioControl.readAloudElements"
-          (click)="audioControl.readAloudElements = false"
+          [class.btn-light]="readAloudElements"
+          [class.btn-primary]="!readAloudElements"
+          (click)="stageStateService.readAloudElements = false"
         >Off</button>
       </div>
     </div>
     <div class="d-flex align-items-center my-2">
       <p class="mb-0 mr-3">Speed</p>
-      <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+      <div class="btn-group btn-group-sm" role="group">
         <button type="button" class="btn"
-          [class.btn-light]="audioControl.speed !== EnumSpeed.slow"
-          [class.btn-secondary]="audioControl.speed === EnumSpeed.slow"
-          (click)="audioControl.speed = EnumSpeed.slow"
-          [attr.disabled]="audioControl.readAloudElements ? null : ''"
+          [class.btn-light]="speed !== AudioControlSpeed.slow"
+          [class.btn-secondary]="speed === AudioControlSpeed.slow"
+          (click)="stageStateService.speed = AudioControlSpeed.slow"
+          [attr.disabled]="readAloudElements ? null : ''"
         >Slow</button>
         <button type="button" class="btn"
-          [class.btn-light]="audioControl.speed !== EnumSpeed.normal"
-          [class.btn-secondary]="audioControl.speed === EnumSpeed.normal"
-          (click)="audioControl.speed = EnumSpeed.normal"
-          [attr.disabled]="audioControl.readAloudElements ? null : ''"
+          [class.btn-light]="speed !== AudioControlSpeed.normal"
+          [class.btn-secondary]="speed === AudioControlSpeed.normal"
+          (click)="stageStateService.speed = AudioControlSpeed.normal"
+          [attr.disabled]="readAloudElements ? null : ''"
         >Normal</button>
         <button type="button" class="btn"
-          [class.btn-light]="audioControl.speed !== EnumSpeed.fast"
-          [class.btn-secondary]="audioControl.speed === EnumSpeed.fast"
-          (click)="audioControl.speed = EnumSpeed.fast"
-          [attr.disabled]="audioControl.readAloudElements ? null : ''"
+          [class.btn-light]="speed !== AudioControlSpeed.fast"
+          [class.btn-secondary]="speed === AudioControlSpeed.fast"
+          (click)="stageStateService.speed = AudioControlSpeed.fast"
+          [attr.disabled]="readAloudElements ? null : ''"
         >Fast</button>
       </div>
     </div>
@@ -49,36 +49,36 @@
     <h5 class="card-title">Keyboard Navigation</h5>
     <div class="d-flex align-items-center my-2">
       <p class="mb-0 mr-3">Key Binding</p>
-      <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+      <div class="btn-group btn-group-sm" role="group">
         <button type="button" class="btn"
-          [class.btn-light]="keyboardNavigation.keyBinding !== EnumKeyBinding.nvda"
-          [class.btn-secondary]="keyboardNavigation.keyBinding === EnumKeyBinding.nvda"
-          (click)="keyboardNavigation.keyBinding = EnumKeyBinding.nvda"
+          [class.btn-light]="keyBinding !== KeyboardNavigationKeyBinding.nvda"
+          [class.btn-secondary]="keyBinding === KeyboardNavigationKeyBinding.nvda"
+          (click)="stageStateService.keyBinding = KeyboardNavigationKeyBinding.nvda"
         >NVDA</button>
         <button type="button" class="btn"
-          [class.btn-light]="keyboardNavigation.keyBinding !== EnumKeyBinding.jaws"
-          [class.btn-secondary]="keyboardNavigation.keyBinding === EnumKeyBinding.jaws"
-          (click)="keyboardNavigation.keyBinding = EnumKeyBinding.jaws"
+          [class.btn-light]="keyBinding !== KeyboardNavigationKeyBinding.jaws"
+          [class.btn-secondary]="keyBinding === KeyboardNavigationKeyBinding.jaws"
+          (click)="stageStateService.keyBinding = KeyboardNavigationKeyBinding.jaws"
         >JAWS</button>
         <button type="button" class="btn"
-          [class.btn-light]="keyboardNavigation.keyBinding !== EnumKeyBinding.voiceover"
-          [class.btn-secondary]="keyboardNavigation.keyBinding === EnumKeyBinding.voiceover"
-          (click)="keyboardNavigation.keyBinding = EnumKeyBinding.voiceover"
+          [class.btn-light]="keyBinding !== KeyboardNavigationKeyBinding.voiceover"
+          [class.btn-secondary]="keyBinding === KeyboardNavigationKeyBinding.voiceover"
+          (click)="stageStateService.keyBinding = KeyboardNavigationKeyBinding.voiceover"
         >VoiceOver</button>
       </div>
     </div>
     <div class="d-flex align-items-center my-2">
       <p class="mb-0 mr-3">Read aloud elements</p>
-      <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+      <div class="btn-group btn-group-sm" role="group">
         <button type="button" class="btn"
-          [class.btn-light]="!keyboardNavigation.hint"
-          [class.btn-primary]="keyboardNavigation.hint"
-          (click)="keyboardNavigation.hint = true"
+          [class.btn-light]="!hint"
+          [class.btn-primary]="hint"
+          (click)="stageStateService.hint = true"
         >On</button>
         <button type="button" class="btn"
-          [class.btn-light]="keyboardNavigation.hint"
-          [class.btn-secondary]="!keyboardNavigation.hint"
-          (click)="keyboardNavigation.hint = false"
+          [class.btn-light]="hint"
+          [class.btn-secondary]="!hint"
+          (click)="stageStateService.hint = false"
         >Off</button>
       </div>
     </div>
@@ -87,4 +87,4 @@
 
 
   </div>
-</div> -->
+</div>
