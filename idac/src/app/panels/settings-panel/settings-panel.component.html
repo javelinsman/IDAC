@@ -3,8 +3,44 @@
     Settings
   </div>
   <div class="card-body overflow-y-scroll styled-scroll">
-    <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+
+    <h5 class="card-title">Audio Control</h5>
+    <div class="d-flex align-items-center my-2">
+      <p class="mb-0 mr-3">Read aloud elements</p>
+      <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-secondary">On</button>
+        <button type="button" class="btn btn-dark">Off</button>
+      </div>
+    </div>
+    <div class="d-flex align-items-center my-2">
+      <p class="mb-0 mr-3">Speed</p>
+      <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-secondary disabled">Slow</button>
+        <button type="button" class="btn btn-primary disabled">Normal</button>
+        <button type="button" class="btn btn-secondary disabled">Fast</button>
+      </div>
+    </div>
+
+    <hr>
+
+    <h5 class="card-title">Keyboard Navigation</h5>
+    <div class="d-flex align-items-center my-2">
+      <p class="mb-0 mr-3">Show hint</p>
+      <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-primary">On</button>
+        <button type="button" class="btn btn-secondary">Off</button>
+      </div>
+    </div>
+    <div class="d-flex align-items-center my-2">
+      <p class="mb-0 mr-3">Key Binding</p>
+      <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-primary">NVDA</button>
+        <button type="button" class="btn btn-secondary">JAWS</button>
+        <button type="button" class="btn btn-secondary">Voiceover</button>
+      </div>
+    </div>
+    <app-keyboard-panel></app-keyboard-panel>
+
+
   </div>
 </div>
