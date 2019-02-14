@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { beep_error, beep_detect } from '../utils';
 import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
 import { MessageService } from '../message.service';
+import { SpeakingService } from '../speaking.service';
 
 @Component({
   selector: 'app-navigate',
@@ -32,7 +32,10 @@ export class NavigateComponent implements OnInit {
   */
 
 
-  constructor(private messageService: MessageService) { }
+  constructor(
+    private messageService: MessageService,
+    private speakingService: SpeakingService
+  ) { }
 
   ngOnInit() {
   }
@@ -40,10 +43,10 @@ export class NavigateComponent implements OnInit {
   keyFire(eventName: string) {
     console.log(`keyfire: ${eventName}`);
     if (this[eventName]() === false) {
-      beep_error();
+      this.speakingService.beep_error();
     } else {
       if (this.tag.children && this.tag.children.length) {
-        beep_detect();
+        this.speakingService.beep_detect();
       }
     }
   }
@@ -57,6 +60,7 @@ export class NavigateComponent implements OnInit {
       this.tag = tag;
       this.tagChange.emit(this.tag);
       this.messageService.shouldScroll = true;
+      this.speakingService.read(this.tag.describe());
     }
   }
 
