@@ -1,13 +1,14 @@
 <div class="d-flex mb-2 align-items-center">
+  <span *ngIf="tag.editorsNote.active"
+    class="mr-1"
+    (mouseover)="tag.editorsNote.showInGraphView = true"
+    (mouseout)="tag.editorsNote.showInGraphView = false"
+  >
+    <i class="d-inline fas fa-book editors-note"
+    ></i>
+  </span>
   <p class="tagname font-weight-light">
-    <span *ngIf="tag.editorsNote.active"
-      class="mr-1"
-      (mouseover)="tag.editorsNote.showInGraphView = true"
-      (mouseout)="tag.editorsNote.showInGraphView = false"
-    >
-      <i class="d-inline fas fa-book"
-        [class.text-primary]="tag === currentTag" ></i>
-    </span>
+
     <span
       class="p-1 rounded tagname"
       [class.highlighted]="currentTag === tag"

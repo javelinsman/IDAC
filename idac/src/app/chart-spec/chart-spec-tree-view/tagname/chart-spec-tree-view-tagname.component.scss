@@ -12,3 +12,7 @@ p {
   background-color: lighten($primary, 15%);
   color: white;
 }
+
+.editors-note {
+  color: darken($danger, 20%);
+}
