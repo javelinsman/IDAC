@@ -37,12 +37,12 @@
       </section>
     </div>
   </div>
-  <section class="sidebar" [class.d-none]="!sidebar" #sidebar>
-    <app-help-panel *ngIf="stageState.describe.toolbarHelp"
-      [stageState]="stageState"
+  <section class="sidebar"
+    [class.d-none]="!(sidebarSettings || sidebarHelp)" #sidebar
+  >
+    <app-help-panel *ngIf="sidebarHelp"
     ></app-help-panel>
-    <app-settings-panel *ngIf="stageState.describe.toolbarSetting"
-      [stageState]="stageState"
+    <app-settings-panel *ngIf="sidebarSettings"
     ></app-settings-panel>
   </section>
   <!--

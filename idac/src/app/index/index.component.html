@@ -1,7 +1,4 @@
-<app-nav-bar
-  [(stage)]="currentStage"
-  [stageState]="stageState"
-></app-nav-bar>
+<app-nav-bar></app-nav-bar>
 
 <app-load-data *ngIf="currentStage === Stage.load"
   (exampleIdChange)="_exampleIdChange($event)"
@@ -9,5 +6,4 @@
 
 <app-make-chart *ngIf="currentStage === Stage.describe"
   [exampleId]="exampleId"
-  [stageState]="stageState"
 ></app-make-chart>

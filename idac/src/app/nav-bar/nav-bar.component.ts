@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Stage } from '../index/index.component';
-import { StageState } from '../stage-state';
+import { Stage } from '../stage-state';
+import { StageStateService } from '../stage-state.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -10,31 +10,39 @@ import { StageState } from '../stage-state';
 export class NavBarComponent implements OnInit {
 
   Stage = Stage;
+  stage: Stage;
 
-  @Input() stage: Stage;
-  @Input() stageState: StageState;
+  toolbarSetting: boolean;
+  toolbarHelp: boolean;
 
-  @Output() stageChange: EventEmitter<Stage> = new EventEmitter();
-
-  constructor() { }
+  constructor(
+    public stageStateService: StageStateService
+  ) { }
 
   ngOnInit() {
+    this.stageStateService.stageObservable.subscribe(stage => {
+      this.stage = stage;
+    })
+    this.stageStateService.toolbarSettingObservable.subscribe(toolbarSetting => {
+      this.toolbarSetting = toolbarSetting;
+    });
+    this.stageStateService.toolbarHelpObservable.subscribe(toolbarHelp => {
+      this.toolbarHelp = toolbarHelp;
+    });
   }
 
   _toggleSetting() {
-    if (!this.stageState.describe.toolbarSetting) {
-      this.stageState.describe.toolbarHelp = false;
+    if (!this.toolbarSetting){
+      this.stageStateService.toolbarHelp = false;
     }
-    this.stageState.describe.toolbarSetting =
-      !this.stageState.describe.toolbarSetting;
+    this.stageStateService.toolbarSetting = !this.toolbarSetting;
   }
 
   _toggleHelp() {
-    if (!this.stageState.describe.toolbarHelp) {
-      this.stageState.describe.toolbarSetting = false;
+    if (!this.toolbarHelp){
+      this.stageStateService.toolbarSetting = false;
     }
-    this.stageState.describe.toolbarHelp =
-      !this.stageState.describe.toolbarHelp;
+    this.stageStateService.toolbarHelp = !this.toolbarHelp;
   }
 
 }

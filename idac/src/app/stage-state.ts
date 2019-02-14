@@ -1,32 +1,45 @@
+import { BehaviorSubject } from 'rxjs';
+
+export enum Stage {
+  load,
+  describe,
+  export
+}
+
 export interface StageState {
+  stage: BehaviorSubject<Stage>;
   load: StageStateLoad;
   describe: StageStateDescribe;
   export: StageStateExport;
 }
 
-export type StageStateLoad = any;
+export interface StageStateLoad {
 
-export interface StageStateDescribe {
-  toolbarSetting: boolean;
-  toolbarHelp: boolean;
-  settings: Settings
 }
 
-export type StageStateExport = any;
+export interface StageStateDescribe {
+  toolbarSetting: BehaviorSubject<boolean>;
+  toolbarHelp: BehaviorSubject<boolean>;
+  settings: Settings;
+}
+
+export interface StageStateExport {
+
+}
 
 export interface Settings {
-  audioControl: AudioControl,
-  keyboardNavigation: KeyboardNavigation
+  audioControl: AudioControl;
+  keyboardNavigation: KeyboardNavigation;
 }
 
 export interface AudioControl {
-  readAloudElements: boolean,
-  speed: AudioControlSpeed
+  readAloudElements: BehaviorSubject<boolean>;
+  speed: BehaviorSubject<AudioControlSpeed>;
 }
 
 export interface KeyboardNavigation {
-  hint: boolean,
-  keyBinding: KeyboardNavigationKeyBinding
+  hint: BehaviorSubject<boolean>;
+  keyBinding: BehaviorSubject<KeyboardNavigationKeyBinding>;
 }
 
 export enum AudioControlSpeed {
@@ -35,23 +48,4 @@ export enum AudioControlSpeed {
 
 export enum KeyboardNavigationKeyBinding {
   nvda, jaws, voiceover
-}
-
-export const defaultStageState: StageState =  {
-  load: {},
-  describe: {
-    toolbarSetting: false,
-    toolbarHelp: false,
-    settings: {
-      audioControl: {
-        readAloudElements: true,
-        speed: AudioControlSpeed.normal,
-      },
-      keyboardNavigation: {
-        hint: true,
-        keyBinding: KeyboardNavigationKeyBinding.nvda
-      }
-    }
-  },
-  export: {}
 }
