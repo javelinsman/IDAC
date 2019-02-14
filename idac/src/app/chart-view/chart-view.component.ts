@@ -257,6 +257,8 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
 
     }
 
+    this.attributeLink.title.select('text').text(root.title.properties.title());
+
     this.attributeLink.xLabel.select('text').text(
       labelUnit(xProp.label(), xProp.unit())
     );
