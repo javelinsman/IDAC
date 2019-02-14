@@ -14,7 +14,7 @@
       <hr>
       <section class="row">
         <div class="col-12">
-          <ul class="nav nav-tabs">
+          <!-- <ul class="nav nav-tabs">
             <li class="nav-item">
               <a class="nav-link" style="cursor: pointer"
                 [class.active]="rightPanel === 'filter'"
@@ -31,14 +31,14 @@
                 (click)="rightPanel = 'keyboard'"
               >Keyboard Navigation</a>
             </li>
-          </ul>
+          </ul> -->
           <app-filter-view *ngIf="rightPanel === 'filter'" [(currentTag)]="currentTag"></app-filter-view>
           <app-keyboard-panel *ngIf="rightPanel === 'keyboard'"></app-keyboard-panel>
         </div>
       </section>
     </div>
   </div>
-  <section class="sidebar" [class.d-none]="!sidebar">
+  <section class="sidebar" [class.d-none]="!sidebar" #sidebar>
     <app-help-panel *ngIf="stageState.describe.toolbarHelp"></app-help-panel>
     <app-settings-panel *ngIf="stageState.describe.toolbarSetting"></app-settings-panel>
   </section>
