@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild, AfterViewChecked, AfterContentChec
 import { keyBindings, KeyBindings, KeyBinding } from 'src/app/keyboard-input/key-bindings';
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 import { NavigateComponent } from 'src/app/navigate/navigate.component';
-import { firstLetterUpperCase } from 'src/app/utils';
+import { StageStateService } from 'src/app/stage-state.service';
 
 @Component({
   selector: 'app-chart-spec-tree-view-key-hint',
@@ -20,13 +20,20 @@ export class ChartSpecTreeViewKeyHintComponent implements OnInit, AfterContentCh
   keyBindings: KeyBindings = keyBindings;
   reachableKeys: any[];
 
-  constructor() { }
+  showHint: boolean;
+
+  constructor(
+    public stageStateService: StageStateService
+  ) { }
 
   ngOnInit() {
+    this.stageStateService.hintObservable.subscribe(hint => {
+      this.showHint = hint;
+    })
   }
 
   ngAfterContentChecked() {
-    if (this.prevTag !== this.currentTag) {
+    if (this.showHint && this.prevTag !== this.currentTag) {
       this.prevTag = this.currentTag;
       this.refreshReachableKeys();
     }
