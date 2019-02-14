@@ -84,15 +84,26 @@ export class SpecTag {
         args.map(d => [d, d.slice(2, -1)])
             .forEach(([arg, strip]) => {
                 let value = 'undefined';
+                let isUndefined = true;
                 if (strip.split(':').length > 1) {
                     const tagName = strip.split(':')[0].trim();
                     const keyName = strip.split(':')[1].trim();
                     const tag = this.peekableTags().find(_tag => _tag._tagname === tagName);
-                    if (tag && tag.properties[keyName]) { value = '' + tag.properties[keyName](); }
+                    if (tag && tag.properties[keyName]) {
+                      if (tag.attributes[keyName] && tag.attributes[keyName].type == 'input-select') {
+                        isUndefined = false;
+                      }
+                      value = '' + tag.properties[keyName]();
+                    }
                 } else {
-                    if (this.properties[strip]) { value = '' + this.properties[strip](); }
+                    if (this.properties[strip]) {
+                      if (this.attributes[strip] && this.attributes[strip].type == 'input-select') {
+                        isUndefined = false;
+                      }
+                      value = '' + this.properties[strip]();
+                    }
                 }
-                if (!value.length) { value = 'undefined'; }
+                if (!value.length && isUndefined) { value = 'undefined'; }
                 description = description.replace(arg, value);
             });
         }
