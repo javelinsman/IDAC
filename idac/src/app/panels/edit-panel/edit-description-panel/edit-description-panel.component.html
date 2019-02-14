@@ -7,12 +7,13 @@
     </p>
   </div>
 
-  <textarea *ngIf="!overrideDescription" [(ngModel)]="tag.descriptionRule"
+  <textarea [class.d-none]="overrideDescription" [(ngModel)]="tag.descriptionRule"
     (drop)="onDrop($event)" (dragover)="onDragOver($event)"
+    (blur)="onDescriptionBlur($event)"
     class="form-control" id="description-rule-textarea" rows="3" #input>
   </textarea>
 
-  <textarea *ngIf="overrideDescription" class="form-control" id="description-rule-textarea" rows="3"
+  <textarea [class.d-none]="!overrideDescription" class="form-control" id="description-rule-textarea" rows="3"
     [(ngModel)]="tag.editorsNote.text"></textarea>
 
 

@@ -16,6 +16,7 @@ export class EditDescriptionPanelComponent implements OnInit, AfterViewInit {
   @Output() overrideDescriptionChange: EventEmitter<boolean> = new EventEmitter();
 
   @ViewChild('input') textarea: ElementRef<HTMLTextAreaElement>;
+  textComplete: Textcomplete;
 
   fuzzySearcher: FuzzySearch;
 
@@ -31,8 +32,9 @@ export class EditDescriptionPanelComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     const editor = new Textarea(this.textarea.nativeElement);
-    const textComplete = new Textcomplete(editor);
-    textComplete.register([{
+    this.textComplete = new Textcomplete(editor);
+    console.log(editor, this.textComplete)
+    this.textComplete.register([{
       match: /()\$\(([a-zA-Z0-9+\-\_]*)$/,
       search: (term, callback) => callback(this.searchKeyword(term)),
       replace: (name) => `$1$(${name}) `
@@ -54,6 +56,12 @@ export class EditDescriptionPanelComponent implements OnInit, AfterViewInit {
     const textarea = this.textarea.nativeElement;
     console.log(textarea.);
     */
+  }
+
+  onDescriptionBlur(event: FocusEvent) {
+    if (this.textComplete.dropdown.shown) {
+      this.textComplete.dropdown.deactivate();
+    }
   }
 
   _overrideDescriptionChange(override: boolean) {
