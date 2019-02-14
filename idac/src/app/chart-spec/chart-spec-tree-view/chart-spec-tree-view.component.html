@@ -12,7 +12,9 @@
       [class.spec-tag]="!viewOnly"
     >
       <div class="d-flex">
-        <div class="flex-grow-1">
+        <div class="flex-grow-1"
+          [class.d-flex]="viewOnly"
+        >
           <app-chart-spec-tree-view-tagname
             [tag]="tag"
             [currentTag]="currentTag"
@@ -32,8 +34,9 @@
             [siblingLength]="siblingLength"
             [isCollapsed]="isCollapsed"
             [_collapseToggle]="_collapseToggle.bind(this)"
+            [viewOnly]="viewOnly"
           ></app-chart-spec-tree-view-bar-utils>
-          <div class="mx-2" *ngIf="tag.describe().indexOf('undefined') >= 0">
+          <div class="mx-2" *ngIf="!viewOnly && tag.describe().indexOf('undefined') >= 0">
             <i class="fas fa-exclamation-circle text-danger"></i>
           </div>
         </div>
@@ -44,6 +47,7 @@
     </div>
     <div class="" style="width: 2em">
       <app-chart-spec-tree-view-key-hint
+        *ngIf="!viewOnly"
         [tag]="tag" [currentTag]="currentTag"
       ></app-chart-spec-tree-view-key-hint>
     </div>

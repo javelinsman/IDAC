@@ -2,9 +2,14 @@
   (mouseover)="hover = true" (mouseout)="hover = false"
   [class.text-muted]="!tag.describe().length"
   [class.font-italic]="!tag.describe().length"
+
   [class.ml-2]="viewOnly"
-  [class.bg-light]="hover && tag === currentTag"
-  class="font-weight-normal text-unselectable pl-1 cursor-pointer"
+  [class.cursor-default]="viewOnly"
+
+  [class.text-unselectable]="!viewOnly"
+  [class.cursor-pointer]="!viewOnly"
+  [class.bg-light]="!viewOnly && hover && tag === currentTag"
+  class="font-weight-normal pl-1"
   #description
 >
 </p>

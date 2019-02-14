@@ -12,6 +12,7 @@ export class ChartSpecTreeViewBarUtilsComponent implements OnInit {
   @Input() isCollapsed: boolean;
   @Input() _collapseToggle: any;
   @Input() edit: boolean;
+  @Input() viewOnly: boolean;
 
   constructor() { }
 
