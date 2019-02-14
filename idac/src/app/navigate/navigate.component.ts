@@ -1,14 +1,7 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-
-import { Chart } from '../chart';
-import { ChartExampleService } from '../chart-example.service';
-import { beep_error, beep_detect, speak, isAscendingArray, isDescendingArray } from '../utils';
-import { DescriptionComponent } from '../description/description.component';
-import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
 import { MessageService } from '../message.service';
+import { SpeakingService } from '../speaking.service';
 
 @Component({
   selector: 'app-navigate',
@@ -17,8 +10,10 @@ import { MessageService } from '../message.service';
 })
 export class NavigateComponent implements OnInit {
 
+  @Input() sandbox = false;
   @Input() tag: SpecTag;
   @Output() tagChange: EventEmitter<SpecTag> = new EventEmitter();
+
 
   focusBookmarks = {};
   focusHistory: SpecTag[] = [];
@@ -37,7 +32,10 @@ export class NavigateComponent implements OnInit {
   */
 
 
-  constructor(private messageService: MessageService) { }
+  constructor(
+    private messageService: MessageService,
+    private speakingService: SpeakingService
+  ) { }
 
   ngOnInit() {
   }
@@ -45,19 +43,25 @@ export class NavigateComponent implements OnInit {
   keyFire(eventName: string) {
     console.log(`keyfire: ${eventName}`);
     if (this[eventName]() === false) {
-      beep_error();
+      this.speakingService.beep_error();
     } else {
       if (this.tag.children && this.tag.children.length) {
-        beep_detect();
+        this.speakingService.beep_detect();
       }
+      this.speakingService.read(this.tag.describe());
     }
   }
 
   setFocus(tag: SpecTag) {
-    this.focusHistory.push(this.tag);
-    this.tag = tag;
-    this.tagChange.emit(this.tag);
-    this.messageService.shouldScroll = true;
+    if (this.sandbox) {
+      this.focusHistory.push(this.tag);
+      this.tag = tag;
+    } else {
+      this.focusHistory.push(this.tag);
+      this.tag = tag;
+      this.tagChange.emit(this.tag);
+      this.messageService.shouldScroll = true;
+    }
   }
 
   checkCurrentElement() {
@@ -164,7 +168,7 @@ export class NavigateComponent implements OnInit {
     if (!tag) {
       tag = this.tag;
     }
-    const { index, length } = this.getElementSiblingIndex(tag);
+    const { index } = this.getElementSiblingIndex(tag);
     if (index - 1 >= 0) {
       this.setFocus(tag._parent.children[index - 1]);
     } else {

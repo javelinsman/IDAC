@@ -1,0 +1,12 @@
+<ng-container *ngIf="showHint">
+  <div class="d-flex flex-column py-3">
+    <ng-container *ngFor="let reachableKey of reachableKeys">
+      <span
+        class="badge badge-info mx-auto my-1 font-weight-light cursor-default"
+        placement="right" [ngbTooltip]="reachableKey.tooltip" container="body"
+        >{{ reachableKey.key }}</span>
+    </ng-container>
+  </div>
+</ng-container>
+<app-navigate [sandbox]="true">
+</app-navigate>

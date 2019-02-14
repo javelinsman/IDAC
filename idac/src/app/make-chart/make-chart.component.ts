@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, AfterViewChecked, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, AfterViewChecked, Input, AfterContentChecked } from '@angular/core';
 import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
-import { NavigateComponent } from '../navigate/navigate.component';
 import { ActivatedRoute } from '@angular/router';
 import { ChartExampleService } from '../chart-example.service';
 import * as d3 from 'd3';
@@ -8,6 +7,7 @@ import { Chart } from '../chart';
 import { ChartAccent } from '../chart-structure/chart-accent/chart-accent';
 import { HttpClient } from '@angular/common/http';
 import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
+import { StageStateService } from '../stage-state.service';
 
 @Component({
   selector: 'app-make-chart',
@@ -24,15 +24,27 @@ export class MakeChartComponent implements OnInit {
   currentTag: SpecTag;
   rightPanel = 'filter';
   @ViewChild('container') containerDiv: ElementRef;
+  @ViewChild('sidebar') sidebarSection: ElementRef;
+
+  sidebarSettings: boolean;
+  sidebarHelp: boolean;
 
   constructor(
       private chartExampleService: ChartExampleService,
       private route: ActivatedRoute,
-      private http: HttpClient
+      private http: HttpClient,
+      public stageStateService: StageStateService
     ) { }
 
   ngOnInit() {
-    console.log(this.exampleId, this.currentTag);
+    SpecTag.clear();
+    this.stageStateService.toolbarSettingObservable.subscribe(settings => {
+      this.sidebarSettings = settings;
+    })
+    this.stageStateService.toolbarHelpObservable.subscribe(help => {
+      this.sidebarHelp = help;
+    })
+
     if (this.exampleId) {
       this.chart = this.fetchExampleChart(this.exampleId);
     } else {
@@ -47,8 +59,11 @@ export class MakeChartComponent implements OnInit {
     });
     this.onWindowResize();
   }
+
   onWindowResize() {
-    d3.select(this.containerDiv.nativeElement).style('height', `${window.innerHeight - 20 - 50}px`);
+    const mainHeight = `${window.innerHeight - 20 - 50}px`;
+    d3.select(this.containerDiv.nativeElement).style('height', mainHeight);
+    d3.select(this.sidebarSection.nativeElement).style('height', mainHeight);
   }
 
 

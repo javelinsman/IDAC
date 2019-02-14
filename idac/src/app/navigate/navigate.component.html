@@ -1,1 +1,1 @@
-<app-keyboard-input (keyFire)="keyFire($event)"></app-keyboard-input>
+<app-keyboard-input *ngIf="!sandbox" (keyFire)="keyFire($event)"></app-keyboard-input>

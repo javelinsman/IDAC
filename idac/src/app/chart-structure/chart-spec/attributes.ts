@@ -1,5 +1,3 @@
-import { SpecTag } from './spec-tag';
-
 type Value = string | number;
 
 export interface IAttribute {

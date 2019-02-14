@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PropertiesPanelComponent } from './properties-panel.component';
+import { EditPanelComponent } from './edit-panel.component';
 
-describe('PropertiesPanelComponent', () => {
-  let component: PropertiesPanelComponent;
-  let fixture: ComponentFixture<PropertiesPanelComponent>;
+describe('EditPanelComponent', () => {
+  let component: EditPanelComponent;
+  let fixture: ComponentFixture<EditPanelComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PropertiesPanelComponent ]
+      declarations: [ EditPanelComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PropertiesPanelComponent);
+    fixture = TestBed.createComponent(EditPanelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

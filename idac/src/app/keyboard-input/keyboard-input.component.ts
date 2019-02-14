@@ -59,9 +59,9 @@ export class KeyboardInputComponent implements OnInit {
 
   detectKeyFire() {
     for (const [eventName, keyBinding] of Object.entries(this.keyBindings)) {
-      if (eqSet(this.keydowns, keyBinding)) {
+      if (eqSet(this.keydowns, keyBinding.key)) {
         this.currentEventName = eventName;
-        this.currentKeybinding = keyBinding;
+        this.currentKeybinding = keyBinding.key;
         this.messageService.keyboardEventName = eventName;
         this.keyFire.emit(eventName);
         return;
@@ -71,7 +71,7 @@ export class KeyboardInputComponent implements OnInit {
 
   isReservedKey(key: string): boolean {
     for (const keyBinding of Object.values(this.keyBindings)) {
-      if (keyBinding.has(key)) {
+      if (keyBinding.key.has(key)) {
         return true;
       }
     }

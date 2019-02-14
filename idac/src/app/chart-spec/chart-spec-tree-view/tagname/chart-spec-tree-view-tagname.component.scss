@@ -1,0 +1,18 @@
+@import "../../../theme.scss";
+
+p {
+  margin: 0;
+}
+
+.tagname {
+  background-color: $gray-200;
+}
+
+.tagname.highlighted {
+  background-color: lighten($primary, 15%);
+  color: white;
+}
+
+.editors-note {
+  color: darken($danger, 20%);
+}

@@ -31,6 +31,23 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       highlightShape: HighlightShape
     }
   };
+  attributeLink: {
+    title;
+    legend;
+    chart;
+    items;
+    marks;
+    x;
+    y;
+    yLabel;
+    xLabel;
+    serieses;
+    rects;
+    bargroups;
+    xTicks;
+    yTicks;
+  }
+
 
   ready = false;
 
@@ -121,6 +138,23 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       };
     });
     Object.values(this.elementLink).forEach(val => val.highlightShape.afterAllRendered());
+
+    this.attributeLink = {
+      title,
+      legend,
+      chart,
+      items,
+      marks,
+      x,
+      y,
+      yLabel,
+      xLabel,
+      serieses,
+      rects,
+      bargroups,
+      xTicks,
+      yTicks,
+    }
   }
 
   onSVGInit() {
@@ -192,12 +226,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
         // .classed('active', (tag: SpecTag) => tag.editorsNote.active);
         .classed('highlighted', (tag: SpecTag) => tag.editorsNote.showInGraphView && tag.editorsNote.active);
 
-      /*
-      // scroll horizontally
-      const prevY = window.scrollY;
-      highlightRect.node().scrollIntoView({inline: 'center'});
-      window.scroll(window.scrollX, prevY);
-      */
+      this.updateAttribute();
 
     }
   }
@@ -212,6 +241,41 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     this.currentTag = tag;
     this.currentTagChange.emit(this.currentTag);
     this.messageService.shouldScroll = true;
+  }
+
+  updateAttribute() {
+    const root = this.currentTag._root;
+    const xProp = root.x.properties;
+    const yProp = root.y.properties;
+
+    const labelUnit = (label, unit) => {
+      if (unit.length) {
+        return `${label} (unit: ${unit})`;
+      } else {
+        return label;
+      }
+
+    }
+
+    this.attributeLink.title.select('text').text(root.title.properties.title());
+
+    if (this.attributeLink.xLabel) {
+      this.attributeLink.xLabel.select('text').text(
+        labelUnit(xProp.label(), xProp.unit())
+      );
+    }
+    if (this.attributeLink.yLabel) {
+      this.attributeLink.yLabel.select('text').text(
+        labelUnit(yProp.label(), yProp.unit())
+      );
+    }
+    this.attributeLink.xTicks.forEach((xTick, i) => {
+      xTick.select('text').text(root.x.children[i].properties.text());
+    });
+    this.attributeLink.items.forEach((item, i) => {
+      item.select('text').text(root.legend.children[i].properties.text());
+    });
+
   }
 
 }

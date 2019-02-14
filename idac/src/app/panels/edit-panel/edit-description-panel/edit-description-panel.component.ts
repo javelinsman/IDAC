@@ -5,19 +5,22 @@ import { Textcomplete, Textarea } from 'textcomplete';
 
 
 @Component({
-  selector: 'app-description-panel',
-  templateUrl: './description-panel.component.html',
-  styleUrls: ['./description-panel.component.scss']
+  selector: 'app-edit-description-panel',
+  templateUrl: './edit-description-panel.component.html',
+  styleUrls: ['./edit-description-panel.component.scss']
 })
-export class DescriptionPanelComponent implements OnInit, AfterViewInit {
+export class EditDescriptionPanelComponent implements OnInit, AfterViewInit {
 
   @Input() tag: SpecTag;
   @Input() overrideDescription: boolean;
   @Output() overrideDescriptionChange: EventEmitter<boolean> = new EventEmitter();
 
   @ViewChild('input') textarea: ElementRef<HTMLTextAreaElement>;
+  textComplete: Textcomplete;
 
   fuzzySearcher: FuzzySearch;
+
+  replaced = false;
 
   constructor() { }
 
@@ -31,12 +34,31 @@ export class DescriptionPanelComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     const editor = new Textarea(this.textarea.nativeElement);
-    const textComplete = new Textcomplete(editor);
-    textComplete.register([{
-      match: /()\$\(([a-zA-Z0-9+\-\_]*)$/,
+    this.textComplete = new Textcomplete(editor);
+    this.textComplete.register([{
+      match: /()\$\(((?:\w|\d|\s|\:)*)$/,
       search: (term, callback) => callback(this.searchKeyword(term)),
-      replace: (name) => `$1$(${name}) `
+      replace: (name) => {
+        this.replaced = true;
+        return `$(${name})`;
+      }
     }]);
+  }
+
+  onDescriptionChange() {
+    if (this.replaced) {
+      this.deleteFollowingSegment();
+    }
+  }
+
+  deleteFollowingSegment() {
+    const textarea = this.textarea.nativeElement;
+    const pos = textarea.selectionStart;
+    const left = textarea.value.slice(0, pos);
+    const right = textarea.value.slice(pos);
+    const rightNew = right.replace(/^[^()]*\)/, '');
+    textarea.value = left + rightNew;
+    this.replaced = false;
   }
 
   searchKeyword(keyword: string): string[] {
@@ -46,6 +68,7 @@ export class DescriptionPanelComponent implements OnInit, AfterViewInit {
   onDrop(event: DragEvent) {
     const textarea = this.textarea.nativeElement;
     const propName = event.dataTransfer.getData('text');
+    // TODO: remove this black magic
     setTimeout(() => { textarea.selectionStart += propName.length; }, 0);
   }
 
@@ -54,6 +77,12 @@ export class DescriptionPanelComponent implements OnInit, AfterViewInit {
     const textarea = this.textarea.nativeElement;
     console.log(textarea.);
     */
+  }
+
+  onDescriptionBlur(event: FocusEvent) {
+    if (this.textComplete.dropdown.shown) {
+      this.textComplete.dropdown.deactivate();
+    }
   }
 
   _overrideDescriptionChange(override: boolean) {

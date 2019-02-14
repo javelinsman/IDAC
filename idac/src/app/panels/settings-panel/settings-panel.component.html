@@ -1,0 +1,92 @@
+<div class="card h-100">
+  <div class="card-header">
+    Settings
+  </div>
+  <div class="card-body overflow-y-scroll styled-scroll">
+
+    <h5 class="card-title">Audio Control</h5>
+    <div class="d-flex align-items-center my-2">
+      <p class="mb-0 mr-3">Read aloud elements</p>
+      <div class="btn-group btn-group-sm" role="group">
+        <button type="button" class="btn"
+          [class.btn-light]="!readAloudElements"
+          [class.btn-primary]="readAloudElements"
+          (click)="stageStateService.readAloudElements = true"
+        >On</button>
+        <button type="button" class="btn"
+          [class.btn-light]="readAloudElements"
+          [class.btn-primary]="!readAloudElements"
+          (click)="stageStateService.readAloudElements = false"
+        >Off</button>
+      </div>
+    </div>
+    <div class="d-flex align-items-center my-2">
+      <p class="mb-0 mr-3">Speed</p>
+      <div class="btn-group btn-group-sm" role="group">
+        <button type="button" class="btn"
+          [class.btn-light]="speed !== AudioControlSpeed.slow"
+          [class.btn-secondary]="speed === AudioControlSpeed.slow"
+          (click)="stageStateService.speed = AudioControlSpeed.slow"
+          [attr.disabled]="readAloudElements ? null : ''"
+        >Slow</button>
+        <button type="button" class="btn"
+          [class.btn-light]="speed !== AudioControlSpeed.normal"
+          [class.btn-secondary]="speed === AudioControlSpeed.normal"
+          (click)="stageStateService.speed = AudioControlSpeed.normal"
+          [attr.disabled]="readAloudElements ? null : ''"
+        >Normal</button>
+        <button type="button" class="btn"
+          [class.btn-light]="speed !== AudioControlSpeed.fast"
+          [class.btn-secondary]="speed === AudioControlSpeed.fast"
+          (click)="stageStateService.speed = AudioControlSpeed.fast"
+          [attr.disabled]="readAloudElements ? null : ''"
+        >Fast</button>
+      </div>
+    </div>
+
+    <hr>
+
+    <h5 class="card-title">Keyboard Navigation</h5>
+    <div class="d-flex align-items-center my-2">
+      <p class="mb-0 mr-3">Key Binding</p>
+      <div class="btn-group btn-group-sm" role="group">
+        <button type="button" class="btn"
+          [class.btn-light]="keyBinding !== KeyboardNavigationKeyBinding.nvda"
+          [class.btn-secondary]="keyBinding === KeyboardNavigationKeyBinding.nvda"
+          (click)="stageStateService.keyBinding = KeyboardNavigationKeyBinding.nvda"
+        >NVDA</button>
+        <button type="button" class="btn"
+          [class.btn-light]="keyBinding !== KeyboardNavigationKeyBinding.jaws"
+          [class.btn-secondary]="keyBinding === KeyboardNavigationKeyBinding.jaws"
+          (click)="stageStateService.keyBinding = KeyboardNavigationKeyBinding.jaws"
+          disabled
+        >JAWS</button>
+        <button type="button" class="btn"
+          [class.btn-light]="keyBinding !== KeyboardNavigationKeyBinding.voiceover"
+          [class.btn-secondary]="keyBinding === KeyboardNavigationKeyBinding.voiceover"
+          (click)="stageStateService.keyBinding = KeyboardNavigationKeyBinding.voiceover"
+          disabled
+        >VoiceOver</button>
+      </div>
+    </div>
+    <div class="d-flex align-items-center my-2">
+      <p class="mb-0 mr-3">Key Hint</p>
+      <div class="btn-group btn-group-sm" role="group">
+        <button type="button" class="btn"
+          [class.btn-light]="!hint"
+          [class.btn-primary]="hint"
+          (click)="stageStateService.hint = true"
+        >On</button>
+        <button type="button" class="btn"
+          [class.btn-light]="hint"
+          [class.btn-secondary]="!hint"
+          (click)="stageStateService.hint = false"
+        >Off</button>
+      </div>
+    </div>
+
+    <app-keyboard-panel></app-keyboard-panel>
+
+
+  </div>
+</div>

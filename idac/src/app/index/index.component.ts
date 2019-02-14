@@ -1,13 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Chart } from '../chart';
-import { ChartExampleService } from '../chart-example.service';
-import { HttpClient } from '@angular/common/http';
-
-export enum Stage {
-  load,
-  describe,
-  export
-}
+import { Stage } from '../stage-state';
+import { StageStateService } from '../stage-state.service';
 
 @Component({
   selector: 'app-index',
@@ -17,17 +10,22 @@ export enum Stage {
 export class IndexComponent implements OnInit {
   Stage = Stage;
   exampleId: number;
-  currentStage = Stage.load;
+  currentStage: Stage;
 
   constructor(
+    public stageStateService: StageStateService
   ) { }
 
   ngOnInit() {
+    this.stageStateService.stageObservable
+      .subscribe(stage => {
+        this.currentStage = stage;
+      })
   }
 
   _exampleIdChange(event) {
     this.exampleId = event;
-    this.currentStage = Stage.describe;
+    this.stageStateService.stage = Stage.describe;
   }
 
 }

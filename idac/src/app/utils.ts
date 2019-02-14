@@ -26,52 +26,6 @@ export function eqSet(as: Set<any>, bs: Set<any>) {
     return eq.reduce((a, b) => a && b);
 }
 
-const audioContext = new AudioContext();
-// browsers limit the number of concurrent audio contexts, so you better re-use'em
-
-export function beep(vol, freq, duration) {
-  const v = audioContext.createOscillator();
-  const u = audioContext.createGain();
-  v.connect(u);
-  v.frequency.value = freq;
-  v.type = 'square';
-  u.connect(audioContext.destination);
-  u.gain.value = vol * 0.01;
-  v.start(audioContext.currentTime);
-  v.stop(audioContext.currentTime + duration * 0.001);
-}
-
-export function beep_error() {
-  beep(5, 700, 150);
-}
-
-export function beep_detect() {
-  beep(5, 350, 150);
-}
-
-let sayTimeout = null;
-export function speak(message, korean = false) {
-  if (speechSynthesis.speaking) {
-    // SpeechSyn is currently speaking, cancel the current utterance(s)
-    speechSynthesis.cancel();
-    // Make sure we don't create more than one timeout...
-    if (sayTimeout !== null) {
-        clearTimeout(sayTimeout);
-    }
-    const _this = this;
-    sayTimeout = setTimeout(function () { speak(message); }, 250);
-  } else {
-    const msg = new SpeechSynthesisUtterance(message);
-    if (korean) {
-      msg.lang = 'ko-KR';
-    } else {
-      msg.lang = 'en-US';
-    }
-    msg.rate = 1;
-    window.speechSynthesis.speak(msg);
-  }
-}
-
 export function isAscendingArray(arr: any[]) {
   for (let i = 1; i < arr.length ; i++) {
     if (arr[i - 1] > arr[i]) {
@@ -109,15 +63,6 @@ export function makeAbsoluteContext(element: SVGGraphicsElement, svgDocument: SV
       x: transformedPoint.x,
       y: transformedPoint.y
     };
-
-    /*
-    const offset = svgDocument.getBoundingClientRect();
-    const matrix = element.getCTM();
-    return {
-      x: (matrix.a * x) + (matrix.c * y) + matrix.e, // - offset.left,
-      y: (matrix.b * x) + (matrix.d * y) + matrix.f // - offset.top
-    };
-    */
   };
 }
 

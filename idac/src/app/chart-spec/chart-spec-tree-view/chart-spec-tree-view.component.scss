@@ -3,3 +3,19 @@
 p {
   margin: 0;
 }
+
+:host /deep/ .tagcard .show-on-hover {
+  visibility: hidden;
+}
+:host /deep/ .tagcard:hover .show-on-hover {
+  visibility: visible;
+}
+
+:host /deep/ .hover-highlighted {
+  background-color: lighten($primary, 49%);
+  .tagname {
+    background-color: lighten($primary, 30%);
+    color: white;
+  }
+}
+

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,20 +8,28 @@ export class MessageService {
 
   constructor() { }
 
-  private _shouldScroll = false;
+  private shouldScrollSubject = new BehaviorSubject(false);
   set shouldScroll(b: boolean) {
-    this._shouldScroll = b;
+    this.shouldScrollSubject.next(b);
   }
   get shouldScroll() {
-    return this._shouldScroll;
+    return this.shouldScrollSubject.getValue();
+  }
+  get shouldScrollObservable() {
+    return this.shouldScrollSubject.asObservable();
   }
 
-  private _keyboardEventName = '';
-  set keyboardEventName(s: string) {
-    this._keyboardEventName = s;
-  }
+  private keyboardSubject: BehaviorSubject<string> = new BehaviorSubject('');
   get keyboardEventName() {
-    return this._keyboardEventName;
+    return this.keyboardSubject.getValue();
+  }
+
+  set keyboardEventName(s: string) {
+    this.keyboardSubject.next(s);
+  }
+
+  get keyboardEventNameObservable() {
+    return this.keyboardSubject.asObservable();
   }
 
 }

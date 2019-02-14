@@ -17,6 +17,10 @@ export class SpecTag {
     private static idCount = 0;
     public static _descriptionRule = '';
 
+    public static clear() {
+      SpecTag.idCount = 0;
+    }
+
     attributes: IAttribute = {};
     _properties: IProperty = {};
     children: SpecTag[];
@@ -80,25 +84,36 @@ export class SpecTag {
                 description = `${text} ${description}`;
             }
         }
-        if (queryAnswer) {
-            description = queryAnswer + ' ' + description;
-            console.log(description);
-        }
         const args = description.match(/\$\(([^)]*)\)/g);
         if (args) {
         args.map(d => [d, d.slice(2, -1)])
             .forEach(([arg, strip]) => {
                 let value = 'undefined';
+                let isUndefined = true;
                 if (strip.split(':').length > 1) {
                     const tagName = strip.split(':')[0].trim();
                     const keyName = strip.split(':')[1].trim();
                     const tag = this.peekableTags().find(_tag => _tag._tagname === tagName);
-                    if (tag.properties[keyName]) { value = '' + tag.properties[keyName](); }
+                    if (tag && tag.properties[keyName]) {
+                      if (tag.attributes[keyName] && tag.attributes[keyName].type == 'input-select') {
+                        isUndefined = false;
+                      }
+                      value = '' + tag.properties[keyName]();
+                    }
                 } else {
-                    if (this.properties[strip]) { value = '' + this.properties[strip](); }
+                    if (this.properties[strip]) {
+                      if (this.attributes[strip] && this.attributes[strip].type == 'input-select') {
+                        isUndefined = false;
+                      }
+                      value = '' + this.properties[strip]();
+                    }
                 }
+                if (!value.length && isUndefined) { value = 'undefined'; }
                 description = description.replace(arg, value);
             });
+        }
+        if (queryAnswer) {
+            description = queryAnswer + ' ' + description;
         }
         return firstLetterUpperCase(description);
     }

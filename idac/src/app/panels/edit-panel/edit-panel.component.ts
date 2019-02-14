@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 
 @Component({
-  selector: 'app-master-panel',
-  templateUrl: './master-panel.component.html',
-  styleUrls: ['./master-panel.component.scss']
+  selector: 'app-edit-panel',
+  templateUrl: './edit-panel.component.html',
+  styleUrls: ['./edit-panel.component.scss']
 })
-export class MasterPanelComponent implements OnInit {
+export class EditPanelComponent implements OnInit {
 
   @Input() tag: SpecTag;
   overrideDescription: boolean;
