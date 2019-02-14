@@ -45,4 +45,8 @@ export class NavBarComponent implements OnInit {
     this.stageStateService.toolbarHelp = !this.toolbarHelp;
   }
 
+  _setStage(stage: Stage) {
+    this.stageStateService.stage = stage;
+  }
+
 }

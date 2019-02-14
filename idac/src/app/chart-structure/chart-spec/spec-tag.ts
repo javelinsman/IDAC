@@ -17,6 +17,10 @@ export class SpecTag {
     private static idCount = 0;
     public static _descriptionRule = '';
 
+    public static clear() {
+      SpecTag.idCount = 0;
+    }
+
     attributes: IAttribute = {};
     _properties: IProperty = {};
     children: SpecTag[];

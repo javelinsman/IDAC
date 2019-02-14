@@ -37,6 +37,7 @@ export class MakeChartComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    SpecTag.clear();
     this.stageStateService.toolbarSettingObservable.subscribe(settings => {
       this.sidebarSettings = settings;
     })

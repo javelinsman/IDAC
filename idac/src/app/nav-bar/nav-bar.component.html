@@ -8,7 +8,7 @@
       <li class="nav-item"
         style="cursor: pointer"
         [class.active]="stage === Stage.load"
-        (click)="stageChange.emit(Stage.load)">
+        (click)="_setStage(Stage.load)">
         <a class="nav-link">1. Load Data</a>
       </li>
       <li class="nav-item"
