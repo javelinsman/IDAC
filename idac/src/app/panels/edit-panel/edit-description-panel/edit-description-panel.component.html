@@ -8,7 +8,7 @@
   </div>
 
   <textarea [class.d-none]="overrideDescription" [(ngModel)]="tag.descriptionRule"
-    (drop)="onDrop($event)" (dragover)="onDragOver($event)"
+    (drop)="onDrop($event)"
     (blur)="onDescriptionBlur($event)" (input)="onDescriptionChange()"
     class="form-control" id="description-rule-textarea" rows="3" #input>
   </textarea>
