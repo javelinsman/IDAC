@@ -20,6 +20,8 @@ export class EditDescriptionPanelComponent implements OnInit, AfterViewInit {
 
   fuzzySearcher: FuzzySearch;
 
+  replaced = false;
+
   constructor() { }
 
   ngOnInit() {
@@ -35,10 +37,29 @@ export class EditDescriptionPanelComponent implements OnInit, AfterViewInit {
     this.textComplete = new Textcomplete(editor);
     console.log(editor, this.textComplete)
     this.textComplete.register([{
-      match: /()\$\(([a-zA-Z0-9+\-\_]*)$/,
+      match: /()\$\(((?:\w|\d|\s|\:)*)$/,
       search: (term, callback) => callback(this.searchKeyword(term)),
-      replace: (name) => `$1$(${name}) `
+      replace: (name) => {
+        this.replaced = true;
+        return `$(${name})`;
+      }
     }]);
+  }
+
+  onDescriptionChange() {
+    if (this.replaced) {
+      this.deleteFollowingSegment();
+    }
+  }
+
+  deleteFollowingSegment() {
+    const textarea = this.textarea.nativeElement;
+    const pos = textarea.selectionStart;
+    const left = textarea.value.slice(0, pos);
+    const right = textarea.value.slice(pos);
+    const rightNew = right.replace(/^[^()]*\)/, '');
+    textarea.value = left + rightNew;
+    this.replaced = false;
   }
 
   searchKeyword(keyword: string): string[] {
