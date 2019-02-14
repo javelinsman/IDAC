@@ -68,6 +68,7 @@ export class EditDescriptionPanelComponent implements OnInit, AfterViewInit {
   onDrop(event: DragEvent) {
     const textarea = this.textarea.nativeElement;
     const propName = event.dataTransfer.getData('text');
+    // TODO: remove this black magic
     setTimeout(() => { textarea.selectionStart += propName.length; }, 0);
   }
 
