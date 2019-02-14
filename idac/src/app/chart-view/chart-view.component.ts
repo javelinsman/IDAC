@@ -259,10 +259,14 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
 
     this.attributeLink.xLabel.select('text').text(
       labelUnit(xProp.label(), xProp.unit())
-    )
+    );
     this.attributeLink.yLabel.select('text').text(
       labelUnit(yProp.label(), yProp.unit())
-    )
+    );
+    this.attributeLink.xTicks.forEach((xTick, i) => {
+      console.log(xTick);
+      xTick.select('text').text(root.x.children[i].properties.text());
+    });
 
   }
 
