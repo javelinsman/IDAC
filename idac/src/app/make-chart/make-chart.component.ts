@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, AfterViewChecked, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, AfterViewChecked, Input, AfterContentChecked } from '@angular/core';
 import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
 import { ActivatedRoute } from '@angular/router';
 import { ChartExampleService } from '../chart-example.service';
@@ -14,7 +14,7 @@ import { StageState } from '../index/index.component';
   templateUrl: './make-chart.component.html',
   styleUrls: ['./make-chart.component.scss']
 })
-export class MakeChartComponent implements OnInit {
+export class MakeChartComponent implements OnInit, AfterContentChecked {
   @Input() exampleId: number;
   @Input() stageState: StageState;
 
@@ -25,6 +25,8 @@ export class MakeChartComponent implements OnInit {
   currentTag: SpecTag;
   rightPanel = 'filter';
   @ViewChild('container') containerDiv: ElementRef;
+
+  sidebar: boolean;
 
   constructor(
       private chartExampleService: ChartExampleService,
@@ -47,6 +49,11 @@ export class MakeChartComponent implements OnInit {
     });
     this.onWindowResize();
   }
+
+  ngAfterContentChecked() {
+    this.sidebar = Object.values(this.stageState.describe).some(d => d);
+  }
+
   onWindowResize() {
     d3.select(this.containerDiv.nativeElement).style('height', `${window.innerHeight - 20 - 50}px`);
   }

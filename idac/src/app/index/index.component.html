@@ -1,6 +1,6 @@
 <app-nav-bar
   [(stage)]="currentStage"
-  [(stageState)]="stageState"
+  [stageState]="stageState"
 ></app-nav-bar>
 
 <app-load-data *ngIf="currentStage === Stage.load"

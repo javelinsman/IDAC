@@ -65,3 +65,14 @@ $constant-highlight-color: #303f9f;
     color: $primary !important;
   }
 }
+
+$navbar-height: 3.5em;
+
+
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
+
+.overflow-x-scroll {
+  overflow-x: scroll;
+}

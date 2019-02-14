@@ -1,17 +1,18 @@
 <div class="container-fluid" #container (window:resize)="onWindowResize()">
   <div class="row h-100" *ngIf="chart && chartAccent">
-    <div class="col-4 border h-100 styled-scroll" style="overflow-y: scroll">
+    <section class="col-4 border h-100 styled-scroll" style="overflow-y: scroll">
       <app-chart-spec [chartSpec]="chartSpec" [(currentTag)]="currentTag"></app-chart-spec>
-    </div>
-    <div class="col-8 border h-100 styled-scroll" style="overflow-y: scroll">
-      <div class="row">
+    </section>
+    <div class="border h-100 styled-scroll col-8 overflow-y-scroll">
+    >
+      <section class="row">
         <div class="col-12">
           <app-chart-view [chartSpec]="chartSpec"
             [src]="chart.src_svg" [(currentTag)]="currentTag"></app-chart-view>
         </div>
-      </div>
+      </section>
       <hr>
-      <div class="row">
+      <section class="row">
         <div class="col-12">
           <ul class="nav nav-tabs">
             <li class="nav-item">
@@ -34,23 +35,13 @@
           <app-filter-view *ngIf="rightPanel === 'filter'" [(currentTag)]="currentTag"></app-filter-view>
           <app-keyboard-panel *ngIf="rightPanel === 'keyboard'"></app-keyboard-panel>
         </div>
-      </div>
-      <!--div class="row border">
-        <div class="col-12">
-        </div>
-      </div-->
-      <!--div class="row border">
-        <div class="col-12">
-          <app-editors-note-panel [tag]="currentTag"></app-editors-note-panel>
-        </div>
-      </div-->
-      <!--div class="row border">
-        <div class="col-12">
-          <app-properties-panel [tag]="currentTag"></app-properties-panel>
-        </div>
-      </div-->
+      </section>
     </div>
   </div>
+  <section class="sidebar" [class.d-none]="!sidebar">
+    <app-help-panel *ngIf="stageState.describe.toolbarHelp"></app-help-panel>
+    <app-settings-panel *ngIf="stageState.describe.toolbarSetting"></app-settings-panel>
+  </section>
   <!--
   <div class="row">
   </div>

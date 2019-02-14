@@ -14,7 +14,6 @@ export class NavBarComponent implements OnInit {
   @Input() stageState: StageState;
 
   @Output() stageChange: EventEmitter<Stage> = new EventEmitter();
-  @Output() stageStateChange: EventEmitter<StageState> = new EventEmitter();
 
   constructor() { }
 
@@ -27,7 +26,6 @@ export class NavBarComponent implements OnInit {
     }
     this.stageState.describe.toolbarSetting =
       !this.stageState.describe.toolbarSetting;
-    this.stageStateChange.emit(this.stageState);
   }
 
   _toggleHelp() {
@@ -36,7 +34,6 @@ export class NavBarComponent implements OnInit {
     }
     this.stageState.describe.toolbarHelp =
       !this.stageState.describe.toolbarHelp;
-    this.stageStateChange.emit(this.stageState);
   }
 
 }

@@ -27,6 +27,8 @@ import { ChartSpecTreeViewTagnameComponent } from './chart-spec/chart-spec-tree-
 import { ChartSpecTreeViewKeyHintComponent } from './chart-spec/chart-spec-tree-view/key-hint/chart-spec-tree-view-key-hint.component';
 import { ChartSpecTreeViewDescriptionComponent } from './chart-spec/chart-spec-tree-view/description/chart-spec-tree-view-description.component';
 import { ChartSpecTreeViewBarUtilsComponent } from './chart-spec/chart-spec-tree-view/bar-utils/chart-spec-tree-view-bar-utils.component';
+import { SettingsPanelComponent } from './panels/settings-panel/settings-panel.component';
+import { HelpPanelComponent } from './panels/help-panel/help-panel.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { ChartSpecTreeViewBarUtilsComponent } from './chart-spec/chart-spec-tree
     ChartSpecTreeViewTagnameComponent,
     ChartSpecTreeViewKeyHintComponent,
     ChartSpecTreeViewDescriptionComponent,
-    ChartSpecTreeViewBarUtilsComponent
+    ChartSpecTreeViewBarUtilsComponent,
+    SettingsPanelComponent,
+    HelpPanelComponent
   ],
   imports: [
     BrowserModule,
