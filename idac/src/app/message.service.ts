@@ -6,17 +6,20 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class MessageService {
 
-  private keyboardSubject: BehaviorSubject<string> = new BehaviorSubject('');
   constructor() { }
 
-  private _shouldScroll = false;
+  private shouldScrollSubject = new BehaviorSubject(false);
   set shouldScroll(b: boolean) {
-    this._shouldScroll = b;
+    this.shouldScrollSubject.next(b);
   }
   get shouldScroll() {
-    return this._shouldScroll;
+    return this.shouldScrollSubject.getValue();
+  }
+  get shouldScrollObservable() {
+    return this.shouldScrollSubject.asObservable();
   }
 
+  private keyboardSubject: BehaviorSubject<string> = new BehaviorSubject('');
   get keyboardEventName() {
     return this.keyboardSubject.getValue();
   }
