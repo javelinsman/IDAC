@@ -35,7 +35,6 @@ export class EditDescriptionPanelComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     const editor = new Textarea(this.textarea.nativeElement);
     this.textComplete = new Textcomplete(editor);
-    console.log(editor, this.textComplete)
     this.textComplete.register([{
       match: /()\$\(((?:\w|\d|\s|\:)*)$/,
       search: (term, callback) => callback(this.searchKeyword(term)),

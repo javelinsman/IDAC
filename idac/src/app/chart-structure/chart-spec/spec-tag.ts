@@ -13,6 +13,7 @@ interface IEditorsNote {
 class SpecTagCache {
   descriptionRule: string;
   renderedText: string;
+  attributes: any;
 }
 
 export class SpecTag {
@@ -23,7 +24,8 @@ export class SpecTag {
     public static _descriptionRule = '';
     public static cache: SpecTagCache = {
       descriptionRule: null,
-      renderedText: null
+      renderedText: null,
+      attributes: null
     }
 
     attributes: IAttribute = {};
@@ -79,9 +81,21 @@ export class SpecTag {
         return (this.constructor as any).cache;
     }
 
+    isCacheDirty(): boolean {
+      if (this.cache.descriptionRule !== this.descriptionRule) {
+        return true;
+      }
+      Object.entries(this.attributes).forEach(([key, value]) => {
+        if (this.cache.attributes[key].value !== value.value) {
+          return true;
+        }
+      });
+      return false;
+    }
+
     describe(info: ChartSpec = null, tags: any[] = null, keyboardEvent: string = null, queryAnswer: string = null) {
         let description = this.descriptionRule;
-        if (this.cache.descriptionRule !== this.descriptionRule) {
+        if (this.isCacheDirty()) {
           if (this.editorsNote.active) {
               const text = this.editorsNote.text;
               const position = this.editorsNote.position;
@@ -115,6 +129,7 @@ export class SpecTag {
           }
           this.cache.descriptionRule = this.descriptionRule;
           this.cache.renderedText = firstLetterUpperCase(description);
+          this.cache.attributes = JSON.parse(JSON.stringify(this.attributes));
         }
         return this.cache.renderedText;
     }

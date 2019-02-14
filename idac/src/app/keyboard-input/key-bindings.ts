@@ -143,7 +143,6 @@ Object.values(keyBindings).forEach(keyBinding => {
     firstLetterUpperCase(key.replace('arrow', '')));
   keyBinding.keyName = keys.join('+');
   keyBinding.keyNameShort = shorten(keyBinding.keyName);
-  console.log(keyBinding);
 });
 
 function shorten(keyName: string) {
