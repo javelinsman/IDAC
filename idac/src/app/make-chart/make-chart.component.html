@@ -38,8 +38,12 @@
     </div>
   </div>
   <section class="sidebar" [class.d-none]="!sidebar" #sidebar>
-    <app-help-panel *ngIf="stageState.describe.toolbarHelp"></app-help-panel>
-    <app-settings-panel *ngIf="stageState.describe.toolbarSetting"></app-settings-panel>
+    <app-help-panel *ngIf="stageState.describe.toolbarHelp"
+      [stageState]="stageState"
+    ></app-help-panel>
+    <app-settings-panel *ngIf="stageState.describe.toolbarSetting"
+      [stageState]="stageState"
+    ></app-settings-panel>
   </section>
   <!--
   <div class="row">

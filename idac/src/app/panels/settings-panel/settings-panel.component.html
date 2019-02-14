@@ -8,16 +8,39 @@
     <div class="d-flex align-items-center my-2">
       <p class="mb-0 mr-3">Read aloud elements</p>
       <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-secondary">On</button>
-        <button type="button" class="btn btn-dark">Off</button>
+        <button type="button" class="btn"
+          [class.btn-light]="!audioControl.readAloudElements"
+          [class.btn-primary]="audioControl.readAloudElements"
+          (click)="audioControl.readAloudElements = true"
+        >On</button>
+        <button type="button" class="btn"
+          [class.btn-light]="audioControl.readAloudElements"
+          [class.btn-secondary]="!audioControl.readAloudElements"
+          (click)="audioControl.readAloudElements = false"
+        >Off</button>
       </div>
     </div>
     <div class="d-flex align-items-center my-2">
       <p class="mb-0 mr-3">Speed</p>
       <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-secondary disabled">Slow</button>
-        <button type="button" class="btn btn-primary disabled">Normal</button>
-        <button type="button" class="btn btn-secondary disabled">Fast</button>
+        <button type="button" class="btn"
+          [class.btn-light]="audioControl.speed !== EnumSpeed.slow"
+          [class.btn-secondary]="audioControl.speed === EnumSpeed.slow"
+          (click)="audioControl.speed = EnumSpeed.slow"
+          [attr.disabled]="audioControl.readAloudElements ? null : ''"
+        >Slow</button>
+        <button type="button" class="btn"
+          [class.btn-light]="audioControl.speed !== EnumSpeed.normal"
+          [class.btn-secondary]="audioControl.speed === EnumSpeed.normal"
+          (click)="audioControl.speed = EnumSpeed.normal"
+          [attr.disabled]="audioControl.readAloudElements ? null : ''"
+        >Normal</button>
+        <button type="button" class="btn"
+          [class.btn-light]="audioControl.speed !== EnumSpeed.fast"
+          [class.btn-secondary]="audioControl.speed === EnumSpeed.fast"
+          (click)="audioControl.speed = EnumSpeed.fast"
+          [attr.disabled]="audioControl.readAloudElements ? null : ''"
+        >Fast</button>
       </div>
     </div>
 
@@ -25,20 +48,41 @@
 
     <h5 class="card-title">Keyboard Navigation</h5>
     <div class="d-flex align-items-center my-2">
-      <p class="mb-0 mr-3">Show hint</p>
+      <p class="mb-0 mr-3">Key Binding</p>
       <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-primary">On</button>
-        <button type="button" class="btn btn-secondary">Off</button>
+        <button type="button" class="btn"
+          [class.btn-light]="keyboardNavigation.keyBinding !== EnumKeyBinding.nvda"
+          [class.btn-secondary]="keyboardNavigation.keyBinding === EnumKeyBinding.nvda"
+          (click)="keyboardNavigation.keyBinding = EnumKeyBinding.nvda"
+        >NVDA</button>
+        <button type="button" class="btn"
+          [class.btn-light]="keyboardNavigation.keyBinding !== EnumKeyBinding.jaws"
+          [class.btn-secondary]="keyboardNavigation.keyBinding === EnumKeyBinding.jaws"
+          (click)="keyboardNavigation.keyBinding = EnumKeyBinding.jaws"
+        >JAWS</button>
+        <button type="button" class="btn"
+          [class.btn-light]="keyboardNavigation.keyBinding !== EnumKeyBinding.voiceover"
+          [class.btn-secondary]="keyboardNavigation.keyBinding === EnumKeyBinding.voiceover"
+          (click)="keyboardNavigation.keyBinding = EnumKeyBinding.voiceover"
+        >VoiceOver</button>
       </div>
     </div>
     <div class="d-flex align-items-center my-2">
-      <p class="mb-0 mr-3">Key Binding</p>
+      <p class="mb-0 mr-3">Read aloud elements</p>
       <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-primary">NVDA</button>
-        <button type="button" class="btn btn-secondary">JAWS</button>
-        <button type="button" class="btn btn-secondary">Voiceover</button>
+        <button type="button" class="btn"
+          [class.btn-light]="!keyboardNavigation.hint"
+          [class.btn-primary]="keyboardNavigation.hint"
+          (click)="keyboardNavigation.hint = true"
+        >On</button>
+        <button type="button" class="btn"
+          [class.btn-light]="keyboardNavigation.hint"
+          [class.btn-secondary]="!keyboardNavigation.hint"
+          (click)="keyboardNavigation.hint = false"
+        >Off</button>
       </div>
     </div>
+
     <app-keyboard-panel></app-keyboard-panel>
 
 

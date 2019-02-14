@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { defaultStageState, StageState } from 'src/app/stage-state';
 
 @Component({
   selector: 'app-help-panel',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./help-panel.component.scss']
 })
 export class HelpPanelComponent implements OnInit {
+
+  @Input() stageState: StageState;
 
   constructor() { }
 
