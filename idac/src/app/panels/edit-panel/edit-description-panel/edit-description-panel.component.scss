@@ -1,1 +1,6 @@
 @import "../../../theme.scss";
+
+textarea:focus {
+  border: 1px soild $primary !important;
+  box-shadow: none !important;
+}

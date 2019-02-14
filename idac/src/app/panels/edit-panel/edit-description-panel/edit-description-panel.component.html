@@ -10,10 +10,12 @@
   <textarea [class.d-none]="overrideDescription" [(ngModel)]="tag.descriptionRule"
     (drop)="onDrop($event)"
     (blur)="onDescriptionBlur($event)" (input)="onDescriptionChange()"
-    class="form-control" id="description-rule-textarea" rows="3" #input>
+    class="form-control styled-scroll" id="description-rule-textarea" rows="3" #input>
   </textarea>
 
-  <textarea [class.d-none]="!overrideDescription" class="form-control" id="description-rule-textarea" rows="3"
+  <textarea [class.d-none]="!overrideDescription"
+    class="form-control styled-scroll"
+    id="description-rule-textarea" rows="3"
     [(ngModel)]="tag.editorsNote.text"></textarea>
 
 
