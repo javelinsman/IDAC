@@ -25,6 +25,7 @@ export class MakeChartComponent implements OnInit, AfterContentChecked {
   currentTag: SpecTag;
   rightPanel = 'filter';
   @ViewChild('container') containerDiv: ElementRef;
+  @ViewChild('sidebar') sidebarSection: ElementRef;
 
   sidebar: boolean;
 
@@ -55,7 +56,9 @@ export class MakeChartComponent implements OnInit, AfterContentChecked {
   }
 
   onWindowResize() {
-    d3.select(this.containerDiv.nativeElement).style('height', `${window.innerHeight - 20 - 50}px`);
+    const mainHeight = `${window.innerHeight - 20 - 50}px`;
+    d3.select(this.containerDiv.nativeElement).style('height', mainHeight);
+    d3.select(this.sidebarSection.nativeElement).style('height', mainHeight);
   }
 
 
