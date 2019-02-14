@@ -28,7 +28,15 @@ export class SpeakingService {
     }
   }
 
-  beep(volume: number, frequency: number, duration: number) {
+  get isSpeaking() {
+    return speechSynthesis.speaking;
+  }
+
+  stop() {
+    speechSynthesis.cancel();
+  }
+
+  private beep(volume: number, frequency: number, duration: number) {
     const v = this.audioContext.createOscillator();
     const u = this.audioContext.createGain();
     v.connect(u);
@@ -48,15 +56,13 @@ export class SpeakingService {
     this.beep(5, 350, 150);
   }
 
-  _read(message, korean = false) {
-    if (speechSynthesis.speaking) {
-      // SpeechSyn is currently speaking, cancel the current utterance(s)
-      speechSynthesis.cancel();
+  private _read(message, korean = false) {
+    if (this.isSpeaking) {
+      this.stop()
       // Make sure we don't create more than one timeout...
       if (this.sayTimeout !== null) {
           clearTimeout(this.sayTimeout);
       }
-      const _this = this;
       this.sayTimeout = setTimeout(() => this._read(message, korean), 250);
     } else {
       const msg = new SpeechSynthesisUtterance(message);

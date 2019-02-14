@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
+import { SpeakingService } from 'src/app/speaking.service';
 
 @Component({
   selector: 'app-chart-spec-tree-view-bar-utils',
@@ -14,9 +15,23 @@ export class ChartSpecTreeViewBarUtilsComponent implements OnInit {
   @Input() edit: boolean;
   @Input() viewOnly: boolean;
 
-  constructor() { }
+  constructor(
+    private speakingService: SpeakingService
+  ) { }
 
   ngOnInit() {
+  }
+
+  play() {
+    this.speakingService.read(this.tag.describe());
+  }
+
+  get speaking() {
+    return this.speakingService.isSpeaking;
+  }
+
+  stop() {
+    this.speakingService.stop();
   }
 
 }

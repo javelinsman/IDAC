@@ -3,7 +3,10 @@
 >
   <ul class="d-flex justify-content-end p-0">
     <li [class.invisible]="!edit" class="mx-2">
-      <i class="fas fa-play text-secondary text-as-button"></i>
+      <i class="fas fa-play text-secondary text-as-button"
+        [class.fa-play]="!speaking"
+        [class.fa-stop]="speaking"
+        (click)="speaking ? stop() : play()"></i>
     </li>
     <li *ngIf="tag._parent._tagname !== 'ChartSpec' && siblingLength > 1"
       class="mx-2"
