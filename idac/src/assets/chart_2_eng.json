@@ -88,7 +88,7 @@
       "color": "#000000"
     },
     "yLabel": {
-      "text": "people (unit: per 0.1 million)",
+      "text": "people (per 0.1 million)",
       "fontFamily": "Roboto",
       "fontSize": 14,
       "fontStyle": "regular",

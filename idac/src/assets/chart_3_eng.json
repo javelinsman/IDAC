@@ -15,51 +15,51 @@
     "fileName": "chart_3_eng.csv",
     "rows": [
       {
-        "month": "_1",
+        "month": "1",
         "mm": 13
       },
       {
-        "month": "_2",
+        "month": "2",
         "mm": 16
       },
       {
-        "month": "_3",
+        "month": "3",
         "mm": 7
       },
       {
-        "month": "_4",
+        "month": "4",
         "mm": 31
       },
       {
-        "month": "_5",
+        "month": "5",
         "mm": 63
       },
       {
-        "month": "_6",
+        "month": "6",
         "mm": 98
       },
       {
-        "month": "_7",
+        "month": "7",
         "mm": 208
       },
       {
-        "month": "_8",
+        "month": "8",
         "mm": 173
       },
       {
-        "month": "_9",
+        "month": "9",
         "mm": 88
       },
       {
-        "month": "_10",
+        "month": "10",
         "mm": 52
       },
       {
-        "month": "_11",
+        "month": "11",
         "mm": 42
       },
       {
-        "month": "_12",
+        "month": "12",
         "mm": 18
       }
     ],
@@ -88,7 +88,7 @@
       "color": "#000000"
     },
     "yLabel": {
-      "text": "precipitation (unit: mm)",
+      "text": "precipitation (mm)",
       "fontFamily": "Roboto",
       "fontSize": 14,
       "fontStyle": "regular",
@@ -125,7 +125,7 @@
           "_id": "_uniqueid_947",
           "type": "range",
           "axis": "E0",
-          "range": "range(\"_6\", \"_8\", $[WyJfMSIsIl8yIiwiXzMiLCJfNCIsIl81IiwiXzYiLCJfNyIsIl84IiwiXzkiLCJfMTAiLCJfMTEiLCJfMTIiXQ==])"
+          "range": "range(\"6\", \"8\", $[WyJfMSIsIl8yIiwiXzMiLCJfNCIsIl81IiwiXzYiLCJfNyIsIl84IiwiXzkiLCJfMTAiLCJfMTEiLCJfMTIiXQ==])"
         },
         "components": [
           {
@@ -175,7 +175,7 @@
           "_id": "_uniqueid_947",
           "type": "range",
           "axis": "E0",
-          "range": "range(\"_6\", \"_8\", $[WyJfMSIsIl8yIiwiXzMiLCJfNCIsIl81IiwiXzYiLCJfNyIsIl84IiwiXzkiLCJfMTAiLCJfMTEiLCJfMTIiXQ==])"
+          "range": "range(\"6\", \"8\", $[WyJfMSIsIl8yIiwiXzMiLCJfNCIsIl81IiwiXzYiLCJfNyIsIl84IiwiXzkiLCJfMTAiLCJfMTEiLCJfMTIiXQ==])"
         },
         "target_inherit": {
           "mode": "within-or-equal",

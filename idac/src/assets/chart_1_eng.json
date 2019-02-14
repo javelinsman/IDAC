@@ -82,7 +82,7 @@
       "color": "#000000"
     },
     "yLabel": {
-      "text": "net income (unit: billion dollars)",
+      "text": "net income (billion dollars)",
       "fontFamily": "Roboto",
       "fontSize": 14,
       "fontStyle": "regular",
