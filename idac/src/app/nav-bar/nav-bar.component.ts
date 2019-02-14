@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Stage } from '../index/index.component';
+import { Stage, StageState } from '../index/index.component';
 
 @Component({
   selector: 'app-nav-bar',
@@ -9,12 +9,34 @@ import { Stage } from '../index/index.component';
 export class NavBarComponent implements OnInit {
 
   Stage = Stage;
+
   @Input() stage: Stage;
+  @Input() stageState: StageState;
+
   @Output() stageChange: EventEmitter<Stage> = new EventEmitter();
+  @Output() stageStateChange: EventEmitter<StageState> = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  _toggleSetting() {
+    if (!this.stageState.describe.toolbarSetting) {
+      this.stageState.describe.toolbarHelp = false;
+    }
+    this.stageState.describe.toolbarSetting =
+      !this.stageState.describe.toolbarSetting;
+    this.stageStateChange.emit(this.stageState);
+  }
+
+  _toggleHelp() {
+    if (!this.stageState.describe.toolbarHelp) {
+      this.stageState.describe.toolbarSetting = false;
+    }
+    this.stageState.describe.toolbarHelp =
+      !this.stageState.describe.toolbarHelp;
+    this.stageStateChange.emit(this.stageState);
   }
 
 }

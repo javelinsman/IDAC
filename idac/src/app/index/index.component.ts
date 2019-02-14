@@ -9,6 +9,21 @@ export enum Stage {
   export
 }
 
+export interface StageState {
+  load: StageStateLoad;
+  describe: StageStateDescribe;
+  export: StageStateExport;
+}
+
+type StageStateLoad = any;
+
+interface StageStateDescribe {
+  toolbarSetting: boolean;
+  toolbarHelp: boolean;
+}
+
+type StageStateExport = any;
+
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
@@ -18,6 +33,15 @@ export class IndexComponent implements OnInit {
   Stage = Stage;
   exampleId: number;
   currentStage = Stage.load;
+
+  stageState: StageState = {
+    load: {},
+    describe: {
+      toolbarSetting: false,
+      toolbarHelp: false,
+    },
+    export: {}
+  }
 
   constructor(
   ) { }

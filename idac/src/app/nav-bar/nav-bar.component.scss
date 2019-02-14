@@ -1,2 +1,14 @@
-nav {
+@import "../theme.scss";
+
+.toolbar {
+  i {
+    cursor: pointer;
+    color: $gray-400;
+  }
+  i:hover {
+    color: $gray-200;
+  }
+  i.active {
+    color: $white;
+  }
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, AfterViewChecked, Input } from '@angular/core';
 import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
-import { NavigateComponent } from '../navigate/navigate.component';
 import { ActivatedRoute } from '@angular/router';
 import { ChartExampleService } from '../chart-example.service';
 import * as d3 from 'd3';
@@ -8,6 +7,7 @@ import { Chart } from '../chart';
 import { ChartAccent } from '../chart-structure/chart-accent/chart-accent';
 import { HttpClient } from '@angular/common/http';
 import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
+import { StageState } from '../index/index.component';
 
 @Component({
   selector: 'app-make-chart',
@@ -16,6 +16,7 @@ import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
 })
 export class MakeChartComponent implements OnInit {
   @Input() exampleId: number;
+  @Input() stageState: StageState;
 
   chart: Chart;
   chartAccent: ChartAccent;
