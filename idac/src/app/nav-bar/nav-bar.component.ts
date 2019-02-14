@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Stage, StageState } from '../index/index.component';
+import { Stage } from '../index/index.component';
+import { StageState } from '../stage-state';
 
 @Component({
   selector: 'app-nav-bar',

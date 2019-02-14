@@ -7,7 +7,7 @@ import { Chart } from '../chart';
 import { ChartAccent } from '../chart-structure/chart-accent/chart-accent';
 import { HttpClient } from '@angular/common/http';
 import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
-import { StageState } from '../index/index.component';
+import { StageState } from '../stage-state';
 
 @Component({
   selector: 'app-make-chart',
