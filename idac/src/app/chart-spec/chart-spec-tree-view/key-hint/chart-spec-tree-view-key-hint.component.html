@@ -1,14 +1,9 @@
-<!--
-  Very weird bug occurs here.
-  If reachableKey in *ngFor becomes object (currently it is string),
-  tooltip doesn't work.
--->
 <div class="d-flex flex-column py-3">
-  <ng-container *ngFor="let reachableKey of reachableKeys; index as i">
+  <ng-container *ngFor="let reachableKey of reachableKeys">
     <span
       class="badge badge-info mx-auto my-1 font-weight-light cursor-default"
-      placement="right" [ngbTooltip]="tooltipDescriptions[i]" container="body"
-      >{{ reachableKey }}</span>
+      placement="right" [ngbTooltip]="reachableKey.tooltip" container="body"
+      >{{ reachableKey.key }}</span>
   </ng-container>
 </div>
 <app-navigate [sandbox]="true">

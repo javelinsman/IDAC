@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, AfterViewChecked, AfterContentChecked } from '@angular/core';
-import { keyBindings, KeyBindings } from 'src/app/keyboard-input/key-bindings';
+import { keyBindings, KeyBindings, KeyBinding } from 'src/app/keyboard-input/key-bindings';
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 import { NavigateComponent } from 'src/app/navigate/navigate.component';
 
@@ -15,10 +15,9 @@ export class ChartSpecTreeViewKeyHintComponent implements OnInit, AfterContentCh
 
   @ViewChild(NavigateComponent) navigateComponent: NavigateComponent;
 
+  prevTag = null;
   keyBindings: KeyBindings = keyBindings;
-
-  reachableKeys: string[];
-  tooltipDescriptions: string[];
+  reachableKeys: any[];
 
   constructor() { }
 
@@ -26,8 +25,14 @@ export class ChartSpecTreeViewKeyHintComponent implements OnInit, AfterContentCh
   }
 
   ngAfterContentChecked() {
+    if (this.prevTag !== this.currentTag) {
+      this.prevTag = this.currentTag;
+      this.refreshReachableKeys();
+    }
+  }
+
+  refreshReachableKeys() {
     this.reachableKeys =[];
-    this.tooltipDescriptions =[];
     if (this.tag === this.currentTag) {
       // this.reachableKeys.push('⏎');
     } else {
@@ -35,8 +40,10 @@ export class ChartSpecTreeViewKeyHintComponent implements OnInit, AfterContentCh
         this.navigateComponent.tag = this.currentTag;
         this.navigateComponent[methodName]();
         if(this.navigateComponent.tag === this.tag) {
-          this.reachableKeys.push(this.shorten(Array.from(keyBinding).join('+')));
-          this.tooltipDescriptions.push(this.tooltipDescription(methodName, keyBinding));
+          this.reachableKeys.push({
+            key: this.shorten(Array.from(keyBinding).join('+')),
+            tooltip: this.tooltipDescription(methodName, keyBinding)
+          });
         }
       });
       this.reachableKeys = this.reachableKeys.slice(0, 5);
@@ -58,9 +65,9 @@ export class ChartSpecTreeViewKeyHintComponent implements OnInit, AfterContentCh
     }
   }
 
-  tooltipDescription(methodName, keyBinding) {
+  tooltipDescription(methodName: string, keyBinding: KeyBinding) {
     return `Press [${
-      Array.from(keyBinding).join(' and ').toLocaleUpperCase().replace('ARROW', '')
+      Array.from(keyBinding).join('+').toLocaleUpperCase().replace('ARROW', '')
     }] key to go to ${this.tag._tagname}`;
   }
 
