@@ -48,6 +48,7 @@ export class NavigateComponent implements OnInit {
       if (this.tag.children && this.tag.children.length) {
         this.speakingService.beep_detect();
       }
+      this.speakingService.read(this.tag.describe());
     }
   }
 
@@ -60,7 +61,6 @@ export class NavigateComponent implements OnInit {
       this.tag = tag;
       this.tagChange.emit(this.tag);
       this.messageService.shouldScroll = true;
-      this.speakingService.read(this.tag.describe());
     }
   }
 
