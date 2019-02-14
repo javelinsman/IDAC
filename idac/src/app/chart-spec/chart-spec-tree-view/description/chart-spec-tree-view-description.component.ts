@@ -19,19 +19,24 @@ export class ChartSpecTreeViewDescriptionComponent implements OnInit, AfterConte
 
   hover: boolean;
 
+  prevDescriptionRule: string = null;
+
   constructor() { }
 
   ngOnInit() {
   }
 
   ngAfterContentChecked() {
-    const description =
-      (this.tag.describe().length
-        ? this.tag.describe()
-        : '(No description)'
-      ).replace(/undefined/g, '<span class="undefined-variable">undefined</span>')
-    d3.select(this.descriptionP.nativeElement)
-      .html(description)
+    if (this.prevDescriptionRule !== this.tag.descriptionRule){
+      this.prevDescriptionRule = this.tag.descriptionRule;
+      const description =
+        (this.tag.describe().length
+          ? this.tag.describe()
+          : '(No description)'
+        ).replace(/undefined/g, '<span class="undefined-variable">undefined</span>')
+      d3.select(this.descriptionP.nativeElement)
+        .html(description)
+    }
   }
 
 }
