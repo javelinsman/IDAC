@@ -1,9 +1,11 @@
 <div *ngIf="!viewOnly" class="bar-utils">
   <ul class="d-flex justify-content-end p-0">
     <li class="mx-2">
-      <i class="fas fa-play text-secondary text-as-button"
-        [class.fa-play]="!speaking"
-        [class.fa-stop]="speaking"
+      <i class="fas fa-play text-secondary"
+        [class.text-as-button]="!muted"
+        [class.fa-volume-mute]="muted"
+        [class.fa-play]="!muted && !speaking"
+        [class.fa-stop]="!muted && speaking"
         (click)="speaking ? stop() : play()"></i>
     </li>
     <li *ngIf="tag._parent._tagname !== 'ChartSpec' && siblingLength > 1"

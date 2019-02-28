@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, AfterContentChecked } from '@angular/core';
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 import { SpeakingService } from 'src/app/speaking.service';
+import { StageStateService } from 'src/app/stage-state.service';
 
 @Component({
   selector: 'app-chart-spec-tree-view-bar-utils',
@@ -31,6 +32,10 @@ export class ChartSpecTreeViewBarUtilsComponent implements OnInit, AfterContentC
 
   play() {
     this.speakingService.read(this.tag.describe(), this.tag);
+  }
+
+  get muted() {
+    return !this.speakingService.speak;
   }
 
   get speaking() {

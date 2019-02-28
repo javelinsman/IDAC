@@ -8,11 +8,11 @@ import { SpecTag } from './chart-structure/chart-spec/spec-tag';
 })
 export class SpeakingService {
 
-  private speak: boolean;
   private speed: AudioControlSpeed;
   private audioContext: AudioContext;
   private sayTimeout;
 
+  public speak: boolean;
   public tagReading: SpecTag;
 
   constructor(private stageStateService: StageStateService) {
