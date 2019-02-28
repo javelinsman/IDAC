@@ -15,30 +15,31 @@
         <div class="flex-grow-1"
           [class.d-flex]="viewOnly"
         >
-          <app-chart-spec-tree-view-tagname
-            [tag]="tag"
-            [currentTag]="currentTag"
-            [siblingIndex]="siblingIndex"
-            [siblingLength]="siblingLength"
-            [warning]="!viewOnly && tag.describe().indexOf('undefined') >= 0"
-          ></app-chart-spec-tree-view-tagname>
+          <div class="d-flex justify-content-between align-items-end">
+            <app-chart-spec-tree-view-tagname
+              [tag]="tag"
+              [currentTag]="currentTag"
+              [siblingIndex]="siblingIndex"
+              [siblingLength]="siblingLength"
+              [warning]="!viewOnly && tag.describe().indexOf('undefined') >= 0"
+            ></app-chart-spec-tree-view-tagname>
+            <app-chart-spec-tree-view-bar-utils
+              [tag]="tag"
+              [edit]="edit"
+              [siblingLength]="siblingLength"
+              [isCollapsed]="isCollapsed"
+              [_collapseToggle]="_collapseToggle.bind(this)"
+              [viewOnly]="viewOnly"
+              [currentTag]="currentTag"
+            ></app-chart-spec-tree-view-bar-utils>
+          </div>
           <app-chart-spec-tree-view-description
             [viewOnly]="viewOnly"
             [tag]="tag" [currentTag]="currentTag"
             [edit]="edit" [_editChange]="_editChange.bind(this)"
           ></app-chart-spec-tree-view-description>
         </div>
-        <div class="d-flex flex-column justify-content-between align-items-end">
-          <app-chart-spec-tree-view-bar-utils
-            [tag]="tag"
-            [edit]="edit"
-            [siblingLength]="siblingLength"
-            [isCollapsed]="isCollapsed"
-            [_collapseToggle]="_collapseToggle.bind(this)"
-            [viewOnly]="viewOnly"
-            [currentTag]="currentTag"
-          ></app-chart-spec-tree-view-bar-utils>
-        </div>
+
       </div>
       <div class="ml-2" *ngIf="edit && tag === currentTag">
         <app-edit-panel [tag]="tag"></app-edit-panel>
