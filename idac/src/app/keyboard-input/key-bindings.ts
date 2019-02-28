@@ -12,6 +12,12 @@ export interface KeyBindings {
 }
 
 export const keyBindings: KeyBindings = {
+    stopSpeaking: {
+      key: new Set(['control']),
+      description: 'Stop reading current element.',
+      keyName: '',
+      keyNameShort: ''
+    },
     checkCurrentElement: {
       key: new Set(['enter']),
       description: 'Repeat the description of the current element.',
