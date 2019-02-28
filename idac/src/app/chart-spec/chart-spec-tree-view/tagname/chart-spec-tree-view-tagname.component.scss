@@ -13,6 +13,10 @@ p {
   color: white;
 }
 
+.tagname.warning {
+  border: 2px solid lighten($danger, 10%);
+}
+
 .editors-note {
   color: darken($danger, 20%);
 }
