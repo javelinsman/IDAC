@@ -15,14 +15,21 @@
         <div class="flex-grow-1"
           [class.d-flex]="viewOnly"
         >
-          <div class="d-flex justify-content-between align-items-end">
-            <app-chart-spec-tree-view-tagname
-              [tag]="tag"
-              [currentTag]="currentTag"
-              [siblingIndex]="siblingIndex"
-              [siblingLength]="siblingLength"
-              [warning]="!viewOnly && tag.describe().indexOf('undefined') >= 0"
-            ></app-chart-spec-tree-view-tagname>
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="d-flex align-items-baseline">
+              <app-chart-spec-tree-view-tagname
+                [tag]="tag"
+                [currentTag]="currentTag"
+                [siblingIndex]="siblingIndex"
+                [siblingLength]="siblingLength"
+                [warning]="!viewOnly && tag.describe().indexOf('undefined') >= 0"
+              ></app-chart-spec-tree-view-tagname>
+              <app-chart-spec-tree-view-key-hint
+                class="ml-2"
+                *ngIf="!viewOnly"
+                [tag]="tag" [currentTag]="currentTag"
+              ></app-chart-spec-tree-view-key-hint>
+            </div>
             <app-chart-spec-tree-view-bar-utils
               [tag]="tag"
               [edit]="edit"
@@ -39,17 +46,10 @@
             [edit]="edit" [_editChange]="_editChange.bind(this)"
           ></app-chart-spec-tree-view-description>
         </div>
-
       </div>
       <div class="ml-2" *ngIf="edit && tag === currentTag">
         <app-edit-panel [tag]="tag"></app-edit-panel>
       </div>
-    </div>
-    <div class="" style="width: 2em">
-      <app-chart-spec-tree-view-key-hint
-        *ngIf="!viewOnly"
-        [tag]="tag" [currentTag]="currentTag"
-      ></app-chart-spec-tree-view-key-hint>
     </div>
   </section>
   <div class="d-flex" *ngIf="!viewOnly && tag.children">
