@@ -30,11 +30,12 @@ export class ChartSpecTreeViewBarUtilsComponent implements OnInit, AfterContentC
   }
 
   play() {
-    this.speakingService.read(this.tag.describe());
+    this.speakingService.read(this.tag.describe(), this.tag);
   }
 
   get speaking() {
-    return this.speakingService.isSpeaking;
+    return this.speakingService.isSpeaking
+      && this.speakingService.tagReading === this.tag;
   }
 
   stop() {

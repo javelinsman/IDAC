@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { StageStateService } from './stage-state.service';
 import { AudioControlSpeed } from './stage-state';
+import { SpecTag } from './chart-structure/chart-spec/spec-tag';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,9 @@ export class SpeakingService {
   private speak: boolean;
   private speed: AudioControlSpeed;
   private audioContext: AudioContext;
-  private sayTimeout
+  private sayTimeout;
+
+  public tagReading: SpecTag;
 
   constructor(private stageStateService: StageStateService) {
     this.stageStateService.readAloudElementsObservable.subscribe(speak => {
@@ -22,9 +25,10 @@ export class SpeakingService {
     this.audioContext = new AudioContext();
   }
 
-  read(message: string){
+  read(message: string, tag: SpecTag = null){
     if (this.speak) {
       this._read(message);
+      this.tagReading = tag;
     }
   }
 
