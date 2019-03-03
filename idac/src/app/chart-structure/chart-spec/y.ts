@@ -29,9 +29,9 @@ export class Y extends SpecTag {
   afterFromChartAccent() {
     const allValues = this._root.marks.children.map(bargroup => bargroup.children.map(bar => bar.properties.value() as number))
       .reduce((a, b) => [...a, ...b]);
-    if (!this.attributes.rangeFrom || !this.attributes.rangeTo) {
+    if (!this.attributes.rangeFrom.value || !this.attributes.rangeTo.value) {
       this.properties.rangeTo = () => Math.ceil(Math.max(...allValues));
-      this.properties.rangeFrom = () => Math.floor(Math.min(...allValues));
+      this.properties.rangeFrom = () => 0; // Math.floor(Math.min(...allValues));
     }
 
     this.descriptionRule = this.assembleDescriptionRules([
