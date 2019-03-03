@@ -104,8 +104,7 @@
             (click)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])">
           </i>
         </div>
-        <div class="mr-3 overflow-y-scroll"
-          [class.styled-scroll]="!collapsable || collapseChildren"
+        <div class="mr-3 styled-scroll overflow-y-scroll"
           style="max-height: 500px"
         >
           <div *ngFor="let childTag of tag.children; index as i">
