@@ -16,9 +16,6 @@ export class X extends SpecTag {
             numChildren: () => this.children.length,
             children: () => this.children.map(d => d.foreignRepr()).join(', ')
         };
-        this.descriptionRule = [
-            'X axis indicates $(X Axis: label) in $(X Axis: unit), measuring $(numChildren) bar groups as follows: $(children).'
-        ].join(' ');
 
     }
     fromChartAccent(ca: ChartAccent) {
@@ -29,6 +26,15 @@ export class X extends SpecTag {
         };
         this.children = ca.dataset.rows.map((row, index) => new Tick(
             row[ca.dataset.columns[0].name], index, this._root, this));
+
+    }
+    afterFromChartAccent() {
+        this.descriptionRule = this.assembleDescriptionRules([
+            ['X axis indicates $(X Axis: label)', true],
+            [' in $(X Axis: unit)', false, ''],
+            [', measuring $(numChildren) data as follows: $(children).', true],
+        ]);
+        this.children.forEach(child => child.afterFromChartAccent());
     }
 }
 
@@ -42,10 +48,16 @@ export class Tick extends SpecTag {
             index0: () => index,
             index1: () => index + 1
         };
-        this.descriptionRule = '$(text) $(X Axis: unit), which indicates $(X Axis: label).';
     }
 
     foreignRepr() {
         return this.attributes.text.value;
+    }
+    afterFromChartAccent() {
+        this.descriptionRule = this.assembleDescriptionRules([
+          ['$(text)', true],
+          ['$(X Axis: unit)', false, ''],
+          [', which indicates $(X Axis: label).', false, '.'],
+        ]);
     }
 }

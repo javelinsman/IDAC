@@ -74,7 +74,7 @@ export class SpecTag {
       return rules.map(struct => {
         const rule = struct[0];
         const important = struct[1];
-        if (!important && rule.indexOf('undefined') < 0) {
+        if (!important && this.renderRule(rule).indexOf('undefined') >= 0) {
           return struct[2];
         } else {
           return struct[0];
