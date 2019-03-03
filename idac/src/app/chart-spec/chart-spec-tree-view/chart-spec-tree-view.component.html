@@ -33,6 +33,8 @@
               ></app-chart-spec-tree-view-key-hint>
             </div>
             <app-chart-spec-tree-view-bar-utils
+              [class.invisible]="!hover && currentTag !== tag"
+              [class.hover]="hover && currentTag !== tag"
               [tag]="tag"
               [edit]="edit"
               [siblingLength]="siblingLength"
@@ -51,6 +53,8 @@
             ></app-chart-spec-tree-view-description>
             <app-chart-spec-tree-view-bar-utils
               *ngIf="minimize"
+              [class.invisible]="!hover && currentTag !== tag"
+              [class.hover]="hover && currentTag !== tag"
               [tag]="tag"
               [edit]="edit"
               [siblingLength]="siblingLength"
