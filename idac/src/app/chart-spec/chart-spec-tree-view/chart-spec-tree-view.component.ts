@@ -52,7 +52,7 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
     this.siblingIndex = this.tag._parent.children.indexOf(this.tag);
     this.siblingLength = this.tag._parent.children.length;
 
-    if (this.tag.children && this.tag.children.length && (!this.tag.children[0].children || !this.tag.children[0].children.length)) {
+    if (this.tag.children && this.tag.children.length > 1 && (!this.tag.children[0].children || !this.tag.children[0].children.length)) {
       this.collapseChildren = true;
     }
   }
