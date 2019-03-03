@@ -21,6 +21,6 @@
   <p *ngIf="tag._parent._tagname !== 'ChartSpec' && siblingLength > 1"
     [class.ml-1]="true || viewOnly" [class.small]="!viewOnly"
     class="font-weight-light text-secondary" [style.white-space]="'nowrap'">
-    {{ siblingIndex + 1 }} out of {{ siblingLength }}
+    {{ siblingLength }} items
   </p>
 </div>
