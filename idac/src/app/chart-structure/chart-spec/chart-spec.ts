@@ -15,6 +15,8 @@ export class ChartSpec extends SpecTag {
     marks = new Marks(this);
     annotations = new Annotations(this);
 
+    chartType: string;
+
     _flattendTags: SpecTag[];
 
     constructor() {
@@ -28,6 +30,7 @@ export class ChartSpec extends SpecTag {
         this.children.forEach(tag => tag.fromChartAccent(ca));
         this.children.forEach(tag => tag.afterFromChartAccent());
         this._flattendTags = null; // assure that flattend tags will be updated
+        this.chartType = ca.chart.type;
     }
 
     flattenedTags() {

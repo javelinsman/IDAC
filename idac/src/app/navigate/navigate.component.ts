@@ -64,6 +64,10 @@ export class NavigateComponent implements OnInit {
     }
   }
 
+  stopSpeaking() {
+    this.speakingService.stop();
+  }
+
   checkCurrentElement() {
     // this function should be empty.
     return;

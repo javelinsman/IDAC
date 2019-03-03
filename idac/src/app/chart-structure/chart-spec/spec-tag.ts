@@ -70,9 +70,20 @@ export class SpecTag {
         return (this.constructor as any)._descriptionRule;
     }
 
-    describe(info: ChartSpec = null, tags: any[] = null,
-        keyboardEvent: string = null, queryAnswer: string = null) {
-        let description = this.descriptionRule;
+    assembleDescriptionRules(rules: ([string, boolean] | [string, boolean, string])[]) {
+      return rules.map(struct => {
+        const rule = struct[0];
+        const important = struct[1];
+        if (!important && this.renderRule(rule).indexOf('undefined') >= 0) {
+          return struct[2];
+        } else {
+          return struct[0];
+        }
+      }).join('');
+    }
+
+    describe(info: ChartSpec = null, tags: any[] = null, keyboardEvent: string = null, queryAnswer: string = null) {
+      let description = this.descriptionRule;
         if (this.editorsNote.active) {
             const text = this.editorsNote.text;
             const position = this.editorsNote.position;
@@ -84,7 +95,16 @@ export class SpecTag {
                 description = `${text} ${description}`;
             }
         }
-        const args = description.match(/\$\(([^)]*)\)/g);
+        description = this.renderRule(description);
+
+        if (queryAnswer) {
+            description = queryAnswer + ' ' + description;
+        }
+        return firstLetterUpperCase(description);
+    }
+
+    renderRule(rule: string){
+        const args = rule.match(/\$\(([^)]*)\)/g);
         if (args) {
         args.map(d => [d, d.slice(2, -1)])
             .forEach(([arg, strip]) => {
@@ -109,13 +129,10 @@ export class SpecTag {
                     }
                 }
                 if (!value.length && isUndefined) { value = 'undefined'; }
-                description = description.replace(arg, value);
+                rule = rule.replace(arg, value);
             });
         }
-        if (queryAnswer) {
-            description = queryAnswer + ' ' + description;
-        }
-        return firstLetterUpperCase(description);
+        return rule;
     }
 
     fromChartAccent(ca: ChartAccent): void {}

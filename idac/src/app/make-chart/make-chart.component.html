@@ -1,9 +1,6 @@
 <div class="container-fluid" #container (window:resize)="onWindowResize()">
   <div class="row h-100" *ngIf="chart && chartAccent">
-    <section class="col-4 border h-100 styled-scroll" style="overflow-y: scroll">
-      <app-chart-spec [chartSpec]="chartSpec" [(currentTag)]="currentTag"></app-chart-spec>
-    </section>
-    <div class="border h-100 styled-scroll col-8 overflow-y-scroll">
+    <div class="border h-100 styled-scroll col-6 overflow-y-scroll">
       <section class="row">
         <div class="col-12">
           <app-chart-view [chartSpec]="chartSpec"
@@ -13,6 +10,9 @@
       <hr>
       <section class="row">
         <div class="col-12">
+          <img class="img img-fluid" src="./assets/chart_panel_sample.png">
+        </div>
+        <div class="col-12 d-none">
           <!-- <ul class="nav nav-tabs">
             <li class="nav-item">
               <a class="nav-link" style="cursor: pointer"
@@ -20,7 +20,7 @@
                 [class.text-dark]="rightPanel === 'filter'"
                 [class.text-muted]="rightPanel !== 'filter'"
                 (click)="rightPanel = 'filter'"
-              >Tags of the Same Kind</a>
+              >Tags of the Same Kind</a >
             </li>
             <li class="nav-item">
               <a class="nav-link" style="cursor: pointer"
@@ -36,6 +36,9 @@
         </div>
       </section>
     </div>
+    <section class="col-6 border h-100 styled-scroll" style="overflow-y: scroll">
+      <app-chart-spec [chartSpec]="chartSpec" [(currentTag)]="currentTag"></app-chart-spec>
+    </section>
   </div>
   <section class="sidebar"
     [class.d-none]="!(sidebarSettings || sidebarHelp)" #sidebar

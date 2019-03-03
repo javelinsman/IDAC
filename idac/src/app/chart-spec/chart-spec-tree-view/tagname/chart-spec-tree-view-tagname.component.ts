@@ -11,6 +11,7 @@ export class ChartSpecTreeViewTagnameComponent implements OnInit {
   @Input() currentTag: SpecTag;
   @Input() siblingIndex: number;
   @Input() siblingLength: number;
+  @Input() warning: boolean;
 
   constructor() { }
 

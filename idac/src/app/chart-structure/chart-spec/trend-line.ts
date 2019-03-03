@@ -23,10 +23,6 @@ export class TrendLine extends SpecTag {
             targetDescription: () => '',
             numTargets: () => ''
         };
-        this.descriptionRule = [
-            'A trend line goes $(trend) on $(numTargets) bars, labeled as "$(label)".',
-            'Specifically, the line is drawn over $(targetDescription).'
-        ].join(' ');
     }
 
     fromChartAccent(ca: ChartAccent.ChartAccent) {
@@ -53,6 +49,11 @@ export class TrendLine extends SpecTag {
                 } else { return 'constant'; }
             }
         };
+        this.descriptionRule = this.assembleDescriptionRules([
+            ['A trend line goes $(trend) on $(numTargets) bars', true],
+            [', labeled as "$(label)".', false, '.'],
+            [' Specifically, the line is drawn over $(targetDescription).', true],
+        ]);
     }
 
     getTargetLocation(): [Item, number[]][] {

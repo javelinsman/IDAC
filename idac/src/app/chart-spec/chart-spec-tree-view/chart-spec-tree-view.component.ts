@@ -18,6 +18,7 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
   @Input() parentCollapseIndex = 0;
   @Input() edit: boolean;
   @Input() viewOnly = false;
+  @Input() minimize: boolean = false;
 
   @Output() currentTagChange: EventEmitter<SpecTag> = new EventEmitter();
   @Output() parentCollapseIndexChange: EventEmitter<number> = new EventEmitter();
@@ -50,6 +51,10 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
     }
     this.siblingIndex = this.tag._parent.children.indexOf(this.tag);
     this.siblingLength = this.tag._parent.children.length;
+
+    if (this.tag.children && this.tag.children.length > 1 && (!this.tag.children[0].children || !this.tag.children[0].children.length)) {
+      // this.collapseChildren = true;
+    }
   }
 
   ngAfterViewChecked() {

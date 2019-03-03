@@ -1,4 +1,4 @@
-<div class="d-flex mb-2 align-items-center">
+<div class="d-flex align-items-center">
   <span *ngIf="tag.editorsNote.active"
     class="mr-1"
     (mouseover)="tag.editorsNote.showInGraphView = true"
@@ -12,6 +12,7 @@
     <span
       class="p-1 rounded tagname"
       [class.highlighted]="currentTag === tag"
+      [class.warning]="warning"
       [style.white-space]="'nowrap'"
     >
       {{ tag._tagname }}
@@ -20,6 +21,6 @@
   <p *ngIf="tag._parent._tagname !== 'ChartSpec' && siblingLength > 1"
     [class.ml-1]="true || viewOnly" [class.small]="!viewOnly"
     class="font-weight-light text-secondary" [style.white-space]="'nowrap'">
-    {{ siblingIndex + 1 }} out of {{ siblingLength }}
+    {{ siblingLength }} items
   </p>
 </div>
