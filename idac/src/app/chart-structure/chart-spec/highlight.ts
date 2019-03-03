@@ -30,7 +30,7 @@ export class Highlight extends SpecTag {
             '$(highlight)',
             '$(itemLabel)',
             'Specifically, targets are $(targetDescription).'
-        ];
+        ].join(' ');
     }
 
     fromChartAccent(ca: ChartAccent.ChartAccent) {

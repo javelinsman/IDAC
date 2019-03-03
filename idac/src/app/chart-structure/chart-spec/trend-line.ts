@@ -26,7 +26,7 @@ export class TrendLine extends SpecTag {
         this.descriptionRule = [
             'A trend line goes $(trend) on $(numTargets) bars, labeled as "$(label)".',
             'Specifically, the line is drawn over $(targetDescription).'
-        ];
+        ].join(' ');
     }
 
     fromChartAccent(ca: ChartAccent.ChartAccent) {

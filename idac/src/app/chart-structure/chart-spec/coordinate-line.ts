@@ -28,7 +28,7 @@ export class CoordinateLine extends SpecTag {
         this.children = [] as RelationalHighlightLine[];
         this.descriptionRule =  [
             'A $(orientation) line passes through the point at $(range) on $(targetAxis) axis, labeled as "$(label)".'
-        ];
+        ].join(' ');
 
     }
     fromChartAccent(ca: ChartAccent.ChartAccent) {
@@ -69,7 +69,7 @@ export class RelationalHighlightLine extends Highlight {
         this.attributes.relation.value = mode.startsWith('below') ? 'below' : 'above';
         this.descriptionRule = [
             '$(relation) the line are $(numTargets) bars. $(highlight) $(itemLabel) Specifically, targets are $(targetDescription).'
-        ];
+        ].join(' ');
         // this._tagname = firstLetterUpperCase(this.attributes.targetRelation.value);
 
         this.properties = {

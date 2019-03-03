@@ -18,7 +18,7 @@ export class X extends SpecTag {
         };
         this.descriptionRule = [
             'X axis indicates $(X Axis: label) in $(X Axis: unit), measuring $(numChildren) bar groups as follows: $(children).'
-        ];
+        ].join(' ');
 
     }
     fromChartAccent(ca: ChartAccent) {
@@ -42,9 +42,7 @@ export class Tick extends SpecTag {
             index0: () => index,
             index1: () => index + 1
         };
-        this.descriptionRule = [
-          '$(text) $(X Axis: unit), which indicates $(X Axis: label).'
-        ];
+        this.descriptionRule = '$(text) $(X Axis: unit), which indicates $(X Axis: label).';
     }
 
     foreignRepr() {
