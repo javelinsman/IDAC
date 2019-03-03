@@ -42,11 +42,24 @@
               [currentTag]="currentTag"
             ></app-chart-spec-tree-view-bar-utils>
           </div>
-          <app-chart-spec-tree-view-description
-            [viewOnly]="viewOnly"
-            [tag]="tag" [currentTag]="currentTag"
-            [edit]="edit" [_editChange]="_editChange.bind(this)"
-          ></app-chart-spec-tree-view-description>
+          <div class="d-flex">
+            <app-chart-spec-tree-view-description
+              [viewOnly]="viewOnly"
+              [tag]="tag" [currentTag]="currentTag"
+              [edit]="edit" [_editChange]="_editChange.bind(this)"
+              [class.w-100]="minimize"
+            ></app-chart-spec-tree-view-description>
+            <app-chart-spec-tree-view-bar-utils
+              *ngIf="minimize"
+              [tag]="tag"
+              [edit]="edit"
+              [siblingLength]="siblingLength"
+              [isCollapsed]="isCollapsed"
+              [_collapseToggle]="_collapseToggle.bind(this)"
+              [viewOnly]="viewOnly"
+              [currentTag]="currentTag"
+            ></app-chart-spec-tree-view-bar-utils>
+          </div>
         </div>
       </div>
       <div class="ml-2" *ngIf="edit && tag === currentTag">
