@@ -13,10 +13,12 @@ export class Y extends SpecTag {
       rangeFrom: new AttrInput(),
       rangeTo: new AttrInput(),
     };
-    this.descriptionRule = [
-      'Y axis indicates $(Y Axis: label)  in $(Y Axis: unit).',
-      'The data range from $(Y Axis: rangeFrom) to $(Y Axis: rangeTo)  $(Y Axis: unit).'
-    ].join(' ');
+    this.descriptionRule = this.assembleDescriptionRules([
+      ['Y axis indicates $(Y Axis: label)', true],
+      [' in $(Y Axis: unit).', false, '.'],
+      ['The data range from $(Y Axis: rangeFrom) to $(Y Axis: rangeTo)', true, ''],
+      [' $(Y Axis: unit).', false, '.'],
+    ]);
   }
 
   fromChartAccent(ca: ChartAccent) {
