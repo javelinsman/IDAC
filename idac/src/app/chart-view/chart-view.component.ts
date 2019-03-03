@@ -120,12 +120,21 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     cs.legend.children.forEach((item, i) => {
       pairs.push([item, items[i]]);
     });
-    cs.marks.children.forEach((bargroup, i) => {
-      pairs.push([bargroup, (bargroups as any)[i]]);
-      bargroup.children.forEach((bar, j) => {
-        pairs.push([bar, d3AsSelectionArray(bargroups[i])[j]]);
+    if(cs.chartType === 'bar-chart') {
+      cs.marks.children.forEach((bargroup, i) => {
+        pairs.push([bargroup, (bargroups as any)[i]]);
+        bargroup.children.forEach((bar, j) => {
+          pairs.push([bar, d3AsSelectionArray(bargroups[i])[j]]);
+        });
       });
-    });
+    } else {
+      cs.marks.children.forEach((series, i) => {
+        pairs.push([series, (serieses as any)[i]]);
+        /*series.children.forEach((point, j) => {
+          pairs.push([point, d3AsSelectionArray(bargroups[i])[j]]);
+        });*/
+      });
+    }
     annotations.forEach((annotation, i) => {
       const tag = cs.annotations.findByAnnotation(cs.annotations.annotationInChartAccent(i));
       pairs.push([tag, annotation as any]);
@@ -226,7 +235,9 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
         // .classed('active', (tag: SpecTag) => tag.editorsNote.active);
         .classed('highlighted', (tag: SpecTag) => tag.editorsNote.showInGraphView && tag.editorsNote.active);
 
-      this.updateAttribute();
+      if (this.currentTag._root.chartType === 'bar-chart') {
+        this.updateAttribute();
+      }
 
     }
   }

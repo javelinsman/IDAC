@@ -101,11 +101,14 @@ export class HighlightShape {
       .node();
   }
 
-  makePath(path: d3.Selection<any, any, any, any>, strokeWidth: number) {
-    return d3.select(createSVGElement('path'))
+  makePath(path: d3.Selection<any, any, any, any>, strokeWidth: number, fill = true) {
+    const pathSel = d3.select(createSVGElement('path'))
       .attr('d', path.attr('d'))
-      .style('stroke-width', strokeWidth)
-      .node();
+      .style('stroke-width', strokeWidth);
+    if (!fill) {
+      pathSel.style('fill', 'none');
+    }
+    return pathSel.node();
   }
 
 
@@ -211,6 +214,29 @@ class Bar extends HighlightShape {
     this.enlargeBoxBy(this.boundingBox, d, d, d, 0);
   }
 }
+class Series extends HighlightShape {
+  path;
+  onInit() {
+    console.log(this.associatedElements);
+    this.path = this.associatedElements.select('path');
+  }
+  elemMarks() {
+    return [this.makePath(this.path, 15, false)];
+  }
+}
+class Point extends HighlightShape {
+  onInit() {
+    const d = this.boundingBox.width * 0.2;
+    this.enlargeBoxBy(this.boundingBox, d, d, d, 0);
+  }
+  elemMarks() {
+    return [this.makeCircle(
+      this.boundingBox.x + this.boundingBox.width / 2,
+      this.boundingBox.y + this.boundingBox.height / 2,
+      this.boundingBox.width / 2
+    )];
+  }
+}
 class Annotations extends HighlightShape { }
 class Highlight extends HighlightShape {
   paths: d3.Selection<any, any, any, any>;
@@ -294,6 +320,10 @@ function getHighlightShapeClass(tagname: string) {
       return BarGroup;
     case 'Bar':
       return Bar;
+    case 'Series':
+      return Series;
+    case 'Point':
+      return Point;
     case 'Annotations':
       return Annotations;
     case 'Highlight':
