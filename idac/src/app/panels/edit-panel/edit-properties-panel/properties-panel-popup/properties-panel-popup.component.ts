@@ -38,12 +38,14 @@ export class PropertiesPanelPopupComponent implements OnInit {
     this.show = !this.show;
     if (this.show) {
       const bBox = popupParent.getBoundingClientRect();
+      const bBoxThis = this.cardSection.nativeElement.getBoundingClientRect();
+
       this.cardSection.nativeElement.style.left =
-        `${bBox.left + bBox.width + 20}px`;
+        `${bBox.left - bBoxThis.width - 20}px`;
       this.cardSection.nativeElement.style.top =
         `${bBox.top - 110}px`;
 
-      const bBoxThis = this.cardSection.nativeElement.getBoundingClientRect();
+
       if (bBoxThis.top + bBoxThis.height > window.innerHeight) {
         this.cardSection.nativeElement.style.top = `${window.innerHeight - bBoxThis.height}px`;
       }
