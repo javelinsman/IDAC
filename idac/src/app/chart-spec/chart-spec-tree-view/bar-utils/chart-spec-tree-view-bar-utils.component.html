@@ -8,7 +8,7 @@
         [class.fa-stop]="!muted && speaking"
         (click)="speaking ? stop() : play()"></i>
     </li>
-    <li *ngIf="tag._parent._tagname !== 'ChartSpec' && siblingLength > 1"
+    <!-- <li *ngIf="tag._parent._tagname !== 'ChartSpec' && siblingLength > 1"
       class="mx-2"
     >
       <i class="far fa-plus-square text-secondary text-as-button"
@@ -16,6 +16,6 @@
         [class.fa-minus-square]="isCollapsed"
         (click)="_collapseToggle()">
       </i>
-    </li>
+    </li> -->
   </ul>
 </div>
