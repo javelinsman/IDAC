@@ -223,10 +223,13 @@ class Series extends HighlightShape {
   elemMarks() {
     return [this.makePath(this.path, 15, false)];
   }
+  bookmarks() {
+    return [this.makePath(this.path, 7, false)];
+  }
 }
 class Point extends HighlightShape {
   onInit() {
-    const d = this.boundingBox.width * 0.2;
+    const d = this.boundingBox.width * 0.4;
     this.enlargeBoxBy(this.boundingBox, d, d, d, 0);
   }
   elemMarks() {
@@ -236,6 +239,14 @@ class Point extends HighlightShape {
       this.boundingBox.width / 2
     )];
   }
+  bookmarks() {
+    return [this.makeCircle(
+      this.boundingBox.x + this.boundingBox.width / 2,
+      this.boundingBox.y + this.boundingBox.height / 2,
+      this.boundingBox.width / 3
+    )];
+  }
+
 }
 class Annotations extends HighlightShape { }
 class Highlight extends HighlightShape {

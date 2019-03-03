@@ -85,11 +85,20 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       xLabel.classed('idac-x-axis', true);
     }
     const serieses = d3AsSelectionArray(d3ImmediateChildren(marks, 'g'));
-    const rects = zip(serieses.map(d => d3AsSelectionArray(d3ImmediateChildren(d, 'rect'))));
-    rects.forEach((elem: d3.Selection<any, any, any, any>[], i) => {
-      elem.forEach(d => d.classed(`idac-bargroup-${i}`, true));
-    });
-    const bargroups = rects.map((_, i) => this.svg.selectAll(`.idac-bargroup-${i}`));
+    let rects, bargroups, circles, pointGroups;
+    if (this.currentTag._root.chartType === 'bar-chart') {
+      rects = zip(serieses.map(d => d3AsSelectionArray(d3ImmediateChildren(d, 'rect'))));
+      rects.forEach((elem: d3.Selection<any, any, any, any>[], i) => {
+        elem.forEach(d => d.classed(`idac-bargroup-${i}`, true));
+      });
+      bargroups = rects.map((_, i) => this.svg.selectAll(`.idac-bargroup-${i}`));
+    } else {
+      circles = zip(serieses.map(d => d3AsSelectionArray(d3ImmediateChildren(d, 'circle'))));
+      circles.forEach((elem: d3.Selection<any, any, any, any>[], i) => {
+        elem.forEach(d => d.classed(`idac-point-group-${i}`, true));
+      });
+      pointGroups = circles.map((_, i) => this.svg.selectAll(`.idac-point-group-${i}`));
+    }
     const xTicks = d3AsSelectionArray(x.selectAll('.tick'));
     const yTicks = d3AsSelectionArray(y.selectAll('.tick'));
     const annotationRenderingArea = d3AsSelectionArray(
@@ -130,9 +139,9 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     } else {
       cs.marks.children.forEach((series, i) => {
         pairs.push([series, (serieses as any)[i]]);
-        /*series.children.forEach((point, j) => {
-          pairs.push([point, d3AsSelectionArray(bargroups[i])[j]]);
-        });*/
+        series.children.forEach((point, j) => {
+          pairs.push([point, d3AsSelectionArray(pointGroups[j])[i]]);
+        });
       });
     }
     annotations.forEach((annotation, i) => {
