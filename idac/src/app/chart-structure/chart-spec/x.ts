@@ -30,9 +30,10 @@ export class X extends SpecTag {
     }
     afterFromChartAccent() {
         this.descriptionRule = this.assembleDescriptionRules([
-            ['X axis indicates $(X Axis: label)', true],
-            [' in $(X Axis: unit)', false, ''],
-            [', measuring $(numChildren) data as follows: $(children).', true],
+            ['X axis', true],
+            [' indicates $(X Axis: label)', false],
+            [' in $(X Axis: unit)', false, '.'],
+            [' It measures $(numChildren) data as follows: $(children).', true],
         ]);
         this.children.forEach(child => child.afterFromChartAccent());
     }

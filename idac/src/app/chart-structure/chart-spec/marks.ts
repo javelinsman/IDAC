@@ -16,13 +16,19 @@ export class Marks extends SpecTag {
             numBarGroups: () => this.children.length,
             numBars: () => this.children.length ? this.children[0].children.length : 0,
         };
-        this.descriptionRule = [
-            'There are $(numBarGroups) bar groups, which correspond to each $(X Axis: label).',
-            'And each bar group contains $(numBars) bars, which correspond to each series of $(Legend: label).'
-        ].join(' ');
+
     }
     fromChartAccent(ca: ChartAccent) {
         this.children = ca.dataset.rows.map((row, index) => new Bargroup(row, index, this._root, this));
+    }
+    afterFromChartAccent() {
+      this.descriptionRule = this.assembleDescriptionRules([
+        ['There are $(numBarGroups) bar groups', true],
+        [', which correspond to each $(X Axis: label).', false, '.'],
+        [' And each bar group contains $(numBars) bars', true],
+        [', which correspond to each series of $(Legend: label).', false, '.'],
+      ]);
+      this.children.forEach(child => child.afterFromChartAccent());
     }
 }
 
@@ -46,11 +52,17 @@ export class Bargroup extends SpecTag {
             const value = +row[key.attributes.text.value];
             return new Bar(key, value, index2, this._root, this);
         });
-        this.descriptionRule = [
-            'A bar group in $(name).',
-            'It contains $(numBars) bars.',
-            'The sum of all bars inside is $(sumOfBarValues) $(Y Axis: unit), indicating $(Y Axis: label).'
-        ].join(' ');
+
+    }
+    afterFromChartAccent() {
+      this.descriptionRule = this.assembleDescriptionRules([
+        ['A bar group in $(name).', true],
+        [' It contains $(numBars) bars.', true],
+        [' The sum of all bars inside is $(sumOfBarValues)', true],
+        [' $(Y Axis: unit)', false, ''],
+        [', indicating $(Y Axis: label).', false, '.']
+      ]);
+      this.children.forEach(child => child.afterFromChartAccent());
     }
 }
 
@@ -65,10 +77,17 @@ export class Bar extends SpecTag {
             index0: () => index,
             index1: () => index + 1
         };
-        this.descriptionRule = '$(value) $(Y Axis: unit) for $(seriesName) in $(Bar Group: name).';
     }
 
     foreignRepr() {
         return `${this.properties.seriesName()}:${this.properties.key()}`;
+    }
+
+    afterFromChartAccent() {
+      this.descriptionRule = this.assembleDescriptionRules([
+        ['$(value)', true],
+        [' $(Y Axis: unit)', false, ''],
+        [' for $(seriesName) in $(Bar Group: name).', true],
+      ]);
     }
 }

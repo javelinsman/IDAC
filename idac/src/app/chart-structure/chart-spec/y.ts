@@ -37,7 +37,7 @@ export class Y extends SpecTag {
     this.descriptionRule = this.assembleDescriptionRules([
       ['Y axis indicates $(Y Axis: label)', true],
       [' in $(Y Axis: unit).', false, '.'],
-      ['The data range from $(Y Axis: rangeFrom) to $(Y Axis: rangeTo)', true, ''],
+      [' The data range from $(Y Axis: rangeFrom) to $(Y Axis: rangeTo)', true, ''],
       [' $(Y Axis: unit).', false, '.'],
     ]);
   }

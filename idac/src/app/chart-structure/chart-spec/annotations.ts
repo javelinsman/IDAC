@@ -22,13 +22,7 @@ export class Annotations extends SpecTag {
             numLines: () => this.children.filter(tag => tag._tagname === 'Line').length,
             numRanges: () => this.children.filter(tag => tag._tagname === 'Range').length,
         };
-        this.descriptionRule = [
-            'There are total of $(numChildren) annotations,',
-            'which consists of $(numHighlights) highlights,',
-            '$(numTrendlines) trend lines,',
-            '$(numLines) lines,',
-            'and $(numRanges) ranges.'
-        ].join(' ');
+
     }
     fromChartAccent(ca: ChartAccent.ChartAccent) {
         this.children = [];
@@ -39,6 +33,32 @@ export class Annotations extends SpecTag {
                     .forEach(a => this.children.push(a));
             });
         this.chartAccentAnnotations = ca.annotations.annotations;
+    }
+
+    afterFromChartAccent() {
+      const descriptionRules = [
+      ];
+      if (this.properties.numHighlights()) { descriptionRules.push(
+        '$(numHighlights) highlight' + (this.properties.numHighlights() > 1 ? 's' : '')
+      ) }
+      if (this.properties.numTrendlines()) { descriptionRules.push(
+        '$(numTrendlines) trend line' + (this.properties.numTrendlines() > 1 ? 's' : '')
+      ) }
+      if (this.properties.numLines()) { descriptionRules.push(
+        '$(numLines) line' + (this.properties.numLines() > 1 ? 's' : '')
+      ) }
+      if (this.properties.numRanges()) { descriptionRules.push(
+        '$(numRanges) range' + (this.properties.numRanges() > 1 ? 's' : '')
+      ) }
+
+      if (this.properties.numChildren() > 1) {
+        this.descriptionRule = 'There are total of $(numChildren) annotations, which consists of '
+          + descriptionRules.slice(0, -1).join(', ') + ' and ' + descriptionRules.slice(-1)[0] + '.';
+      } else if (this.properties.numChildren() == 1) {
+        this.descriptionRule = 'There is ' + descriptionRules[0] + '.';
+      } else {
+        this.descriptionRule = 'There are no annotations.';
+      }
     }
 
     convertToAnnotations(annotation: ChartAccent.Annotation,
