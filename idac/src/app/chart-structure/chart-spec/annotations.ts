@@ -28,7 +28,7 @@ export class Annotations extends SpecTag {
             '$(numTrendlines) trend lines,',
             '$(numLines) lines,',
             'and $(numRanges) ranges.'
-        ].join(' ');
+        ];
     }
     fromChartAccent(ca: ChartAccent.ChartAccent) {
         this.children = [];

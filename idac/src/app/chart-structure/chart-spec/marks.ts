@@ -19,7 +19,7 @@ export class Marks extends SpecTag {
         this.descriptionRule = [
             'There are $(numBarGroups) bar groups, which correspond to each $(X Axis: label).',
             'And each bar group contains $(numBars) bars, which correspond to each series of $(Legend: label).'
-        ].join(' ');
+        ];
     }
     fromChartAccent(ca: ChartAccent) {
         this.children = ca.dataset.rows.map((row, index) => new Bargroup(row, index, this._root, this));
@@ -50,7 +50,7 @@ export class Bargroup extends SpecTag {
             'A bar group in $(name).',
             'It contains $(numBars) bars.',
             'The sum of all bars inside is $(sumOfBarValues) $(Y Axis: unit), indicating $(Y Axis: label).'
-        ].join(' ');
+        ];
     }
 }
 
@@ -65,7 +65,9 @@ export class Bar extends SpecTag {
             index0: () => index,
             index1: () => index + 1
         };
-        this.descriptionRule = '$(value) $(Y Axis: unit) for $(seriesName) in $(Bar Group: name).';
+        this.descriptionRule = [
+          '$(value) $(Y Axis: unit) for $(seriesName) in $(Bar Group: name).'
+        ];
     }
 
     foreignRepr() {

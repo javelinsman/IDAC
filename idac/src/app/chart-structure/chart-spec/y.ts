@@ -16,7 +16,7 @@ export class Y extends SpecTag {
     this.descriptionRule = [
       'Y axis indicates $(Y Axis: label)  in $(Y Axis: unit).',
       'The data range from $(Y Axis: rangeFrom) to $(Y Axis: rangeTo)  $(Y Axis: unit).'
-    ].join(' ');
+    ];
   }
 
   fromChartAccent(ca: ChartAccent) {

@@ -15,7 +15,7 @@ export class SpecTag {
         this._id = SpecTag.idCount ++;
     }
     private static idCount = 0;
-    public static _descriptionRule = '';
+    public static _descriptionRule = [];
 
     public static clear() {
       SpecTag.idCount = 0;
@@ -62,60 +62,66 @@ export class SpecTag {
         return ret;
     }
 
-    set descriptionRule(descriptionRule: string) {
+    set descriptionRule(descriptionRule: string[]) {
         (this.constructor as any)._descriptionRule = descriptionRule;
     }
 
-    get descriptionRule(): string {
-        return (this.constructor as any)._descriptionRule;
+    get descriptionRule(): string[] {
+        return (this.constructor as any)._descriptionRule.filter(rule => this.renderRule(rule).indexOf('undefined') < 0);
     }
 
     describe(info: ChartSpec = null, tags: any[] = null, keyboardEvent: string = null, queryAnswer: string = null) {
-      let description = this.descriptionRule;
+      let rule = this.descriptionRule.join(' ');
         if (this.editorsNote.active) {
             const text = this.editorsNote.text;
             const position = this.editorsNote.position;
             if (position === 'append') {
-                description = `${description} ${text}`;
+                rule = `${rule} ${text}`;
             } else if (position === 'replace') {
-                description = text;
+                rule = text;
             } else if (position === 'prepend') {
-                description = `${text} ${description}`;
+                rule = `${text} ${rule}`;
             }
         }
-        const args = description.match(/\$\(([^)]*)\)/g);
-        if (args) {
-        args.map(d => [d, d.slice(2, -1)])
-            .forEach(([arg, strip]) => {
-                let value = 'undefined';
-                let isUndefined = true;
-                if (strip.split(':').length > 1) {
-                    const tagName = strip.split(':')[0].trim();
-                    const keyName = strip.split(':')[1].trim();
-                    const tag = this.peekableTags().find(_tag => _tag._tagname === tagName);
-                    if (tag && tag.properties[keyName]) {
-                      if (tag.attributes[keyName] && tag.attributes[keyName].type == 'input-select') {
-                        isUndefined = false;
-                      }
-                      value = '' + tag.properties[keyName]();
-                    }
-                } else {
-                    if (this.properties[strip]) {
-                      if (this.attributes[strip] && this.attributes[strip].type == 'input-select') {
-                        isUndefined = false;
-                      }
-                      value = '' + this.properties[strip]();
-                    }
-                }
-                if (!value.length && isUndefined) { value = 'undefined'; }
-                description = description.replace(arg, value);
-            });
-        }
+        let description = this.renderRule(rule);
         if (queryAnswer) {
             description = queryAnswer + ' ' + description;
         }
         return firstLetterUpperCase(description);
     }
+
+    renderRule(rule: string) {
+      const args = rule.match(/\$\(([^)]*)\)/g);
+      if (args) {
+      args.map(d => [d, d.slice(2, -1)])
+          .forEach(([arg, strip]) => {
+              let value = 'undefined';
+              let isUndefined = true;
+              if (strip.split(':').length > 1) {
+                  const tagName = strip.split(':')[0].trim();
+                  const keyName = strip.split(':')[1].trim();
+                  const tag = this.peekableTags().find(_tag => _tag._tagname === tagName);
+                  if (tag && tag.properties[keyName]) {
+                    if (tag.attributes[keyName] && tag.attributes[keyName].type == 'input-select') {
+                      isUndefined = false;
+                    }
+                    value = '' + tag.properties[keyName]();
+                  }
+              } else {
+                  if (this.properties[strip]) {
+                    if (this.attributes[strip] && this.attributes[strip].type == 'input-select') {
+                      isUndefined = false;
+                    }
+                    value = '' + this.properties[strip]();
+                  }
+              }
+              if (!value.length && isUndefined) { value = 'undefined'; }
+              rule = rule.replace(arg, value);
+          });
+      }
+      return rule;
+    }
+
 
     fromChartAccent(ca: ChartAccent): void {}
     afterFromChartAccent(): void {}
