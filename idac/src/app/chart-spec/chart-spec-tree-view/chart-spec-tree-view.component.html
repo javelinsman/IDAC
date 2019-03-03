@@ -57,11 +57,12 @@
   <div class="d-flex" *ngIf="!viewOnly && tag.children">
     <span *ngIf="true || collapsable"
       (click)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
-      style="width: 30px; cursor: pointer" class="badge badge-light my-2 pt-2 mr-2"
-      [class.invisible]="true || !collapsable">
+      style="width: 30px; height: 30px; cursor: pointer" class="badge border my-2 pt-2 mr-2"
+      [class.invisible]="(tag.children && tag.children.length && (!tag.children[0].children || !tag.children[0].children.length)) || !collapsable">
       <i class="fas text-secondary"
         [class.fa-minus]="collapseChildren"
-        [class.fa-plus]="!collapseChildren"></i>
+        [class.fa-plus]="!collapseChildren"
+        ></i>
     </span>
     <div class="w-100">
       <div *ngIf="tag.children && tag.children.length && (!tag.children[0].children || !tag.children[0].children.length); else elseBlock"
