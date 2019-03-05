@@ -25,7 +25,7 @@ export class StageStateService {
       }
     },
     export: {}
-  }
+  };
 
   state: StageState;
   settings: Settings;
@@ -33,7 +33,7 @@ export class StageStateService {
   keyboardNavigation: KeyboardNavigation;
 
   constructor() {
-    this.settings = this.stageState.describe.settings
+    this.settings = this.stageState.describe.settings;
     this.audioControl = this.settings.audioControl;
     this.keyboardNavigation = this.settings.keyboardNavigation;
   }
