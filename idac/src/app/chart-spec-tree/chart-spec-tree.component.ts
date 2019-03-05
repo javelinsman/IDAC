@@ -12,6 +12,7 @@ export class ChartSpecTreeComponent implements OnInit {
 
   chartSpec: ChartSpec;
   currentTag: SpecTag;
+  hover = false;
 
   constructor(
     private chartSpecService: ChartSpecService,
