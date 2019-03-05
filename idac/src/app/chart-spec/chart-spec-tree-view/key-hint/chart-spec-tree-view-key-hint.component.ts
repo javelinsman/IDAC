@@ -39,12 +39,14 @@ export class ChartSpecTreeViewKeyHintComponent implements OnInit, AfterContentCh
     }
   }
 
+  // TODO: Extremely inefficient
   refreshReachableKeys() {
     this.reachableKeys =[];
     if (this.tag === this.currentTag) {
       // this.reachableKeys.push('⏎');
     } else {
       Object.entries(this.keyBindings).forEach(([methodName, keyBinding]) => {
+        this.navigateComponent.sandbox = true;
         this.navigateComponent.tag = this.currentTag;
         this.navigateComponent[methodName]();
         if(this.navigateComponent.tag === this.tag) {
