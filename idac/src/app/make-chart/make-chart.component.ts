@@ -8,6 +8,7 @@ import { ChartAccent } from '../chart-structure/chart-accent/chart-accent';
 import { HttpClient } from '@angular/common/http';
 import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
 import { StageStateService } from '../stage-state.service';
+import { ChartSpecService } from '../chart-spec.service';
 
 @Component({
   selector: 'app-make-chart',
@@ -19,9 +20,10 @@ export class MakeChartComponent implements OnInit {
 
   chart: Chart;
   chartAccent: ChartAccent;
-  chartSpec: ChartSpec;
 
+  chartSpec: ChartSpec;
   currentTag: SpecTag;
+
   rightPanel = 'filter';
   @ViewChild('container') containerDiv: ElementRef;
   @ViewChild('sidebar') sidebarSection: ElementRef;
@@ -31,7 +33,7 @@ export class MakeChartComponent implements OnInit {
 
   constructor(
       private chartExampleService: ChartExampleService,
-      private route: ActivatedRoute,
+      private chartSpecService: ChartSpecService,
       private http: HttpClient,
       public stageStateService: StageStateService
     ) { }
@@ -40,11 +42,18 @@ export class MakeChartComponent implements OnInit {
     SpecTag.clear();
     this.stageStateService.toolbarSettingObservable.subscribe(settings => {
       this.sidebarSettings = settings;
-    })
+    });
     this.stageStateService.toolbarHelpObservable.subscribe(help => {
       this.sidebarHelp = help;
+    });
+    this.chartSpecService.currentTagObservable.subscribe(currentTag => {
+      this.currentTag = currentTag;
+    })
+    this.chartSpecService.chartSpecObservable.subscribe(chartSpec => {
+      this.chartSpec = chartSpec;
     })
 
+    this.exampleId = 0;
     if (this.exampleId) {
       this.chart = this.fetchExampleChart(this.exampleId);
     } else {
@@ -53,9 +62,10 @@ export class MakeChartComponent implements OnInit {
 
     this.http.get<ChartAccent>(this.chart.src_json).subscribe(data => {
       this.chartAccent = data;
-      this.chartSpec = new ChartSpec();
-      this.chartSpec.fromChartAccent(this.chartAccent);
-      this.currentTag = this.chartSpec.findById(1);
+      const chartSpec = new ChartSpec();
+      chartSpec.fromChartAccent(this.chartAccent);
+      this.chartSpecService.chartSpec = chartSpec;
+      this.chartSpecService.currentTag = chartSpec.findById(1);
     });
     this.onWindowResize();
   }
