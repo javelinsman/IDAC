@@ -1,6 +1,9 @@
 <div class="container-fluid" #container (window:resize)="onWindowResize()">
   <div class="row h-100" *ngIf="chart && chartAccent">
-    <div class="border h-100 styled-scroll col-6 overflow-y-scroll">
+    <section class="col-6 border h-100 styled-scroll" style="overflow-y: scroll">
+      <app-chart-spec-tree></app-chart-spec-tree>
+    </section>
+    <div class="border h-100 styled-scroll col-6 overflow-y-scroll d-none">
       <section class="row">
         <div class="col-12">
           <app-chart-view [chartSpec]="chartSpec"
