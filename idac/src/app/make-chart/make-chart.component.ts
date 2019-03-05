@@ -48,10 +48,10 @@ export class MakeChartComponent implements OnInit {
     });
     this.chartSpecService.currentTagObservable.subscribe(currentTag => {
       this.currentTag = currentTag;
-    })
+    });
     this.chartSpecService.chartSpecObservable.subscribe(chartSpec => {
       this.chartSpec = chartSpec;
-    })
+    });
 
     this.exampleId = 0;
     if (this.exampleId) {

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ChartSpecService } from '../chart-spec.service';
+import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
+import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
 
 @Component({
   selector: 'app-chart-spec-tree',
@@ -7,9 +10,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChartSpecTreeComponent implements OnInit {
 
-  constructor() { }
+  chartSpec: ChartSpec;
+  currentTag: SpecTag;
+
+  constructor(
+    private chartSpecService: ChartSpecService,
+  ) { }
 
   ngOnInit() {
+    this.chartSpecService.currentTagObservable.subscribe(currentTag => {
+      this.currentTag = currentTag;
+    });
+    this.chartSpecService.chartSpecObservable.subscribe(chartSpec => {
+      this.chartSpec = chartSpec;
+    });
   }
 
 }
