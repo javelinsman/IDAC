@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output, AfterViewChecked, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 import { OnClickOutside } from 'src/app/utils';
+import { ChartSpecService } from 'src/app/chart-spec.service';
 
 @Component({
   selector: 'app-chart-spec-tree-view',
@@ -38,7 +39,8 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
   hover: boolean;
 
   constructor(
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private chartSpecService: ChartSpecService,
   ) { }
 
   ngOnInit() {
@@ -69,8 +71,7 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
     if (this.currentTag !== tag) {
       this.edit = false;
     }
-    this.currentTag = tag;
-    this.currentTagChange.emit(this.currentTag);
+    this.chartSpecService.currentTag = tag;
   }
 
   _editChange(edit: boolean) {
