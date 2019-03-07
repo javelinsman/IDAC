@@ -4,6 +4,7 @@ import { AttrInput, makeAttrInput } from './attributes';
 import { ChartAccent } from '../chart-accent/chart-accent';
 import { d3Selection } from 'src/app/chartutils';
 import { d3AsSelectionArray } from 'src/app/utils';
+import { YTick } from './tick';
 
 export class Y extends SpecTag {
   constructor(public _root: ChartSpec) {
@@ -18,21 +19,11 @@ export class Y extends SpecTag {
 
   }
 
-  fromChartAccent(ca: ChartAccent) {
-    this.attributes = {
-      label: new AttrInput(ca.chart.yLabel.text.split('(')[0].trim()),
-      unit: new AttrInput(ca.chart.yLabel.text.split('(')
-        .slice(1).join('(').slice(0, -1).trim()),
-      rangeTo: new AttrInput(ca.chart.yScale.max),
-      rangeFrom: new AttrInput(ca.chart.yScale.min)
-    };
-  }
   fromSpecSVG(spec: d3Selection<SVGSVGElement>) {
     const axis = spec.select('.ca-y-axis');
     const label = spec.select('.ca-y-label');
     const unit = spec.select('.ca-y-unit');
-    const numTicks = axis.selectAll('.ca-item').size()
-    console.log({ axis, label, unit });
+    const numTicks = axis.selectAll('.ca-item').size();
     this.attributes = {
       label: makeAttrInput(() => label.select('text').text()),
       unit: makeAttrInput(() => unit.select('text').text()),
@@ -41,22 +32,9 @@ export class Y extends SpecTag {
       rangeTo: makeAttrInput(() =>
         axis.select(`.ca-item-${numTicks - 1}`).select('text').text()),
     };
-  }
-
-  afterFromChartAccent() {
-    const allValues = this._root.marks.children.map(bargroup => bargroup.children.map(bar => bar.properties.value() as number))
-      .reduce((a, b) => [...a, ...b]);
-    if (!this.attributes.rangeFrom.value || !this.attributes.rangeTo.value) {
-      this.properties.rangeTo = () => Math.ceil(Math.max(...allValues));
-      this.properties.rangeFrom = () => 0; // Math.floor(Math.min(...allValues));
-    }
-
-    this.descriptionRule = this.assembleDescriptionRules([
-      ['Y axis indicates $(Y Axis: label)', true],
-      [' in $(Y Axis: unit).', false, '.'],
-      [' The data range from $(Y Axis: rangeFrom) to $(Y Axis: rangeTo)', true, ''],
-      [' $(Y Axis: unit).', false, '.'],
-    ]);
+    this.children = Array.from(Array(numTicks)).map((_, index) => {
+      return new YTick(axis.select(`.ca-item-${index}`).text(), index, this._root, this);
+    });
   }
 
   afterFromSpecSVG() {
@@ -66,6 +44,7 @@ export class Y extends SpecTag {
       [' The data range from $(Y Axis: rangeFrom) to $(Y Axis: rangeTo)', true, ''],
       [' $(Y Axis: unit).', false, '.'],
     ]);
+    this.children.forEach(child => child.afterFromSpecSVG());
   }
 
   _foreignRepr() {

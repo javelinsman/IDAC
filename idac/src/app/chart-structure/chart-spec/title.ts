@@ -12,16 +12,7 @@ export class Title extends SpecTag {
       title: new AttrInput()
     };
   }
-  fromChartAccent(ca: ChartAccent) {
-    this.attributes = {
-      title: new AttrInput(ca.chart.title.text)
-    };
-  }
-  afterFromChartAccent() {
-    this.descriptionRule = this.assembleDescriptionRules([
-    ['This chart is titled "$(title)."', true],
-    ]);
-  }
+
   fromSpecSVG(spec: d3Selection<SVGSVGElement>) {
     const title = spec.select('.ca-title');
     if (!title) { return; }
@@ -29,7 +20,11 @@ export class Title extends SpecTag {
       title: new AttrInput(title.select('text').text())
     };
   }
+
   afterFromSpecSVG() {
-    this.afterFromChartAccent();
+    this.descriptionRule = this.assembleDescriptionRules([
+    ['This chart is titled "$(title)."', true],
+    ]);
   }
+
 }
