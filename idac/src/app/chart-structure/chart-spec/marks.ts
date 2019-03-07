@@ -186,7 +186,6 @@ export class Point extends SpecTag {
     return `${this.properties.seriesName()}:${this.properties.key()}`;
   }
   afterFromSpecSVG() {
-    console.log(this._root.chartType);
     if (this._root.chartType === 'line-chart') {
       this.descriptionRule = this.assembleDescriptionRules([
         ['$(value)', true],

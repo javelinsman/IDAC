@@ -244,7 +244,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
         // .classed('active', (tag: SpecTag) => tag.editorsNote.active);
         .classed('highlighted', (tag: SpecTag) => tag.editorsNote.showInGraphView && tag.editorsNote.active);
 
-      if (this.currentTag._root.chartType === 'bar-chart') {
+      if (false && this.currentTag._root.chartType === 'bar-chart') {
         this.updateAttribute();
       }
 

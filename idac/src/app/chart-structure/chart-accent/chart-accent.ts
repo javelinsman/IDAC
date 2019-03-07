@@ -107,6 +107,7 @@ export interface Chart {
   yScale:      YScale;
   legendLabel: LegendLabel;
   nameColumn:  string;
+  groupColumn:  string;
   colors:      string[];
 }
 
