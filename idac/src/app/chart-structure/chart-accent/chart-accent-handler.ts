@@ -5,46 +5,20 @@ import { d3AsSelectionArray, d3ImmediateChildren } from 'src/app/utils';
 export class ChartAccentHandler {
   constructor(private json: ChartAccent, private svg: d3Selection<SVGSVGElement>) { }
   convertToSpec(): d3Selection<SVGSVGElement> {
-    this.svg.attr('ca-chart-type', this.json.chart.type);
-
     const [annotationBackground, g2, annotationForeground] = d3AsSelectionArray(d3ImmediateChildren(this.svg, 'g'));
     const [title, legend, chart] = d3AsSelectionArray(d3ImmediateChildren(g2, 'g'));
+    title.classed('idac-title', true).attr('data', 'Hello' || this.json.chart.title.text);
+    return this.svg;
     const items = d3AsSelectionArray(legend.selectAll('.legend'));
     const [marks, x, y, yLabel, xLabel] = d3AsSelectionArray(d3ImmediateChildren(chart, 'g'));
-
-    const xTicks = d3AsSelectionArray(x.selectAll('.tick'));
-    const yTicks = d3AsSelectionArray(y.selectAll('.tick'));
-
-    y
-      .append('g')
-        .classed('tick', true)
-        .classed('ca-item ca-item-0', true)
-        .style('display', 'none')
-      .append('text')
-        .text('0');
-
-    x
-      .append('g')
-        .classed('tick', true)
-        .classed('ca-item ca-item-0', true)
-        .style('display', 'none')
-      .append('text')
-        .text('0');
-
-    title.classed('ca-title', true);
-    y.classed('ca-y-axis', true);
+    y.classed('idac-y-axis', true);
     if (yLabel) {
-      yLabel.classed('ca-y-label', true);
+      yLabel.classed('idac-y-axis', true);
     }
-    yTicks.forEach((yTick, i) => {
-      yTick.classed(`ca-item ca-item-${i + 1}`, true);
-    });
-    x.classed('ca-x-axis', true);
+    x.classed('idac-x-axis', true);
     if (xLabel) {
-      xLabel.classed('ca-x-label', true);
+      xLabel.classed('idac-x-axis', true);
     }
-    xTicks.forEach((xTick, i) => xTick.classed(`ca-item ca-item-${i + 1}`, true));
-    return this.svg;
     const serieses = d3AsSelectionArray(d3ImmediateChildren(marks, 'g'));
     let rects, bargroups, circles, pointGroups;
     if (this.currentTag._root.chartType === 'bar-chart') {
@@ -60,6 +34,8 @@ export class ChartAccentHandler {
       });
       pointGroups = circles.map((_, i) => this.svg.selectAll(`.idac-point-group-${i}`));
     }
+    const xTicks = d3AsSelectionArray(x.selectAll('.tick'));
+    const yTicks = d3AsSelectionArray(y.selectAll('.tick'));
     const annotationRenderingArea = d3AsSelectionArray(
       d3ImmediateChildren(
         d3ImmediateChildren(annotationForeground, 'g'),
@@ -88,7 +64,7 @@ export class ChartAccentHandler {
     cs.legend.children.forEach((item, i) => {
       pairs.push([item, items[i]]);
     });
-    if (cs.chartType === 'bar-chart') {
+    if(cs.chartType === 'bar-chart') {
       cs.marks.children.forEach((bargroup, i) => {
         pairs.push([bargroup, (bargroups as any)[i]]);
         bargroup.children.forEach((bar, j) => {
@@ -131,6 +107,6 @@ export class ChartAccentHandler {
       bargroups,
       xTicks,
       yTicks,
-    };
+    }
   }
 }
