@@ -99,12 +99,14 @@ export interface Chart {
   width:       number;
   height:      number;
   xColumn:     string;
+  yColumn:     string;
   yColumns:    string[];
   xLabel:      LegendLabel;
   yLabel:      LegendLabel;
   xScale:      XScale;
   yScale:      YScale;
   legendLabel: LegendLabel;
+  nameColumn:  string;
   colors:      string[];
 }
 

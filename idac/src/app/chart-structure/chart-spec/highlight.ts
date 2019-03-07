@@ -4,8 +4,8 @@ import { ChartSpec } from './chart-spec';
 import { Annotations } from './annotations';
 import { AttrInputSelect, AttrInput } from './attributes';
 import { CoordinateRange } from './coordinate-range';
-import { Item } from './legend';
 import { CoordinateLine } from './coordinate-line';
+import { Item } from './item';
 
 export class Highlight extends SpecTag {
   constructor(

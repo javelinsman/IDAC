@@ -110,3 +110,15 @@ export function OnClickOutside(element, callback) {
 
 // source (2018-03-11): https://github.com/jquery/jquery/blob/master/src/css/hiddenVisibleSelectors.js
 const isVisible = elem => !!elem && !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length );
+
+export class Counter {
+  count = {};
+  constructor() {
+  }
+  addCount(name) {
+    this.count[name] ? this.count[name] += 1 : this.count[name] = 1;
+  }
+  getCount(name) {
+    return this.count[name] ? this.count[name] : 0;
+  }
+}

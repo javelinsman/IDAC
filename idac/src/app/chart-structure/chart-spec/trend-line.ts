@@ -4,7 +4,7 @@ import { ChartSpec } from './chart-spec';
 import { Annotations } from './annotations';
 import { AttrInputSelect, AttrInput } from './attributes';
 import { CoordinateRange } from './coordinate-range';
-import { Item } from './legend';
+import { Item } from './item';
 import { CoordinateLine } from './coordinate-line';
 import { Bar } from './marks';
 

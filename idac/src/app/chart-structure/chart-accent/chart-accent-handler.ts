@@ -1,6 +1,7 @@
 import { ChartAccent } from './chart-accent';
 import { d3Selection } from 'src/app/chartutils';
-import { d3AsSelectionArray, d3ImmediateChildren } from 'src/app/utils';
+import { d3AsSelectionArray, d3ImmediateChildren, zip, Counter } from 'src/app/utils';
+import { json } from 'd3';
 
 export class ChartAccentHandler {
   constructor(private json: ChartAccent, private svg: d3Selection<SVGSVGElement>) { }
@@ -34,42 +35,69 @@ export class ChartAccentHandler {
       yTick.classed(`ca-item ca-item-${i + 1}`, true);
     });
 
-    x
-      .classed('ca-x-axis', true)
-      .append('g')
-        .classed('tick', true)
-        .classed('ca-item ca-item-0', true)
-        .style('display', 'none')
-      .append('text')
-        .text('0');
+    if (this.json.chart.type === 'scatterplot') {
+      x
+        .classed('ca-x-axis', true)
+        .append('g')
+          .classed('tick', true)
+          .classed('ca-item ca-item-0', true)
+          .style('display', 'none')
+        .append('text')
+          .text('0');
+      xTicks.forEach((xTick, i) => xTick.classed(`ca-item ca-item-${i + 1}`, true));
+    } else {
+      x.classed('ca-x-axis', true)
+      xTicks.forEach((xTick, i) => xTick.classed(`ca-item ca-item-${i}`, true));
+    }
 
     if (xLabel) {
       xLabel.classed('ca-x-label', true);
     }
-
-    xTicks.forEach((xTick, i) => xTick.classed(`ca-item ca-item-${i + 1}`, true));
 
     legend.classed('ca-legend', true);
     items.forEach((item, i) => {
       item.classed(`ca-item ca-item-${i}`, true);
     });
 
-    return this.svg;
     const serieses = d3AsSelectionArray(d3ImmediateChildren(marks, 'g'));
-    let rects, bargroups, circles, pointGroups;
-    if (this.currentTag._root.chartType === 'bar-chart') {
-      rects = zip(serieses.map(d => d3AsSelectionArray(d3ImmediateChildren(d, 'rect'))));
-      rects.forEach((elem: d3.Selection<any, any, any, any>[], i) => {
-        elem.forEach(d => d.classed(`idac-bargroup-${i}`, true));
+    console.log(this.json);
+    marks.classed('ca-marks', true);
+    if (this.json.chart.type === 'bar-chart') {
+      serieses.forEach((series, seriesIndex) => {
+        const bars = d3AsSelectionArray(d3ImmediateChildren(series, 'rect'));
+        bars.forEach((bar, groupIndex) => {
+          bar.classed(`ca-item ca-series ca-series-${seriesIndex} ca-group ca-group-${groupIndex}`, true);
+          const value = this.json.dataset.rows[groupIndex][this.json.chart.yColumns[seriesIndex]];
+          bar.attr('ca-data', value);
+        });
       });
-      bargroups = rects.map((_, i) => this.svg.selectAll(`.idac-bargroup-${i}`));
-    } else {
-      circles = zip(serieses.map(d => d3AsSelectionArray(d3ImmediateChildren(d, 'circle'))));
-      circles.forEach((elem: d3.Selection<any, any, any, any>[], i) => {
-        elem.forEach(d => d.classed(`idac-point-group-${i}`, true));
+    } else if (this.json.chart.type === 'line-chart') {
+      serieses.forEach((series, seriesIndex) => {
+        const points = d3AsSelectionArray(d3ImmediateChildren(series, 'circle'));
+        points.forEach((point, pointIndex) => {
+          point.classed(`ca-item ca-series ca-series-${seriesIndex} ca-group ca-group-${pointIndex} ca-item-${pointIndex}`, true);
+          const value = this.json.dataset.rows[pointIndex][this.json.chart.yColumns[seriesIndex]];
+          point.attr('ca-data', value);
+        });
       });
-      pointGroups = circles.map((_, i) => this.svg.selectAll(`.idac-point-group-${i}`));
+    } else if (this.json.chart.type === 'scatterplot') {
+      const points = d3AsSelectionArray(d3ImmediateChildren(serieses[0], 'circle'));
+      const counter = new Counter();
+      points.forEach((point, pointIndex) => {
+        const seriesNames = items.map(item => item.select('text').text());
+        const seriesName = this.json.dataset.rows[pointIndex][this.json.chart.nameColumn] as string;
+        const seriesIndex = seriesNames.indexOf(seriesName);
+        counter.addCount(seriesIndex);
+        point.classed(`ca-item ca-series ca-series-${seriesIndex} ca-item-${counter.getCount(seriesIndex) - 1}`, true);
+        const xValue = this.json.dataset.rows[pointIndex][this.json.chart.xColumn];
+        const yValue = this.json.dataset.rows[pointIndex][this.json.chart.yColumn];
+        point.attr('ca-data-x', xValue);
+        point.attr('ca-data-y', yValue);
+      });
     }
+    return this.svg;
+
+    /*
     const annotationRenderingArea = d3AsSelectionArray(
       d3ImmediateChildren(
         d3ImmediateChildren(annotationForeground, 'g'),
@@ -142,5 +170,6 @@ export class ChartAccentHandler {
       xTicks,
       yTicks,
     };
+  */
   }
 }

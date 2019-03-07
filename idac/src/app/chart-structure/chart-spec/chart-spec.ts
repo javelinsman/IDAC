@@ -35,10 +35,10 @@ export class ChartSpec extends SpecTag {
   }
 
   fromSpecSVG(spec: d3Selection<SVGSVGElement>) {
+    this.chartType = spec.attr('ca-chart-type');
     this.children.forEach(tag => tag.fromSpecSVG(spec));
     this.children.forEach(tag => tag.afterFromSpecSVG());
     this._flattendTags = null; // assure that flattend tags will be updated
-    this.chartType = spec.attr('chart-type');
   }
 
 
