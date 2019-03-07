@@ -41,6 +41,7 @@ export class X extends SpecTag {
 
 export class Tick extends SpecTag {
   constructor(tick: string | number, index: number, public _root: ChartSpec, public _parent: X) {
+    console.log(tick);
     super('Tick');
     this.attributes = {
       text: new AttrInput(tick),

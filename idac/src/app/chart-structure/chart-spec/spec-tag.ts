@@ -2,6 +2,7 @@ import { IAttribute, IProperty } from './attributes';
 import { ChartAccent } from '../chart-accent/chart-accent';
 import { ChartSpec } from './chart-spec';
 import { firstLetterUpperCase } from 'src/app/utils';
+import { d3Selection } from 'src/app/chartutils';
 
 interface IEditorsNote {
   text: string;
@@ -14,12 +15,9 @@ export class SpecTag {
   constructor(public _tagname: string) {
     this._id = SpecTag.idCount ++;
   }
+
   private static idCount = 0;
   public static _descriptionRule = '';
-
-  public static clear() {
-    SpecTag.idCount = 0;
-  }
 
   attributes: IAttribute = {};
   _properties: IProperty = {};
@@ -36,6 +34,9 @@ export class SpecTag {
     showInGraphView: false
   };
 
+  public static clear() {
+    SpecTag.idCount = 0;
+  }
 
   set properties(properties: IProperty) {
     this._properties = properties;
@@ -138,6 +139,9 @@ export class SpecTag {
 
   fromChartAccent(ca: ChartAccent): void {}
   afterFromChartAccent(): void {}
+
+  fromSpecSVG(spec: d3Selection<SVGSVGElement>) {}
+  afterFromSpecSVG() {}
 
   foreignRepr(): string {
     return this._tagname;

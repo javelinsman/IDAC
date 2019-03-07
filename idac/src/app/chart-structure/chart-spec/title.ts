@@ -2,6 +2,7 @@ import { SpecTag } from './spec-tag';
 import { ChartSpec } from './chart-spec';
 import { AttrInput } from './attributes';
 import { ChartAccent } from '../chart-accent/chart-accent';
+import { d3Selection } from 'src/app/chartutils';
 
 export class Title extends SpecTag {
   constructor(public _root: ChartSpec) {
@@ -20,5 +21,15 @@ export class Title extends SpecTag {
     this.descriptionRule = this.assembleDescriptionRules([
     ['This chart is titled "$(title)."', true],
     ]);
+  }
+  fromSpecSVG(spec: d3Selection<SVGSVGElement>) {
+    const title = spec.select('.idac-title');
+    if (!title) { return; }
+    this.attributes = {
+      title: new AttrInput(title.attr('data'))
+    };
+  }
+  afterFromSpecSVG() {
+    this.afterFromChartAccent();
   }
 }

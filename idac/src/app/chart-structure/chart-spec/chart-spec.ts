@@ -6,6 +6,7 @@ import { Legend } from './legend';
 import { Marks } from './marks';
 import { Annotations } from './annotations';
 import { SpecTag } from './spec-tag';
+import { d3Selection } from 'src/app/chartutils';
 
 export class ChartSpec extends SpecTag {
   title = new Title(this);
@@ -32,6 +33,14 @@ export class ChartSpec extends SpecTag {
     this._flattendTags = null; // assure that flattend tags will be updated
     this.chartType = ca.chart.type;
   }
+
+  fromSpecSVG(spec: d3Selection<SVGSVGElement>) {
+    this.children.forEach(tag => tag.fromSpecSVG(spec));
+    this.children.forEach(tag => tag.afterFromSpecSVG());
+    this._flattendTags = null; // assure that flattend tags will be updated
+    this.chartType = spec.attr('chart-type');
+  }
+
 
   flattenedTags() {
     if (!this._flattendTags) {
