@@ -105,7 +105,7 @@ export class SpecTag {
     return firstLetterUpperCase(description);
   }
 
-  renderRule(rule: string){
+  renderRule(rule: string) {
     const args = rule.match(/\$\(([^)]*)\)/g);
     if (args) {
     args.map(d => [d, d.slice(2, -1)])
@@ -117,14 +117,14 @@ export class SpecTag {
           const keyName = strip.split(':')[1].trim();
           const tag = this.peekableTags().find(_tag => _tag._tagname === tagName);
           if (tag && tag.properties[keyName]) {
-            if (tag.attributes[keyName] && tag.attributes[keyName].type == 'input-select') {
+            if (tag.attributes[keyName] && tag.attributes[keyName].type === 'input-select') {
             isUndefined = false;
             }
             value = '' + tag.properties[keyName]();
           }
         } else {
           if (this.properties[strip]) {
-            if (this.attributes[strip] && this.attributes[strip].type == 'input-select') {
+            if (this.attributes[strip] && this.attributes[strip].type === 'input-select') {
             isUndefined = false;
             }
             value = '' + this.properties[strip]();

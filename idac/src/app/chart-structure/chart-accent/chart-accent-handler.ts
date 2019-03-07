@@ -9,41 +9,51 @@ export class ChartAccentHandler {
 
     const [annotationBackground, g2, annotationForeground] = d3AsSelectionArray(d3ImmediateChildren(this.svg, 'g'));
     const [title, legend, chart] = d3AsSelectionArray(d3ImmediateChildren(g2, 'g'));
-    const items = d3AsSelectionArray(legend.selectAll('.legend'));
     const [marks, x, y, yLabel, xLabel] = d3AsSelectionArray(d3ImmediateChildren(chart, 'g'));
 
     const xTicks = d3AsSelectionArray(x.selectAll('.tick'));
     const yTicks = d3AsSelectionArray(y.selectAll('.tick'));
-
-    y
-      .append('g')
-        .classed('tick', true)
-        .classed('ca-item ca-item-0', true)
-        .style('display', 'none')
-      .append('text')
-        .text('0');
-
-    x
-      .append('g')
-        .classed('tick', true)
-        .classed('ca-item ca-item-0', true)
-        .style('display', 'none')
-      .append('text')
-        .text('0');
+    const items = d3AsSelectionArray(legend.selectAll('.legend'));
 
     title.classed('ca-title', true);
-    y.classed('ca-y-axis', true);
+
+    y
+      .classed('ca-y-axis', true)
+      .append('g')
+        .classed('tick', true)
+        .classed('ca-item ca-item-0', true)
+        .style('display', 'none')
+      .append('text')
+        .text('0');
+
     if (yLabel) {
       yLabel.classed('ca-y-label', true);
     }
+
     yTicks.forEach((yTick, i) => {
       yTick.classed(`ca-item ca-item-${i + 1}`, true);
     });
-    x.classed('ca-x-axis', true);
+
+    x
+      .classed('ca-x-axis', true)
+      .append('g')
+        .classed('tick', true)
+        .classed('ca-item ca-item-0', true)
+        .style('display', 'none')
+      .append('text')
+        .text('0');
+
     if (xLabel) {
       xLabel.classed('ca-x-label', true);
     }
+
     xTicks.forEach((xTick, i) => xTick.classed(`ca-item ca-item-${i + 1}`, true));
+
+    legend.classed('ca-legend', true);
+    items.forEach((item, i) => {
+      item.classed(`ca-item ca-item-${i}`, true);
+    });
+
     return this.svg;
     const serieses = d3AsSelectionArray(d3ImmediateChildren(marks, 'g'));
     let rects, bargroups, circles, pointGroups;
