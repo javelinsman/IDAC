@@ -23,10 +23,10 @@ export class Title extends SpecTag {
     ]);
   }
   fromSpecSVG(spec: d3Selection<SVGSVGElement>) {
-    const title = spec.select('.idac-title');
+    const title = spec.select('.ca-title');
     if (!title) { return; }
     this.attributes = {
-      title: new AttrInput(title.attr('data'))
+      title: new AttrInput(title.select('text').text())
     };
   }
   afterFromSpecSVG() {
