@@ -29,7 +29,7 @@ export class ChartSpecTreeViewKeyHintComponent implements OnInit, AfterContentCh
   ngOnInit() {
     this.stageStateService.hintObservable.subscribe(hint => {
       this.showHint = hint;
-    })
+    });
   }
 
   ngAfterContentChecked() {
@@ -40,14 +40,14 @@ export class ChartSpecTreeViewKeyHintComponent implements OnInit, AfterContentCh
   }
 
   refreshReachableKeys() {
-    this.reachableKeys =[];
+    this.reachableKeys = [];
     if (this.tag === this.currentTag) {
       // this.reachableKeys.push('⏎');
     } else {
       Object.entries(this.keyBindings).forEach(([methodName, keyBinding]) => {
         this.navigateComponent.tag = this.currentTag;
         this.navigateComponent[methodName]();
-        if(this.navigateComponent.tag === this.tag) {
+        if (this.navigateComponent.tag === this.tag) {
           this.reachableKeys.push({
             key: keyBinding.keyNameShort,
             tooltip: this.tooltipDescription(methodName, keyBinding)
