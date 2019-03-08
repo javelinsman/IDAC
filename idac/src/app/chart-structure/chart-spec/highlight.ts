@@ -70,7 +70,34 @@ export class Highlight extends SpecTag {
       const indices = item.items.map(itemString => JSON.parse(itemString)[2]);
       locations.push([series, indices]);
     });
-    return locations;
+    if (this._root.chartType === 'scatterplot') {
+      const aggr = {};
+      locations.forEach(([series, indices]) => {
+        indices.forEach(index => {
+          const lengths = this._root.marks.children.map(series => series.children.length);
+          const convert = (series, index, lengths) => {
+            for (let i = 0; i < lengths.length; i++) {
+              const length = lengths[i];
+              if (index >= length) {
+                index -= length;
+              } else {
+                return [i, index];
+              }
+            }
+          };
+          [series, index] = convert(series, index, lengths);
+          aggr[series] ? aggr[series].push(index) : aggr[series] = [index];
+        });
+      });
+      const newLocations = [];
+      Object.entries(aggr).forEach(([seriesIndex, indices]) => {
+        const series = this._root.legend.children[seriesIndex];
+        newLocations.push([series, indices])
+      });
+      return newLocations;
+    } else {
+      return locations;
+    }
   }
 
   makeTargetInfo() {
@@ -78,8 +105,14 @@ export class Highlight extends SpecTag {
     let numTargets = 0;
     this.getTargetLocation().forEach(([series, indices]) => {
       const seriesName = series.properties.text();
-      targets.push(`${indices.length === this._root.marks.children.length ?
-        'all bars' : `${indices.map(i => i + 1).join(', ')}-th bar`} in ${seriesName}`);
+      if (this._root.chartType === 'bar-chart') {
+        targets.push(`${indices.length === this._root.marks.children.length ?
+          'all bars' : `${indices.map(i => i + 1).join(', ')}-th position`} in ${seriesName}`);
+      } else {
+        const seriesIndex = this._root.legend.children.indexOf(series);
+        targets.push(`${indices.length === this._root.marks.children[seriesIndex].children.length ?
+          'all points' : `${indices.length} points`} in ${seriesName}`);
+      }
       numTargets += indices.length;
     });
     return {
@@ -89,13 +122,23 @@ export class Highlight extends SpecTag {
     }
 
   afterFromChartAccent() {
-    this.descriptionRule = this.assembleDescriptionRules([
-      ['$(numTargets) bars are annotated', true],
-      [', labeled as "$(label)".', false, '.'],
-      [' $(highlight)', true],
-      [' $(itemLabel)', true],
-      [' Specifically, targets are $(targetDescription).', true],
-    ]);
+    if (this._root.chartType === 'bar-chart') {
+      this.descriptionRule = this.assembleDescriptionRules([
+        ['$(numTargets) bars are annotated', true],
+        [', labeled as "$(label)".', false, '.'],
+        [' $(highlight)', true],
+        [' $(itemLabel)', true],
+        [' Specifically, targets are $(targetDescription).', true],
+      ]);
+    } else {
+      this.descriptionRule = this.assembleDescriptionRules([
+        ['$(numTargets) points are annotated', true],
+        [', labeled as "$(label)".', false, '.'],
+        [' $(highlight)', true],
+        [' $(itemLabel)', true],
+        [' Specifically, targets are $(targetDescription).', true],
+      ]);
+    }
   }
 
 

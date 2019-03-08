@@ -14,7 +14,6 @@ export function caSpecDistinctClasses(selection: d3.Selection<any, any, any, any
   } else {
     elems = d3AsSelectionArray(selection.selectAll(`.${className}`));
   }
-  console.log(elems);
   return Array.from(new Set(
     elems.map(elem => elem.attr('class').split(' ')
       .filter(a => a.startsWith(`${className}-`)))

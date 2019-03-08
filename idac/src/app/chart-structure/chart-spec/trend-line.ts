@@ -7,6 +7,7 @@ import { CoordinateRange } from './coordinate-range';
 import { Item } from './item';
 import { CoordinateLine } from './coordinate-line';
 import { Bar } from './marks';
+import { pearsonCorrelation } from 'src/app/utils';
 
 export class TrendLine extends SpecTag {
   targets: Bar[] = [];
@@ -39,21 +40,33 @@ export class TrendLine extends SpecTag {
     this.properties = {
       ...this.properties,
       trend: () => {
-        const values = this.targets.map(bar => +bar.properties.value());
-        const diff = values.slice(-1)[0] - values[0];
-        const rate = diff / (+this._root.y.properties.rangeTo() - +this._root.y.properties.rangeFrom());
-        if (rate >= 0.1) {
+        let values;
+        if (this._root.chartType === 'scatterplot') {
+          values = this.targets.map(point => [point.properties.x(), point.properties.y()]);
+        } else {
+          values = this.targets.map((bar, i) => [i, +bar.properties.value()]);
+        }
+        const corr = pearsonCorrelation(values.map(d => +d[0]), values.map(d => +d[1]));
+        if (corr >= 0.1) {
           return 'upward';
-        } else if (rate <= -0.1) {
+        } else if (corr <= -0.1) {
           return 'downward';
         } else { return 'constant'; }
       }
     };
-    this.descriptionRule = this.assembleDescriptionRules([
-      ['A trend line goes $(trend) on $(numTargets) bars', true],
-      [', labeled as "$(label)".', false, '.'],
-      [' Specifically, the line is drawn over $(targetDescription).', true],
-    ]);
+    if (this._root.chartType === 'bar-chart') {
+      this.descriptionRule = this.assembleDescriptionRules([
+        ['A trend line goes $(trend) on $(numTargets) bars', true],
+        [', labeled as "$(label)".', false, '.'],
+        [' Specifically, the line is drawn over $(targetDescription).', true],
+      ]);
+    } else {
+      this.descriptionRule = this.assembleDescriptionRules([
+        ['A trend line goes $(trend) on $(numTargets) points', true],
+        [', labeled as "$(label)".', false, '.'],
+        [' Specifically, the line is drawn over $(targetDescription).', true],
+      ]);
+    }
   }
 
   getTargetLocation(): [Item, number[]][] {
@@ -64,7 +77,34 @@ export class TrendLine extends SpecTag {
       const indices = item.items.map(itemString => JSON.parse(itemString)[2]);
       locations.push([series, indices]);
       });
-    return locations;
+    if (this._root.chartType === 'scatterplot') {
+      const aggr = {};
+      locations.forEach(([series, indices]) => {
+        indices.forEach(index => {
+          const lengths = this._root.marks.children.map(series => series.children.length);
+          const convert = (series, index, lengths) => {
+            for (let i = 0; i < lengths.length; i++) {
+              const length = lengths[i];
+              if (index >= length) {
+                index -= length;
+              } else {
+                return [i, index];
+              }
+            }
+          };
+          [series, index] = convert(series, index, lengths);
+          aggr[series] ? aggr[series].push(index) : aggr[series] = [index];
+        });
+      });
+      const newLocations = [];
+      Object.entries(aggr).forEach(([seriesIndex, indices]) => {
+        const series = this._root.legend.children[seriesIndex];
+        newLocations.push([series, indices])
+      });
+      return newLocations;
+    } else {
+      return locations;
+    }
   }
 
   makeTargetInfo() {
@@ -72,10 +112,17 @@ export class TrendLine extends SpecTag {
     const targetDescriptions = [];
     let numTargets = 0;
     this.getTargetLocation().forEach(([series, indices]) => {
-      indices.forEach(index => targets.push(this._root.marks.children[index].children[series.properties.index0()]));
-      const seriesName = series.properties.text();
-      targetDescriptions.push(`${indices.length === this._root.marks.children.length ?
-        'all bars' : `${indices.map(i => i + 1).join(', ')}-th position`} in ${seriesName}`);
+      if (this._root.chartType === 'bar-chart') {
+        indices.forEach(index => targets.push(this._root.marks.children[index].children[series.properties.index0()]));
+        const seriesName = series.properties.text();
+        targetDescriptions.push(`${indices.length === this._root.marks.children.length ?
+          'all bars' : `${indices.map(i => i + 1).join(', ')}-th position`} in ${seriesName}`);
+      } else {
+        indices.forEach(index => targets.push(this._root.marks.children[series.properties.index0()].children[index]));
+        const seriesName = series.properties.text();
+        targetDescriptions.push(`${indices.length === this._root.marks.children[0].children.length ?
+          'all points' : `${indices.length} points`} in ${seriesName}`);
+      }
       numTargets += indices.length;
     });
     return {

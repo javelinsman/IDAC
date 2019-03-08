@@ -62,6 +62,8 @@ export class MakeChartComponent implements OnInit {
 
         this.chartSpec = new ChartSpec();
         this.chartSpec.fromSpecSVG(this.specSVG);
+        this.chartSpec.fromChartAccent(json);
+        console.log(this.chartSpec);
         this.currentTag = this.chartSpec.findById(1);
       });
     });

@@ -40,16 +40,16 @@ export class Annotations extends SpecTag {
     ];
     if (this.properties.numHighlights()) { descriptionRules.push(
     '$(numHighlights) highlight' + (this.properties.numHighlights() > 1 ? 's' : '')
-    ) }
+    ); }
     if (this.properties.numTrendlines()) { descriptionRules.push(
     '$(numTrendlines) trend line' + (this.properties.numTrendlines() > 1 ? 's' : '')
-    ) }
+    ); }
     if (this.properties.numLines()) { descriptionRules.push(
     '$(numLines) line' + (this.properties.numLines() > 1 ? 's' : '')
-    ) }
+    ); }
     if (this.properties.numRanges()) { descriptionRules.push(
     '$(numRanges) range' + (this.properties.numRanges() > 1 ? 's' : '')
-    ) }
+    ); }
 
     if (this.properties.numChildren() > 1) {
     this.descriptionRule = 'There are total of $(numChildren) annotations, which consists of '

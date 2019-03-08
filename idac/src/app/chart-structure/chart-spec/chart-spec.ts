@@ -28,10 +28,10 @@ export class ChartSpec extends SpecTag {
   }
 
   fromChartAccent(ca: ChartAccent) {
-    this.children.forEach(tag => tag.fromChartAccent(ca));
-    this.children.forEach(tag => tag.afterFromChartAccent());
+    this.annotations.fromChartAccent(ca);
+    this.annotations.afterFromChartAccent();
     this._flattendTags = null; // assure that flattend tags will be updated
-    this.chartType = ca.chart.type;
+    // this.chartType = ca.chart.type;
   }
 
   fromSpecSVG(spec: d3Selection<SVGSVGElement>) {

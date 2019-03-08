@@ -24,7 +24,6 @@ export class Marks extends SpecTag {
   fromSpecSVG(spec: d3Selection<SVGSVGElement>) {
     const chartType = spec.attr('ca-chart-type');
     const marks = spec.select('.ca-marks');
-    console.log(d3AsSelectionArray(marks.selectAll('.ca-group')));
     const groups = caSpecDistinctClasses(marks, 'ca-group');
     const numGroups = groups.length;
     const serieses = caSpecDistinctClasses(marks, 'ca-series');
@@ -43,12 +42,20 @@ export class Marks extends SpecTag {
   }
 
   afterFromSpecSVG() {
-    this.descriptionRule = this.assembleDescriptionRules([
-    ['There are $(numBarGroups) bar groups', true],
-    [', which correspond to each $(X Axis: label).', false, '.'],
-    [' And each bar group contains $(numBars) bars', true],
-    [', which correspond to each series of $(Legend: label).', false, '.'],
-    ]);
+    if (this._root.chartType === 'bar-chart') {
+      this.descriptionRule = this.assembleDescriptionRules([
+        ['There are $(numBarGroups) bar groups', true],
+        [', which correspond to each $(X Axis: label).', false, '.'],
+        [' And each bar group contains $(numBars) bars', true],
+        [', which correspond to each series of $(Legend: label).', false, '.'],
+      ]);
+    } else {
+      this.descriptionRule = this.assembleDescriptionRules([
+        ['There are $(numBarGroups) series', true],
+        [', which correspond to each $(Legend: label).', false, '.'],
+      ]);
+
+    }
     this.children.forEach(child => child.afterFromSpecSVG());
   }
 }
