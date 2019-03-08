@@ -11,10 +11,11 @@ type AllAnnotation = Annotation | RelationalHighlightLine | RelationalHighlightR
 
 export class Annotations extends SpecTag {
   chartAccentAnnotations: ChartAccent.Annotation[];
+  _children;
   constructor(public _root: ChartSpec) {
     super('Annotations');
     this._parent = _root;
-    this.children = [] as Annotation[];
+    this._children = [] as Annotation[];
     this.properties = {
       numChildren: () => this.children.length,
       numHighlights: () => this.children.filter(tag => tag._tagname === 'Highlight').length,
@@ -25,14 +26,18 @@ export class Annotations extends SpecTag {
 
   }
   fromChartAccent(ca: ChartAccent.ChartAccent) {
-    this.children = [];
+    this._children = [];
     ca.annotations.annotations
       .filter(annotation => !annotation.target_inherit)
       .forEach(annotation => {
         this.convertToAnnotations(annotation, ca.annotations.annotations, ca)
-          .forEach(a => this.children.push(a));
+          .forEach(a => this._children.push(a));
       });
     this.chartAccentAnnotations = ca.annotations.annotations;
+  }
+
+  get children() {
+    return this._children.filter(child => child.active !== false);
   }
 
   afterFromChartAccent() {

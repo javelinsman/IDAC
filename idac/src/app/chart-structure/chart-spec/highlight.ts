@@ -8,6 +8,8 @@ import { CoordinateLine } from './coordinate-line';
 import { Item } from './item';
 
 export class Highlight extends SpecTag {
+  active = true;
+
   constructor(
     public annotation: ChartAccent.Annotation,
     public _root: ChartSpec,

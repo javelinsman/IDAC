@@ -11,6 +11,7 @@ import { pearsonCorrelation } from 'src/app/utils';
 
 export class TrendLine extends SpecTag {
   targets: Bar[] = [];
+  active = true;
   constructor(
     public annotation: ChartAccent.Annotation,
     public _root: ChartSpec,
