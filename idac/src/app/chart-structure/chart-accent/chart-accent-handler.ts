@@ -2,6 +2,7 @@ import { ChartAccent } from './chart-accent';
 import { d3Selection } from 'src/app/chartutils';
 import { d3AsSelectionArray, d3ImmediateChildren, zip, Counter } from 'src/app/utils';
 import { json } from 'd3';
+import { Annotations } from '../chart-spec/annotations';
 
 export class ChartAccentHandler {
   constructor(private json: ChartAccent, private svg: d3Selection<SVGSVGElement>) { }
@@ -95,9 +96,7 @@ export class ChartAccentHandler {
         point.attr('ca-data-y', yValue);
       });
     }
-    return this.svg;
 
-    /*
     const annotationRenderingArea = d3AsSelectionArray(
       d3ImmediateChildren(
         d3ImmediateChildren(annotationForeground, 'g'),
@@ -111,7 +110,13 @@ export class ChartAccentHandler {
       }
       return accum;
     }, []);
+    return this.svg;
+    /*
     const annotations = uniqueAnnotationIds.map(id => annotationForeground.selectAll(`.${id}`));
+    const specAnnotations = new Annotations();
+
+    const chartAccentAnnotations = ca.annotations.annotations;
+
     const cs = this.chartSpec;
     const pairs = [
       [cs.title, title],

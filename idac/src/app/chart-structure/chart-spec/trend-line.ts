@@ -27,7 +27,7 @@ export class TrendLine extends SpecTag {
   }
 
   fromChartAccent(ca: ChartAccent.ChartAccent) {
-    const { targets, targetDescriptions, numTargets } = this.makeTargetInfo();
+    const { targets, targetDescriptions, numTargets } = this.makeTargetInfo(ca);
     this.targets = targets;
     this.properties = {
       ...this.properties,
@@ -69,7 +69,7 @@ export class TrendLine extends SpecTag {
     }
   }
 
-  getTargetLocation(): [Item, number[]][] {
+  getTargetLocation(ca: ChartAccent.ChartAccent): [Item, number[]][] {
     const locations = [];
     (this.annotation.target as ChartAccent.ItemsTarget).items.forEach(item => {
       const seriesIndex = +item.elements.slice(1) - 2;
@@ -81,19 +81,13 @@ export class TrendLine extends SpecTag {
       const aggr = {};
       locations.forEach(([series, indices]) => {
         indices.forEach(index => {
-          const lengths = this._root.marks.children.map(series => series.children.length);
-          const convert = (series, index, lengths) => {
-            for (let i = 0; i < lengths.length; i++) {
-              const length = lengths[i];
-              if (index >= length) {
-                index -= length;
-              } else {
-                return [i, index];
-              }
-            }
-          };
-          [series, index] = convert(series, index, lengths);
-          aggr[series] ? aggr[series].push(index) : aggr[series] = [index];
+          const seriesName = ca.dataset.rows[index][ca.chart.groupColumn];
+          const item = this._root.legend.children.find(item => item.properties.text() === seriesName);
+          const itemIndex = this._root.legend.children.indexOf(item);
+          const series = this._root.marks.children.find(_series => _series.properties.name() === seriesName);
+          const newIndex = ca.dataset.rows.filter(row => row[ca.chart.groupColumn] === seriesName)
+            .indexOf(ca.dataset.rows[index]);
+          aggr[itemIndex] ? aggr[itemIndex].push(newIndex) : aggr[itemIndex] = [newIndex];
         });
       });
       const newLocations = [];
@@ -107,11 +101,11 @@ export class TrendLine extends SpecTag {
     }
   }
 
-  makeTargetInfo() {
+  makeTargetInfo(ca: ChartAccent.ChartAccent) {
     const targets = [];
     const targetDescriptions = [];
     let numTargets = 0;
-    this.getTargetLocation().forEach(([series, indices]) => {
+    this.getTargetLocation(ca).forEach(([series, indices]) => {
       if (this._root.chartType === 'bar-chart') {
         indices.forEach(index => targets.push(this._root.marks.children[index].children[series.properties.index0()]));
         const seriesName = series.properties.text();

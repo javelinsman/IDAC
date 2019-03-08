@@ -87,8 +87,8 @@ export class RelationalHighlightRange extends Highlight {
 
     this.properties = {
       ...this.properties,
-      targetDescription: () => this.makeTargetInfo().target,
-      numTargets: () => this.makeTargetInfo().numTargets,
+      targetDescription: () => this.makeTargetInfo(ca).target,
+      numTargets: () => this.makeTargetInfo(ca).numTargets,
     };
   }
 

@@ -84,8 +84,8 @@ export class RelationalHighlightLine extends Highlight {
     super.fromChartAccent(ca);
     this.properties = {
       ...this.properties,
-      targetDescription: () => this.makeTargetInfo().target,
-      numTargets: () => this.makeTargetInfo().numTargets,
+      targetDescription: () => this.makeTargetInfo(ca).target,
+      numTargets: () => this.makeTargetInfo(ca).numTargets,
     };
   }
 

@@ -65,7 +65,8 @@ export enum Type {
   ItemLabel = 'item-label',
   Trendline = 'trendline',
   Label = 'label',
-  RangeLine = 'range-line'
+  RangeLine = 'range-line',
+  BubbleSet = 'bubbleset'
 }
 
 export type Target = ItemsTarget | RangeTarget;
