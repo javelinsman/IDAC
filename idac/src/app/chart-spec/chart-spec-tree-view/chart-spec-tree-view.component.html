@@ -76,18 +76,18 @@
       <span *ngIf="true || collapsable"
         (click)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
         style="width: 30px; min-height: 30px; cursor: pointer" class="badge border mt-2 pt-2 mr-2"
-        [class.d-none]="(tag.children && tag.children.length > 1 && (!tag.children[0].children || !tag.children[0].children.length)) || !collapsable">
+        [class.d-none]="tag._tagname !== 'Annotations' && (tag.children && tag.children.length > 1 && (!tag.children[0].children || !tag.children[0].children.length)) || !collapsable">
         <i class="fas text-secondary"
           [class.fa-minus]="collapseChildren"
           [class.fa-plus]="!collapseChildren"
           ></i>
       </span>
       <span
-        [class.invisible]="(tag.children && tag.children.length > 1 && (!tag.children[0].children || !tag.children[0].children.length)) || !collapsable"
+        [class.invisible]="tag._tagname !== 'Annotations' && (tag.children && tag.children.length > 1 && (!tag.children[0].children || !tag.children[0].children.length)) || !collapsable"
         style="width: 2px; height: 100%; margin-left: 14px; margin-right: 14px" class="badge badge-light text-light p-0 my-3">.</span>
     </div>
     <div class="w-100">
-      <div *ngIf="tag._tagname !== 'aAnnotations' && tag.children && tag.children.length > 1 && (!tag.children[0].children || !tag.children[0].children.length); else elseBlock"
+      <div *ngIf="tag._tagname !== 'Annotations' && tag.children && tag.children.length > 1 && (!tag.children[0].children || !tag.children[0].children.length); else elseBlock"
         class="pl-1 py-2 pr-3"
       >
         <div class="d-flex justify-content-between align-items-center mb-1">
