@@ -61,6 +61,7 @@ export class NavigateComponent implements OnInit {
       this.tag = tag;
       this.tagChange.emit(this.tag);
       this.messageService.shouldScroll = true;
+      this.messageService.shouldCollapse = true;
     }
   }
 
