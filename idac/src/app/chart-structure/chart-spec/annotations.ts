@@ -40,16 +40,16 @@ export class Annotations extends SpecTag {
     ];
     if (this.properties.numHighlights()) { descriptionRules.push(
     '$(numHighlights) highlight' + (this.properties.numHighlights() > 1 ? 's' : '')
-    ) }
+    ); }
     if (this.properties.numTrendlines()) { descriptionRules.push(
     '$(numTrendlines) trend line' + (this.properties.numTrendlines() > 1 ? 's' : '')
-    ) }
+    ); }
     if (this.properties.numLines()) { descriptionRules.push(
     '$(numLines) line' + (this.properties.numLines() > 1 ? 's' : '')
-    ) }
+    ); }
     if (this.properties.numRanges()) { descriptionRules.push(
     '$(numRanges) range' + (this.properties.numRanges() > 1 ? 's' : '')
-    ) }
+    ); }
 
     if (this.properties.numChildren() > 1) {
     this.descriptionRule = 'There are total of $(numChildren) annotations, which consists of '
@@ -79,14 +79,15 @@ export class Annotations extends SpecTag {
       const ret = [];
       const _itemLabel = annotation.components.find(d => d.type === 'item-label');
       const _highlight = annotation.components.find(d => d.type === 'highlight');
-      if (_itemLabel.visible || _highlight.visible) {
+      const _bubbleset = annotation.components.find(d => d.type === 'bubbleset');
+      if ((_itemLabel && _itemLabel.visible) || (_highlight && _highlight.visible) || (_bubbleset && _bubbleset.visible)) {
         const highlight = new Highlight(annotation, this._root, this);
         highlight.fromChartAccent(ca);
         highlight.afterFromChartAccent();
         ret.push(highlight);
       }
       const _trendline = annotation.components.find(d => d.type === 'trendline');
-      if (_trendline.visible) {
+      if (_trendline && _trendline.visible) {
         const trendLine = new TrendLine(annotation, this._root, this);
         trendLine.fromChartAccent(ca);
         trendLine.afterFromChartAccent();

@@ -65,7 +65,8 @@ export enum Type {
   ItemLabel = 'item-label',
   Trendline = 'trendline',
   Label = 'label',
-  RangeLine = 'range-line'
+  RangeLine = 'range-line',
+  BubbleSet = 'bubbleset'
 }
 
 export type Target = ItemsTarget | RangeTarget;
@@ -99,12 +100,15 @@ export interface Chart {
   width:       number;
   height:      number;
   xColumn:     string;
+  yColumn:     string;
   yColumns:    string[];
   xLabel:      LegendLabel;
   yLabel:      LegendLabel;
   xScale:      XScale;
   yScale:      YScale;
   legendLabel: LegendLabel;
+  nameColumn:  string;
+  groupColumn:  string;
   colors:      string[];
 }
 

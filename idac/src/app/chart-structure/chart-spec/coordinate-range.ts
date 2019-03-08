@@ -4,9 +4,9 @@ import { ChartSpec } from './chart-spec';
 import { Annotations } from './annotations';
 import { AttrInput, AttrInputSelect } from './attributes';
 import { Highlight } from './highlight';
-import { Item } from './legend';
+import { Item } from './item';
 import { Bar } from './marks';
-import { Tick } from './x';
+import { Tick } from './tick';
 import { firstLetterUpperCase } from 'src/app/utils';
 
 export class CoordinateRange extends SpecTag {
@@ -87,8 +87,8 @@ export class RelationalHighlightRange extends Highlight {
 
     this.properties = {
       ...this.properties,
-      targetDescription: () => this.makeTargetInfo().target,
-      numTargets: () => this.makeTargetInfo().numTargets,
+      targetDescription: () => this.makeTargetInfo(ca).target,
+      numTargets: () => this.makeTargetInfo(ca).numTargets,
     };
   }
 
