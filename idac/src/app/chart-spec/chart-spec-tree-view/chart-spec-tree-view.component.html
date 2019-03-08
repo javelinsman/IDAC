@@ -71,7 +71,7 @@
       </div>
     </div>
   </section>
-  <div class="d-flex" *ngIf="!viewOnly && tag.children">
+  <div class="d-flex" *ngIf="!viewOnly && tag.children && tag.children.length > 0">
     <div class="d-flex flex-column">
       <span *ngIf="true || collapsable"
         (click)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
