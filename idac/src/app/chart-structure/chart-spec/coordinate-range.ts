@@ -10,6 +10,7 @@ import { Tick } from './tick';
 import { firstLetterUpperCase } from 'src/app/utils';
 
 export class CoordinateRange extends SpecTag {
+  active = true;
   constructor(
     public annotation: ChartAccent.Annotation,
     private annotations: ChartAccent.Annotation[],
@@ -60,6 +61,7 @@ export class CoordinateRange extends SpecTag {
 }
 
 export class RelationalHighlightRange extends Highlight {
+  active = true;
   constructor(
     annotation: ChartAccent.Annotation,
     _root: ChartSpec, _parent: CoordinateRange
