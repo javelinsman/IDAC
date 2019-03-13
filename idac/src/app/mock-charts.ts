@@ -57,4 +57,10 @@ export const CHARTS: Chart[] = [
         src_json: './assets/chart_8_eng.json',
         src_svg: './assets/chart_8_eng.svg'
     },
+    {
+      id: 9,
+      title: 'test',
+      src_svg: './assets/chart_9_eng.svg',
+      svg_only: true,
+    },
 ];
