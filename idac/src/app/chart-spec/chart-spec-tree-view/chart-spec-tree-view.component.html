@@ -108,7 +108,9 @@
       </div>
       <div class="d-flex" *ngIf="!viewOnly && tag.children && tag.children.length > 0">
         <div class="d-flex flex-column">
-          <span #indentLine style="width: 2px; height: 100%; margin-left: 19px; margin-right: 19px" class="badge badge-light text-light p-0">.</span>
+          <span #indentLine
+            [class.invisible]="!collapseChildren"
+            style="width: 2px; height: 100%; margin-left: 19px; margin-right: 19px" class="badge badge-light text-light p-0">.</span>
         </div>
         <div class="w-100">
           <div *ngIf="false && tag._tagname !== 'Annotations' && tag.children && tag.children.length > 1 && (!tag.children[0].children || !tag.children[0].children.length); else elseBlock"
