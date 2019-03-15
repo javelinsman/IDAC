@@ -21,7 +21,7 @@ export class ChartSpec extends SpecTag {
   _flattendTags: SpecTag[];
 
   constructor() {
-    super('ChartSpec');
+    super('Chart');
     this.children = [
       this.title, this.y, this.x, this.legend, this.marks, this.annotations
     ];

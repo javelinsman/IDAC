@@ -32,7 +32,10 @@ export class ChartSpecComponent implements OnInit, AfterViewChecked {
     if (this.messageService.shouldScroll) {
       this.messageService.shouldScroll = false;
       const elem = this.containerDiv.nativeElement as HTMLDivElement;
-      (d3.select(elem).select('.spec-tag.highlighted').node() as any).scrollIntoView({block: 'center'});
+      const highlightedTag = d3.select(elem).select('.spec-tag.highlighted').node() as any;
+      if (highlightedTag) {
+        highlightedTag.scrollIntoView({block: 'center'});
+      }
     }
   }
 
