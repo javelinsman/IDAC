@@ -6,11 +6,12 @@
       <div
         *ngIf="tag._parent"
         class="d-flex flex-column mt-2"
-        style="position: absolute; left: -30px;"
+        style="position: absolute; left: -31px;"
       >
+        <span #horizontalIndentLine style="height: 2px; width: 20px; position: absolute; left: 10px; z-index: -1" class="badge badge-light text-light p-0 mt-2">.</span>
         <span *ngIf="collapsable"
           (click)="collapseChildren=!collapseChildren"
-          style="cursor: pointer" class="badge border"
+          style="cursor: pointer; background-color: white" class="badge border"
         >
           <i class="fas text-secondary"
             [class.fa-minus]="collapseChildren"
