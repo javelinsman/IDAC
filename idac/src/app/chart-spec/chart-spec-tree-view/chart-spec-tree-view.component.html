@@ -5,18 +5,22 @@
     <section class="tagcard w-100" style="position: relative;" #tagSection>
       <div
         *ngIf="tag._parent"
-        class="d-flex flex-column mt-2"
-        style="position: absolute; left: -31px;"
+        class="d-flex flex-column h-100"
+        style="position: absolute; left: -31px; width: 31px;"
       >
-        <span #horizontalIndentLine style="height: 2px; width: 20px; position: absolute; left: 10px; z-index: -1" class="badge badge-light text-light p-0 mt-2">.</span>
+        <span #horizontalIndentLine style="height: 2px; width: 20px; position: relative; left: 10px; z-index: -1" class="badge badge-light text-light p-0 mt-3">.</span>
         <span *ngIf="collapsable"
           (click)="collapseChildren=!collapseChildren"
-          style="cursor: pointer; background-color: white" class="badge border"
+          style="cursor: pointer; background-color: white; width: 22px; position: absolute" class="badge border mt-2"
         >
           <i class="fas text-secondary"
             [class.fa-minus]="collapseChildren"
             [class.fa-plus]="!collapseChildren"
             ></i>
+        </span>
+        <span #lastPartEraser
+          *ngIf="siblingIndex && siblingIndex === siblingLength - 1"
+          style="width: 100%; height: 100%; background-color: white">
         </span>
       </div>
 
@@ -91,69 +95,81 @@
       </div>
     </section>
 
-    <div class="d-flex" *ngIf="!viewOnly && tag.children && tag.children.length > 0">
-      <div class="d-flex flex-column">
-        <span #indentLine style="width: 2px; height: 100%; margin-left: 19px; margin-right: 19px" class="badge badge-light text-light p-0">.</span>
+    <div style="position: relative">
+      <div
+        *ngIf="tag._parent"
+        class="d-flex flex-column h-100"
+        style="position: absolute; left: -31px; width: 31px"
+      >
+        <span #lastPartEraser
+          *ngIf="siblingIndex && siblingIndex === siblingLength - 1"
+          style="width: 100%; height: 100%; background-color: white; color: white">
+        </span>
       </div>
-      <div class="w-100">
-        <div *ngIf="false && tag._tagname !== 'Annotations' && tag.children && tag.children.length > 1 && (!tag.children[0].children || !tag.children[0].children.length); else elseBlock"
-          class="pl-1 py-2 pr-3"
-        >
-          <div class="d-flex justify-content-between align-items-center mb-1">
-            <app-chart-spec-tree-view-tagname
-              [tag]="tag.children[0]"
-              [currentTag]="null"
-              [siblingIndex]="0"
-              [siblingLength]="tag.children.length"
-              [warning]="!viewOnly && tag.children[0].describe().indexOf('undefined') >= 0"
-            ></app-chart-spec-tree-view-tagname>
-            <i class="far fa-plus-square text-secondary text-as-button mx-2"
-              [class.fa-minus-square]="!collapsable || collapseChildren"
-              [class.fa-plus-square]="collapsable && !collapseChildren"
-              (click)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])">
-            </i>
-          </div>
-          <div class="mr-3 styled-scroll overflow-y-scroll"
-            style="max-height: 500px"
-          >
-            <div *ngFor="let childTag of tag.children; index as i">
-              <app-chart-spec-tree-view
-                [class.d-none]="collapseChildren"
-                [(edit)]="edit"
-                (collapseToggle)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
-                [tag]="childTag" [isCollapsed]="!collapsable || collapseChildren"
-                [siblingIndex]="i" [siblingLength]="tag.children.length" [(parentCollapseIndex)]="collapseIndex"
-                [minimize]="true"
-                [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)" [indent]="indent + 1"></app-chart-spec-tree-view>
-            </div>
-          </div>
+      <div class="d-flex" *ngIf="!viewOnly && tag.children && tag.children.length > 0">
+        <div class="d-flex flex-column">
+          <span #indentLine style="width: 2px; height: 100%; margin-left: 19px; margin-right: 19px" class="badge badge-light text-light p-0">.</span>
         </div>
-        <ng-template #elseBlock>
-          <ng-container
-            #childElements
-            *ngIf="collapseChildren; else numberOfChildren"
+        <div class="w-100">
+          <div *ngIf="false && tag._tagname !== 'Annotations' && tag.children && tag.children.length > 1 && (!tag.children[0].children || !tag.children[0].children.length); else elseBlock"
+            class="pl-1 py-2 pr-3"
           >
-            <div *ngFor="let childTag of tag.children; index as i">
-              <app-chart-spec-tree-view
-                [(edit)]="edit"
-                (collapseToggle)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
-                [tag]="childTag" [isCollapsed]="!collapsable || collapseChildren"
-                [siblingIndex]="i" [siblingLength]="tag.children.length" [(parentCollapseIndex)]="collapseIndex"
-                [minimize]="false"
-                [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)" [indent]="indent + 1"></app-chart-spec-tree-view>
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <app-chart-spec-tree-view-tagname
+                [tag]="tag.children[0]"
+                [currentTag]="null"
+                [siblingIndex]="0"
+                [siblingLength]="tag.children.length"
+                [warning]="!viewOnly && tag.children[0].describe().indexOf('undefined') >= 0"
+              ></app-chart-spec-tree-view-tagname>
+              <i class="far fa-plus-square text-secondary text-as-button mx-2"
+                [class.fa-minus-square]="!collapsable || collapseChildren"
+                [class.fa-plus-square]="collapsable && !collapseChildren"
+                (click)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])">
+              </i>
             </div>
-          </ng-container>
-          <ng-template
-            #numberOfChildren
-          >
-            <p
-              *ngIf="tag.children && tag.children.length > 0"
-              class="text-secondary"
+            <div class="mr-3 styled-scroll overflow-y-scroll"
+              style="max-height: 500px"
             >
-              {{ tag.children.length }} child elements
-            </p>
+              <div *ngFor="let childTag of tag.children; index as i">
+                <app-chart-spec-tree-view
+                  [class.d-none]="collapseChildren"
+                  [(edit)]="edit"
+                  (collapseToggle)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
+                  [tag]="childTag" [isCollapsed]="!collapsable || collapseChildren"
+                  [siblingIndex]="i" [siblingLength]="tag.children.length" [(parentCollapseIndex)]="collapseIndex"
+                  [minimize]="true"
+                  [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)" [indent]="indent + 1"></app-chart-spec-tree-view>
+              </div>
+            </div>
+          </div>
+          <ng-template #elseBlock>
+            <ng-container
+              #childElements
+              *ngIf="collapseChildren; else numberOfChildren"
+            >
+              <div *ngFor="let childTag of tag.children; index as i">
+                <app-chart-spec-tree-view
+                  [(edit)]="edit"
+                  (collapseToggle)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
+                  [tag]="childTag" [isCollapsed]="!collapsable || collapseChildren"
+                  [siblingIndex]="i" [siblingLength]="tag.children.length" [(parentCollapseIndex)]="collapseIndex"
+                  [minimize]="false"
+                  [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)" [indent]="indent + 1"></app-chart-spec-tree-view>
+              </div>
+            </ng-container>
+            <ng-template
+              #numberOfChildren
+            >
+              <p
+                *ngIf="tag.children && tag.children.length > 0"
+                class="text-secondary"
+              >
+                {{ tag.children.length }} child elements
+              </p>
+            </ng-template>
           </ng-template>
-        </ng-template>
+        </div>
       </div>
     </div>
   </div>
