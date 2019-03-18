@@ -73,6 +73,15 @@ $navbar-height: 3.5em;
   overflow-y: scroll;
 }
 
+.overflow-y-hidden {
+  overflow-y: hidden;
+}
+
 .overflow-x-scroll {
   overflow-x: scroll;
 }
+
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
