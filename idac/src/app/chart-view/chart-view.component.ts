@@ -16,6 +16,8 @@ import { ChartSpecService } from '../chart-spec.service';
 })
 export class ChartViewComponent implements OnInit, AfterViewChecked {
 
+  preview = false;
+
   @Input() src: string;
   chartSpec: ChartSpec;
   currentTag: SpecTag;
