@@ -52,7 +52,6 @@ export class MakeChartComponent implements OnInit {
 
     this.exampleId = this.exampleId || +this.route.snapshot.paramMap.get('exampleId');
 
-    this.exampleId = 0;
     if (this.exampleId) {
       this.chart = this.fetchExampleChart(this.exampleId);
     } else {
