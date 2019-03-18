@@ -25,6 +25,19 @@ export class ChartSpec extends SpecTag {
     this.children = [
       this.title, this.y, this.x, this.legend, this.marks, this.annotations
     ];
+    this.descriptionRule = this.assembleDescriptionRules([
+      ['This is a $(chartType), titled "$(Title: title)." The Y axis indicates $(Y Axis: label), and the X axis indicates $(X Axis: label).', true],
+    ]);
+    this.properties = {
+      'chartType': () => {
+        if (this.chartType === 'scatterplot') {
+          return 'scatter plot';
+        } else {
+          return this.chartType.split('-').join(' ');
+        }
+      }
+    };
+    this._root = this;
   }
 
   fromChartAccent(ca: ChartAccent) {

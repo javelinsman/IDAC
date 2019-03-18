@@ -60,7 +60,7 @@ export class SpecTag {
 
   peekableTags() {
     const ret: SpecTag[] = [this];
-    for (let tag = this._parent; tag._parent; tag = tag._parent) {
+    for (let tag = this._parent; tag && tag._parent; tag = tag._parent) {
       ret.push(tag);
     }
     this._root.children.filter(tag => !ret.includes(tag)).forEach(tag => ret.push(tag));
