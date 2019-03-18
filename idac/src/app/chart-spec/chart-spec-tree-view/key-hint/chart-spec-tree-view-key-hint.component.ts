@@ -31,17 +31,17 @@ export class ChartSpecTreeViewKeyHintComponent implements OnInit, AfterContentCh
   ) { }
 
   ngOnInit() {
-    // this.stageStateService.hintObservable.subscribe(hint => {
-    //   this.showHint = hint;
-    // });
-    // this.chartSpecService.bindChartSpec(this);
+    this.stageStateService.hintObservable.subscribe(hint => {
+      this.showHint = hint;
+    });
+    this.chartSpecService.bindChartSpec(this);
   }
 
   ngAfterContentChecked() {
-    // if (this.showHint && this.prevTag !== this.currentTag) {
-    //   this.prevTag = this.currentTag;
-    //   this.refreshReachableKeys();
-    // }
+    if (this.showHint && this.prevTag !== this.currentTag) {
+      this.prevTag = this.currentTag;
+      this.refreshReachableKeys();
+    }
   }
 
   // TODO: Extremely inefficient

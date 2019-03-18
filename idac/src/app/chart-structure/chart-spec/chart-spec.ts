@@ -58,6 +58,7 @@ export class ChartSpec extends SpecTag {
   flattenedTags() {
     if (!this._flattendTags) {
       this._flattendTags = [
+        this,
         ...this.title.flattenedTags(),
         ...this.y.flattenedTags(),
         ...this.x.flattenedTags(),

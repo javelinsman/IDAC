@@ -141,7 +141,7 @@ export class NavigateComponent implements OnInit {
   }
 
   moveToParent() {
-    if (!this.tag._parent || this.tag._parent._id === 0) {
+    if (!this.tag._parent) {
       return false;
     }
     this.focusBookmarks[this.tag._parent._id] = this.tag._id;
@@ -245,6 +245,7 @@ export class NavigateComponent implements OnInit {
 
   moveToNextFrame() {
     let tag = this.tag;
+    if (tag._id === 0) { return false; }
     while (tag._parent._id !== 0) {
       tag = tag._parent;
     }
@@ -253,6 +254,7 @@ export class NavigateComponent implements OnInit {
 
   moveToPreviousFrame() {
     let tag = this.tag;
+    if (tag._id === 0) { return false; }
     while (tag._parent._id !== 0) {
       tag = tag._parent;
     }

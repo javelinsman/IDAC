@@ -70,7 +70,7 @@ export class MakeChartComponent implements OnInit {
           this.chartSpecService.chartSpec.fromSpecSVG(this.specSVG);
           this.chartSpecService.chartSpec.fromChartAccent(json);
           console.log(this.chartSpec);
-          this.chartSpecService.currentTag = this.chartSpecService.chartSpec.findById(1);
+          this.chartSpecService.currentTag = this.chartSpecService.chartSpec.findById(0);
         });
       });
     } else {
@@ -81,7 +81,7 @@ export class MakeChartComponent implements OnInit {
         this.chartSpecService.chartSpec = new ChartSpec();
         this.chartSpecService.chartSpec.fromSpecSVG(this.specSVG);
         console.log(this.chartSpec);
-        this.chartSpecService.currentTag = this.chartSpec.findById(1);
+        this.chartSpecService.currentTag = this.chartSpec.findById(0);
       });
     }
     this.onWindowResize();
