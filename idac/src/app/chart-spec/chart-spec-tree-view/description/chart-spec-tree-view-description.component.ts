@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, AfterContentChecked, ViewChild, ElementRef } from '@angular/core';
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 import * as d3 from 'd3';
+import { ChartSpec } from 'src/app/chart-structure/chart-spec/chart-spec';
+import { ChartSpecService } from 'src/app/chart-spec.service';
 
 @Component({
   selector: 'app-chart-spec-tree-view-description',
@@ -8,10 +10,11 @@ import * as d3 from 'd3';
   styleUrls: ['./chart-spec-tree-view-description.component.scss']
 })
 export class ChartSpecTreeViewDescriptionComponent implements OnInit, AfterContentChecked {
+  currentTag: SpecTag;
+  chartSpec: ChartSpec;
 
   @Input() viewOnly: boolean;
   @Input() tag: SpecTag;
-  @Input() currentTag: SpecTag;
   @Input() edit: boolean;
   @Input() _editChange: any;
 
@@ -21,9 +24,12 @@ export class ChartSpecTreeViewDescriptionComponent implements OnInit, AfterConte
 
   prevDescription: string = null;
 
-  constructor() { }
+  constructor(
+    private chartSpecService: ChartSpecService,
+  ) { }
 
   ngOnInit() {
+    this.chartSpecService.bindChartSpec(this);
   }
 
   ngAfterContentChecked() {
