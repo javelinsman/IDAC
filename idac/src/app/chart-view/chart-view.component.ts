@@ -7,6 +7,7 @@ import { d3ImmediateChildren, d3AsSelectionArray, makeAbsoluteContext, mergeBoun
 import { translate } from '../chartutils';
 import { HighlightShape } from './highlight-shape/highlight-shape';
 import { MessageService } from '../message.service';
+import { ChartSpecService } from '../chart-spec.service';
 
 @Component({
   selector: 'app-chart-view',
@@ -16,9 +17,8 @@ import { MessageService } from '../message.service';
 export class ChartViewComponent implements OnInit, AfterViewChecked {
 
   @Input() src: string;
-  @Input() chartSpec: ChartSpec;
-  @Input() currentTag: SpecTag;
-  @Output() currentTagChange: EventEmitter<SpecTag> = new EventEmitter();
+  chartSpec: ChartSpec;
+  currentTag: SpecTag;
 
   @ViewChild(SvgContainerComponent) svgContainer: SvgContainerComponent;
 
@@ -60,9 +60,13 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
 
   showEditorsNote = true;
 
-  constructor(private messageService: MessageService) { }
+  constructor(
+    private messageService: MessageService,
+    private chartSpecService: ChartSpecService,
+  ) { }
 
   ngOnInit() {
+    this.chartSpecService.bindChartSpec(this);
   }
 
   resizeSVG() {

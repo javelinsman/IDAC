@@ -21,4 +21,13 @@ export class ChartSpecService {
   set currentTag(currentTag) { this._currentTag.next(currentTag); }
   get currentTagObservable() { return this._currentTag.asObservable(); }
 
+  bindChartSpec(component, currentTagName= 'currentTag', chartSpecName= 'chartSpec') {
+    component.chartSpecService.currentTagObservable.subscribe(currentTag => {
+      component[currentTagName] = currentTag;
+    });
+    component.chartSpecService.chartSpecObservable.subscribe(chartSpec => {
+      component[chartSpecName] = chartSpec;
+    });
+  }
+
 }

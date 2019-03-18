@@ -48,12 +48,7 @@ export class MakeChartComponent implements OnInit {
     this.stageStateService.toolbarHelpObservable.subscribe(help => {
       this.sidebarHelp = help;
     });
-    this.chartSpecService.currentTagObservable.subscribe(currentTag => {
-      this.currentTag = currentTag;
-    });
-    this.chartSpecService.chartSpecObservable.subscribe(chartSpec => {
-      this.chartSpec = chartSpec;
-    });
+    this.chartSpecService.bindChartSpec(this);
 
     this.exampleId = this.exampleId || +this.route.snapshot.paramMap.get('exampleId');
 

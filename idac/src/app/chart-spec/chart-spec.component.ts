@@ -3,6 +3,7 @@ import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
 import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
 import { MessageService } from '../message.service';
 import * as d3 from 'd3';
+import { ChartSpecService } from '../chart-spec.service';
 
 @Component({
   selector: 'app-chart-spec',
@@ -11,21 +12,23 @@ import * as d3 from 'd3';
 })
 export class ChartSpecComponent implements OnInit, AfterViewChecked {
 
-  @Input() chartSpec: ChartSpec;
-  @Input() currentTag: SpecTag;
-
-  @Output() currentTagChange: EventEmitter<SpecTag> = new EventEmitter();
+  chartSpec: ChartSpec;
+  currentTag: SpecTag;
 
   @ViewChild('container') containerDiv: ElementRef;
 
   edit = false;
 
-  constructor(private messageService: MessageService) { }
+  constructor(
+    private messageService: MessageService,
+    private chartSpecService: ChartSpecService,
+  ) { }
 
   ngOnInit() {
     if (!this.chartSpec) {
       this.chartSpec = new ChartSpec();
     }
+    this.chartSpecService.bindChartSpec(this);
   }
 
   ngAfterViewChecked() {
