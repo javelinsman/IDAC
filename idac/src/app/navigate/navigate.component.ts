@@ -50,7 +50,7 @@ export class NavigateComponent implements OnInit {
       if (this.tag.children && this.tag.children.length) {
         this.speakingService.beep_detect();
       }
-      this.speakingService.read(this.tag.describe());
+      this.speakingService.read(this.tag.describe(), this.tag);
     }
   }
 
