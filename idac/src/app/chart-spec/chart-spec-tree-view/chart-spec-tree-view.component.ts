@@ -3,6 +3,7 @@ import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 import { OnClickOutside } from 'src/app/utils';
 import { ChartSpecService } from 'src/app/chart-spec.service';
 import { MessageService } from 'src/app/message.service';
+import { ChartSpec } from 'src/app/chart-structure/chart-spec/chart-spec';
 
 @Component({
   selector: 'app-chart-spec-tree-view',
@@ -11,9 +12,11 @@ import { MessageService } from 'src/app/message.service';
 })
 export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked, AfterContentChecked {
 
-  @Input() tag: SpecTag;
-  @Input() currentTag: SpecTag;
+  chartSpec: ChartSpec;
+  currentTag: SpecTag;
+
   @Input() indent: number;
+  @Input() tag: SpecTag;
   @Input() isCollapsed: any;
   @Input() siblingIndex: number;
   @Input() siblingLength: number;
@@ -22,7 +25,6 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked, Aft
   @Input() viewOnly = false;
   @Input() minimize = false;
 
-  @Output() currentTagChange: EventEmitter<SpecTag> = new EventEmitter();
   @Output() parentCollapseIndexChange: EventEmitter<number> = new EventEmitter();
   @Output() editChange: EventEmitter<boolean> = new EventEmitter();
   @Output() collapseToggle: EventEmitter<boolean> = new EventEmitter();
@@ -62,6 +64,7 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked, Aft
     if (!this.tag._parent) {
       this.collapseChildren = true;
     }
+    this.chartSpecService.bindChartSpec(this);
 
   }
 
@@ -96,7 +99,6 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked, Aft
   }
 
   _currentTagChange(tag: SpecTag) {
-    // console.log(`My name is ${this.tag._tagname} and I am changing currentTag into ${tag._tagname}`);
     if (this.currentTag !== tag) {
       this.edit = false;
     }

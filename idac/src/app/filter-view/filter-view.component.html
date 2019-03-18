@@ -10,7 +10,7 @@
       </div>
       <div [class.ml-4]="parents.length > 1">
         <app-chart-spec-tree-view *ngFor="let sameTag of sameTags" [tag]="sameTag" [edit]="false" [viewOnly]="true"
-          [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)"></app-chart-spec-tree-view>
+          (currentTagChange)="_currentTagChange($event)"></app-chart-spec-tree-view>
       </div>
     </ng-container>
   </div>

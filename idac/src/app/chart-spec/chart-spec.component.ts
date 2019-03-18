@@ -41,11 +41,4 @@ export class ChartSpecComponent implements OnInit, AfterViewChecked {
       }
     }
   }
-
-  _currentTagChange(tag: SpecTag) {
-    // console.log(`My name is ChartSpecComponent and I am changing currentTag into ${tag._tagname}`);
-    this.currentTag = tag;
-    this.currentTagChange.emit(this.currentTag);
-  }
-
 }
