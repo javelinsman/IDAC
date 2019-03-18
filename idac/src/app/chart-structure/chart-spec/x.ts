@@ -41,12 +41,21 @@ export class X extends SpecTag {
   }
 
   afterFromSpecSVG() {
-    this.descriptionRule = this.assembleDescriptionRules([
-      ['X axis', true],
-      [' indicates $(X Axis: label)', false],
-      [' in $(X Axis: unit)', false, '.'],
-      [' It measures $(numChildren) data as follows: $(children).', true],
-    ]);
+    if (this._root.chartType === 'bar-chart' || this._root.chartType === 'line-chart') {
+      this.descriptionRule = this.assembleDescriptionRules([
+        ['X axis', true],
+        [' indicates $(X Axis: label)', false],
+        [' in $(X Axis: unit)', false, '.'],
+        [' It measures $(numChildren) data as follows: $(children).', true],
+      ]);
+    } else {
+      this.descriptionRule = this.assembleDescriptionRules([
+        ['X axis indicates $(X Axis: label)', true],
+        [' in $(X Axis: unit).', false, '.'],
+        [' The data ranges from $(X Axis: rangeFrom) to $(X Axis: rangeTo)', true, ''],
+        [' $(X Axis: unit).', false, '.'],
+      ]);
+    }
     this.children.forEach(child => child.afterFromSpecSVG());
   }
 }

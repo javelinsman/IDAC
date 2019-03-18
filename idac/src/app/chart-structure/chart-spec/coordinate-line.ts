@@ -51,7 +51,7 @@ export class CoordinateLine extends SpecTag {
   }
   afterFromChartAccent() {
     this.descriptionRule =  this.assembleDescriptionRules([
-      ['A $(orientation) line passes through the point at $(range) on $(targetAxis) axis', true],
+      ['A $(orientation) line passes through the point at $(range) on the $(targetAxis) axis', true],
       [', labeled as "$(label)".', false, '.'],
     ]);
     this.children.forEach(child => child.afterFromChartAccent());

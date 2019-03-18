@@ -8,6 +8,7 @@ import { ChartAccent } from '../chart-structure/chart-accent/chart-accent';
 import { HttpClient } from '@angular/common/http';
 import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
 import { StageStateService } from '../stage-state.service';
+import { ChartSpecService } from '../chart-spec.service';
 import { ChartAccentHandler } from '../chart-structure/chart-accent/chart-accent-handler';
 
 @Component({
@@ -16,36 +17,40 @@ import { ChartAccentHandler } from '../chart-structure/chart-accent/chart-accent
   styleUrls: ['./make-chart.component.scss']
 })
 export class MakeChartComponent implements OnInit {
-  @Input() exampleId: number = 5;
+  @Input() exampleId;
 
   chart: Chart;
   chartAccent: ChartAccent;
   specSVG;
-  chartSpec: ChartSpec;
 
+  chartSpec: ChartSpec;
   currentTag: SpecTag;
+
   rightPanel = 'filter';
   @ViewChild('container') containerDiv: ElementRef;
   @ViewChild('sidebar') sidebarSection: ElementRef;
-
   sidebarSettings: boolean;
   sidebarHelp: boolean;
 
   constructor(
       private chartExampleService: ChartExampleService,
-      private route: ActivatedRoute,
+      private chartSpecService: ChartSpecService,
       private http: HttpClient,
-      public stageStateService: StageStateService
+      public stageStateService: StageStateService,
+      private route: ActivatedRoute
     ) { }
 
   ngOnInit() {
     SpecTag.clear();
     this.stageStateService.toolbarSettingObservable.subscribe(settings => {
       this.sidebarSettings = settings;
-    })
+    });
     this.stageStateService.toolbarHelpObservable.subscribe(help => {
       this.sidebarHelp = help;
-    })
+    });
+    this.chartSpecService.bindChartSpec(this);
+
+    this.exampleId = this.exampleId || +this.route.snapshot.paramMap.get('exampleId');
 
     if (this.exampleId) {
       this.chart = this.fetchExampleChart(this.exampleId);
@@ -53,20 +58,32 @@ export class MakeChartComponent implements OnInit {
       this.chart = this.fetchChart();
     }
 
-    this.http.get<ChartAccent>(this.chart.src_json).subscribe(json => {
+    if (!this.chart.svg_only) {
+      this.http.get<ChartAccent>(this.chart.src_json).subscribe(json => {
+        d3.svg(this.chart.src_svg).then(svgRaw => {
+          const svg = d3.select(svgRaw.documentElement as unknown as SVGSVGElement);
+          console.log(svgRaw.documentElement);
+          const handler = new ChartAccentHandler(json, svg);
+          this.specSVG = handler.convertToSpec();
+
+          this.chartSpecService.chartSpec = new ChartSpec();
+          this.chartSpecService.chartSpec.fromSpecSVG(this.specSVG);
+          this.chartSpecService.chartSpec.fromChartAccent(json);
+          console.log(this.chartSpec);
+          this.chartSpecService.currentTag = this.chartSpecService.chartSpec.findById(0);
+        });
+      });
+    } else {
       d3.svg(this.chart.src_svg).then(svgRaw => {
         const svg = d3.select(svgRaw.documentElement as unknown as SVGSVGElement);
-        console.log(svgRaw.documentElement);
-        const handler = new ChartAccentHandler(json, svg);
-        this.specSVG = handler.convertToSpec();
+        this.specSVG = svg;
 
-        this.chartSpec = new ChartSpec();
-        this.chartSpec.fromSpecSVG(this.specSVG);
-        this.chartSpec.fromChartAccent(json);
+        this.chartSpecService.chartSpec = new ChartSpec();
+        this.chartSpecService.chartSpec.fromSpecSVG(this.specSVG);
         console.log(this.chartSpec);
-        this.currentTag = this.chartSpec.findById(1);
+        this.chartSpecService.currentTag = this.chartSpec.findById(0);
       });
-    });
+    }
     this.onWindowResize();
   }
 

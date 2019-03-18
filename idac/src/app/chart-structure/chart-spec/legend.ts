@@ -29,7 +29,7 @@ export class Legend extends SpecTag {
 
   afterFromSpecSVG() {
     this.descriptionRule = this.assembleDescriptionRules([
-      ['The legend shows $(numChildren) series, named as follows: $(children).', true],
+      ['The legend shows $(numChildren) series, named as following: $(children).', true],
       ['It indicates $(label).', false, ''],
     ]);
 

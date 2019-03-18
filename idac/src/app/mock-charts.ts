@@ -3,6 +3,16 @@ import { Chart } from './chart';
 export const CHARTS: Chart[] = [
     {
         id: 1,
+        title: 'Life Expectancy versus Fertility Rate',
+        src_png: './assets/chart-remastered-0.png',
+        src_json: './assets/chart-remastered-0.json',
+        src_svg: './assets/chart-remastered-0.svg',
+    }
+];
+
+const prev = [
+    {
+        id: 1,
         title: 'Net Income of Companies',
         src_png: './assets/chart_1_eng.png',
         src_json: './assets/chart_1_eng.json',
@@ -56,5 +66,11 @@ export const CHARTS: Chart[] = [
         src_png: './assets/chart_8_eng.png',
         src_json: './assets/chart_8_eng.json',
         src_svg: './assets/chart_8_eng.svg'
+    },
+    {
+        id: 9,
+        title: 'test',
+        src_svg: './assets/chart_9_eng.svg',
+        svg_only: true,
     },
 ];

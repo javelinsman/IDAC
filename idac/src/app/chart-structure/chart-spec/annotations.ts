@@ -57,13 +57,21 @@ export class Annotations extends SpecTag {
     ); }
 
     if (this.properties.numChildren() > 1) {
-    this.descriptionRule = 'There are total of $(numChildren) annotations, which consists of '
+    this.descriptionRule = 'There are total of $(numChildren) annotations, consisting of '
       + descriptionRules.slice(0, -1).join(', ') + ' and ' + descriptionRules.slice(-1)[0] + '.';
     } else if (this.properties.numChildren() == 1) {
     this.descriptionRule = 'There is ' + descriptionRules[0] + '.';
     } else {
     this.descriptionRule = 'There are no annotations.';
     }
+
+    this._children = [
+      this._children[2],
+      this._children[1],
+      this._children[3],
+      this._children[4],
+      this._children[5],
+    ];
   }
 
   convertToAnnotations(annotation: ChartAccent.Annotation,

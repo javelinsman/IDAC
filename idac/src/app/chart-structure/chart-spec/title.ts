@@ -15,7 +15,7 @@ export class Title extends SpecTag {
 
   fromSpecSVG(spec: d3Selection<SVGSVGElement>) {
     const title = spec.select('.ca-title');
-    if (!title) { return; }
+    if (!title.size()) { return; }
     this.attributes = {
       title: new AttrInput(title.select('text').text())
     };
@@ -23,7 +23,7 @@ export class Title extends SpecTag {
 
   afterFromSpecSVG() {
     this.descriptionRule = this.assembleDescriptionRules([
-    ['This chart is titled "$(title)."', true],
+    ['The title is "$(title)."', true],
     ]);
   }
 

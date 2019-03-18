@@ -10,7 +10,7 @@
   <p class="tagname font-weight-light">
 
     <span
-      class="p-1 rounded tagname"
+      class="p-1 rounded tagname text-unselectable"
       [class.highlighted]="currentTag === tag"
       [class.warning]="warning"
       [style.white-space]="'nowrap'"
@@ -18,9 +18,9 @@
       {{ tag._tagname }}
     </span>
   </p>
-  <p *ngIf="tag._parent._tagname !== 'ChartSpec' && siblingLength > 1"
+  <!-- <p *ngIf="tag._parent._tagname !== 'ChartSpec' && siblingLength > 1"
     [class.ml-1]="true || viewOnly" [class.small]="!viewOnly"
     class="font-weight-light text-secondary" [style.white-space]="'nowrap'">
     {{ siblingLength }} items
-  </p>
+  </p> -->
 </div>

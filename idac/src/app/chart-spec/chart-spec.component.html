@@ -1,15 +1,17 @@
-<h3 class="my-3 mx-3 py-2" [style.border-bottom]="'1px solid #aaa'">Chart Description</h3>
-<div class="container-fluid styled-scroll" #container>
-  <app-chart-spec-tree-view [tag]="chartSpec.title" [(edit)]="edit"
-    [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)"></app-chart-spec-tree-view>
-  <app-chart-spec-tree-view [tag]="chartSpec.y" [(edit)]="edit"
-    [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)"></app-chart-spec-tree-view>
-  <app-chart-spec-tree-view [tag]="chartSpec.x" [(edit)]="edit"
-    [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)"></app-chart-spec-tree-view>
-  <app-chart-spec-tree-view [tag]="chartSpec.legend" [(edit)]="edit"
-    [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)"></app-chart-spec-tree-view>
-  <app-chart-spec-tree-view [tag]="chartSpec.marks" [(edit)]="edit"
-    [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)"></app-chart-spec-tree-view>
-  <app-chart-spec-tree-view [tag]="chartSpec.annotations" [(edit)]="edit"
-    [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)"></app-chart-spec-tree-view>
+<div class="d-flex align-items-baseline">
+  <h3 class="my-3 mx-3 py-2" [style.border-bottom]="'1px solid #aaa'">Description</h3>
+  <p class="text-as-button" (click)="preview = !preview">{{ preview ? 'Resume' : 'Hide for preview' }}</p>
+</div>
+<div
+  #container
+  class="container-fluid styled-scroll"
+  [class.d-none]="preview"
+>
+  <app-chart-spec-tree-view [tag]="chartSpec" [(edit)]="edit"></app-chart-spec-tree-view>
+</div>
+<div
+  *ngIf="preview"
+  class="bg-dark text-light d-flex justify-content-center align-items-center h-100"
+>
+  Preview Mode
 </div>

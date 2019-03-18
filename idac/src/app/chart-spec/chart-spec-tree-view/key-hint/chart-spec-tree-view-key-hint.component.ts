@@ -3,6 +3,8 @@ import { keyBindings, KeyBindings, KeyBinding } from 'src/app/keyboard-input/key
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 import { NavigateComponent } from 'src/app/navigate/navigate.component';
 import { StageStateService } from 'src/app/stage-state.service';
+import { ChartSpec } from 'src/app/chart-structure/chart-spec/chart-spec';
+import { ChartSpecService } from 'src/app/chart-spec.service';
 
 @Component({
   selector: 'app-chart-spec-tree-view-key-hint',
@@ -10,9 +12,10 @@ import { StageStateService } from 'src/app/stage-state.service';
   styleUrls: ['./chart-spec-tree-view-key-hint.component.scss']
 })
 export class ChartSpecTreeViewKeyHintComponent implements OnInit, AfterContentChecked {
+  currentTag: SpecTag;
+  chartSpec: ChartSpec;
 
   @Input() tag: SpecTag;
-  @Input() currentTag: SpecTag;
 
   @ViewChild(NavigateComponent) navigateComponent: NavigateComponent;
 
@@ -23,13 +26,15 @@ export class ChartSpecTreeViewKeyHintComponent implements OnInit, AfterContentCh
   showHint: boolean;
 
   constructor(
-    public stageStateService: StageStateService
+    public stageStateService: StageStateService,
+    private chartSpecService: ChartSpecService,
   ) { }
 
   ngOnInit() {
     this.stageStateService.hintObservable.subscribe(hint => {
       this.showHint = hint;
     });
+    this.chartSpecService.bindChartSpec(this);
   }
 
   ngAfterContentChecked() {
@@ -39,12 +44,14 @@ export class ChartSpecTreeViewKeyHintComponent implements OnInit, AfterContentCh
     }
   }
 
+  // TODO: Extremely inefficient
   refreshReachableKeys() {
     this.reachableKeys = [];
     if (this.tag === this.currentTag) {
       // this.reachableKeys.push('⏎');
     } else if (this.tag && this.currentTag) {
       Object.entries(this.keyBindings).forEach(([methodName, keyBinding]) => {
+        this.navigateComponent.sandbox = true;
         this.navigateComponent.tag = this.currentTag;
         this.navigateComponent[methodName]();
         if (this.navigateComponent.tag === this.tag) {

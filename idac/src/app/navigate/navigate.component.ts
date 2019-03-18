@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
 import { MessageService } from '../message.service';
 import { SpeakingService } from '../speaking.service';
+import { ChartSpecService } from '../chart-spec.service';
 
 @Component({
   selector: 'app-navigate',
@@ -34,7 +35,8 @@ export class NavigateComponent implements OnInit {
 
   constructor(
     private messageService: MessageService,
-    private speakingService: SpeakingService
+    private speakingService: SpeakingService,
+    private chartSpecService: ChartSpecService,
   ) { }
 
   ngOnInit() {
@@ -48,7 +50,7 @@ export class NavigateComponent implements OnInit {
       if (this.tag.children && this.tag.children.length) {
         this.speakingService.beep_detect();
       }
-      this.speakingService.read(this.tag.describe());
+      this.speakingService.read(this.tag.describe(), this.tag);
     }
   }
 
@@ -59,7 +61,7 @@ export class NavigateComponent implements OnInit {
     } else {
       this.focusHistory.push(this.tag);
       this.tag = tag;
-      this.tagChange.emit(this.tag);
+      this.chartSpecService.currentTag = this.tag;
       this.messageService.shouldScroll = true;
       this.messageService.shouldCollapse = true;
     }
@@ -139,7 +141,7 @@ export class NavigateComponent implements OnInit {
   }
 
   moveToParent() {
-    if (!this.tag._parent || this.tag._parent._id === 0) {
+    if (!this.tag._parent) {
       return false;
     }
     this.focusBookmarks[this.tag._parent._id] = this.tag._id;
@@ -243,6 +245,7 @@ export class NavigateComponent implements OnInit {
 
   moveToNextFrame() {
     let tag = this.tag;
+    if (tag._id === 0) { return false; }
     while (tag._parent._id !== 0) {
       tag = tag._parent;
     }
@@ -251,6 +254,7 @@ export class NavigateComponent implements OnInit {
 
   moveToPreviousFrame() {
     let tag = this.tag;
+    if (tag._id === 0) { return false; }
     while (tag._parent._id !== 0) {
       tag = tag._parent;
     }

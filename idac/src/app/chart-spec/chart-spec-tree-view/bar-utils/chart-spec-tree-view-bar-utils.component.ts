@@ -2,6 +2,8 @@ import { Component, OnInit, Input, AfterContentChecked } from '@angular/core';
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 import { SpeakingService } from 'src/app/speaking.service';
 import { StageStateService } from 'src/app/stage-state.service';
+import { ChartSpec } from 'src/app/chart-structure/chart-spec/chart-spec';
+import { ChartSpecService } from 'src/app/chart-spec.service';
 
 @Component({
   selector: 'app-chart-spec-tree-view-bar-utils',
@@ -9,8 +11,10 @@ import { StageStateService } from 'src/app/stage-state.service';
   styleUrls: ['./chart-spec-tree-view-bar-utils.component.scss']
 })
 export class ChartSpecTreeViewBarUtilsComponent implements OnInit, AfterContentChecked {
+  currentTag: SpecTag;
+  chartSpec: ChartSpec;
+
   @Input() tag: SpecTag;
-  @Input() currentTag: SpecTag;
   @Input() siblingLength: number;
   @Input() isCollapsed: boolean;
   @Input() _collapseToggle: any;
@@ -18,10 +22,12 @@ export class ChartSpecTreeViewBarUtilsComponent implements OnInit, AfterContentC
   @Input() viewOnly: boolean;
 
   constructor(
-    private speakingService: SpeakingService
+    private speakingService: SpeakingService,
+    private chartSpecService: ChartSpecService,
   ) { }
 
   ngOnInit() {
+    this.chartSpecService.bindChartSpec(this);
   }
 
   ngAfterContentChecked() {
