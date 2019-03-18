@@ -103,7 +103,7 @@ export class Highlight extends SpecTag {
       const seriesName = series.properties.text();
       if (this._root.chartType === 'bar-chart') {
         targets.push(`${indices.length === this._root.marks.children.length ?
-          'all bars' : `${indices.map(i => i + 1).join(', ')}-th position`} in ${seriesName}`);
+          'all bars' : `positions ${indices.map(i => i + 1).join(', ')}`} in ${seriesName}`);
       } else {
         const seriesIndex = this._root.legend.children.indexOf(series);
         targets.push(`${indices.length === this._root.marks.children[seriesIndex].children.length ?
@@ -112,7 +112,7 @@ export class Highlight extends SpecTag {
       numTargets += indices.length;
     });
     return {
-      target: targets.join(', and '),
+      target: targets.join(', '),
       numTargets
     };
     }

@@ -122,7 +122,7 @@ export class TrendLine extends SpecTag {
     });
     return {
       targets,
-      targetDescriptions: targetDescriptions.join(', and '),
+      targetDescriptions: targetDescriptions.join(', '),
       numTargets
     };
   }

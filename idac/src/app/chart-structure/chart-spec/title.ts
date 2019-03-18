@@ -23,7 +23,7 @@ export class Title extends SpecTag {
 
   afterFromSpecSVG() {
     this.descriptionRule = this.assembleDescriptionRules([
-    ['This chart is titled "$(title)."', true],
+    ['The title is "$(title)."', true],
     ]);
   }
 

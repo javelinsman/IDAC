@@ -205,7 +205,7 @@ export class Point extends SpecTag {
         ['$(X Axis: unit) ', false, ''],
         ['and $(Y Axis: label) is $(y) ', true],
         ['$(Y Axis: unit) ', false, ''],
-        ['in series $(Series: name).', true],
+        ['in the series $(Series: name).', true],
       ]);
     }
   }

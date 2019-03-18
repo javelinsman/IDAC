@@ -53,7 +53,7 @@ export class CoordinateRange extends SpecTag {
   }
   afterFromChartAccent() {
     this.descriptionRule = this.assembleDescriptionRules([
-    ['An interval ranges from $(rangeFrom) to $(rangeTo) on $(targetAxis) axis', true],
+    ['An interval ranges from $(rangeFrom) to $(rangeTo) on the $(targetAxis) axis', true],
     [', labeled as "$(label)".', false, '.']
     ]);
     this.children.forEach(child => child.afterFromChartAccent());
@@ -96,7 +96,7 @@ export class RelationalHighlightRange extends Highlight {
 
   afterFromChartAccent() {
     this.descriptionRule = [
-      '$(relation) the range are $(numTargets) bars. $(highlight) $(itemLabel) Specifically, targets are $(targetDescription).'
+      '$(relation) the interval are $(numTargets) bars. $(highlight) $(itemLabel) Specifically, targets are $(targetDescription).'
     ].join(' ');
   }
 
