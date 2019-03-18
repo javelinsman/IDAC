@@ -11,7 +11,7 @@ import { SpeakingService } from 'src/app/speaking.service';
   templateUrl: './chart-spec-tree-view.component.html',
   styleUrls: ['./chart-spec-tree-view.component.scss']
 })
-export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked, AfterContentChecked {
+export class ChartSpecTreeViewComponent implements OnInit, AfterContentChecked {
 
   chartSpec: ChartSpec;
   currentTag: SpecTag;
