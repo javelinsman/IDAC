@@ -15,17 +15,20 @@ export class SpeakingService {
   public speak: boolean;
   public tagReading: SpecTag;
 
+
+  timestamp: number;
+
   constructor(private stageStateService: StageStateService) {
     this.stageStateService.readAloudElementsObservable.subscribe(speak => {
       this.speak = speak;
     });
     this.stageStateService.speedObservable.subscribe(speed => {
       this.speed = speed;
-    })
+    });
     this.audioContext = new AudioContext();
   }
 
-  read(message: string, tag: SpecTag = null){
+  read(message: string, tag: SpecTag = null) {
     if (this.speak) {
       this._read(message);
       this.tagReading = tag;
@@ -61,30 +64,27 @@ export class SpeakingService {
   }
 
   private _read(message, korean = false) {
-    if (this.isSpeaking) {
-      this.stop()
-      // Make sure we don't create more than one timeout...
-      if (this.sayTimeout !== null) {
-          clearTimeout(this.sayTimeout);
-      }
-      this.sayTimeout = setTimeout(() => this._read(message, korean), 250);
-    } else {
+    const timestamp = Date.now();
+    this.timestamp = timestamp;
+    this.stop();
+    setTimeout(() => {
+      if (this.timestamp !== timestamp) { return; }
       const msg = new SpeechSynthesisUtterance(message);
       if (korean) {
         msg.lang = 'ko-KR';
       } else {
-        msg.lang = 'en-US';
+        msg.lang = 'en-GB';
       }
-      if (this.speed == AudioControlSpeed.slow) {
+      if (this.speed === AudioControlSpeed.slow) {
         msg.rate = 0.5;
-      } else if (this.speed == AudioControlSpeed.normal) {
+      } else if (this.speed === AudioControlSpeed.normal) {
         msg.rate = 1;
       } else {
         msg.rate = 1.5;
       }
-
+      msg.volume = 1;
       window.speechSynthesis.speak(msg);
-    }
+    }, 250);
   }
 
 }
