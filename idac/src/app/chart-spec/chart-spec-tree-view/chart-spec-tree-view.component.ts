@@ -4,6 +4,7 @@ import { OnClickOutside } from 'src/app/utils';
 import { ChartSpecService } from 'src/app/chart-spec.service';
 import { MessageService } from 'src/app/message.service';
 import { ChartSpec } from 'src/app/chart-structure/chart-spec/chart-spec';
+import { SpeakingService } from 'src/app/speaking.service';
 
 @Component({
   selector: 'app-chart-spec-tree-view',
@@ -46,7 +47,8 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked, Aft
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private chartSpecService: ChartSpecService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private speakingService: SpeakingService
   ) { }
 
   ngOnInit() {
@@ -101,6 +103,7 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked, Aft
   _currentTagChange(tag: SpecTag) {
     if (this.currentTag !== tag) {
       this.edit = false;
+      this.speakingService.read(tag.describe(), tag);
     }
     this.chartSpecService.currentTag = tag;
   }
