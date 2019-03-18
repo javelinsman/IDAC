@@ -21,7 +21,7 @@ export class SpecTag {
 
   attributes: IAttribute = {};
   _properties: IProperty = {};
-  children: SpecTag[];
+  _children: SpecTag[] = [];
 
   _id: number;
   _root: ChartSpec;
@@ -37,6 +37,9 @@ export class SpecTag {
   public static clear() {
     SpecTag.idCount = 0;
   }
+
+  get children() { return this._children; }
+  set children(_children) { this._children = _children; }
 
   set properties(properties: IProperty) {
     this._properties = properties;

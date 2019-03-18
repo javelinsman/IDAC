@@ -25,9 +25,6 @@ export class ChartSpecComponent implements OnInit, AfterViewChecked {
   ) { }
 
   ngOnInit() {
-    if (!this.chartSpec) {
-      this.chartSpec = new ChartSpec();
-    }
     this.chartSpecService.bindChartSpec(this);
   }
 

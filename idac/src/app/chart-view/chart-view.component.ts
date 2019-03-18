@@ -264,8 +264,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
   }
 
   _currentTagChange(tag: SpecTag) {
-    this.currentTag = tag;
-    this.currentTagChange.emit(this.currentTag);
+    this.chartSpecService.currentTag = tag;
     this.messageService.shouldScroll = true;
   }
 

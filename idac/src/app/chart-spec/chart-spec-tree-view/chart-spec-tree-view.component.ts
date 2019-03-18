@@ -136,4 +136,8 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked, Aft
     this.collapseToggle.emit(!this.isCollapsed);
   }
 
+  shouldMinimizeTag(tag) {
+    return !tag.children.length && tag._parent && tag._praent._tagname !== 'Annotations';
+  }
+
 }
