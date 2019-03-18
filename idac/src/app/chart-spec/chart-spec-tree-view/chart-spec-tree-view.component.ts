@@ -70,28 +70,18 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked, Aft
 
   }
 
-  ngAfterViewChecked() {
-    if (this.tag.flattenedTags().indexOf(this.currentTag) >= 0) {
-      this.parentCollapseIndexChange.emit(this.siblingIndex);
-      this.changeDetectorRef.detectChanges();
-    }
-  }
-
   tagIncludesCurrentTag() {
     if (!this.tagIncludesCurrentTagCache[this.currentTag._id]) {
-      this.tagIncludesCurrentTagCache[this.currentTag._id] = this.tag.children.includes(this.currentTag);
+      this.tagIncludesCurrentTagCache[this.currentTag._id] = this.tag.flattenedTags().slice(1).includes(this.currentTag);
     }
     return this.tagIncludesCurrentTagCache[this.currentTag._id];
   }
 
   ngAfterContentChecked() {
     if (this.messageService.shouldCollapse) {
-      if (this.currentTag._parent === this.currentTag._root) {
-        this.messageService.shouldCollapse = false;
-      } else if (this.tag.children && this.tagIncludesCurrentTag()) {
+      if (this.tag._parent && this.tag.children && this.tagIncludesCurrentTag()) {
         this.collapseChildren = true;
         this.collapseChildrenTemporary = true;
-        this.messageService.shouldCollapse = false;
       }
     }
     if (this.collapseChildrenTemporary && !this.tagIncludesCurrentTag()) {
@@ -106,6 +96,7 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked, Aft
       this.speakingService.read(tag.describe(), tag);
     }
     this.chartSpecService.currentTag = tag;
+    this.messageService.shouldCollapse = false;
   }
 
   _editChange(edit: boolean) {
