@@ -18,6 +18,7 @@ export class ChartSpecComponent implements OnInit, AfterViewChecked {
   @ViewChild('container') containerDiv: ElementRef;
 
   edit = false;
+  preview = false;
 
   constructor(
     private messageService: MessageService,
