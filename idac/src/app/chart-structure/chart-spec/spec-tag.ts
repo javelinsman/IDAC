@@ -2,6 +2,7 @@ import { IAttribute, IProperty } from './attributes';
 import { ChartAccent } from '../chart-accent/chart-accent';
 import { ChartSpec } from './chart-spec';
 import { firstLetterUpperCase } from 'src/app/utils';
+import { d3Selection } from 'src/app/chartutils';
 
 interface IEditorsNote {
   text: string;
@@ -14,12 +15,9 @@ export class SpecTag {
   constructor(public _tagname: string) {
     this._id = SpecTag.idCount ++;
   }
+
   private static idCount = 0;
   public static _descriptionRule = '';
-
-  public static clear() {
-    SpecTag.idCount = 0;
-  }
 
   attributes: IAttribute = {};
   _properties: IProperty = {};
@@ -36,6 +34,9 @@ export class SpecTag {
     showInGraphView: false
   };
 
+  public static clear() {
+    SpecTag.idCount = 0;
+  }
 
   set properties(properties: IProperty) {
     this._properties = properties;
@@ -56,7 +57,7 @@ export class SpecTag {
 
   peekableTags() {
     const ret: SpecTag[] = [this];
-    for (let tag = this._parent; tag._tagname !== 'ChartSpec'; tag = tag._parent) {
+    for (let tag = this._parent; tag._parent; tag = tag._parent) {
       ret.push(tag);
     }
     this._root.children.filter(tag => !ret.includes(tag)).forEach(tag => ret.push(tag));
@@ -104,7 +105,7 @@ export class SpecTag {
     return firstLetterUpperCase(description);
   }
 
-  renderRule(rule: string){
+  renderRule(rule: string) {
     const args = rule.match(/\$\(([^)]*)\)/g);
     if (args) {
     args.map(d => [d, d.slice(2, -1)])
@@ -116,14 +117,14 @@ export class SpecTag {
           const keyName = strip.split(':')[1].trim();
           const tag = this.peekableTags().find(_tag => _tag._tagname === tagName);
           if (tag && tag.properties[keyName]) {
-            if (tag.attributes[keyName] && tag.attributes[keyName].type == 'input-select') {
+            if (tag.attributes[keyName] && tag.attributes[keyName].type === 'input-select') {
             isUndefined = false;
             }
             value = '' + tag.properties[keyName]();
           }
         } else {
           if (this.properties[strip]) {
-            if (this.attributes[strip] && this.attributes[strip].type == 'input-select') {
+            if (this.attributes[strip] && this.attributes[strip].type === 'input-select') {
             isUndefined = false;
             }
             value = '' + this.properties[strip]();
@@ -138,6 +139,9 @@ export class SpecTag {
 
   fromChartAccent(ca: ChartAccent): void {}
   afterFromChartAccent(): void {}
+
+  fromSpecSVG(spec: d3Selection<SVGSVGElement>) {}
+  afterFromSpecSVG() {}
 
   foreignRepr(): string {
     return this._tagname;

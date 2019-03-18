@@ -29,7 +29,7 @@ import { ChartSpecTreeViewDescriptionComponent } from './chart-spec/chart-spec-t
 import { ChartSpecTreeViewBarUtilsComponent } from './chart-spec/chart-spec-tree-view/bar-utils/chart-spec-tree-view-bar-utils.component';
 import { SettingsPanelComponent } from './panels/settings-panel/settings-panel.component';
 import { HelpPanelComponent } from './panels/help-panel/help-panel.component';
-import { ChartSpecTreeComponent } from './chart-spec-tree/chart-spec-tree.component';
+import { MainPanelComponent } from './panels/main-panel/main-panel.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +57,7 @@ import { ChartSpecTreeComponent } from './chart-spec-tree/chart-spec-tree.compon
     ChartSpecTreeViewBarUtilsComponent,
     SettingsPanelComponent,
     HelpPanelComponent,
-    ChartSpecTreeComponent
+    MainPanelComponent
   ],
   imports: [
     BrowserModule,

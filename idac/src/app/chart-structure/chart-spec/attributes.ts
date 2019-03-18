@@ -19,3 +19,11 @@ export class AttrInputSelect {
 }
 
 export type Attribute = any;
+
+export function makeAttrInput(val) {
+  try {
+    return new AttrInput(val());
+  } catch {
+    return new AttrInput('');
+  }
+}

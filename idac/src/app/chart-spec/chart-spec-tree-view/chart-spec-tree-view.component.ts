@@ -1,14 +1,15 @@
-import { Component, OnInit, Input, EventEmitter, Output, AfterViewChecked, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, AfterViewChecked, ChangeDetectorRef, ElementRef, ViewChild, AfterContentChecked } from '@angular/core';
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 import { OnClickOutside } from 'src/app/utils';
 import { ChartSpecService } from 'src/app/chart-spec.service';
+import { MessageService } from 'src/app/message.service';
 
 @Component({
   selector: 'app-chart-spec-tree-view',
   templateUrl: './chart-spec-tree-view.component.html',
   styleUrls: ['./chart-spec-tree-view.component.scss']
 })
-export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
+export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked, AfterContentChecked {
 
   @Input() tag: SpecTag;
   @Input() currentTag: SpecTag;
@@ -19,7 +20,7 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
   @Input() parentCollapseIndex = 0;
   @Input() edit: boolean;
   @Input() viewOnly = false;
-  @Input() minimize: boolean = false;
+  @Input() minimize = false;
 
   @Output() currentTagChange: EventEmitter<SpecTag> = new EventEmitter();
   @Output() parentCollapseIndexChange: EventEmitter<number> = new EventEmitter();
@@ -34,13 +35,16 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
 
   collapsable = false;
   collapseChildren = false;
+  collapseChildrenTemporary = false;
   collapseIndex = 0;
 
   hover: boolean;
+  tagIncludesCurrentTagCache = {}
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private chartSpecService: ChartSpecService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -51,18 +55,43 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterViewChecked {
     if (this.tag.children && this.tag.children.length > 1) {
       this.collapsable = true;
     }
-    this.siblingIndex = this.tag._parent.children.indexOf(this.tag);
-    this.siblingLength = this.tag._parent.children.length;
-
-    if (this.tag.children && this.tag.children.length > 1 && (!this.tag.children[0].children || !this.tag.children[0].children.length)) {
-      // this.collapseChildren = true;
+    if (this.tag._parent) {
+      this.siblingIndex = this.tag._parent.children.indexOf(this.tag);
+      this.siblingLength = this.tag._parent.children.length;
     }
+    if (!this.tag._parent) {
+      this.collapseChildren = true;
+    }
+
   }
 
   ngAfterViewChecked() {
     if (this.tag.flattenedTags().indexOf(this.currentTag) >= 0) {
       this.parentCollapseIndexChange.emit(this.siblingIndex);
       this.changeDetectorRef.detectChanges();
+    }
+  }
+
+  tagIncludesCurrentTag() {
+    if (!this.tagIncludesCurrentTagCache[this.currentTag._id]) {
+      this.tagIncludesCurrentTagCache[this.currentTag._id] = this.tag.children.includes(this.currentTag);
+    }
+    return this.tagIncludesCurrentTagCache[this.currentTag._id];
+  }
+
+  ngAfterContentChecked() {
+    if (this.messageService.shouldCollapse) {
+      if (this.currentTag._parent === this.currentTag._root) {
+        this.messageService.shouldCollapse = false;
+      } else if (this.tag.children && this.tagIncludesCurrentTag()) {
+        this.collapseChildren = true;
+        this.collapseChildrenTemporary = true;
+        this.messageService.shouldCollapse = false;
+      }
+    }
+    if (this.collapseChildrenTemporary && !this.tagIncludesCurrentTag()) {
+      this.collapseChildren = false;
+      this.collapseChildrenTemporary = false;
     }
   }
 

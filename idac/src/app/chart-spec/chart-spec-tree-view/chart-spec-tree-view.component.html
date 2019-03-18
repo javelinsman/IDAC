@@ -1,136 +1,178 @@
-<div class="container-fluid p-0">
-  <section class="d-flex tagcard" #tagSection>
+<div class="container-fluid p-0 my-1">
 
-    <div (click)="_currentTagChange(tag)"
-      (mouseover)="hover = true" (mouseout)="hover = false"
-      class="w-100 border-bottom pl-1 pt-2 pb-2 pr-3"
-      style="border: 1px solid transparent"
-      [class.hover-highlighted]="tag !== currentTag && hover"
-      [class.cursor-pointer]="tag !== currentTag"
-      [class.border]="false || (edit && tag === currentTag)"
-      [class.highlighted]="tag === currentTag"
-      [class.spec-tag]="!viewOnly"
-      [class.border-primary]="minimize && tag === currentTag"
-    >
-      <div class="d-flex">
-        <div class="flex-grow-1"
-          [class.d-flex]="viewOnly"
-        >
-          <div *ngIf="!minimize"
-            class="d-flex justify-content-between align-items-center mb-2">
-            <div class="d-flex align-items-baseline">
-              <app-chart-spec-tree-view-tagname
-                [tag]="tag"
-                [currentTag]="currentTag"
-                [siblingIndex]="siblingIndex"
-                [siblingLength]="siblingLength"
-                [warning]="!viewOnly && tag.describe().indexOf('undefined') >= 0"
-              ></app-chart-spec-tree-view-tagname>
-              <app-chart-spec-tree-view-key-hint
-                class="ml-2"
-                *ngIf="!viewOnly"
-                [tag]="tag" [currentTag]="currentTag"
-              ></app-chart-spec-tree-view-key-hint>
-            </div>
-            <app-chart-spec-tree-view-bar-utils
-              [class.invisible]="!hover && currentTag !== tag"
-              [class.hover]="hover && currentTag !== tag"
-              [tag]="tag"
-              [edit]="edit"
-              [siblingLength]="siblingLength"
-              [isCollapsed]="isCollapsed"
-              [_collapseToggle]="_collapseToggle.bind(this)"
-              [viewOnly]="viewOnly"
-              [currentTag]="currentTag"
-            ></app-chart-spec-tree-view-bar-utils>
-          </div>
-          <div class="d-flex">
-            <app-chart-spec-tree-view-description
-              [viewOnly]="viewOnly"
-              [tag]="tag" [currentTag]="currentTag"
-              [edit]="edit" [_editChange]="_editChange.bind(this)"
-              [class.w-100]="minimize"
-            ></app-chart-spec-tree-view-description>
-            <app-chart-spec-tree-view-bar-utils
-              *ngIf="minimize"
-              [class.invisible]="!hover && currentTag !== tag"
-              [class.hover]="hover && currentTag !== tag"
-              [tag]="tag"
-              [edit]="edit"
-              [siblingLength]="siblingLength"
-              [isCollapsed]="isCollapsed"
-              [_collapseToggle]="_collapseToggle.bind(this)"
-              [viewOnly]="viewOnly"
-              [currentTag]="currentTag"
-            ></app-chart-spec-tree-view-bar-utils>
-          </div>
-        </div>
-      </div>
-      <div class="ml-2" *ngIf="edit && tag === currentTag">
-        <app-edit-panel [tag]="tag"></app-edit-panel>
-      </div>
-    </div>
-  </section>
-  <div class="d-flex" *ngIf="!viewOnly && tag.children">
-    <div class="d-flex flex-column">
-      <span *ngIf="true || collapsable"
-        (click)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
-        style="width: 30px; min-height: 30px; cursor: pointer" class="badge border mt-2 pt-2 mr-2"
-        [class.d-none]="(tag.children && tag.children.length > 1 && (!tag.children[0].children || !tag.children[0].children.length)) || !collapsable">
-        <i class="fas text-secondary"
-          [class.fa-minus]="collapseChildren"
-          [class.fa-plus]="!collapseChildren"
-          ></i>
-      </span>
-      <span
-        [class.invisible]="(tag.children && tag.children.length > 1 && (!tag.children[0].children || !tag.children[0].children.length)) || !collapsable"
-        style="width: 2px; height: 100%; margin-left: 14px; margin-right: 14px" class="badge badge-light text-light p-0 my-3">.</span>
-    </div>
-    <div class="w-100">
-      <div *ngIf="tag._tagname !== 'Annotations' && tag.children && tag.children.length > 1 && (!tag.children[0].children || !tag.children[0].children.length); else elseBlock"
-        class="pl-1 py-2 pr-3"
+  <div class="w-100">
+
+    <section class="tagcard w-100" style="position: relative;" #tagSection>
+      <div
+        *ngIf="tag._parent"
+        class="d-flex flex-column h-100"
+        style="position: absolute; left: -31px; width: 31px;"
       >
-        <div class="d-flex justify-content-between align-items-center mb-1">
-          <app-chart-spec-tree-view-tagname
-            [tag]="tag.children[0]"
-            [currentTag]="null"
-            [siblingIndex]="0"
-            [siblingLength]="tag.children.length"
-            [warning]="!viewOnly && tag.children[0].describe().indexOf('undefined') >= 0"
-          ></app-chart-spec-tree-view-tagname>
-          <i class="far fa-plus-square text-secondary text-as-button mx-2"
-            [class.fa-minus-square]="!collapsable || collapseChildren"
-            [class.fa-plus-square]="collapsable && !collapseChildren"
-            (click)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])">
-          </i>
-        </div>
-        <div class="mr-3 styled-scroll overflow-y-scroll"
-          style="max-height: 500px"
+        <span #horizontalIndentLine style="height: 2px; width: 20px; position: relative; left: 10px; z-index: -1" class="badge badge-light text-light p-0 mt-3">.</span>
+        <span *ngIf="collapsable"
+          (click)="collapseChildren=!collapseChildren"
+          style="cursor: pointer; background-color: white; width: 22px; position: absolute" class="badge border mt-2"
         >
-          <div *ngFor="let childTag of tag.children; index as i">
-            <app-chart-spec-tree-view
-              class="{{ !collapsable || collapseChildren || i === collapseIndex ? '' : 'd-none'}}"
-              [(edit)]="edit"
-              (collapseToggle)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
-              [tag]="childTag" [isCollapsed]="!collapsable || collapseChildren"
-              [siblingIndex]="i" [siblingLength]="tag.children.length" [(parentCollapseIndex)]="collapseIndex"
-              [minimize]="true"
-              [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)" [indent]="indent + 1"></app-chart-spec-tree-view>
+          <i class="fas text-secondary"
+            [class.fa-minus]="collapseChildren"
+            [class.fa-plus]="!collapseChildren"
+            ></i>
+        </span>
+        <span #lastPartEraser
+          *ngIf="siblingIndex && siblingIndex === siblingLength - 1"
+          style="width: 100%; height: 100%; background-color: white">
+        </span>
+      </div>
+
+      <div (click)="_currentTagChange(tag)"
+        (mouseover)="hover = true" (mouseout)="hover = false"
+        class="w-100 border-bottom border-left border-right border-top pl-1 pt-2 pb-2 pr-3"
+        style="border: 1px solid transparent;"
+        [class.hover-highlighted]="tag !== currentTag && hover"
+        [class.cursor-pointer]="tag !== currentTag"
+        [class.border]="false || (edit && tag === currentTag)"
+        [class.highlighted]="tag === currentTag"
+        [class.spec-tag]="!viewOnly"
+        [class.border-primary]="minimize && tag === currentTag"
+      >
+        <div class="d-flex">
+          <div class="flex-grow-1"
+            [class.d-flex]="viewOnly"
+          >
+            <div *ngIf="!minimize"
+              class="d-flex justify-content-between align-items-center mb-2">
+              <div class="d-flex align-items-baseline">
+                <app-chart-spec-tree-view-tagname
+                  [tag]="tag"
+                  [currentTag]="currentTag"
+                  [siblingIndex]="siblingIndex"
+                  [siblingLength]="siblingLength"
+                  [warning]="!viewOnly && tag.describe().indexOf('undefined') >= 0"
+                ></app-chart-spec-tree-view-tagname>
+                <app-chart-spec-tree-view-key-hint
+                  class="ml-2"
+                  *ngIf="!viewOnly"
+                  [tag]="tag" [currentTag]="currentTag"
+                ></app-chart-spec-tree-view-key-hint>
+              </div>
+              <app-chart-spec-tree-view-bar-utils
+                [class.invisible]="!hover && currentTag !== tag"
+                [class.hover]="hover && currentTag !== tag"
+                [tag]="tag"
+                [edit]="edit"
+                [siblingLength]="siblingLength"
+                [isCollapsed]="isCollapsed"
+                [_collapseToggle]="_collapseToggle.bind(this)"
+                [viewOnly]="viewOnly"
+                [currentTag]="currentTag"
+              ></app-chart-spec-tree-view-bar-utils>
+            </div>
+            <div class="d-flex">
+              <app-chart-spec-tree-view-description
+                [viewOnly]="viewOnly"
+                [tag]="tag" [currentTag]="currentTag"
+                [edit]="edit" [_editChange]="_editChange.bind(this)"
+                [class.w-100]="minimize"
+              ></app-chart-spec-tree-view-description>
+              <app-chart-spec-tree-view-bar-utils
+                *ngIf="minimize"
+                [class.invisible]="!hover && currentTag !== tag"
+                [class.hover]="hover && currentTag !== tag"
+                [tag]="tag"
+                [edit]="edit"
+                [siblingLength]="siblingLength"
+                [isCollapsed]="isCollapsed"
+                [_collapseToggle]="_collapseToggle.bind(this)"
+                [viewOnly]="viewOnly"
+                [currentTag]="currentTag"
+              ></app-chart-spec-tree-view-bar-utils>
+            </div>
           </div>
         </div>
-      </div>
-      <ng-template #elseBlock>
-        <div *ngFor="let childTag of tag.children; index as i">
-          <app-chart-spec-tree-view
-            class="{{ !collapsable || collapseChildren || i === collapseIndex ? '' : 'd-none'}}"
-            [(edit)]="edit"
-            (collapseToggle)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
-            [tag]="childTag" [isCollapsed]="!collapsable || collapseChildren"
-            [siblingIndex]="i" [siblingLength]="tag.children.length" [(parentCollapseIndex)]="collapseIndex"
-            [minimize]="false"
-            [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)" [indent]="indent + 1"></app-chart-spec-tree-view>
+        <div class="ml-2" *ngIf="edit && tag === currentTag">
+          <app-edit-panel [tag]="tag"></app-edit-panel>
         </div>
-      </ng-template>
+      </div>
+    </section>
+
+    <div style="position: relative">
+      <div
+        *ngIf="tag._parent"
+        class="d-flex flex-column h-100"
+        style="position: absolute; left: -31px; width: 31px"
+      >
+        <span #lastPartEraser
+          *ngIf="siblingIndex && siblingIndex === siblingLength - 1"
+          style="width: 100%; height: 100%; background-color: white; color: white">
+        </span>
+      </div>
+      <div class="d-flex" *ngIf="!viewOnly && tag.children && tag.children.length > 0">
+        <div class="d-flex flex-column">
+          <span #indentLine
+            [class.invisible]="!collapseChildren"
+            style="width: 2px; height: 100%; margin-left: 19px; margin-right: 19px" class="badge badge-light text-light p-0">.</span>
+        </div>
+        <div class="w-100">
+          <div *ngIf="false && tag._tagname !== 'Annotations' && tag.children && tag.children.length > 1 && (!tag.children[0].children || !tag.children[0].children.length); else elseBlock"
+            class="pl-1 py-2 pr-3"
+          >
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <app-chart-spec-tree-view-tagname
+                [tag]="tag.children[0]"
+                [currentTag]="null"
+                [siblingIndex]="0"
+                [siblingLength]="tag.children.length"
+                [warning]="!viewOnly && tag.children[0].describe().indexOf('undefined') >= 0"
+              ></app-chart-spec-tree-view-tagname>
+              <i class="far fa-plus-square text-secondary text-as-button mx-2"
+                [class.fa-minus-square]="!collapsable || collapseChildren"
+                [class.fa-plus-square]="collapsable && !collapseChildren"
+                (click)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])">
+              </i>
+            </div>
+            <div class="mr-3 styled-scroll overflow-y-scroll"
+              style="max-height: 500px"
+            >
+              <div *ngFor="let childTag of tag.children; index as i">
+                <app-chart-spec-tree-view
+                  [class.d-none]="collapseChildren"
+                  [(edit)]="edit"
+                  (collapseToggle)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
+                  [tag]="childTag" [isCollapsed]="!collapsable || collapseChildren"
+                  [siblingIndex]="i" [siblingLength]="tag.children.length" [(parentCollapseIndex)]="collapseIndex"
+                  [minimize]="true"
+                  [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)" [indent]="indent + 1"></app-chart-spec-tree-view>
+              </div>
+            </div>
+          </div>
+          <ng-template #elseBlock>
+            <ng-container
+              #childElements
+              *ngIf="collapseChildren; else numberOfChildren"
+            >
+              <div *ngFor="let childTag of tag.children; index as i">
+                <app-chart-spec-tree-view
+                  [(edit)]="edit"
+                  (collapseToggle)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
+                  [tag]="childTag" [isCollapsed]="!collapsable || collapseChildren"
+                  [siblingIndex]="i" [siblingLength]="tag.children.length" [(parentCollapseIndex)]="collapseIndex"
+                  [minimize]="false"
+                  [currentTag]="currentTag" (currentTagChange)="_currentTagChange($event)" [indent]="indent + 1"></app-chart-spec-tree-view>
+              </div>
+            </ng-container>
+            <ng-template
+              #numberOfChildren
+            >
+              <p
+                *ngIf="tag.children && tag.children.length > 0"
+                class="text-secondary"
+              >
+                {{ tag.children.length }} child elements
+              </p>
+            </ng-template>
+          </ng-template>
+        </div>
+      </div>
     </div>
-  <div>
+  </div>
 </div>

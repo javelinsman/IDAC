@@ -34,3 +34,7 @@
   stroke: lighten($variable2-highlight-color, 0%);
   opacity: 0.6;
 }
+
+:host /deep/ svg {
+  width: 100% !important;
+}

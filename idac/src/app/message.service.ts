@@ -19,6 +19,18 @@ export class MessageService {
     return this.shouldScrollSubject.asObservable();
   }
 
+  private shouldCollapseSubject = new BehaviorSubject(false);
+  set shouldCollapse(b: boolean) {
+    this.shouldCollapseSubject.next(b);
+  }
+  get shouldCollapse() {
+    return this.shouldCollapseSubject.getValue();
+  }
+  get shouldCollapseObservable() {
+    return this.shouldCollapseSubject.asObservable();
+  }
+
+
   private keyboardSubject: BehaviorSubject<string> = new BehaviorSubject('');
   get keyboardEventName() {
     return this.keyboardSubject.getValue();
