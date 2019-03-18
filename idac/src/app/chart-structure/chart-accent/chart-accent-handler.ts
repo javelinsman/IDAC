@@ -19,37 +19,15 @@ export class ChartAccentHandler {
 
     title.classed('ca-title', true);
 
-    y
-      .classed('ca-y-axis', true)
-      .append('g')
-        .classed('tick', true)
-        .classed('ca-item ca-item-0', true)
-        .style('display', 'none')
-      .append('text')
-        .text('0');
+    y.classed('ca-y-axis', true)
+    yTicks.forEach((yTick, i) => yTick.classed(`ca-item ca-item-${i}`, true));
 
     if (yLabel) {
       yLabel.classed('ca-y-label', true);
     }
 
-    yTicks.forEach((yTick, i) => {
-      yTick.classed(`ca-item ca-item-${i + 1}`, true);
-    });
-
-    if (this.json.chart.type === 'scatterplot') {
-      x
-        .classed('ca-x-axis', true)
-        .append('g')
-          .classed('tick', true)
-          .classed('ca-item ca-item-0', true)
-          .style('display', 'none')
-        .append('text')
-          .text('0');
-      xTicks.forEach((xTick, i) => xTick.classed(`ca-item ca-item-${i + 1}`, true));
-    } else {
-      x.classed('ca-x-axis', true)
-      xTicks.forEach((xTick, i) => xTick.classed(`ca-item ca-item-${i}`, true));
-    }
+    x.classed('ca-x-axis', true)
+    xTicks.forEach((xTick, i) => xTick.classed(`ca-item ca-item-${i}`, true));
 
     if (xLabel) {
       xLabel.classed('ca-x-label', true);
