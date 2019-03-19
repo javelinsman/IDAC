@@ -72,6 +72,7 @@ export class ChartAccentHandler {
         const yValue = this.json.dataset.rows[pointIndex][this.json.chart.yColumn];
         point.attr('ca-data-x', xValue);
         point.attr('ca-data-y', yValue);
+        point.attr('ca-data-extra', JSON.stringify(this.json.dataset.rows[pointIndex]));
       });
     }
 

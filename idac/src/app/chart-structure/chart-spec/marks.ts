@@ -183,9 +183,12 @@ export class Point extends SpecTag {
       const point = spec.select(`.ca-marks .ca-series-${this.seriesIndex}.ca-item-${this.pointIndex}`)
       const x = point.attr('ca-data-x');
       const y = point.attr('ca-data-y');
+      const extra = JSON.parse(point.attr('ca-data-extra'));
       this.properties = {
         x: () => x,
-        y: () => y
+        y: () => y,
+        population: () => extra.Population,
+        country: () => extra.Country
       };
     }
   }
