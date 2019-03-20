@@ -56,7 +56,7 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterContentChecked {
       this.indent = 0;
     }
     this.numAttributes = Object.entries(this.tag.attributes).length;
-    if (this.tag.children && this.tag.children.length > 1) {
+    if (this.tag.children.length) {
       this.collapsable = true;
     }
     if (this.tag._parent) {
