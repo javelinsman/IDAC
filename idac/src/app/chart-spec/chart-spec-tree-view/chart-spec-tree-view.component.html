@@ -138,7 +138,7 @@
               *ngIf="tag.children && tag.children.length > 0"
               class="text-secondary pl-1"
             >
-              {{ tag.children.length }} child elements
+              {{ tag.children.length }} child element{{ tag.children.length > 1 ? 's' : '' }}
             </p>
           </ng-template>
         </div>
