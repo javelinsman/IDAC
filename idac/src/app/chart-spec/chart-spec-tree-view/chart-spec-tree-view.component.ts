@@ -131,6 +131,7 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterContentChecked {
   }
 
   shouldMinimizeTag(tag: SpecTag) {
+    return false;
     return !tag.children.length && tag._parent && tag._parent._tagname !== 'Annotations' && tag._parent._tagname !== 'Chart';
   }
 
