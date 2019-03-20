@@ -64,14 +64,6 @@ export class Annotations extends SpecTag {
     } else {
     this.descriptionRule = 'There are no annotations.';
     }
-
-    this._children = [
-      this._children[2],
-      this._children[1],
-      this._children[3],
-      this._children[4],
-      this._children[5],
-    ];
   }
 
   convertToAnnotations(annotation: ChartAccent.Annotation,
