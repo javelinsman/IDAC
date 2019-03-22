@@ -63,7 +63,7 @@ export class KeyboardInputComponent implements OnInit {
         this.currentEventName = eventName;
         this.currentKeybinding = keyBinding.key;
         this.messageService.keyboardEventName = eventName;
-        this.keyFire.emit(eventName);
+        this.keyFire.emit({eventName, keyBinding});
         return;
       }
     }
