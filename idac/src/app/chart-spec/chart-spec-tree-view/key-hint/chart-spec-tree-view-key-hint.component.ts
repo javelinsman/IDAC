@@ -51,6 +51,7 @@ export class ChartSpecTreeViewKeyHintComponent implements OnInit, AfterContentCh
       // this.reachableKeys.push('⏎');
     } else if (this.tag && this.currentTag) {
       Object.entries(this.keyBindings).forEach(([methodName, keyBinding]) => {
+        if (keyBinding.type !== 'navigation') { return; }
         this.navigateComponent.sandbox = true;
         this.navigateComponent.tag = this.currentTag;
         this.navigateComponent[methodName]();
