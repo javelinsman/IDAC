@@ -7,6 +7,12 @@ export const CHARTS: Chart[] = [
         src_png: './assets/chart-remastered-0.png',
         src_json: './assets/chart-remastered-0.json',
         src_svg: './assets/chart-remastered-0.svg',
+    },
+    {
+        id: 2,
+        title: `How quickly Apple's market cap has fallen below its tech rivals`,
+        src_json: './assets/chart-remastered-1.json',
+        src_svg: './assets/chart-remastered-1.svg',
     }
 ];
 

@@ -17,7 +17,7 @@
     <div class="row">
       <div class="col-md-4" *ngFor="let chart of charts; let i = index">
         <div class="card mb-2" (click)="_exampleIdChange(i)">
-          <img class="img-fluid" [src]="chart.src_png">
+          <img class="img-fluid" [src]="chart.src_svg">
           <div class="card-body bg-light text-center">
             <h5 class="card-text">{{ chart.title }}</h5>
           </div>
