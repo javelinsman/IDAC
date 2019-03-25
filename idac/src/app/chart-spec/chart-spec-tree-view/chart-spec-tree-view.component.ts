@@ -157,6 +157,10 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterContentChecked {
     this.collapseChildren = !this.collapseChildren;
     if (this.collapseChildren) {
       this.numChildrenToShow = 10;
+    } else {
+      if (this.tagIncludesCurrentTag()) {
+        this._currentTagChange(this.tag);
+      }
     }
   }
 
