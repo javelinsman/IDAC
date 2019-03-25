@@ -10,7 +10,7 @@
       >
         <span #horizontalIndentLine style="height: 2px; width: 20px; position: relative; left: 10px; z-index: -1" class="badge badge-light text-light p-0 mt-3">.</span>
         <span *ngIf="collapsable"
-          (click)="collapseChildren=!collapseChildren"
+          (click)="onCollapseChildrenToggle()"
           style="cursor: pointer; background-color: white; width: 22px; position: absolute" class="badge border mt-2"
         >
           <i class="fas text-secondary"

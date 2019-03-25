@@ -137,4 +137,11 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterContentChecked {
     return !tag.children.length && tag._parent && tag._parent._tagname !== 'Annotations' && tag._parent._tagname !== 'Chart';
   }
 
+  onCollapseChildrenToggle() {
+    this.collapseChildren = !this.collapseChildren;
+    if (this.collapseChildren) {
+      this.numChildrenToShow = 10;
+    }
+  }
+
 }
