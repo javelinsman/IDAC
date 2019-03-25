@@ -133,7 +133,8 @@
               </app-chart-spec-tree-view>
             </div>
             <ng-container *ngIf="numChildrenToShow < tag.children.length">
-              <p class="text-as-button ml-1 text-secondary" (click)="numChildrenToShow = tag.children.length">
+              <p class="text-as-button ml-1 text-secondary d-flex align-items-center" (click)="numChildrenToShow = tag.children.length">
+                <span class="material-icons text-secondary">more_horiz</span>
                 View {{ tag.children.length - numChildrenToShow }} more children
               </p>
             </ng-container>

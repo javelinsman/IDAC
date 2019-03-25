@@ -61,7 +61,7 @@ $constant-highlight-color: #303f9f;
 .text-as-button {
   @extend %text-unselectable;
   cursor: pointer;
-  &:hover {
+  &:hover, &:hover * {
     color: $primary !important;
   }
 }

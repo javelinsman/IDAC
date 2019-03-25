@@ -28,6 +28,7 @@
     "d3": "^5.7.0",
     "font-awesome": "^4.7.0",
     "fuzzy-search": "^3.0.1",
+    "material-icons": "^0.3.0",
     "rxjs": "~6.3.3",
     "textcomplete": "^0.17.1",
     "tslib": "^1.9.0",
