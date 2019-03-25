@@ -3,6 +3,7 @@ import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
 import { MessageService } from '../message.service';
 import { SpeakingService } from '../speaking.service';
 import { ChartSpecService } from '../chart-spec.service';
+import { KeyBinding } from '../keyboard-input/key-bindings';
 
 @Component({
   selector: 'app-navigate',
@@ -42,15 +43,19 @@ export class NavigateComponent implements OnInit {
   ngOnInit() {
   }
 
-  keyFire(eventName: string) {
+  keyFire({eventName, keyBinding}: {eventName: string, keyBinding: KeyBinding}) {
     console.log(`keyfire: ${eventName}`);
-    if (this[eventName]() === false) {
-      this.speakingService.beep_error();
-    } else {
-      if (this.tag.children && this.tag.children.length) {
-        this.speakingService.beep_detect();
+    if (keyBinding.type === 'navigation') {
+      if (this[eventName]() === false) {
+        this.speakingService.beep_error();
+      } else {
+        if (this.tag.children && this.tag.children.length) {
+          this.speakingService.beep_detect();
+        }
+        this.speakingService.read(this.tag.describe(), this.tag);
       }
-      this.speakingService.read(this.tag.describe(), this.tag);
+    } else if (keyBinding.type === 'query') {
+      this[eventName]();
     }
   }
 
@@ -259,6 +264,11 @@ export class NavigateComponent implements OnInit {
       tag = tag._parent;
     }
     return this.moveToPreviousSibling(tag);
+  }
+
+  readDescendants() {
+    const message = this.tag.flattenedTags().map(tag => `${tag._tagname}: ${tag.describe()}.`).join(';');
+    this.speakingService.read(message, null);
   }
 
   /*
