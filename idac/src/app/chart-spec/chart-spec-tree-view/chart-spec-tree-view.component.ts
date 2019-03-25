@@ -45,6 +45,7 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterContentChecked {
   tagIncludesCurrentTagCache = {}
 
   numChildrenToShow = 10;
+  numChildrenToShowAdjustedTemporaily = false;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
@@ -79,6 +80,10 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterContentChecked {
     return this.tagIncludesCurrentTagCache[this.currentTag._id];
   }
 
+  currentTagIsImmediateChildren() {
+    return this.tagIncludesCurrentTag() && this.currentTag._parent === this.tag;
+  }
+
   ngAfterContentChecked() {
     if (this.messageService.shouldCollapse) {
       if (this.tag._parent && this.tag.children && this.tagIncludesCurrentTag()) {
@@ -86,9 +91,20 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterContentChecked {
         this.collapseChildrenTemporary = true;
       }
     }
-    if (this.collapseChildrenTemporary && !this.tagIncludesCurrentTag()) {
-      this.collapseChildren = false;
-      this.collapseChildrenTemporary = false;
+    if (!this.tagIncludesCurrentTag()) {
+      if (this.collapseChildrenTemporary) {
+        this.collapseChildren = false;
+        this.collapseChildrenTemporary = false;
+      }
+      if (this.numChildrenToShowAdjustedTemporaily) {
+        this.numChildrenToShow = 10;
+      }
+    }
+    if (this.numChildrenToShow < this.tag.children.length && this.currentTagIsImmediateChildren()) {
+      if (this.numChildrenToShow <= this.tag.children.indexOf(this.currentTag)) {
+        this.numChildrenToShow = this.tag.children.length;
+        this.numChildrenToShowAdjustedTemporaily = true;
+      }
     }
   }
 
