@@ -44,6 +44,8 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterContentChecked {
   hover: boolean;
   tagIncludesCurrentTagCache = {}
 
+  numChildrenToShow = 10;
+
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private chartSpecService: ChartSpecService,

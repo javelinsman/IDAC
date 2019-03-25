@@ -123,13 +123,20 @@
             </p>
             <div *ngFor="let childTag of tag.children; index as i">
               <app-chart-spec-tree-view
+                *ngIf="i < numChildrenToShow"
                 [(edit)]="edit"
                 (collapseToggle)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
                 [tag]="childTag" [isCollapsed]="!collapsable || collapseChildren"
                 [siblingIndex]="i" [siblingLength]="tag.children.length" [(parentCollapseIndex)]="collapseIndex"
                 [minimize]="shouldMinimizeTag(childTag)"
-                (currentTagChange)="_currentTagChange($event)" [indent]="indent + 1"></app-chart-spec-tree-view>
+                (currentTagChange)="_currentTagChange($event)" [indent]="indent + 1">
+              </app-chart-spec-tree-view>
             </div>
+            <ng-container *ngIf="numChildrenToShow < tag.children.length">
+              <p class="text-as-button ml-1 text-secondary" (click)="numChildrenToShow = tag.children.length">
+                View {{ tag.children.length - numChildrenToShow }} more children
+              </p>
+            </ng-container>
           </ng-container>
           <ng-template
             #numberOfChildren
