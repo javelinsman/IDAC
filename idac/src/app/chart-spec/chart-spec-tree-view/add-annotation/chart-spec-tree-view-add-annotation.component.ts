@@ -10,6 +10,8 @@ export class ChartSpecTreeViewAddAnnotationComponent implements OnInit {
 
   modalCloseResult: string = '';
 
+  annotationOptions = [ 'Note', 'Highlight' ];
+
   constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
