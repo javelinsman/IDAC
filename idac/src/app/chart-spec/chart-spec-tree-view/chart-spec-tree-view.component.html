@@ -46,7 +46,7 @@
                   [tag]="tag"
                   [siblingIndex]="siblingIndex"
                   [siblingLength]="siblingLength"
-                  [warning]="!viewOnly && tag.describe().indexOf('undefined') >= 0"
+                  [warning]="!viewOnly && tag.describe().toLocaleLowerCase().indexOf('undefined') >= 0"
                 ></app-chart-spec-tree-view-tagname>
                 <app-chart-spec-tree-view-key-hint
                   class="ml-2"
