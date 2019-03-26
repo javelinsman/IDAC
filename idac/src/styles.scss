@@ -57,3 +57,23 @@ body {
 textarea {
   width: 100%;
 }
+
+.add-annotation {
+  &.modal-backdrop {
+    opacity: 0 !important;
+    position: absolute !important;
+  }
+  &.modal {
+    position: absolute;
+
+    .modal-dialog {
+      position: absolute;
+      left: 45px;
+      top: 10px;
+    }
+  }
+}
+
+body.modal-open {
+  padding-right: 0px !important;
+}
