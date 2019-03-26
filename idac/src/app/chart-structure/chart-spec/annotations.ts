@@ -5,6 +5,7 @@ import { Highlight } from './highlight';
 import { CoordinateRange, RelationalHighlightRange } from './coordinate-range';
 import { CoordinateLine, RelationalHighlightLine } from './coordinate-line';
 import { TrendLine } from './trend-line';
+import { Note } from './note';
 
 type Annotation = Highlight | TrendLine | CoordinateLine | CoordinateRange;
 type AllAnnotation = Annotation | RelationalHighlightLine | RelationalHighlightRange;
@@ -18,6 +19,7 @@ export class Annotations extends SpecTag {
     this._children = [] as Annotation[];
     this.properties = {
       numChildren: () => this.children.length,
+      numNotes: () => this.children.filter(tag => tag._tagname === 'Note').length,
       numHighlights: () => this.children.filter(tag => tag._tagname === 'Highlight').length,
       numTrendlines: () => this.children.filter(tag => tag._tagname === 'Trend Line').length,
       numLines: () => this.children.filter(tag => tag._tagname === 'Line').length,
@@ -109,5 +111,23 @@ export class Annotations extends SpecTag {
 
   annotationInChartAccent(index: number) {
     return this.chartAccentAnnotations[index];
+  }
+
+  prependChild(childTag: SpecTag) {
+    this._children = [
+      childTag,
+      ...this._children
+    ]
+  }
+
+  addAnnotation(tagname: string) {
+    let child = null;
+    if (tagname === 'Note') {
+      child = new Note(null, this._root, this);
+    } else if (tagname === 'Highlight') {
+      child = new Highlight(null, this._root, this);
+    }
+
+    if (child) { this.prependChild(child); }
   }
 }

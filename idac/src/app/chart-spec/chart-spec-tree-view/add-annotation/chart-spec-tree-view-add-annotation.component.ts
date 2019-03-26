@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { ChartSpecService } from 'src/app/chart-spec.service';
+import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
+import { ChartSpec } from 'src/app/chart-structure/chart-spec/chart-spec';
 
 @Component({
   selector: 'app-chart-spec-tree-view-add-annotation',
@@ -7,14 +10,20 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./chart-spec-tree-view-add-annotation.component.scss']
 })
 export class ChartSpecTreeViewAddAnnotationComponent implements OnInit {
+  currentTag: SpecTag;
+  chartSpec: ChartSpec;
 
   modalCloseResult: string = '';
 
   annotationOptions = [ 'Note', 'Highlight' ];
 
-  constructor(private modalService: NgbModal) { }
+  constructor(
+      private modalService: NgbModal,
+      private chartSpecService: ChartSpecService,
+    ) { }
 
   ngOnInit() {
+    this.chartSpecService.bindChartSpec(this);
   }
 
   open(content) {
@@ -26,10 +35,10 @@ export class ChartSpecTreeViewAddAnnotationComponent implements OnInit {
         container: '#add-annotation-modal-container'
       })
       .result.then((result) => {
-      this.modalCloseResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.modalCloseResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+        this.chartSpec.annotations.addAnnotation(result);
+      }, (reason) => {
+        this.modalCloseResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
   }
 
   private getDismissReason(reason: any): string {

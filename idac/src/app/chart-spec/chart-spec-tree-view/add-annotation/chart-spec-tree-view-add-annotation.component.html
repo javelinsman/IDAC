@@ -17,7 +17,7 @@
   </div>
   <div class="modal-body">
     <ul>
-      <li *ngFor="let option of annotationOptions" ngbAutoFocus class="text-as-button" (click)="modal.dismiss(option)">{{ option }}</li>
+      <li *ngFor="let option of annotationOptions" ngbAutoFocus class="text-as-button" (click)="modal.close(option)">{{ option }}</li>
     </ul>
   </div>
   <!-- <div class="modal-footer">
