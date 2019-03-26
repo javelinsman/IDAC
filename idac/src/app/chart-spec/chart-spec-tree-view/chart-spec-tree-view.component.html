@@ -110,6 +110,7 @@
             style="width: 2px; height: 100%; margin-left: 19px; margin-right: 19px" class="badge badge-light text-light p-0">.</span>
         </div>
         <div class="w-100 mt-1">
+          <app-chart-spec-tree-view-add-annotation *ngIf="tag._tagname === 'Annotations'"></app-chart-spec-tree-view-add-annotation>
           <ng-container
             #childElements
             *ngIf="collapseChildren; else numberOfChildren"
