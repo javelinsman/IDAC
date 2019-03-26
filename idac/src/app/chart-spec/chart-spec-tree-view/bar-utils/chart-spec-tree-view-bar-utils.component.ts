@@ -53,4 +53,8 @@ export class ChartSpecTreeViewBarUtilsComponent implements OnInit, AfterContentC
     this.speakingService.stop();
   }
 
+  onDeleteButton() {
+    this.chartSpec.annotations.deleteAnnotation(this.tag);
+  }
+
 }

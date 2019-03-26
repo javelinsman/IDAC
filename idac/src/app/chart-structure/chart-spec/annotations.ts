@@ -130,4 +130,8 @@ export class Annotations extends SpecTag {
 
     if (child) { this.prependChild(child); }
   }
+
+  deleteAnnotation(tag: SpecTag) {
+    this._children.splice(this._children.indexOf(tag), 1);
+  }
 }
