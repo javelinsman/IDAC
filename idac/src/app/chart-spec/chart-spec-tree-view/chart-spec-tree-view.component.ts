@@ -164,4 +164,16 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterContentChecked {
     }
   }
 
+  onItemDrop(source: number, target: number) {
+    const children = this.tag._root.annotations._children;
+    const item = children[source];
+    children.splice(children.indexOf(item), 1);
+    children.splice(target, 0, item);
+    console.log(source, target);
+  }
+
+  onItemDragStart(source: number) {
+    console.log(source);
+  }
+
 }
