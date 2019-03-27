@@ -123,7 +123,7 @@
               <span class="text-secondary">s</span>
             </p>
             <app-chart-spec-tree-view-add-annotation *ngIf="tag._tagname === 'Annotations'"></app-chart-spec-tree-view-add-annotation>
-            <div *ngFor="let childTag of tag.children; index as i">
+            <div *ngFor="let childTag of tag.children; index as i; last as last">
               <ng-container *ngIf="tag._tagname !== 'Annotations'; else draggableTags">
                 <app-chart-spec-tree-view
                   *ngIf="i < numChildrenToShow"
@@ -136,8 +136,29 @@
                 >
                 </app-chart-spec-tree-view>
               </ng-container>
-              <ng-template #draggableTags>
-                <div draggable [dragData]="i" droppable (onDragStart)="onItemDragStart(i)" (onDrop)="onItemDrop($event.dragData, i)">
+              <ng-template #draggableTags
+              >
+                <div
+                  class="drag-reorder"
+                  [class.useless]="draggingAnnotationIndex === i || draggingAnnotationIndex + 1 === i"
+                  droppable
+                  (onDrop)="onItemDrop($event.dragData, i, 'reorder')"
+                  [dragOverClass]="'annotation-drag-over'"
+                  [dragHintClass]="'annotation-drag-hint'"
+                >
+                </div>
+                <div
+                  class="drag-merge"
+                  draggable
+                    [dragData]="i"
+                    [dragClass]="'annotation-drag'"
+                    (onDragStart)="onItemDragStart(i)"
+                  droppable
+                    (onDrop)="onItemDrop($event.dragData, i, 'merge')"
+                    (onDragEnter)="onItemDragEnter(i)"
+                    [dragOverClass]="'annotation-drag-over'"
+                    [dragHintClass]="'annotation-drag-hint'"
+                >
                   <app-chart-spec-tree-view
                     *ngIf="i < numChildrenToShow"
                     [(edit)]="edit"
@@ -149,6 +170,17 @@
                   >
                   </app-chart-spec-tree-view>
                 </div>
+                <ng-container *ngIf="last">
+                  <div
+                    class="drag-reorder"
+                    [class.useless]="draggingAnnotationIndex === i"
+                    droppable
+                    (onDrop)="onItemDrop($event.dragData, i+1, 'reorder')"
+                    [dragOverClass]="'annotation-drag-over'"
+                    [dragHintClass]="'annotation-drag-hint'"
+                  >
+                  </div>
+                </ng-container>
               </ng-template>
             </div>
             <ng-container *ngIf="numChildrenToShow < tag.children.length">

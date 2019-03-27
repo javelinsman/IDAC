@@ -47,6 +47,8 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterContentChecked {
   numChildrenToShow = 10;
   numChildrenToShowAdjustedTemporaily = false;
 
+  draggingAnnotationIndex: number;
+
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private chartSpecService: ChartSpecService,
@@ -164,16 +166,23 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterContentChecked {
     }
   }
 
-  onItemDrop(source: number, target: number) {
+  onItemDrop(source: number, target: number, type: 'merge' | 'reorder') {
+    console.log(type, source, target);
+    this.draggingAnnotationIndex = null;
+    /*
     const children = this.tag._root.annotations._children;
     const item = children[source];
     children.splice(children.indexOf(item), 1);
     children.splice(target, 0, item);
-    console.log(source, target);
+    this.draggingAnnotationIndex = -1;
+    */
   }
 
   onItemDragStart(source: number) {
-    console.log(source);
+    this.draggingAnnotationIndex = source;
+  }
+
+  onItemDragEnter(target: number) {
   }
 
 }
