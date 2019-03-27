@@ -167,15 +167,13 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterContentChecked {
   }
 
   onItemDrop(source: number, target: number, type: 'merge' | 'reorder') {
-    console.log(type, source, target);
+    if (type === 'merge') {
+      this.tag._root.annotations.mergeAnnotations(source, target);
+    } else if (type === 'reorder') {
+      this.tag._root.annotations.moveAnnotation(source, target);
+    }
     this.draggingAnnotationIndex = null;
-    /*
-    const children = this.tag._root.annotations._children;
-    const item = children[source];
-    children.splice(children.indexOf(item), 1);
-    children.splice(target, 0, item);
-    this.draggingAnnotationIndex = -1;
-    */
+
   }
 
   onItemDragStart(source: number) {

@@ -134,4 +134,16 @@ export class Annotations extends SpecTag {
   deleteAnnotation(tag: SpecTag) {
     this._children.splice(this._children.indexOf(tag), 1);
   }
+
+  moveAnnotation(sourceIndex: number, targetIndex: number) {
+    const item = this._children[sourceIndex];
+    this._children.splice(this._children.indexOf(item), 1);
+    if (sourceIndex < targetIndex) { targetIndex--; }
+    this._children.splice(targetIndex, 0, item);
+  }
+
+  mergeAnnotations(sourceIndex: number, targetIndex: number) {
+    console.log('mergeAnnotations', sourceIndex, targetIndex);
+  }
+
 }
