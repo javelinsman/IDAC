@@ -220,36 +220,40 @@ class SeriesLine extends HighlightShape {
     this.path = d3.select(this.associatedElements.nodes().find(d => d.tagName === 'path'));
   }
   elemMarks() {
-    return [this.makePath(this.path, 15, false)];
+    return [this.makePath(this.path, 20, false)];
   }
   bookmarks() {
     return [this.makePath(this.path, 7, false)];
   }
 }
 class SeriesScatter extends HighlightShape {
+  circles;
   onInit() {
+    this.circles = this.associatedElements.nodes().filter(d => d.tagName === 'circle');
+  }
+  elemMarks() {
+    return this.circles.map(circle => {
+      return this.makeCircle(+circle.attributes.cx.value,
+        +circle.attributes.cy.value, +circle.attributes.r.value + 15);
+    });
+  }
+  bookmarks() {
+    return this.elemMarks();
   }
 }
 class Point extends HighlightShape {
+  circle;
   onInit() {
-    const d = this.boundingBox.width * 0.4;
-    this.enlargeBoxBy(this.boundingBox, d, d, d, 0);
+    const d = 7; // this.boundingBox.width * 0.4;
+    this.circle = this.associatedElements.nodes().find(d => d.tagName === 'circle');
   }
   elemMarks() {
-    return [this.makeCircle(
-      this.boundingBox.x + this.boundingBox.width / 2,
-      this.boundingBox.y + this.boundingBox.height / 2,
-      this.boundingBox.width / 2
-    )];
+    return [this.makeCircle(+this.circle.attributes.cx.value,
+      +this.circle.attributes.cy.value, +this.circle.attributes.r.value + 7)];
   }
   bookmarks() {
-    return [this.makeCircle(
-      this.boundingBox.x + this.boundingBox.width / 2,
-      this.boundingBox.y + this.boundingBox.height / 2,
-      this.boundingBox.width / 3
-    )];
+    return this.elemMarks();
   }
-
 }
 class Annotations extends HighlightShape { }
 class Highlight extends HighlightShape {
