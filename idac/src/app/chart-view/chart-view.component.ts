@@ -253,7 +253,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
         // .classed('active', (tag: SpecTag) => tag.editorsNote.active);
         .classed('highlighted', (tag: SpecTag) => tag.editorsNote.showInGraphView && tag.editorsNote.active);
 
-      this.updateAttribute();
+      // this.updateAttribute();
 
     }
   }
@@ -296,12 +296,14 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
         labelUnit(yProp.label(), yProp.unit())
       );
     }
+    /*
     this.attributeLink.xTicks.forEach((xTick, i) => {
       xTick.select('text').text(root.x.children[i].properties.text());
     });
     this.attributeLink.items.forEach((item, i) => {
       item.select('text').text(root.legend.children[i].properties.text());
     });
+    */
 
   }
 
