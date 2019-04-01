@@ -152,6 +152,7 @@
                   draggable
                     [dragData]="i"
                     [dragClass]="'annotation-drag'"
+                    [dragHandle]="'.drag-handle'"
                     (onDragStart)="onItemDragStart(i)"
                   droppable
                     (onDrop)="onItemDrop($event.dragData, i, 'merge')"
