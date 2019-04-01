@@ -8,6 +8,7 @@ import { translate } from '../chartutils';
 import { HighlightShape } from './highlight-shape/highlight-shape';
 import { MessageService } from '../message.service';
 import { ChartSpecService } from '../chart-spec.service';
+import { SpeakingService } from '../speaking.service';
 
 @Component({
   selector: 'app-chart-view',
@@ -66,6 +67,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
   constructor(
     private messageService: MessageService,
     private chartSpecService: ChartSpecService,
+    private speakingService: SpeakingService,
   ) { }
 
   ngOnInit() {
@@ -270,6 +272,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     this.chartSpecService.currentTag = tag;
     this.messageService.shouldScroll = true;
     this.messageService.shouldCollapse = true;
+    this.speakingService.read(tag.describe(), tag);
   }
 
   updateAttribute() {
