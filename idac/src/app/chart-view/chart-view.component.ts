@@ -132,7 +132,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       [cs.y, d3.selectAll('.idac-y-axis')],
       [cs.x, d3.selectAll('.idac-x-axis')],
       [cs.legend, legend],
-      [cs.marks, marks],
+      // [cs.marks, marks],
     ];
     cs.x.children.forEach((tick, i) => {
       pairs.push([tick, xTicks[i]]);
