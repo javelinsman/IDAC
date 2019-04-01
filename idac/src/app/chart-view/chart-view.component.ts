@@ -92,7 +92,6 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       xLabel.classed('idac-x-axis', true);
     }
     const serieses = d3AsSelectionArray(d3ImmediateChildren(marks, 'g'));
-    console.log(serieses)
     let rects, bargroups, circles, points;
     if (this.currentTag._root.chartType === 'bar-chart') {
       rects = zip(serieses.map(d => d3AsSelectionArray(d3ImmediateChildren(d, 'rect'))));
@@ -148,11 +147,9 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       });
     } else {
       cs.marks.children.forEach((series, i) => {
-        console.log('series', i);
-        pairs.push([series, (serieses as any)[i]]);
+        pairs.push([series, this.svg.selectAll(`.ca-series-${i}`) as any]);
         series.children.forEach((point, j) => {
-          console.log('point', j, d3AsSelectionArray(points[i])[j])
-          pairs.push([point, d3AsSelectionArray(points[i])[j]]);
+          pairs.push([point, this.svg.select(`.ca-series-${i}.ca-item-${j}`)]);
         });
       });
     }
@@ -164,7 +161,6 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     */
     this.elementLink = {};
     pairs.forEach(([tag, associatedElements]: [SpecTag, any]) => {
-      console.log(tag, associatedElements);
       this.elementLink[tag._id] = {
         tag, associatedElements,
         highlightShape: HighlightShape.getShape(tag, associatedElements, this.svg, this.elementLink)
