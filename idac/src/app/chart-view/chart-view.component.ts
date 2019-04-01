@@ -19,6 +19,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
   preview = false;
 
   @Input() src: string;
+  @Input() svgData: SVGSVGElement;
   chartSpec: ChartSpec;
   currentTag: SpecTag;
 
@@ -91,19 +92,22 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       xLabel.classed('idac-x-axis', true);
     }
     const serieses = d3AsSelectionArray(d3ImmediateChildren(marks, 'g'));
-    let rects, bargroups, circles, pointGroups;
+    console.log(serieses)
+    let rects, bargroups, circles, points;
     if (this.currentTag._root.chartType === 'bar-chart') {
       rects = zip(serieses.map(d => d3AsSelectionArray(d3ImmediateChildren(d, 'rect'))));
       rects.forEach((elem: d3.Selection<any, any, any, any>[], i) => {
         elem.forEach(d => d.classed(`idac-bargroup-${i}`, true));
       });
       bargroups = rects.map((_, i) => this.svg.selectAll(`.idac-bargroup-${i}`));
-    } else {
-      circles = zip(serieses.map(d => d3AsSelectionArray(d3ImmediateChildren(d, 'circle'))));
+    } else if (this.currentTag._root.chartType === 'line-chart') {
+      circles = serieses.map(d => d3AsSelectionArray(d3ImmediateChildren(d, 'circle')));
       circles.forEach((elem: d3.Selection<any, any, any, any>[], i) => {
-        elem.forEach(d => d.classed(`idac-point-group-${i}`, true));
+        elem.forEach(d => d.classed(`idac-point-series-${i}`, true));
       });
-      pointGroups = circles.map((_, i) => this.svg.selectAll(`.idac-point-group-${i}`));
+      points = circles.map((_, i) => this.svg.selectAll(`.idac-point-series-${i}`));
+    } else if (this.currentTag._root.chartType === 'scatterplot') {
+
     }
     const xTicks = d3AsSelectionArray(x.selectAll('.tick'));
     const yTicks = d3AsSelectionArray(y.selectAll('.tick'));
@@ -144,9 +148,11 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       });
     } else {
       cs.marks.children.forEach((series, i) => {
+        console.log('series', i);
         pairs.push([series, (serieses as any)[i]]);
         series.children.forEach((point, j) => {
-          pairs.push([point, d3AsSelectionArray(pointGroups[j])[i]]);
+          console.log('point', j, d3AsSelectionArray(points[i])[j])
+          pairs.push([point, d3AsSelectionArray(points[i])[j]]);
         });
       });
     }

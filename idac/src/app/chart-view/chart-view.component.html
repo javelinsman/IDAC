@@ -5,6 +5,7 @@
 <app-svg-container
   [class.d-none]="preview"
   [src]="src"
+  [svgData]="svgData"
   (ready)="onSVGInit()"
   (window:resize)="onWindowResize()"
 ></app-svg-container>

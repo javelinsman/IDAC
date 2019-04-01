@@ -9,6 +9,7 @@ import * as d3 from 'd3';
 export class SvgContainerComponent implements OnInit, AfterViewInit {
 
   @Input() src: string;
+  @Input() svgData: SVGSVGElement;
   @Output() ready: EventEmitter<any> = new EventEmitter();
   @ViewChild('svgContainer') svgContainerDiv: ElementRef;
 
@@ -18,10 +19,15 @@ export class SvgContainerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    d3.svg(this.src).then(data => {
-      this.svgContainerDiv.nativeElement.appendChild(data.documentElement);
+    if (this.src) {
+      d3.svg(this.src).then(data => {
+        this.svgContainerDiv.nativeElement.appendChild(data.documentElement);
+        this.ready.emit();
+      });
+    } else {
+      this.svgContainerDiv.nativeElement.appendChild(this.svgData);
       this.ready.emit();
-    });
+    }
   }
 
 }
