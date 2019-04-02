@@ -41,6 +41,7 @@ export class ChartSpecTreeViewDescriptionComponent implements OnInit, AfterConte
           ? currentDescription
           : '(No description)'
         ).replace(/undefined/g, '<span class="undefined-variable">undefined</span>')
+        .replace(/Undefined/g, '<span class="undefined-variable">Undefined</span>')
       d3.select(this.descriptionP.nativeElement)
         .html(description)
     }

@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/scss/bootstrap.scss";
+@import "~material-icons/iconfont/material-icons.css";
 @import "~font-awesome/css/font-awesome.css";
+@import "~ng-drag-drop/style.css";
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
 
 body {
@@ -55,4 +57,24 @@ body {
 
 textarea {
   width: 100%;
+}
+
+.add-annotation {
+  &.modal-backdrop {
+    opacity: 0 !important;
+    position: absolute !important;
+  }
+  &.modal {
+    position: absolute;
+
+    .modal-dialog {
+      position: absolute;
+      left: 45px;
+      top: 10px;
+    }
+  }
+}
+
+body.modal-open {
+  padding-right: 0px !important;
 }

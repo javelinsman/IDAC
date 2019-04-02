@@ -5,6 +5,7 @@ import { Highlight } from './highlight';
 import { CoordinateRange, RelationalHighlightRange } from './coordinate-range';
 import { CoordinateLine, RelationalHighlightLine } from './coordinate-line';
 import { TrendLine } from './trend-line';
+import { Note } from './note';
 
 type Annotation = Highlight | TrendLine | CoordinateLine | CoordinateRange;
 type AllAnnotation = Annotation | RelationalHighlightLine | RelationalHighlightRange;
@@ -18,6 +19,7 @@ export class Annotations extends SpecTag {
     this._children = [] as Annotation[];
     this.properties = {
       numChildren: () => this.children.length,
+      numNotes: () => this.children.filter(tag => tag._tagname === 'Note').length,
       numHighlights: () => this.children.filter(tag => tag._tagname === 'Highlight').length,
       numTrendlines: () => this.children.filter(tag => tag._tagname === 'Trend Line').length,
       numLines: () => this.children.filter(tag => tag._tagname === 'Line').length,
@@ -65,13 +67,38 @@ export class Annotations extends SpecTag {
     this.descriptionRule = 'There are no annotations.';
     }
 
-    this._children = [
-      this._children[2],
-      this._children[1],
-      this._children[3],
-      this._children[4],
-      this._children[5],
-    ];
+    const makeNote = (content) => {
+      const note = new Note(null, this._root, this);
+      note.attributes.label.value = content;
+      return note;
+    };
+
+    if (this._root.chartType === 'line-chart') {
+      this._children[0].attributes.label.value = '8/1/18: Apple is 1st in U.S. company to officially hit $1 trillion market cap.';
+      this._children[1].attributes.label.value = '11/30: Apple loses spot as most valuable company to Microsoft, but only for the day.';
+      this._children[2].attributes.label.value = '1/3: Apple plunges to No.4 behind Alphabet, after reporting a revenue warning.';
+      this._children[3].attributes.label.value = 'December: Microsoft cements its spot at No. 1';
+      this._children[0].descriptionRule = '$(label)';
+    } else {
+      this._children = [
+        this._children[1],
+        this._children[2],
+        this._children[3]
+      ];
+      this._children[0].attributes.label.value = 'The higher fertility rate, the lower life expectancy.';
+      this._children[0].descriptionRule = 'A trend line goes $(trend) on $(numTargets) points. A caption reads: "$(label)"';
+      this._children[1].attributes.label.value = 'Sub-Saharan Africa region has a high fertility rate in most countries.';
+      this._children[2].attributes.label.value = 'Top 3 countries with the highest GDP';
+      this._children[2].descriptionRule = '$(targetDescription) are highlighted. A caption reads: "$(label)"';
+      this._children[2].editorsNote = {
+        text: 'The top 3 countries with the highest GDP are China, US, and Japan. All of them shows lower fertility rate and higher life expectancy.',
+        position: 'replace',
+        active: true,
+        showInGraphView: false
+      };
+      this._root.marks.children[0].descriptionRule = 'There are $(numPoints) countries in $(name). Each point indicates country, fertility rate, and life expectancy, respectively.';
+      this._root.marks.children[0].children[0].descriptionRule = '$(country), $(x) babies, $(y) years.';
+    }
   }
 
   convertToAnnotations(annotation: ChartAccent.Annotation,
@@ -118,4 +145,38 @@ export class Annotations extends SpecTag {
   annotationInChartAccent(index: number) {
     return this.chartAccentAnnotations[index];
   }
+
+  prependChild(childTag: SpecTag) {
+    this._children = [
+      childTag,
+      ...this._children
+    ];
+  }
+
+  addAnnotation(tagname: string) {
+    let child = null;
+    if (tagname === 'Note') {
+      child = new Note(null, this._root, this);
+    } else if (tagname === 'Highlight') {
+      child = new Highlight(null, this._root, this);
+    }
+
+    if (child) { this.prependChild(child); }
+  }
+
+  deleteAnnotation(tag: SpecTag) {
+    this._children.splice(this._children.indexOf(tag), 1);
+  }
+
+  moveAnnotation(sourceIndex: number, targetIndex: number) {
+    const item = this._children[sourceIndex];
+    this._children.splice(this._children.indexOf(item), 1);
+    if (sourceIndex < targetIndex) { targetIndex--; }
+    this._children.splice(targetIndex, 0, item);
+  }
+
+  mergeAnnotations(sourceIndex: number, targetIndex: number) {
+    console.log('mergeAnnotations', sourceIndex, targetIndex);
+  }
+
 }

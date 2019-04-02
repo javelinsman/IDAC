@@ -8,6 +8,7 @@ import { translate } from '../chartutils';
 import { HighlightShape } from './highlight-shape/highlight-shape';
 import { MessageService } from '../message.service';
 import { ChartSpecService } from '../chart-spec.service';
+import { SpeakingService } from '../speaking.service';
 
 @Component({
   selector: 'app-chart-view',
@@ -19,6 +20,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
   preview = false;
 
   @Input() src: string;
+  @Input() svgData: SVGSVGElement;
   chartSpec: ChartSpec;
   currentTag: SpecTag;
 
@@ -65,6 +67,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
   constructor(
     private messageService: MessageService,
     private chartSpecService: ChartSpecService,
+    private speakingService: SpeakingService,
   ) { }
 
   ngOnInit() {
@@ -91,19 +94,21 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       xLabel.classed('idac-x-axis', true);
     }
     const serieses = d3AsSelectionArray(d3ImmediateChildren(marks, 'g'));
-    let rects, bargroups, circles, pointGroups;
+    let rects, bargroups, circles, points;
     if (this.currentTag._root.chartType === 'bar-chart') {
       rects = zip(serieses.map(d => d3AsSelectionArray(d3ImmediateChildren(d, 'rect'))));
       rects.forEach((elem: d3.Selection<any, any, any, any>[], i) => {
         elem.forEach(d => d.classed(`idac-bargroup-${i}`, true));
       });
       bargroups = rects.map((_, i) => this.svg.selectAll(`.idac-bargroup-${i}`));
-    } else {
-      circles = zip(serieses.map(d => d3AsSelectionArray(d3ImmediateChildren(d, 'circle'))));
+    } else if (this.currentTag._root.chartType === 'line-chart') {
+      circles = serieses.map(d => d3AsSelectionArray(d3ImmediateChildren(d, 'circle')));
       circles.forEach((elem: d3.Selection<any, any, any, any>[], i) => {
-        elem.forEach(d => d.classed(`idac-point-group-${i}`, true));
+        elem.forEach(d => d.classed(`idac-point-series-${i}`, true));
       });
-      pointGroups = circles.map((_, i) => this.svg.selectAll(`.idac-point-group-${i}`));
+      points = circles.map((_, i) => this.svg.selectAll(`.idac-point-series-${i}`));
+    } else if (this.currentTag._root.chartType === 'scatterplot') {
+
     }
     const xTicks = d3AsSelectionArray(x.selectAll('.tick'));
     const yTicks = d3AsSelectionArray(y.selectAll('.tick'));
@@ -127,7 +132,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       [cs.y, d3.selectAll('.idac-y-axis')],
       [cs.x, d3.selectAll('.idac-x-axis')],
       [cs.legend, legend],
-      [cs.marks, marks],
+      // [cs.marks, marks],
     ];
     cs.x.children.forEach((tick, i) => {
       pairs.push([tick, xTicks[i]]);
@@ -144,16 +149,18 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       });
     } else {
       cs.marks.children.forEach((series, i) => {
-        pairs.push([series, (serieses as any)[i]]);
+        pairs.push([series, this.svg.selectAll(`.ca-series-${i}`) as any]);
         series.children.forEach((point, j) => {
-          pairs.push([point, d3AsSelectionArray(pointGroups[j])[i]]);
+          pairs.push([point, this.svg.select(`.ca-series-${i}.ca-item-${j}`)]);
         });
       });
     }
+    /*
     annotations.forEach((annotation, i) => {
       const tag = cs.annotations.findByAnnotation(cs.annotations.annotationInChartAccent(i));
       pairs.push([tag, annotation as any]);
     });
+    */
     this.elementLink = {};
     pairs.forEach(([tag, associatedElements]: [SpecTag, any]) => {
       this.elementLink[tag._id] = {
@@ -185,29 +192,27 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     this.ready = true;
     this.svg = d3.select(this.svgContainer.svgContainerDiv.nativeElement).select('svg');
 
-    if (this.chartSpec.chartType === 'bar-chart') {
-      this.associateElements();
+    this.associateElements();
 
-      this.gElemMarks = this.svg.append('g').classed('idac-elem-marks', true);
-      this.gEditorsNotes = this.svg.append('g').classed('idac-editors-notes', true);
+    this.gElemMarks = this.svg.append('g').classed('idac-elem-marks', true);
+    this.gEditorsNotes = this.svg.append('g').classed('idac-editors-notes', true);
 
-      Object.values(this.elementLink).forEach(({ tag, highlightShape }) => {
-        const elemMarks = d3.selectAll(
-          highlightShape.elemMarks().map(elemMark => this.gElemMarks.node().appendChild(elemMark))
-        );
-        elemMarks.classed('idac-elem-mark', true).data(Array.from(Array(elemMarks.size())).map(_ => tag));
+    Object.values(this.elementLink).forEach(({ tag, highlightShape }) => {
+      const elemMarks = d3.selectAll(
+        highlightShape.elemMarks().map(elemMark => this.gElemMarks.node().appendChild(elemMark))
+      );
+      elemMarks.classed('idac-elem-mark', true).data(Array.from(Array(elemMarks.size())).map(_ => tag));
 
-        elemMarks.on('mouseover', function() { elemMarks.classed('hover', true); });
-        elemMarks.on('mouseout', function() { elemMarks.classed('hover', false); });
-        elemMarks.on('click', () => this._currentTagChange(tag));
+      elemMarks.on('mouseover', function() { elemMarks.classed('hover', true); });
+      elemMarks.on('mouseout', function() { elemMarks.classed('hover', false); });
+      elemMarks.on('click', () => this._currentTagChange(tag));
 
-        const bookmarks = d3.selectAll(
-          highlightShape.bookmarks().map(bookmark => this.gElemMarks.node().appendChild(bookmark))
-        );
-        bookmarks.classed('idac-bookmark', true).data(Array.from(Array(bookmarks.size())).map(_ => tag));
+      const bookmarks = d3.selectAll(
+        highlightShape.bookmarks().map(bookmark => this.gElemMarks.node().appendChild(bookmark))
+      );
+      bookmarks.classed('idac-bookmark', true).data(Array.from(Array(bookmarks.size())).map(_ => tag));
 
-      });
-    }
+    });
 
     this.allSVGElementsAreDrawn = true;
     this.originalSVGSize.width = +this.svg.attr('width');
@@ -252,9 +257,7 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
         // .classed('active', (tag: SpecTag) => tag.editorsNote.active);
         .classed('highlighted', (tag: SpecTag) => tag.editorsNote.showInGraphView && tag.editorsNote.active);
 
-      if (false && this.currentTag._root.chartType === 'bar-chart') {
-        this.updateAttribute();
-      }
+      // this.updateAttribute();
 
     }
   }
@@ -268,6 +271,8 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
   _currentTagChange(tag: SpecTag) {
     this.chartSpecService.currentTag = tag;
     this.messageService.shouldScroll = true;
+    this.messageService.shouldCollapse = true;
+    this.speakingService.read(tag.describe(), tag);
   }
 
   updateAttribute() {
@@ -296,12 +301,14 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
         labelUnit(yProp.label(), yProp.unit())
       );
     }
+    /*
     this.attributeLink.xTicks.forEach((xTick, i) => {
       xTick.select('text').text(root.x.children[i].properties.text());
     });
     this.attributeLink.items.forEach((item, i) => {
       item.select('text').text(root.legend.children[i].properties.text());
     });
+    */
 
   }
 

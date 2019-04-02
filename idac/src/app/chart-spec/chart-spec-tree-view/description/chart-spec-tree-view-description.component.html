@@ -1,15 +1,21 @@
-<p (click)="!viewOnly && tag === currentTag ? _editChange(!edit) : ''"
-  (mouseover)="hover = true" (mouseout)="hover = false"
-  [class.text-muted]="!tag.describe().length"
-  [class.font-italic]="!tag.describe().length"
+<div class="d-flex">
+  <span
+    *ngIf="tag._parent && tag._parent._tagname === 'Annotations'"
+    class="material-icons drag-handle">drag_indicator</span>
+  <p (click)="!viewOnly && tag === currentTag ? _editChange(!edit) : ''"
+    (mouseover)="hover = true" (mouseout)="hover = false"
+    [class.text-muted]="!tag.describe().length"
+    [class.font-italic]="!tag.describe().length"
 
-  [class.ml-2]="viewOnly"
-  [class.cursor-default]="viewOnly"
+    [class.ml-2]="viewOnly"
+    [class.cursor-default]="viewOnly"
 
-  [class.text-unselectable]="!viewOnly"
-  [class.cursor-pointer]="!viewOnly"
-  [class.bg-light]="!viewOnly && hover && tag === currentTag"
-  class="font-weight-normal pl-1 mb-0"
-  #description
->
-</p>
+    [class.text-unselectable]="!viewOnly"
+    [class.cursor-pointer]="!viewOnly"
+    [class.bg-light]="!viewOnly && hover && tag === currentTag"
+    class="font-weight-normal pl-1 mb-0"
+    #description
+  >
+  </p>
+
+</div>

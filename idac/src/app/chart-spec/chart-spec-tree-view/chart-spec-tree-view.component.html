@@ -10,7 +10,7 @@
       >
         <span #horizontalIndentLine style="height: 2px; width: 20px; position: relative; left: 10px; z-index: -1" class="badge badge-light text-light p-0 mt-3">.</span>
         <span *ngIf="collapsable"
-          (click)="collapseChildren=!collapseChildren"
+          (click)="onCollapseChildrenToggle()"
           style="cursor: pointer; background-color: white; width: 22px; position: absolute" class="badge border mt-2"
         >
           <i class="fas text-secondary"
@@ -40,13 +40,13 @@
             [class.d-flex]="viewOnly"
           >
             <div *ngIf="!minimize"
-              class="d-flex justify-content-between align-items-center mb-2">
+              class="d-flex justify-content-start align-items-center mb-2">
               <div class="d-flex align-items-baseline">
                 <app-chart-spec-tree-view-tagname
                   [tag]="tag"
                   [siblingIndex]="siblingIndex"
                   [siblingLength]="siblingLength"
-                  [warning]="!viewOnly && tag.describe().indexOf('undefined') >= 0"
+                  [warning]="!viewOnly && tag.describe().toLocaleLowerCase().indexOf('undefined') >= 0"
                 ></app-chart-spec-tree-view-tagname>
                 <app-chart-spec-tree-view-key-hint
                   class="ml-2"
@@ -63,6 +63,7 @@
                 [isCollapsed]="isCollapsed"
                 [_collapseToggle]="_collapseToggle.bind(this)"
                 [viewOnly]="viewOnly"
+                class="w-100"
               ></app-chart-spec-tree-view-bar-utils>
             </div>
             <div class="d-flex">
@@ -103,7 +104,7 @@
           style="width: 100%; height: 100%; background-color: white; color: white">
         </span>
       </div>
-      <div class="d-flex" *ngIf="!viewOnly && tag.children && tag.children.length > 0">
+      <div class="d-flex" *ngIf="!viewOnly && (tag.children && tag.children.length > 0 || tag._tagname === 'Annotations')">
         <div class="d-flex flex-column">
           <span #indentLine
             [class.invisible]="!collapseChildren"
@@ -121,15 +122,74 @@
               <span>{{ tag.children[0]._tagname }}</span>
               <span class="text-secondary">s</span>
             </p>
-            <div *ngFor="let childTag of tag.children; index as i">
-              <app-chart-spec-tree-view
-                [(edit)]="edit"
-                (collapseToggle)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
-                [tag]="childTag" [isCollapsed]="!collapsable || collapseChildren"
-                [siblingIndex]="i" [siblingLength]="tag.children.length" [(parentCollapseIndex)]="collapseIndex"
-                [minimize]="shouldMinimizeTag(childTag)"
-                (currentTagChange)="_currentTagChange($event)" [indent]="indent + 1"></app-chart-spec-tree-view>
+            <app-chart-spec-tree-view-add-annotation *ngIf="tag._tagname === 'Annotations'"></app-chart-spec-tree-view-add-annotation>
+            <div *ngFor="let childTag of tag.children; index as i; last as last">
+              <ng-container *ngIf="tag._tagname !== 'Annotations'; else draggableTags">
+                <app-chart-spec-tree-view
+                  *ngIf="i < numChildrenToShow"
+                  [(edit)]="edit"
+                  (collapseToggle)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
+                  [tag]="childTag" [isCollapsed]="!collapsable || collapseChildren"
+                  [siblingIndex]="i" [siblingLength]="tag.children.length" [(parentCollapseIndex)]="collapseIndex"
+                  [minimize]="shouldMinimizeTag(childTag)"
+                  (currentTagChange)="_currentTagChange($event)" [indent]="indent + 1"
+                >
+                </app-chart-spec-tree-view>
+              </ng-container>
+              <ng-template #draggableTags
+              >
+                <div
+                  class="drag-reorder"
+                  [class.useless]="draggingAnnotationIndex === i || draggingAnnotationIndex + 1 === i"
+                  droppable
+                  (onDrop)="onItemDrop($event.dragData, i, 'reorder')"
+                  [dragOverClass]="'annotation-drag-over'"
+                  [dragHintClass]="'annotation-drag-hint'"
+                >
+                </div>
+                <div
+                  class="drag-merge"
+                  draggable
+                    [dragData]="i"
+                    [dragClass]="'annotation-drag'"
+                    [dragHandle]="'.drag-handle'"
+                    (onDragStart)="onItemDragStart(i)"
+                  droppable
+                    (onDrop)="onItemDrop($event.dragData, i, 'merge')"
+                    (onDragEnter)="onItemDragEnter(i)"
+                    [dragOverClass]="'annotation-drag-over'"
+                    [dragHintClass]="'annotation-drag-hint'"
+                >
+                  <app-chart-spec-tree-view
+                    *ngIf="i < numChildrenToShow"
+                    [(edit)]="edit"
+                    (collapseToggle)="collapseChildren=!collapseChildren; _currentTagChange(tag.children[0])"
+                    [tag]="childTag" [isCollapsed]="!collapsable || collapseChildren"
+                    [siblingIndex]="i" [siblingLength]="tag.children.length" [(parentCollapseIndex)]="collapseIndex"
+                    [minimize]="shouldMinimizeTag(childTag)"
+                    (currentTagChange)="_currentTagChange($event)" [indent]="indent + 1"
+                  >
+                  </app-chart-spec-tree-view>
+                </div>
+                <ng-container *ngIf="last">
+                  <div
+                    class="drag-reorder"
+                    [class.useless]="draggingAnnotationIndex === i"
+                    droppable
+                    (onDrop)="onItemDrop($event.dragData, i+1, 'reorder')"
+                    [dragOverClass]="'annotation-drag-over'"
+                    [dragHintClass]="'annotation-drag-hint'"
+                  >
+                  </div>
+                </ng-container>
+              </ng-template>
             </div>
+            <ng-container *ngIf="numChildrenToShow < tag.children.length">
+              <p class="text-as-button ml-1 text-secondary d-flex align-items-center" (click)="numChildrenToShow = tag.children.length">
+                <span class="material-icons text-secondary">more_horiz</span>
+                View {{ tag.children.length - numChildrenToShow }} more children
+              </p>
+            </ng-container>
           </ng-container>
           <ng-template
             #numberOfChildren
@@ -138,7 +198,7 @@
               *ngIf="tag.children && tag.children.length > 0"
               class="text-secondary pl-1"
             >
-              {{ tag.children.length }} child elements
+              {{ tag.children.length }} child element{{ tag.children.length > 1 ? 's' : '' }}
             </p>
           </ng-template>
         </div>

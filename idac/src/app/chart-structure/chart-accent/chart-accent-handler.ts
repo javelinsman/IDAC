@@ -58,6 +58,7 @@ export class ChartAccentHandler {
           const value = this.json.dataset.rows[pointIndex][this.json.chart.yColumns[seriesIndex]];
           point.attr('ca-data', value);
         });
+        series.select('path').classed(`ca-series ca-series-${seriesIndex}`, true);
       });
     } else if (this.json.chart.type === 'scatterplot') {
       const points = d3AsSelectionArray(d3ImmediateChildren(serieses[0], 'circle'));

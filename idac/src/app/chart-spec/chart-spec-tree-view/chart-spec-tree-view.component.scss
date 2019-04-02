@@ -22,3 +22,28 @@ p {
 :host /deep/ .hover i {
   color: #e9ecef !important;
 }
+
+:host /deep/ .annotation-drag-over {
+  &.drag-merge {
+    background-color: lighten($info, 49%);
+  }
+
+  &.drag-reorder {
+    background-color: lighten($info, 45%);
+    &.useless {
+      background-color: transparent;
+    }
+  }
+}
+:host /deep/ .annotation-drag-hint {
+  &.drag-reorder {
+    height: 5px;
+    &:not(.useless) {
+      height: 10px;
+      border: 1px dashed lighten($info, 30%);
+    }
+  }
+}
+:host /deep/ .annotation-drag {
+  opacity: 0.5;
+}

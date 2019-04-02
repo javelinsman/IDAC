@@ -15,6 +15,8 @@ export class SpeakingService {
   public speak: boolean;
   public tagReading: SpecTag;
 
+  private queueSignature: number = 0;
+  private utteranceQueue: SpeechSynthesisUtterance[] = [];
 
   timestamp: number;
 
@@ -63,28 +65,41 @@ export class SpeakingService {
     this.beep(5, 350, 150);
   }
 
-  private _read(message, korean = false) {
+  private _makeUtterance(sentence: string) {
+    const utt = new SpeechSynthesisUtterance(sentence);
+    utt.lang = 'en-GB';
+    if (this.speed === AudioControlSpeed.slow) {
+      utt.rate = 0.5;
+    } else if (this.speed === AudioControlSpeed.normal) {
+      utt.rate = 1;
+    } else {
+      utt.rate = 1.5;
+    }
+    utt.volume = 1;
+    return utt;
+  }
+
+  private _read(message: string) {
     const timestamp = Date.now();
     this.timestamp = timestamp;
     this.stop();
     setTimeout(() => {
       if (this.timestamp !== timestamp) { return; }
-      const msg = new SpeechSynthesisUtterance(message);
-      if (korean) {
-        msg.lang = 'ko-KR';
-      } else {
-        msg.lang = 'en-GB';
-      }
-      if (this.speed === AudioControlSpeed.slow) {
-        msg.rate = 0.5;
-      } else if (this.speed === AudioControlSpeed.normal) {
-        msg.rate = 1;
-      } else {
-        msg.rate = 1.5;
-      }
-      msg.volume = 1;
-      window.speechSynthesis.speak(msg);
+      const utts = message.split(';').map(sentence => this._makeUtterance(sentence));
+      const sig = ++ this.queueSignature;
+      this._speakUtterances(utts, sig);
     }, 250);
+  }
+
+  private _speakUtterances(utterances: SpeechSynthesisUtterance[], signature: number) {
+    if (signature != this.queueSignature) { return; }
+    if (!utterances.length) { return; }
+    const utt = utterances[0];
+    const remainingUtts = utterances.slice(1);
+    window.speechSynthesis.speak(utt);
+    utt.onend = () => {
+      this._speakUtterances(remainingUtts, signature);
+    }
   }
 
 }

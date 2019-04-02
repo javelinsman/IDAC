@@ -35,13 +35,12 @@ export class X extends SpecTag {
       this.attributes['rangeTo'] = makeAttrInput(() =>
         axis.select(`.ca-item-${numTicks - 1}`).select('text').text());
     }
-    this.children = Array.from(Array(numTicks)).map((_, index) => {
-      return new XTick(axis.select(`.ca-item-${index}`).text(), index, this._root, this);
-    });
+    const ticks = Array.from(Array(numTicks)).map((_, index) =>axis.select(`.ca-item-${index}`).text());
+    this.children = [new XTick(ticks, this._root, this)];
   }
 
   afterFromSpecSVG() {
-    if (this._root.chartType === 'bar-chart' || this._root.chartType === 'line-chart') {
+    if (this._root.chartType === 'bar-chart') {
       this.descriptionRule = this.assembleDescriptionRules([
         ['X axis', true],
         [' indicates $(X Axis: label)', false],

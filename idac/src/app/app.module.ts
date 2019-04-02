@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgDragDropModule } from 'ng-drag-drop';
 
 import { AppComponent } from './app.component';
 import { IndexComponent } from './index/index.component';
@@ -30,6 +31,7 @@ import { ChartSpecTreeViewBarUtilsComponent } from './chart-spec/chart-spec-tree
 import { SettingsPanelComponent } from './panels/settings-panel/settings-panel.component';
 import { HelpPanelComponent } from './panels/help-panel/help-panel.component';
 import { MainPanelComponent } from './panels/main-panel/main-panel.component';
+import { ChartSpecTreeViewAddAnnotationComponent } from './chart-spec/chart-spec-tree-view/add-annotation/chart-spec-tree-view-add-annotation.component';
 
 @NgModule({
   declarations: [
@@ -57,14 +59,16 @@ import { MainPanelComponent } from './panels/main-panel/main-panel.component';
     ChartSpecTreeViewBarUtilsComponent,
     SettingsPanelComponent,
     HelpPanelComponent,
-    MainPanelComponent
+    MainPanelComponent,
+    ChartSpecTreeViewAddAnnotationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    NgDragDropModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

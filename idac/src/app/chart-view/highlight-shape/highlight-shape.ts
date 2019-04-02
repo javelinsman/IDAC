@@ -1,6 +1,6 @@
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 import * as d3 from 'd3';
-import { d3AsSelectionArray, makeAbsoluteContext, mergeBoundingBoxes } from 'src/app/utils';
+import { d3AsSelectionArray, makeAbsoluteContext, mergeBoundingBoxes, d3ImmediateChildren } from 'src/app/utils';
 import { translate } from 'src/app/chartutils';
 
 function createSVGElement(tagname: string) {
@@ -33,7 +33,7 @@ export class HighlightShape {
       svg: d3.Selection<SVGSVGElement, any, any, any>,
       elementLink: any
     ) {
-      const _class = getHighlightShapeClass(tag._tagname);
+      const _class = getHighlightShapeClass(tag);
       return new _class(tag, associatedElements, svg, elementLink);
   }
 
@@ -214,39 +214,46 @@ class Bar extends HighlightShape {
     this.enlargeBoxBy(this.boundingBox, d, d, d, 0);
   }
 }
-class Series extends HighlightShape {
+class SeriesLine extends HighlightShape {
   path;
   onInit() {
-    console.log(this.associatedElements);
-    this.path = this.associatedElements.select('path');
+    this.path = d3.select(this.associatedElements.nodes().find(d => d.tagName === 'path'));
   }
   elemMarks() {
-    return [this.makePath(this.path, 15, false)];
+    return [this.makePath(this.path, 20, false)];
   }
   bookmarks() {
     return [this.makePath(this.path, 7, false)];
   }
 }
-class Point extends HighlightShape {
+class SeriesScatter extends HighlightShape {
+  circles;
   onInit() {
-    const d = this.boundingBox.width * 0.4;
-    this.enlargeBoxBy(this.boundingBox, d, d, d, 0);
+    this.circles = this.associatedElements.nodes().filter(d => d.tagName === 'circle');
   }
   elemMarks() {
-    return [this.makeCircle(
-      this.boundingBox.x + this.boundingBox.width / 2,
-      this.boundingBox.y + this.boundingBox.height / 2,
-      this.boundingBox.width / 2
-    )];
+    return this.circles.map(circle => {
+      return this.makeCircle(+circle.attributes.cx.value,
+        +circle.attributes.cy.value, +circle.attributes.r.value + 15);
+    });
   }
   bookmarks() {
-    return [this.makeCircle(
-      this.boundingBox.x + this.boundingBox.width / 2,
-      this.boundingBox.y + this.boundingBox.height / 2,
-      this.boundingBox.width / 3
-    )];
+    return this.elemMarks();
   }
-
+}
+class Point extends HighlightShape {
+  circle;
+  onInit() {
+    const d = 7; // this.boundingBox.width * 0.4;
+    this.circle = this.associatedElements.nodes().find(d => d.tagName === 'circle');
+  }
+  elemMarks() {
+    return [this.makeCircle(+this.circle.attributes.cx.value,
+      +this.circle.attributes.cy.value, +this.circle.attributes.r.value + 7)];
+  }
+  bookmarks() {
+    return this.elemMarks();
+  }
 }
 class Annotations extends HighlightShape { }
 class Highlight extends HighlightShape {
@@ -311,8 +318,8 @@ class RelationalHighlightLine extends HighlightShape {
 }
 class RelationalHighlightRange extends HighlightShape { }
 
-function getHighlightShapeClass(tagname: string) {
-  switch (tagname) {
+function getHighlightShapeClass(tag: SpecTag) {
+  switch (tag._tagname) {
     case 'Title':
       return Title;
     case 'Y Axis':
@@ -332,7 +339,11 @@ function getHighlightShapeClass(tagname: string) {
     case 'Bar':
       return Bar;
     case 'Series':
-      return Series;
+      if (tag._root.chartType === 'line-chart') {
+        return SeriesLine;
+      } else {
+        return SeriesScatter;
+      }
     case 'Point':
       return Point;
     case 'Annotations':

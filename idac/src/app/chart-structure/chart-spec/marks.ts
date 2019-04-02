@@ -3,7 +3,7 @@ import { AttrInputSelect, AttrInput } from './attributes';
 import { ChartSpec } from './chart-spec';
 import { ChartAccent, Row } from '../chart-accent/chart-accent';
 import { Item } from './item';
-import { Tick } from './tick';
+import { Tick, XTick } from './tick';
 import { d3Selection, caSpecDistinctClasses } from 'src/app/chartutils';
 import { d3AsSelectionArray } from 'src/app/utils';
 
@@ -168,14 +168,15 @@ export class Point extends SpecTag {
   }
   fromSpecSVG(spec: d3Selection<SVGSVGElement>) {
     if (spec.attr('ca-chart-type') === 'line-chart') {
-      const key = this._root.x.children[this.pointIndex];
+      const key = (this._root.x.children[0] as XTick).ticks[this.pointIndex];
       const value = spec.select(`.ca-marks .ca-series-${this.seriesIndex}.ca-item-${this.pointIndex}`)
         .attr('ca-data');
       this.attributes = {
         value: new AttrInput(value)
       };
       this.properties = {
-        tickName: () => key.attributes.text.value,
+        value: () => Math.round(+this.attributes.value.value * 100) / 100,
+        tickName: () => key,
         index0: () => this.pointIndex,
         index1: () => this.pointIndex + 1
       };

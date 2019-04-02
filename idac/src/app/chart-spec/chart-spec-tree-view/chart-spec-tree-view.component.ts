@@ -44,6 +44,11 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterContentChecked {
   hover: boolean;
   tagIncludesCurrentTagCache = {}
 
+  numChildrenToShow = 10;
+  numChildrenToShowAdjustedTemporaily = false;
+
+  draggingAnnotationIndex: number;
+
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private chartSpecService: ChartSpecService,
@@ -56,7 +61,7 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterContentChecked {
       this.indent = 0;
     }
     this.numAttributes = Object.entries(this.tag.attributes).length;
-    if (this.tag.children && this.tag.children.length > 1) {
+    if (this.tag.children.length) {
       this.collapsable = true;
     }
     if (this.tag._parent) {
@@ -77,6 +82,10 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterContentChecked {
     return this.tagIncludesCurrentTagCache[this.currentTag._id];
   }
 
+  currentTagIsImmediateChildren() {
+    return this.tagIncludesCurrentTag() && this.currentTag._parent === this.tag;
+  }
+
   ngAfterContentChecked() {
     if (this.messageService.shouldCollapse) {
       if (this.tag._parent && this.tag.children && this.tagIncludesCurrentTag()) {
@@ -84,9 +93,20 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterContentChecked {
         this.collapseChildrenTemporary = true;
       }
     }
-    if (this.collapseChildrenTemporary && !this.tagIncludesCurrentTag()) {
-      this.collapseChildren = false;
-      this.collapseChildrenTemporary = false;
+    if (!this.tagIncludesCurrentTag()) {
+      if (this.collapseChildrenTemporary) {
+        this.collapseChildren = false;
+        this.collapseChildrenTemporary = false;
+      }
+      if (this.numChildrenToShowAdjustedTemporaily) {
+        this.numChildrenToShow = 10;
+      }
+    }
+    if (this.numChildrenToShow < this.tag.children.length && this.currentTagIsImmediateChildren()) {
+      if (this.numChildrenToShow <= this.tag.children.indexOf(this.currentTag)) {
+        this.numChildrenToShow = this.tag.children.length;
+        this.numChildrenToShowAdjustedTemporaily = true;
+      }
     }
   }
 
@@ -131,7 +151,36 @@ export class ChartSpecTreeViewComponent implements OnInit, AfterContentChecked {
   }
 
   shouldMinimizeTag(tag: SpecTag) {
+    return false;
     return !tag.children.length && tag._parent && tag._parent._tagname !== 'Annotations' && tag._parent._tagname !== 'Chart';
+  }
+
+  onCollapseChildrenToggle() {
+    this.collapseChildren = !this.collapseChildren;
+    if (this.collapseChildren) {
+      this.numChildrenToShow = 10;
+    } else {
+      if (this.tagIncludesCurrentTag()) {
+        this._currentTagChange(this.tag);
+      }
+    }
+  }
+
+  onItemDrop(source: number, target: number, type: 'merge' | 'reorder') {
+    if (type === 'merge') {
+      this.tag._root.annotations.mergeAnnotations(source, target);
+    } else if (type === 'reorder') {
+      this.tag._root.annotations.moveAnnotation(source, target);
+    }
+    this.draggingAnnotationIndex = null;
+
+  }
+
+  onItemDragStart(source: number) {
+    this.draggingAnnotationIndex = source;
+  }
+
+  onItemDragEnter(target: number) {
   }
 
 }
