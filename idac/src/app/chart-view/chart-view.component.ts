@@ -134,9 +134,9 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
       [cs.legend, legend],
       // [cs.marks, marks],
     ];
-    cs.x.children.forEach((tick, i) => {
-      pairs.push([tick, xTicks[i]]);
-    });
+    // cs.x.children.forEach((tick, i) => {
+    //   pairs.push([tick, xTicks[i]]);
+    // });
     cs.legend.children.forEach((item, i) => {
       pairs.push([item, items[i]]);
     });
