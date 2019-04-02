@@ -66,6 +66,37 @@ export class Annotations extends SpecTag {
     } else {
     this.descriptionRule = 'There are no annotations.';
     }
+
+    const makeNote = (content) => {
+      const note = new Note(null, this._root, this);
+      note.attributes.label.value = content;
+      return note;
+    };
+
+    if (this._root.chartType === 'line-chart') {
+      this._children[0].attributes.label.value = '8/1/18: Apple is 1st in U.S. company to officially hit $1 trillion market cap.';
+      this._children[1].attributes.label.value = '11/30: Apple loses spot as most valuable company to Microsoft, but only for the day.';
+      this._children[2].attributes.label.value = '1/3: Apple plunges to No.4 behind Alphabet, after reporting a revenue warning.';
+      this._children[3].attributes.label.value = 'December: Microsoft cements its spot at No. 1';
+      this._children[0].descriptionRule = '$(label)';
+    } else {
+      this._children = [
+        this._children[1],
+        this._children[2],
+        this._children[3]
+      ];
+      this._children[0].attributes.label.value = 'The higher fertility rate, the lower life expectancy.';
+      this._children[0].descriptionRule = 'A trend line goes $(trend) on $(numTargets) points. A caption reads: "$(label)"';
+      this._children[1].attributes.label.value = 'Sub-Saharan Africa region has a high fertility rate in most countries.';
+      this._children[2].attributes.label.value = 'Top 3 countries with the highest GDP';
+      this._children[2].descriptionRule = '$(targetDescription) are highlighted. A caption reads: "$(label)"';
+      this._children[2].editorsNote = {
+        text: 'The top 3 countries with the highest GDP are China, US, and Japan. All of them shows lower fertility rate and higher life expectancy.',
+        position: 'replace',
+        active: true,
+        showInGraphView: false
+      };
+    }
   }
 
   convertToAnnotations(annotation: ChartAccent.Annotation,
@@ -117,7 +148,7 @@ export class Annotations extends SpecTag {
     this._children = [
       childTag,
       ...this._children
-    ]
+    ];
   }
 
   addAnnotation(tagname: string) {
