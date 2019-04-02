@@ -96,6 +96,8 @@ export class Annotations extends SpecTag {
         active: true,
         showInGraphView: false
       };
+      this._root.marks.children[0].descriptionRule = 'There are $(numPoints) countries in $(name). Each point indicates country, fertility rate, and life expectancy, respectively.';
+      this._root.marks.children[0].children[0].descriptionRule = '$(country), $(x) babies, $(y) years.';
     }
   }
 
