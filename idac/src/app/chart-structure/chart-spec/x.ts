@@ -40,7 +40,7 @@ export class X extends SpecTag {
   }
 
   afterFromSpecSVG() {
-    if (this._root.chartType === 'bar-chart' || this._root.chartType === 'line-chart') {
+    if (this._root.chartType === 'bar-chart') {
       this.descriptionRule = this.assembleDescriptionRules([
         ['X axis', true],
         [' indicates $(X Axis: label)', false],
