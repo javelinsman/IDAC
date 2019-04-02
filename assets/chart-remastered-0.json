@@ -1372,7 +1372,7 @@
   "chart": {
     "type": "scatterplot",
     "title": {
-      "text": "Gapminder",
+      "text": "Life Expectancy versus Fertility Rate",
       "fontFamily": "Roboto",
       "fontSize": 20,
       "fontStyle": "regular",
@@ -1386,14 +1386,14 @@
     "groupColumn": "Region",
     "nameColumn": "Country",
     "xLabel": {
-      "text": "FertilityRate",
+      "text": "Fertility Rate",
       "fontFamily": "Roboto",
       "fontSize": 14,
       "fontStyle": "regular",
       "color": "#000000"
     },
     "yLabel": {
-      "text": "LifeExpectancy",
+      "text": "Life Expectancy",
       "fontFamily": "Roboto",
       "fontSize": 14,
       "fontStyle": "regular",
@@ -1429,7 +1429,7 @@
     "annotations": [
       {
         "target": {
-          "_id": "_uniqueid_901",
+          "_id": "_uniqueid_273",
           "type": "items",
           "items": [
             {
@@ -1717,7 +1717,7 @@
       },
       {
         "target": {
-          "_id": "_uniqueid_991",
+          "_id": "_uniqueid_311",
           "type": "items",
           "items": [
             {
@@ -1862,7 +1862,7 @@
       },
       {
         "target": {
-          "_id": "_uniqueid_1043",
+          "_id": "_uniqueid_345",
           "type": "items",
           "items": [
             {
@@ -1944,89 +1944,7 @@
       },
       {
         "target": {
-          "_id": "_uniqueid_1068",
-          "type": "items",
-          "items": [
-            {
-              "elements": "E2",
-              "items": [
-                "[\"data\",\"index\",78]"
-              ]
-            }
-          ]
-        },
-        "components": [
-          {
-            "type": "item-label",
-            "visible": true,
-            "style": {
-              "fill": {
-                "r": 0,
-                "g": 0,
-                "b": 0,
-                "a": 1
-              },
-              "paint_order": "stroke",
-              "stroke": {
-                "r": 255,
-                "g": 255,
-                "b": 255,
-                "a": 1
-              },
-              "stroke_width": 2,
-              "line_stroke": null,
-              "font_family": "Roboto",
-              "font_size": 14
-            },
-            "text": "{Country}",
-            "anchor": "m,tt",
-            "anchor_offset": {
-              "x": 0,
-              "y": 0
-            }
-          },
-          {
-            "type": "highlight",
-            "visible": true,
-            "style": {
-              "fill": {
-                "mode": "brighter-darker",
-                "value": 0.2
-              },
-              "stroke": {
-                "mode": "brighter-darker",
-                "value": -1
-              },
-              "stroke_width": 2,
-              "line_stroke": {
-                "mode": "brighter-darker",
-                "value": -0.2
-              },
-              "line_stroke_width": 3
-            }
-          },
-          {
-            "type": "trendline",
-            "visible": false,
-            "style": {
-              "fill": null,
-              "stroke": {
-                "r": 0,
-                "g": 0,
-                "b": 0,
-                "a": 1
-              },
-              "stroke_width": 2,
-              "line_stroke": null
-            }
-          }
-        ],
-        "visible": true,
-        "id": "#A4"
-      },
-      {
-        "target": {
-          "_id": "_uniqueid_1093",
+          "_id": "_uniqueid_370",
           "type": "items",
           "items": [
             {
@@ -2104,15 +2022,15 @@
           }
         ],
         "visible": true,
-        "id": "#A5"
+        "id": "#A4"
       },
       {
         "target": {
-          "_id": "_uniqueid_1119",
+          "_id": "_uniqueid_421",
           "type": "freeform",
           "point": {
-            "x": 716,
-            "y": 206.046875
+            "x": 700,
+            "y": 210.046875
           }
         },
         "components": [
@@ -2145,49 +2063,11 @@
       },
       {
         "target": {
-          "_id": "_uniqueid_1283",
-          "type": "freeform",
-          "line": [
-            {
-              "x": 590,
-              "y": 222.046875
-            },
-            {
-              "x": 536,
-              "y": 312.046875
-            }
-          ]
-        },
-        "components": [
-          {
-            "type": "shape.line",
-            "visible": true,
-            "style": {
-              "fill": null,
-              "stroke": {
-                "r": 0,
-                "g": 0,
-                "b": 0,
-                "a": 1
-              },
-              "stroke_width": 2,
-              "line_stroke": null,
-              "arrow": "end"
-            },
-            "arrow": ">",
-            "arrow_size": 5
-          }
-        ],
-        "visible": true,
-        "id": "#A7"
-      },
-      {
-        "target": {
-          "_id": "_uniqueid_1429",
+          "_id": "_uniqueid_489",
           "type": "freeform",
           "point": {
-            "x": 705,
-            "y": 504.046875
+            "x": 691,
+            "y": 514.046875
           }
         },
         "components": [
@@ -2216,9 +2096,171 @@
           }
         ],
         "visible": true,
-        "id": "#A9"
+        "id": "#A7"
+      },
+      {
+        "target": {
+          "_id": "_uniqueid_570",
+          "type": "freeform",
+          "point": {
+            "x": 222,
+            "y": 260.046875
+          }
+        },
+        "components": [
+          {
+            "type": "label",
+            "visible": true,
+            "style": {
+              "fill": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "stroke": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "stroke_width": 3,
+              "line_stroke": null,
+              "font_family": "Roboto",
+              "font_size": 18
+            },
+            "text": "Top 3 countries with the highest GDP",
+            "anchor": "m,m",
+            "anchor_offset": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        ],
+        "visible": true,
+        "id": "#A8"
+      },
+      {
+        "target": {
+          "_id": "_uniqueid_1160",
+          "type": "freeform",
+          "line": [
+            {
+              "x": 581,
+              "y": 223.046875
+            },
+            {
+              "x": 533,
+              "y": 306.046875
+            }
+          ]
+        },
+        "components": [
+          {
+            "type": "shape.line",
+            "visible": true,
+            "style": {
+              "fill": null,
+              "stroke": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null,
+              "arrow": "end"
+            },
+            "arrow": ">",
+            "arrow_size": 5
+          }
+        ],
+        "visible": true,
+        "id": "#A10"
+      },
+      {
+        "target": {
+          "_id": "_uniqueid_1279",
+          "type": "items",
+          "items": [
+            {
+              "elements": "E2",
+              "items": [
+                "[\"data\",\"index\",86]"
+              ]
+            }
+          ]
+        },
+        "components": [
+          {
+            "type": "item-label",
+            "visible": true,
+            "style": {
+              "fill": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "paint_order": "stroke",
+              "stroke": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null,
+              "font_family": "Roboto",
+              "font_size": 14
+            },
+            "text": "{Country}",
+            "anchor": "m,tt",
+            "anchor_offset": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "type": "highlight",
+            "visible": true,
+            "style": {
+              "fill": {
+                "mode": "brighter-darker",
+                "value": 0.2
+              },
+              "stroke": {
+                "mode": "brighter-darker",
+                "value": -1
+              },
+              "stroke_width": 2,
+              "line_stroke": {
+                "mode": "brighter-darker",
+                "value": -0.2
+              },
+              "line_stroke_width": 3
+            }
+          },
+          {
+            "type": "trendline",
+            "visible": false,
+            "style": {
+              "fill": null,
+              "stroke": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null
+            }
+          }
+        ],
+        "visible": true,
+        "id": "#A13"
       }
     ]
   },
-  "timestamp": 1552893835613
+  "timestamp": 1553057345327
 }
