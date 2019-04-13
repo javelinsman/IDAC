@@ -11,10 +11,28 @@
       To get started, upload your chart (SVG) and the <a routerLink="/">specification</a> (JSON) file.
       Alternatively, you can visit <a href="https://chartaccent.github.io">ChartAccent</a> and upload its outputs.
     </p>
-    <p class="text-danger">Currently, only example data are available :(</p>
-    <a class="btn btn-secondary btn-lg mx-2 disabled"
-      aria-disabled="true" routerLink="/make-chart"
-      role="button">Upload previous work</a>
+    <div class="row">
+      <div class="col-md-8">
+        <form>
+          <div class="custom-file my-2">
+            <input type="file" class="custom-file-input" id="idac-input-svg">
+            <label class="custom-file-label" for="idac-input-svg">SVG file (or chartaccent.svg)</label>
+          </div>
+          <div class="custom-file my-2">
+            <input type="file" class="custom-file-input" id="idac-input-json">
+            <label class="custom-file-label" for="idac-input-json">JSON file (or chartaccent.json)</label>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-2">
+          <img class="img-fluid">
+          <div class="card-body bg-light text-center">
+            <h5 class="card-text"></h5>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section id="examples" class="m-3 p-3">
