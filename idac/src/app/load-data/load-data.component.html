@@ -1,11 +1,17 @@
-<div class="container pb-5">
+<div class="container-fluid pb-5">
+  <section>
+    <div class="d-flex m-3 p-3 align-items-baseline">
+      <h1 class="display-3 font-weight-light">Narratable</h1>
+      <h1 class="font-weight-light">: Charts along with narrations</h1>
+    </div>
+  </section>
   <section class="m-3 p-3">
     <h3>Load Data</h3>
-    <p>Make a new chart or upload your previous work.</p>
+    <p>
+      To get started, upload your chart (SVG) and the <a routerLink="/">specification</a> (JSON) file.
+      Alternatively, you can visit <a href="https://chartaccent.github.io">ChartAccent</a> and upload its outputs.
+    </p>
     <p class="text-danger">Currently, only example data are available :(</p>
-    <a class="btn btn-secondary btn-lg mx-2 disabled"
-      aria-disabled="true" routerLink="/make-chart"
-      role="button">Create a new chart</a>
     <a class="btn btn-secondary btn-lg mx-2 disabled"
       aria-disabled="true" routerLink="/make-chart"
       role="button">Upload previous work</a>
