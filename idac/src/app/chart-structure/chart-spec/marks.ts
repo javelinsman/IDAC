@@ -33,8 +33,8 @@ export class Marks extends SpecTag {
         return new Bargroup(index, this._root, this);
       });
       this.children.forEach(child => child.fromSpecSVG(spec));
-      console.log(this.children);
     } else {
+      console.log(numSeries);
       this.children = Array.from(Array(numSeries)).map((_, index) => {
         return new Series(index, this._root, this);
       });
@@ -130,11 +130,13 @@ export class Series extends SpecTag {
   constructor(private index: number, public _root: ChartSpec, public _parent: Marks) {
     super('Series');
     this.properties = {
-      name: () => this.borrowLegend.children[index].attributes.text.value,
       numPoints: () => this.children.length,
       index0: () => index,
       index1: () => index + 1,
     };
+    if (this.borrowLegend.children.length) {
+      this.properties.name = () => this.borrowLegend.children[index].attributes.text.value;
+    }
     this.children = [];
   }
 
@@ -163,7 +165,7 @@ export class Series extends SpecTag {
 }
 
 export class Point extends SpecTag {
-  constructor(private seriesIndex: number, private pointIndex: number, public _root: ChartSpec, public _parent: Series) {
+  constructor(private seriesIndex: number, private pointIndex: number, public _root: ChartSpec, public _parent: Series|Marks) {
     super('Point');
   }
   fromSpecSVG(spec: d3Selection<SVGSVGElement>) {

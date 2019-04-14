@@ -54,7 +54,7 @@ export class MakeChartComponent implements OnInit {
     const handler = new ChartAccentHandler(json, svg);
     this.specSVG = handler.convertToSpec();
     this.specJSON = json;
-    console.log(this.specSVG);
+    console.log(this.specSVG.node());
 
     this.chartSpecService.chartSpec = new ChartSpec();
     this.chartSpecService.chartSpec.fromSpecSVG(this.specSVG);
