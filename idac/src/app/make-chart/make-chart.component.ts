@@ -49,8 +49,6 @@ export class MakeChartComponent implements OnInit {
     });
     this.chartSpecService.bindChartSpec(this);
 
-    // this.exampleId = this.exampleId || +this.route.snapshot.paramMap.get('exampleId');
-
     const svg = d3.select(this.stageStateService.stageState.load.svg.documentElement as unknown as SVGSVGElement);
     const json = this.stageStateService.stageState.load.json;
     const handler = new ChartAccentHandler(json, svg);

@@ -9,7 +9,6 @@ import { StageStateService } from '../stage-state.service';
 })
 export class IndexComponent implements OnInit {
   Stage = Stage;
-  exampleId: number;
   currentStage: Stage;
 
   constructor(
