@@ -1,5 +1,5 @@
 <div class="container-fluid" #container (window:resize)="onWindowResize()">
-  <div class="row h-100" *ngIf="chart && (chartAccent || specSVG)">
+  <div class="row h-100" *ngIf="specSVG && specJSON">
     <div class="border h-100 styled-scroll col-6 overflow-y-scroll">
       <section class="row h-100">
         <div class="col-12">

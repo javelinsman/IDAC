@@ -14,7 +14,7 @@ export interface StageState {
 }
 
 export interface StageStateLoad {
-  svg: SVGSVGElement;
+  svg: any;
   json: any;
 }
 

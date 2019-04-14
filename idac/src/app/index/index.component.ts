@@ -23,8 +23,7 @@ export class IndexComponent implements OnInit {
       })
   }
 
-  _exampleIdChange(event) {
-    this.exampleId = event;
+  onInputChange({svg, json}: any) {
     this.stageStateService.stage = Stage.describe;
   }
 

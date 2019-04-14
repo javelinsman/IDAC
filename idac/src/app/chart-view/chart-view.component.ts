@@ -74,12 +74,6 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     this.chartSpecService.bindChartSpec(this);
   }
 
-  resizeSVG() {
-    const container = this.svgContainer.svgContainerDiv.nativeElement as HTMLElement;
-    this.svg.attr('viewBox', `0 0 ${this.originalSVGSize.width} ${this.originalSVGSize.height + 20}`);
-    this.svg.attr('width', '100%');
-  }
-
   associateElements() {
     const [annotationBackground, g2, annotationForeground] = d3AsSelectionArray(d3ImmediateChildren(this.svg, 'g'));
     const [title, legend, chart] = d3AsSelectionArray(d3ImmediateChildren(g2, 'g'));
@@ -217,7 +211,6 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
     this.allSVGElementsAreDrawn = true;
     this.originalSVGSize.width = +this.svg.attr('width');
     this.originalSVGSize.height = +this.svg.attr('height');
-    this.resizeSVG();
   }
 
   getMergedBoundingBox(selection: d3.Selection<any, any, any, any>) {
@@ -259,12 +252,6 @@ export class ChartViewComponent implements OnInit, AfterViewChecked {
 
       // this.updateAttribute();
 
-    }
-  }
-
-  onWindowResize() {
-    if (this.allSVGElementsAreDrawn) {
-      this.resizeSVG();
     }
   }
 

@@ -35,10 +35,14 @@
         </form>
       </div>
       <div class="col-md-4">
-        <div class="card mb-2">
-          <img class="img-fluid">
+        <div class="card mb-2" (click)="confirmData(svg, json)">
+          <app-svg-container *ngIf="svg" [svgData]="svg.documentElement"></app-svg-container>
           <div class="card-body bg-light text-center">
-            <h5 class="card-text"></h5>
+            <h5 class="card-text"
+              [class.text-secondary]="!json"
+            >
+              {{ json ? json.chart.title.text : 'Upload specification (JSON) file to proceed'}}
+            </h5>
           </div>
         </div>
       </div>
