@@ -36,6 +36,9 @@
       </div>
       <div class="col-md-4">
         <div class="card mb-2" (click)="confirmData(svg, json)">
+          <div *ngIf="!svg" class="w-100 d-flex bg-dark" [style.height]="'170px'">
+            <p class="m-auto text-light">Upload chart (SVG) to proceed</p>
+          </div>
           <app-svg-container *ngIf="svg" [svgData]="svg.documentElement"></app-svg-container>
           <div class="card-body bg-light text-center">
             <h5 class="card-text"
