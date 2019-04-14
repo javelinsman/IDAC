@@ -59,4 +59,12 @@ export class LoadDataComponent implements OnInit {
     });
   }
 
+  uploadSVG() {
+    document.getElementById('idac-input-svg').click();
+  }
+
+  uploadJSON() {
+    document.getElementById('idac-input-json').click();
+  }
+
 }

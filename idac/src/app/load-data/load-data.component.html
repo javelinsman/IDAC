@@ -12,7 +12,7 @@
       Alternatively, you can visit <a href="https://chartaccent.github.io">ChartAccent</a> and upload its outputs.
     </p>
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-6">
         <form>
           <div *ngFor="let config of inputConfigs" class="custom-file my-2">
             <input type="file"
@@ -36,13 +36,14 @@
       </div>
       <div class="col-md-4">
         <div class="card mb-2" [class.disabled]="!svg || !json" (click)="svg && json ? confirmData(svg, json): null">
-          <div *ngIf="!svg" class="w-100 d-flex bg-dark" [style.height]="'170px'">
+          <div *ngIf="!svg" class="w-100 d-flex bg-dark cursor-pointer" [style.height]="'170px'" (click)="svg ? null : uploadSVG()">
             <p class="m-auto text-light text-unselectable">Upload chart (SVG) to proceed</p>
           </div>
           <app-svg-container *ngIf="svg" [svgData]="svg.documentElement"></app-svg-container>
           <div class="card-body bg-light text-center">
-            <h5 class="card-text text-unselectable"
+            <h5 class="card-text text-unselectable cursor-pointer"
               [class.text-secondary]="!json"
+              (click)="json ? null : uploadJSON()"
             >
               {{ json ? json.chart.title.text : 'Upload specification (JSON) file to proceed'}}
             </h5>
