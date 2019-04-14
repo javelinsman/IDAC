@@ -9,7 +9,10 @@ export class StageStateService {
 
   stageState: StageState =  {
     stage: new BehaviorSubject(Stage.load),
-    load: {},
+    load: {
+      json: null,
+      svg: null,
+    },
     describe: {
       toolbarSetting: new BehaviorSubject(false),
       toolbarHelp: new BehaviorSubject(false),

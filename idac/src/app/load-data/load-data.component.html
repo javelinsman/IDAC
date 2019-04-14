@@ -14,13 +14,23 @@
     <div class="row">
       <div class="col-md-8">
         <form>
-          <div class="custom-file my-2">
-            <input type="file" class="custom-file-input" id="idac-input-svg">
-            <label class="custom-file-label" for="idac-input-svg">SVG file (or chartaccent.svg)</label>
-          </div>
-          <div class="custom-file my-2">
-            <input type="file" class="custom-file-input" id="idac-input-json">
-            <label class="custom-file-label" for="idac-input-json">JSON file (or chartaccent.json)</label>
+          <div *ngFor="let config of inputConfigs" class="custom-file my-2">
+            <input type="file"
+              class="custom-file-input"
+              id="idac-input-{{config.filetypeShort}}"
+              (change)="onFileInput($event, config)"
+            >
+            <ng-container *ngIf="config.fileName.length; else errorCheck">
+              <label class="custom-file-label" for="idac-input-{{config.filetypeShort}}">{{ config.fileName }}</label>
+            </ng-container>
+            <ng-template #errorCheck>
+              <ng-container *ngIf="config.errorMessage.length; else defaultHint">
+                <label class="custom-file-label text-danger" for="idac-input-{{config.filetypeShort}}">{{ config.errorMessage }}</label>
+              </ng-container>
+            </ng-template>
+            <ng-template #defaultHint>
+              <label class="custom-file-label" for="idac-input-{{config.filetypeShort}}">{{ config.defaultHint }}</label>
+            </ng-template>
           </div>
         </form>
       </div>
