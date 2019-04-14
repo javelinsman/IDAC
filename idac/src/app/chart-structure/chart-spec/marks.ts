@@ -33,6 +33,7 @@ export class Marks extends SpecTag {
         return new Bargroup(index, this._root, this);
       });
       this.children.forEach(child => child.fromSpecSVG(spec));
+      console.log(this.children);
     } else {
       this.children = Array.from(Array(numSeries)).map((_, index) => {
         return new Series(index, this._root, this);
@@ -62,12 +63,11 @@ export class Marks extends SpecTag {
 
 export class Bargroup extends SpecTag {
   borrowX = this._root.x;
-  borrowY = this._root.y;
   borrowLegend = this._root.legend;
   constructor(private index: number, public _root: ChartSpec, public _parent: Marks) {
     super('Bar Group');
     this.properties = {
-      name: () => this.borrowX.children[index].attributes.text.value,
+      name: () => (this.borrowX.children[0] as Tick).ticks[index],
       numBars: () => this.children.length,
       sumOfBarValues: () => Math.round(
           10 * this.children.map(d => d.properties.value() as number).reduce((a, b) => a + b)

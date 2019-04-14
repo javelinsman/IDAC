@@ -202,10 +202,7 @@ class Marks extends HighlightShape {
 }
 class BarGroup extends HighlightShape {
   onInit() {
-    const yBBox = this.elementLink[this.tag._root.y._id].highlightShape.boundingBox;
-    const marksBBox = this.elementLink[this.tag._root.marks._id].highlightShape.boundingBox;
-    const d = (marksBBox.x - (yBBox.x + yBBox.width)) / 2;
-    this.enlargeBoxBy(this.boundingBox, d, d, d, 0);
+    this.enlargeBoxBy(this.boundingBox, 10, 10, 10, 0);
   }
 }
 class Bar extends HighlightShape {

@@ -3,12 +3,14 @@ import { ChartSpec } from './chart-spec';
 import { AttrInput } from './attributes';
 
 export class Tick extends SpecTag {
+  ticks;
   constructor(public ticks: (string | number)[], public _root: ChartSpec, public _parent: SpecTag) {
     super('Tick');
     this.attributes = {
       ticks: new AttrInput(ticks.join(', ')),
       numTicks: new AttrInput(ticks.length),
     };
+    this.ticks = ticks;
   }
 
   foreignRepr() {
