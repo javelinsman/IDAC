@@ -49,16 +49,13 @@ export class MakeChartComponent implements OnInit {
     });
     this.chartSpecService.bindChartSpec(this);
 
-    const svg = d3.select(this.stageStateService.stageState.load.svg.documentElement as unknown as SVGSVGElement);
-    const json = this.stageStateService.stageState.load.json;
-    const handler = new ChartAccentHandler(json, svg);
-    this.specSVG = handler.convertToSpec();
-    this.specJSON = json;
+    this.specSVG = this.stageStateService.stageState.load.svg;
+    this.specJSON = this.stageStateService.stageState.load.json;
     console.log(this.specSVG.node());
 
     this.chartSpecService.chartSpec = new ChartSpec();
     this.chartSpecService.chartSpec.fromSpecSVG(this.specSVG);
-    this.chartSpecService.chartSpec.fromChartAccent(json);
+    this.chartSpecService.chartSpec.fromChartAccent(this.specJSON);
     console.log(this.chartSpec);
     this.chartSpecService.currentTag = this.chartSpecService.chartSpec.findById(0);
 

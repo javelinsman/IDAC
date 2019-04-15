@@ -5,6 +5,7 @@ import { Chart } from '../chart';
 import * as d3 from 'd3';
 import { StageStateService } from '../stage-state.service';
 import { inputConfigs } from './input-config';
+import { ChartAccentHandler } from '../chart-structure/chart-accent/chart-accent-handler';
 
 @Component({
   selector: 'app-load-data',
@@ -45,9 +46,15 @@ export class LoadDataComponent implements OnInit {
   }
 
   confirmData(svg, json) {
-    this.stageStateService.stageState.load.svg = svg;
-    this.stageStateService.stageState.load.json = json;
-    this.inputDataConfirm.emit({ svg, json });
+    if (true) { // chartAccent
+      const svgSel = d3.select(svg.documentElement as unknown as SVGSVGElement);
+      const handler = new ChartAccentHandler(json, svgSel);
+      const specSVG = handler.convertToSpec();
+      const specJSON = json;
+      this.stageStateService.stageState.load.svg = specSVG;
+      this.stageStateService.stageState.load.json = specJSON;
+      this.inputDataConfirm.emit({ specSVG, specJSON });
+    }
   }
 
   _exampleIdChange(d: number) {

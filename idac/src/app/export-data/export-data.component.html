@@ -1,3 +1,10 @@
-<p>
-  export-data works!
-</p>
+<div class="container-fluid" (window:resize)="onWindowResize()" #container>
+  <button (click)="download()">Download</button>
+  <div class="embed-responsive embed-responsive-16by9">
+    <iframe
+      class="embed-responsive-item" [src]="safeBlobURL"
+      *ngIf="safeBlobURL"
+      [style.max-height]="'75%'"
+    ></iframe>
+  </div>
+</div>

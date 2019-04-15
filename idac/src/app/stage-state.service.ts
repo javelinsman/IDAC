@@ -27,7 +27,8 @@ export class StageStateService {
         }
       }
     },
-    export: {}
+    export: {
+    }
   };
 
   state: StageState;
