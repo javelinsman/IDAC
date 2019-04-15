@@ -32,6 +32,7 @@ import { SettingsPanelComponent } from './panels/settings-panel/settings-panel.c
 import { HelpPanelComponent } from './panels/help-panel/help-panel.component';
 import { MainPanelComponent } from './panels/main-panel/main-panel.component';
 import { ChartSpecTreeViewAddAnnotationComponent } from './chart-spec/chart-spec-tree-view/add-annotation/chart-spec-tree-view-add-annotation.component';
+import { ExportDataComponent } from './export-data/export-data.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { ChartSpecTreeViewAddAnnotationComponent } from './chart-spec/chart-spec
     SettingsPanelComponent,
     HelpPanelComponent,
     MainPanelComponent,
-    ChartSpecTreeViewAddAnnotationComponent
+    ChartSpecTreeViewAddAnnotationComponent,
+    ExportDataComponent
   ],
   imports: [
     BrowserModule,
