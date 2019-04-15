@@ -4,13 +4,13 @@ import { AttrInput } from './attributes';
 
 export class Tick extends SpecTag {
   ticks;
-  constructor(public ticks: (string | number)[], public _root: ChartSpec, public _parent: SpecTag) {
+  constructor(public _ticks: (string | number)[], public _root: ChartSpec, public _parent: SpecTag) {
     super('Tick');
     this.attributes = {
-      ticks: new AttrInput(ticks.join(', ')),
-      numTicks: new AttrInput(ticks.length),
+      ticks: new AttrInput(_ticks.join(', ')),
+      numTicks: new AttrInput(_ticks.length),
     };
-    this.ticks = ticks;
+    this.ticks = _ticks;
   }
 
   foreignRepr() {
