@@ -1,0 +1,7 @@
+@import "../theme.scss";
+
+.card:hover:not(.disabled) {
+  border: 1px solid $variable1-highlight-color;
+  border-radius: 0px;
+  cursor: pointer;
+}

@@ -1,0 +1,31 @@
+<div class="container-fluid" #container (window:resize)="onWindowResize()">
+  <div class="row h-100" *ngIf="specSVG && specJSON">
+    <div class="border h-100 styled-scroll col-6 overflow-y-scroll">
+      <section class="row h-100">
+        <div class="col-12">
+          <app-chart-view [svgData]="specSVG.node()"></app-chart-view>
+        </div>
+      </section>
+      <!-- <hr>
+      <section class="row">
+        <div class="col-12">
+          <app-main-panel></app-main-panel>
+          <p class="mt-4 mt-5 mt-6">// 아래와 같이 만들고자 합니다.</p>
+          <img class="img img-fluid" src="./assets/chart_panel_sample.png">
+        </div>
+      </section> -->
+    </div>
+    <section class="col-6 border h-100 styled-scroll" style="overflow-y: scroll">
+      <app-chart-spec></app-chart-spec>
+    </section>
+  </div>
+  <section class="sidebar"
+    [class.d-none]="!(sidebarSettings || sidebarHelp)" #sidebar
+  >
+    <app-help-panel *ngIf="sidebarHelp"
+    ></app-help-panel>
+    <app-settings-panel *ngIf="sidebarSettings"
+    ></app-settings-panel>
+  </section>
+</div>
+<app-navigate class="d-none" [(tag)]="currentTag"></app-navigate>

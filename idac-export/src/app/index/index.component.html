@@ -1,0 +1,8 @@
+<app-nav-bar></app-nav-bar>
+
+<app-load-data *ngIf="currentStage === Stage.load"
+  (inputDataConfirm)="onInputChange($event)"
+></app-load-data>
+
+<app-make-chart *ngIf="currentStage === Stage.describe"
+></app-make-chart>

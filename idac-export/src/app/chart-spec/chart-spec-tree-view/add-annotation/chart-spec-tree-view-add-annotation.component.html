@@ -1,0 +1,26 @@
+<p
+  (click)="open(content)"
+  class="text-as-button d-flex align-items-center text-secondary mb-1 py-1"
+>
+  <span class="material-icons text-secondary mr-1">add_circle_outline</span>
+  Add a new annotation
+</p>
+
+<div id="add-annotation-modal-container"></div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">New Annotation</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <ul>
+      <li *ngFor="let option of annotationOptions" ngbAutoFocus class="text-as-button" (click)="modal.close(option)">{{ option }}</li>
+    </ul>
+  </div>
+  <!-- <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+  </div> -->
+</ng-template>

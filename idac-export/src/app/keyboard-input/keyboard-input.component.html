@@ -1,0 +1,6 @@
+<div class="container mb-2">
+  <div *ngIf="currentEventName">
+      <h3 class="d-inline">{{ currentEventName }}   </h3>
+      <p class="d-inline">(<span *ngFor="let key of currentKeybinding; let last=last">{{ key }}{{ last ? '' : '+' }}</span>)</p>
+  </div>
+</div>

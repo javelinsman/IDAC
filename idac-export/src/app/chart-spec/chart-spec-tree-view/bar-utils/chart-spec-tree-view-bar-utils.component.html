@@ -1,0 +1,28 @@
+<div *ngIf="!viewOnly" class="bar-utils">
+  <ul class="d-flex justify-content-between p-0 m-0">
+    <li class="mx-2">
+      <i class="fas fa-play text-secondary"
+        [class.text-as-button]="!muted"
+        [class.fa-volume-mute]="muted"
+        [class.fa-play]="!muted && !speaking"
+        [class.fa-stop]="!muted && speaking"
+        (click)="speaking ? stop() : play()"></i>
+    </li>
+    <li
+      *ngIf="tag._parent && tag._parent._tagname === 'Annotations'"
+      class="mx-2"
+    >
+      <i class="far fa-trash-alt text-secondary text-as-button"
+        (click)="onDeleteButton()"></i>
+    </li>
+    <!-- <li *ngIf="tag._parent._tagname !== 'ChartSpec' && siblingLength > 1"
+      class="mx-2"
+    >
+      <i class="far fa-plus-square text-secondary text-as-button"
+        [class.fa-plus-square]="!isCollapsed"
+        [class.fa-minus-square]="isCollapsed"
+        (click)="_collapseToggle()">
+      </i>
+    </li> -->
+  </ul>
+</div>

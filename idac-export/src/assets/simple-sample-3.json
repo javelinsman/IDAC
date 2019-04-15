@@ -1,0 +1,143 @@
+{
+  "dataset": {
+    "columns": [
+      {
+        "name": "Group size",
+        "type": "string"
+      },
+      {
+        "name": " 1_Punish defectors and bystanders",
+        "type": "number",
+        "format": ".2f"
+      },
+      {
+        "name": " 2_Punish defetors",
+        "type": "number",
+        "format": ".2f"
+      },
+      {
+        "name": " 3_No punishment",
+        "type": "number",
+        "format": ".2f"
+      }
+    ],
+    "rawFile": "Group size, 1_Punish defectors and bystanders, 2_Punish defetors, 3_No punishment\r\n_2, 0.88, 0.85, 0.79\r\n_4, 0.87, 0.82, 0.69\r\n_8, 0.86, 0.77, 0.52\r\n_16, 0.67, 0.55, 0.02\r\n_32, 0.62, 0.42, 0.01\r\n_64, 0.61, 0.42, 0.01\r\n_128, 0.71, 0.01, 0.01\r\n_256, 0.80, 0.01, 0.01\r\n_512, 0.78, 0.01, 0.01",
+    "fileName": "simple-sample-3.csv",
+    "rows": [
+      {
+        "Group size": "_2",
+        " 1_Punish defectors and bystanders": 0.88,
+        " 2_Punish defetors": 0.85,
+        " 3_No punishment": 0.79
+      },
+      {
+        "Group size": "_4",
+        " 1_Punish defectors and bystanders": 0.87,
+        " 2_Punish defetors": 0.82,
+        " 3_No punishment": 0.69
+      },
+      {
+        "Group size": "_8",
+        " 1_Punish defectors and bystanders": 0.86,
+        " 2_Punish defetors": 0.77,
+        " 3_No punishment": 0.52
+      },
+      {
+        "Group size": "_16",
+        " 1_Punish defectors and bystanders": 0.67,
+        " 2_Punish defetors": 0.55,
+        " 3_No punishment": 0.02
+      },
+      {
+        "Group size": "_32",
+        " 1_Punish defectors and bystanders": 0.62,
+        " 2_Punish defetors": 0.42,
+        " 3_No punishment": 0.01
+      },
+      {
+        "Group size": "_64",
+        " 1_Punish defectors and bystanders": 0.61,
+        " 2_Punish defetors": 0.42,
+        " 3_No punishment": 0.01
+      },
+      {
+        "Group size": "_128",
+        " 1_Punish defectors and bystanders": 0.71,
+        " 2_Punish defetors": 0.01,
+        " 3_No punishment": 0.01
+      },
+      {
+        "Group size": "_256",
+        " 1_Punish defectors and bystanders": 0.8,
+        " 2_Punish defetors": 0.01,
+        " 3_No punishment": 0.01
+      },
+      {
+        "Group size": "_512",
+        " 1_Punish defectors and bystanders": 0.78,
+        " 2_Punish defetors": 0.01,
+        " 3_No punishment": 0.01
+      }
+    ],
+    "type": "csv"
+  },
+  "chart": {
+    "type": "line-chart",
+    "title": {
+      "text": "Development of cooperation",
+      "fontFamily": "Roboto",
+      "fontSize": 20,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "width": 1000,
+    "height": 400,
+    "xColumn": "Group size",
+    "yColumns": [
+      " 1_Punish defectors and bystanders",
+      " 2_Punish defetors",
+      " 3_No punishment"
+    ],
+    "xLabel": {
+      "text": "Group Size",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "yLabel": {
+      "text": "Average Cooperation Rate",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "xScale": {
+      "type": "categorical"
+    },
+    "yScale": {
+      "min": null,
+      "max": null,
+      "type": "linear"
+    },
+    "legendLabel": {
+      "text": "Series",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "colors": [
+      "#e41a1c",
+      "#377eb8",
+      "#4daf4a",
+      "#984ea3",
+      "#ff7f00",
+      "#ffff33"
+    ]
+  },
+  "annotations": {
+    "annotations": []
+  },
+  "timestamp": 1555050848876
+}

@@ -1,0 +1,40 @@
+@import "../theme.scss";
+
+:host /deep/ .event-box {
+  fill: transparent;
+  stroke: transparent;
+}
+
+:host /deep/ .idac-elem-mark {
+  fill: lighten($variable1-highlight-color, 0%);
+  stroke: lighten($variable1-highlight-color, 0%);
+  opacity: 0;
+}
+
+:host /deep/ .idac-elem-mark.hover {
+  fill: lighten($variable1-highlight-color, 20%);
+  stroke: lighten($variable1-highlight-color, 20%);
+  opacity: 0.2;
+}
+
+
+:host /deep/ .idac-elem-mark.highlighted {
+  fill: lighten($variable1-highlight-color, 0%);
+  stroke: lighten($variable1-highlight-color, 0%);
+  opacity: 0.2;
+}
+
+:host /deep/ .idac-bookmark {
+  visibility: hidden;
+}
+
+:host /deep/ .idac-bookmark.highlighted {
+  visibility: visible;
+  fill: lighten($variable2-highlight-color, 0%);
+  stroke: lighten($variable2-highlight-color, 0%);
+  opacity: 0.6;
+}
+
+:host /deep/ svg {
+  width: 100% !important;
+}

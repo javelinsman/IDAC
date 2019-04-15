@@ -1,0 +1,22 @@
+<section class="my-3">
+  <div class="d-flex justify-content-between">
+    <p class="font-weight-bold">{{ overrideDescription ? 'Description': 'Template' }}</p>
+    <p class="text-secondary text-as-button"
+      (click)="_overrideDescriptionChange(!overrideDescription)">
+      {{ overrideDescription ? 'Reset to use template' : 'Describe without template' }}
+    </p>
+  </div>
+
+  <textarea [class.d-none]="overrideDescription" [(ngModel)]="tag.descriptionRule"
+    (drop)="onDrop($event)"
+    (blur)="onDescriptionBlur($event)" (input)="onDescriptionChange()"
+    class="form-control styled-scroll" id="description-rule-textarea" rows="3" #input>
+  </textarea>
+
+  <textarea [class.d-none]="!overrideDescription"
+    class="form-control styled-scroll"
+    id="description-rule-textarea" rows="3"
+    [(ngModel)]="tag.editorsNote.text"></textarea>
+
+
+</section>

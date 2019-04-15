@@ -1,0 +1,48 @@
+<h3>Attributes</h3>
+<p>// align 맞춰오겠습니다. 그래프에 변경사항 반영은 차트 확장하면서 잠시 해제했습니다.</p>
+<div class="row">
+  <div class="col-md-4">
+    <p class="m-0 p-0 lead">Title</p>
+    <div class="d-flex ml-3">
+      <p class="m-0 p-0">Text</p>
+      <input [(ngModel)]="chartSpec.title.attributes.title.value" class="ml-1">
+    </div>
+    <p class="m-0 p-0 lead">Legend</p>
+    <div class="d-flex ml-3">
+      <p class="m-0 p-0">Label</p>
+      <input [(ngModel)]="chartSpec.legend.attributes.label.value" class="ml-1">
+    </div>
+  </div>
+  <div class="col-md-4">
+    <p class="m-0 p-0 lead">X Axis</p>
+    <div class="d-flex ml-3">
+      <p class="m-0 p-0">Label</p>
+      <input [(ngModel)]="chartSpec.x.attributes.label.value" class="ml-1">
+    </div>
+    <div class="d-flex ml-3">
+      <p class="m-0 p-0">Unit</p>
+      <input [(ngModel)]="chartSpec.x.attributes.unit.value" class="ml-1">
+    </div>
+  </div>
+  <div class="col-md-4">
+    <p class="m-0 p-0 lead">Y Axis</p>
+    <div class="d-flex ml-3">
+      <p class="m-0 p-0">Label</p>
+      <input [(ngModel)]="chartSpec.y.attributes.label.value" class="ml-1">
+    </div>
+    <div class="d-flex ml-3">
+      <p class="m-0 p-0">Unit</p>
+      <input [(ngModel)]="chartSpec.y.attributes.unit.value" class="ml-1">
+    </div>
+  </div>
+</div>
+
+<h3>Annotations</h3>
+<div>
+  <div *ngFor="let annotation of annotations">
+    <div class="d-flex">
+      <input type="checkbox" [(ngModel)]="annotation.active">
+      {{ annotation._tagname }}
+    </div>
+  </div>
+</div>

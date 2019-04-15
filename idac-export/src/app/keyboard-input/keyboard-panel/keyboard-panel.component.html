@@ -1,0 +1,26 @@
+<table class="w-100 table table-sm text-center">
+  <thead>
+    <tr>
+      <th scope="col">Key</th>
+      <th scope="col">Function</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let kv of keyBindings"
+      [class.font-weight-bold]="kv.key === currentKeyboardEventName"
+    >
+      <th class="align-middle" scope="row">
+        <h5 style="cursor: pointer" class="m-0">
+          <span>{{ kv.value.keyName }}</span>
+        </h5>
+      </th>
+      <td class="align-middle text-left">
+        <p class="m-0"
+          style="padding-top: 1px; padding-bottom: 1px; border: 2px solid transparent"
+        >
+          {{ kv.value.description }}
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
