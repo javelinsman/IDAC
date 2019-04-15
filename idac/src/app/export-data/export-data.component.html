@@ -1,5 +1,9 @@
 <div class="container-fluid" (window:resize)="onWindowResize()" #container>
-  <button (click)="download()">Download</button>
+  <div class="my-3 mx-3 py-2">
+    <h5>Click below to download the stand-alone HTML file.</h5>
+    <button class="btn btn-primary" (click)="download()">Download</button>
+  </div>
+  <h3 class="my-3 mx-3 py-2" [style.border-bottom]="'1px solid #aaa'">Preview</h3>
   <div class="embed-responsive embed-responsive-16by9">
     <iframe
       class="embed-responsive-item" [src]="safeBlobURL"
