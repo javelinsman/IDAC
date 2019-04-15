@@ -19,13 +19,5 @@
       <app-chart-spec></app-chart-spec>
     </section>
   </div>
-  <section class="sidebar"
-    [class.d-none]="!(sidebarSettings || sidebarHelp)" #sidebar
-  >
-    <app-help-panel *ngIf="sidebarHelp"
-    ></app-help-panel>
-    <app-settings-panel *ngIf="sidebarSettings"
-    ></app-settings-panel>
-  </section>
 </div>
 <app-navigate class="d-none" [(tag)]="currentTag"></app-navigate>

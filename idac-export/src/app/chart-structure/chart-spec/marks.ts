@@ -34,7 +34,6 @@ export class Marks extends SpecTag {
       });
       this.children.forEach(child => child.fromSpecSVG(spec));
     } else {
-      console.log(numSeries);
       this.children = Array.from(Array(numSeries)).map((_, index) => {
         return new Series(index, this._root, this);
       });

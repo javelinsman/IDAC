@@ -1,6 +1,5 @@
 <div class="d-flex">
-  <p (click)="!viewOnly && tag === currentTag ? _editChange(!edit) : ''"
-    (mouseover)="hover = true" (mouseout)="hover = false"
+  <p
     [class.text-muted]="!tag.describe().length"
     [class.font-italic]="!tag.describe().length"
 

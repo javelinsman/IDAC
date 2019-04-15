@@ -39,7 +39,6 @@ export class ChartAccentHandler {
     });
 
     const serieses = d3AsSelectionArray(d3ImmediateChildren(marks, 'g'));
-    console.log(this.json);
     marks.classed('ca-marks', true);
     if (this.json.chart.type === 'bar-chart') {
       serieses.forEach((series, seriesIndex) => {

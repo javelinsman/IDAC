@@ -1,15 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, AfterViewChecked, Input, AfterContentChecked } from '@angular/core';
 import { ChartSpec } from '../chart-structure/chart-spec/chart-spec';
-import { ActivatedRoute } from '@angular/router';
 import { ChartExampleService } from '../chart-example.service';
 import * as d3 from 'd3';
-import { Chart } from '../chart';
-import { ChartAccent } from '../chart-structure/chart-accent/chart-accent';
 import { HttpClient } from '@angular/common/http';
 import { SpecTag } from '../chart-structure/chart-spec/spec-tag';
 import { StageStateService } from '../stage-state.service';
 import { ChartSpecService } from '../chart-spec.service';
 import { ChartAccentHandler } from '../chart-structure/chart-accent/chart-accent-handler';
+import { CHARTS } from '../mock-charts';
 
 @Component({
   selector: 'app-make-chart',
@@ -20,7 +18,7 @@ export class MakeChartComponent implements OnInit {
   @Input() exampleId;
 
   specSVG;
-  specJSON
+  specJSON;
 
   chartSpec: ChartSpec;
   currentTag: SpecTag;
@@ -36,7 +34,6 @@ export class MakeChartComponent implements OnInit {
       private chartSpecService: ChartSpecService,
       private http: HttpClient,
       public stageStateService: StageStateService,
-      private route: ActivatedRoute
     ) { }
 
   ngOnInit() {
@@ -48,18 +45,16 @@ export class MakeChartComponent implements OnInit {
       this.sidebarHelp = help;
     });
     this.chartSpecService.bindChartSpec(this);
-
-    const svg = d3.select(this.stageStateService.stageState.load.svg.documentElement as unknown as SVGSVGElement);
-    const json = this.stageStateService.stageState.load.json;
+    const json = (window as any).IDAC_JSON;
+    const svgRaw = new DOMParser().parseFromString((window as any).IDAC_SVG, 'text/xml');
+    const svg = d3.select(svgRaw).select('svg') as any;
     const handler = new ChartAccentHandler(json, svg);
     this.specSVG = handler.convertToSpec();
     this.specJSON = json;
-    console.log(this.specSVG.node());
 
     this.chartSpecService.chartSpec = new ChartSpec();
     this.chartSpecService.chartSpec.fromSpecSVG(this.specSVG);
     this.chartSpecService.chartSpec.fromChartAccent(json);
-    console.log(this.chartSpec);
     this.chartSpecService.currentTag = this.chartSpecService.chartSpec.findById(0);
 
     this.onWindowResize();
@@ -68,7 +63,6 @@ export class MakeChartComponent implements OnInit {
   onWindowResize() {
     const mainHeight = `${window.innerHeight - 20 - 50}px`;
     d3.select(this.containerDiv.nativeElement).style('height', mainHeight);
-    d3.select(this.sidebarSection.nativeElement).style('height', mainHeight);
   }
 
 

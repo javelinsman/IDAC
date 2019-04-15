@@ -15,11 +15,11 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "single-spa-angular:build",
           "options": {
             "outputPath": "dist/charteller",
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "main": "src/main.single-spa.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
@@ -59,9 +59,9 @@
           }
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "single-spa-angular:dev-server",
           "options": {
-            "browserTarget": "charteller:build"
+            "browserTarget": "charteller:single-spa"
           },
           "configurations": {
             "production": {
@@ -102,6 +102,61 @@
             "exclude": [
               "**/node_modules/**"
             ]
+          }
+        },
+        "single-spa": {
+          "builder": "single-spa-angular:build",
+          "options": {
+            "outputPath": "dist/charteller",
+            "index": "src/index.html",
+            "main": "src/main.single-spa.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "single-spa-serve": {
+          "builder": "single-spa-angular:dev-server",
+          "options": {
+            "browserTarget": "charteller:single-spa"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "charteller:build:production"
+            }
           }
         }
       }
