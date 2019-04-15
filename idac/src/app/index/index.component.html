@@ -4,7 +4,8 @@
   (inputDataConfirm)="onInputChange($event)"
 ></app-load-data>
 
-<app-make-chart *ngIf="currentStage === Stage.describe"
+<app-make-chart *ngIf="currentStage === Stage.describe || currentStage === Stage.export"
+  [class.d-none]="currentStage === Stage.export"
 ></app-make-chart>
 
 <app-export-data *ngIf="currentStage === Stage.export"
