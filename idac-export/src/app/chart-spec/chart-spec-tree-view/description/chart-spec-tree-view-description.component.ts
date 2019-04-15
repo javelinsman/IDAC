@@ -36,7 +36,7 @@ export class ChartSpecTreeViewDescriptionComponent implements OnInit, AfterViewI
     const currentDescription = this.tag.describe();
     const description = (currentDescription.length ? currentDescription : '(No description)');
     d3.select(this.descriptionP.nativeElement)
-      .html(description)
+      .html(description);
   }
 
 }
