@@ -40,7 +40,8 @@ export class ExportDataComponent implements OnInit, AfterViewInit {
       this.exportHTML = data
         .replace('PLACE_TO_PUT_TITLE', this.chartSpec.title.attributes.title.value)
         .replace('PLACE_TO_PUT_SVG_DATA', '`' + svgAsString + '`')
-        .replace('PLACE_TO_PUT_JSON_DATA', JSON.stringify(this.specJSON));
+        .replace('PLACE_TO_PUT_JSON_DATA', JSON.stringify(this.specJSON))
+        .replace('PLACE_TO_PUT_CHART_SPEC_DATA', JSON.stringify(this.stringifyChartSpec(this.chartSpec)));
       console.log(this.exportHTML);
       this.blob = new Blob([this.exportHTML], {type: 'text/html'});
       this.blobURL = URL.createObjectURL(this.blob);
@@ -50,6 +51,17 @@ export class ExportDataComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.onWindowResize();
+  }
+
+  stringifyChartSpec(tag: SpecTag) {
+    return {
+      attributes: tag.attributes,
+      properties: Object.entries(tag.properties).reduce((accum, [key, value]) => { accum[key] = value(); return accum; }, {}),
+      descriptionRule: tag.descriptionRule,
+      editorsNote: tag.editorsNote,
+      active: tag['active'],
+      _children: tag._children.map(childTag => this.stringifyChartSpec(childTag))
+    }
   }
 
   domToString(dom) {

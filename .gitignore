@@ -4,3 +4,4 @@ idac/package-lock.json
 .vs/slnx.sqlite
 .vs/ProjectSettings.json
 .vs/IDAC/v15/.suo
+idac-export/package-lock.json

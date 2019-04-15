@@ -55,9 +55,23 @@ export class MakeChartComponent implements OnInit {
     this.chartSpecService.chartSpec = new ChartSpec();
     this.chartSpecService.chartSpec.fromSpecSVG(this.specSVG);
     this.chartSpecService.chartSpec.fromChartAccent(json);
+
+    const savedChartSpec = (window as any).IDAC_CHART_SPEC;
+    this.loadChartSpec(this.chartSpecService.chartSpec, savedChartSpec);
+
     this.chartSpecService.currentTag = this.chartSpecService.chartSpec.findById(0);
 
     this.onWindowResize();
+  }
+
+  loadChartSpec(chartSpec, saved) {
+    chartSpec.attributes = saved.attributes;
+    chartSpec.properties = Object.entries(saved.properties)
+      .reduce((accum, [key, value]) => { accum[key] = () => value; return accum; }, {});
+    chartSpec.descriptionRule = saved.descriptionRule;
+    chartSpec.editorsNote = saved.editorsNote;
+    chartSpec.active = saved.active;
+    chartSpec._children.forEach((child, i) => this.loadChartSpec(child, saved._children[i]));
   }
 
   onWindowResize() {

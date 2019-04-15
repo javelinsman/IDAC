@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterContentChecked, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, AfterContentChecked, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { SpecTag } from 'src/app/chart-structure/chart-spec/spec-tag';
 import * as d3 from 'd3';
 import { ChartSpec } from 'src/app/chart-structure/chart-spec/chart-spec';
@@ -9,7 +9,7 @@ import { ChartSpecService } from 'src/app/chart-spec.service';
   templateUrl: './chart-spec-tree-view-description.component.html',
   styleUrls: ['./chart-spec-tree-view-description.component.scss']
 })
-export class ChartSpecTreeViewDescriptionComponent implements OnInit, AfterContentChecked {
+export class ChartSpecTreeViewDescriptionComponent implements OnInit, AfterViewInit {
   currentTag: SpecTag;
   chartSpec: ChartSpec;
 
@@ -32,19 +32,11 @@ export class ChartSpecTreeViewDescriptionComponent implements OnInit, AfterConte
     this.chartSpecService.bindChartSpec(this);
   }
 
-  ngAfterContentChecked() {
+  ngAfterViewInit() {
     const currentDescription = this.tag.describe();
-    if (this.prevDescription !== currentDescription) {
-      this.prevDescription = currentDescription;
-      const description =
-        (currentDescription.length
-          ? currentDescription
-          : '(No description)'
-        ).replace(/undefined/g, '<span class="undefined-variable">undefined</span>')
-        .replace(/Undefined/g, '<span class="undefined-variable">Undefined</span>')
-      d3.select(this.descriptionP.nativeElement)
-        .html(description)
-    }
+    const description = (currentDescription.length ? currentDescription : '(No description)');
+    d3.select(this.descriptionP.nativeElement)
+      .html(description)
   }
 
 }

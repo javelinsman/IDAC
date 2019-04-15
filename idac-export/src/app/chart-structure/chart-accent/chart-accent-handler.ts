@@ -1,7 +1,6 @@
 import { ChartAccent } from './chart-accent';
 import { d3Selection } from 'src/app/chartutils';
 import { d3AsSelectionArray, d3ImmediateChildren, zip, Counter } from 'src/app/utils';
-import { json } from 'd3';
 import { Annotations } from '../chart-spec/annotations';
 
 export class ChartAccentHandler {
