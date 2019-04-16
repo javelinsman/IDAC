@@ -8,13 +8,13 @@
         [class.fa-stop]="!muted && speaking"
         (click)="speaking ? stop() : play()"></i>
     </li>
-    <li
+    <!-- <li
       *ngIf="tag._parent && tag._parent._tagname === 'Annotations'"
       class="mx-2"
     >
       <i class="far fa-trash-alt text-secondary text-as-button"
         (click)="onDeleteButton()"></i>
-    </li>
+    </li> -->
     <!-- <li *ngIf="tag._parent._tagname !== 'ChartSpec' && siblingLength > 1"
       class="mx-2"
     >
