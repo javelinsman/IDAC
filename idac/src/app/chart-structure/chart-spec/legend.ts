@@ -28,10 +28,14 @@ export class Legend extends SpecTag {
   }
 
   afterFromSpecSVG() {
-    this.descriptionRule = this.assembleDescriptionRules([
-      ['The legend shows $(numChildren) series, named as following: $(children).', true],
-      ['It indicates $(label).', false, ''],
-    ]);
+    if (this.children.length > 0) {
+      this.descriptionRule = this.assembleDescriptionRules([
+        ['The legend shows $(numChildren) series, named as following: $(children).', true],
+        ['It indicates $(label).', false, ''],
+      ]);
+    } else {
+      this.descriptionRule = 'The legend is not specified.';
+    }
 
     this.children.forEach(child => child.afterFromSpecSVG());
   }
