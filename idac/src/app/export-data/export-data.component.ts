@@ -36,7 +36,7 @@ export class ExportDataComponent implements OnInit, AfterViewInit {
     this.specSVG = this.stageStateService.stageState.load.svg;
     this.specJSON = this.stageStateService.stageState.load.json;
     const svgAsString = this.domToString(this.specSVG.node());
-    d3.text('/assets/index-template.html').then(data => {
+    d3.text('./assets/index-template.html').then(data => {
       this.exportHTML = data
         .replace('PLACE_TO_PUT_TITLE', this.chartSpec.title.attributes.title.value)
         .replace('PLACE_TO_PUT_SVG_DATA', '`' + svgAsString + '`')
