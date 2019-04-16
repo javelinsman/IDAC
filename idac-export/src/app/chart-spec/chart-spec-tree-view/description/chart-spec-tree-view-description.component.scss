@@ -1,0 +1,5 @@
+@import "../../../theme.scss";
+
+:host /deep/ .undefined-variable {
+  background-color: lighten($danger, 40%) !important;
+}

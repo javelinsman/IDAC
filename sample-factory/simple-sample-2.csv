@@ -1,0 +1,8 @@
+Behavior, 1_Realistic stuffed dog, 2_Jack-o'-lantern, 3_Children's book
+Raise tail, 70, 74, 73
+push owner, 77, 45, 23
+push object, 73, 27, 15
+Get between, 33, 13, 10
+Bite or snap, 31, 3, 3
+Bark, 18, 5, 14
+Whine, 19, 6, 0

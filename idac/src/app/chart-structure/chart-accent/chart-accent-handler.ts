@@ -66,7 +66,7 @@ export class ChartAccentHandler {
       points.forEach((point, pointIndex) => {
         const seriesNames = items.map(item => item.select('text').text());
         const seriesName = this.json.dataset.rows[pointIndex][this.json.chart.groupColumn] as string;
-        const seriesIndex = seriesNames.indexOf(seriesName);
+        const seriesIndex = Math.max(seriesNames.indexOf(seriesName), 0);
         counter.addCount(seriesIndex);
         point.classed(`ca-item ca-series ca-series-${seriesIndex} ca-item-${counter.getCount(seriesIndex) - 1}`, true);
         const xValue = this.json.dataset.rows[pointIndex][this.json.chart.xColumn];

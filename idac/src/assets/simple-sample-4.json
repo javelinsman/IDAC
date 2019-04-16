@@ -1,0 +1,220 @@
+{
+  "dataset": {
+    "columns": [
+      {
+        "name": "Stress Levels",
+        "type": "number",
+        "format": ".2f"
+      },
+      {
+        "name": " BDI Score",
+        "type": "number",
+        "format": ".2f"
+      }
+    ],
+    "rawFile": "Stress Levels, BDI Score\r\n12.28, 0.83\r\n15.04, 4.75\r\n21.94, 10.11\r\n23.32, 1.65\r\n25.93, 8.67\r\n27.31, 5.99\r\n28.08, 8.26\r\n24.09, 7.84\r\n18.11, 3.92\r\n31.92, 6.81\r\n30.38, 7.02\r\n27.16, 11.97\r\n26.85, 15.48\r\n29.62, 8.88\r\n29.00, 1.86\r\n34.83, 9.29\r\n31.15, 11.77\r\n32.23, 10.32\r\n32.84, 8.26\r\n32.84, 13.00\r\n29.00, 15.69\r\n39.13, 16.10\r\n35.14, 15.07\r\n31.00, 20.64\r\n28.85, 23.12\r\n39.74, 27.04\r\n42.51, 12.80\r\n40.82, 19.40\r\n43.73, 31.58\r\n47.26, 38.81\r\n49.87, 37.98\r\n34.07, 25.18\r\n29.16, 9.50\r\n27.47, 7.22\r\n35.91, 22.50",
+    "fileName": "simple-sample-4.csv",
+    "rows": [
+      {
+        "Stress Levels": 12.28,
+        " BDI Score": 0.83
+      },
+      {
+        "Stress Levels": 15.04,
+        " BDI Score": 4.75
+      },
+      {
+        "Stress Levels": 21.94,
+        " BDI Score": 10.11
+      },
+      {
+        "Stress Levels": 23.32,
+        " BDI Score": 1.65
+      },
+      {
+        "Stress Levels": 25.93,
+        " BDI Score": 8.67
+      },
+      {
+        "Stress Levels": 27.31,
+        " BDI Score": 5.99
+      },
+      {
+        "Stress Levels": 28.08,
+        " BDI Score": 8.26
+      },
+      {
+        "Stress Levels": 24.09,
+        " BDI Score": 7.84
+      },
+      {
+        "Stress Levels": 18.11,
+        " BDI Score": 3.92
+      },
+      {
+        "Stress Levels": 31.92,
+        " BDI Score": 6.81
+      },
+      {
+        "Stress Levels": 30.38,
+        " BDI Score": 7.02
+      },
+      {
+        "Stress Levels": 27.16,
+        " BDI Score": 11.97
+      },
+      {
+        "Stress Levels": 26.85,
+        " BDI Score": 15.48
+      },
+      {
+        "Stress Levels": 29.62,
+        " BDI Score": 8.88
+      },
+      {
+        "Stress Levels": 29,
+        " BDI Score": 1.86
+      },
+      {
+        "Stress Levels": 34.83,
+        " BDI Score": 9.29
+      },
+      {
+        "Stress Levels": 31.15,
+        " BDI Score": 11.77
+      },
+      {
+        "Stress Levels": 32.23,
+        " BDI Score": 10.32
+      },
+      {
+        "Stress Levels": 32.84,
+        " BDI Score": 8.26
+      },
+      {
+        "Stress Levels": 32.84,
+        " BDI Score": 13
+      },
+      {
+        "Stress Levels": 29,
+        " BDI Score": 15.69
+      },
+      {
+        "Stress Levels": 39.13,
+        " BDI Score": 16.1
+      },
+      {
+        "Stress Levels": 35.14,
+        " BDI Score": 15.07
+      },
+      {
+        "Stress Levels": 31,
+        " BDI Score": 20.64
+      },
+      {
+        "Stress Levels": 28.85,
+        " BDI Score": 23.12
+      },
+      {
+        "Stress Levels": 39.74,
+        " BDI Score": 27.04
+      },
+      {
+        "Stress Levels": 42.51,
+        " BDI Score": 12.8
+      },
+      {
+        "Stress Levels": 40.82,
+        " BDI Score": 19.4
+      },
+      {
+        "Stress Levels": 43.73,
+        " BDI Score": 31.58
+      },
+      {
+        "Stress Levels": 47.26,
+        " BDI Score": 38.81
+      },
+      {
+        "Stress Levels": 49.87,
+        " BDI Score": 37.98
+      },
+      {
+        "Stress Levels": 34.07,
+        " BDI Score": 25.18
+      },
+      {
+        "Stress Levels": 29.16,
+        " BDI Score": 9.5
+      },
+      {
+        "Stress Levels": 27.47,
+        " BDI Score": 7.22
+      },
+      {
+        "Stress Levels": 35.91,
+        " BDI Score": 22.5
+      }
+    ],
+    "type": "csv"
+  },
+  "chart": {
+    "type": "scatterplot",
+    "title": {
+      "text": "Depression and Stress",
+      "fontFamily": "Roboto",
+      "fontSize": 20,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "width": 700,
+    "height": 400,
+    "xColumn": "Stress Levels",
+    "yColumn": " BDI Score",
+    "sizeColumn": null,
+    "groupColumn": null,
+    "nameColumn": null,
+    "xLabel": {
+      "text": "Stress Levels",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "yLabel": {
+      "text": " BDI Score",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "xScale": {
+      "min": 0,
+      "max": 60,
+      "type": "linear"
+    },
+    "yScale": {
+      "min": 0,
+      "max": 45,
+      "type": "linear"
+    },
+    "legendLabel": {
+      "text": "Series",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "colors": [
+      "#60636a",
+      "#a5acaf",
+      "#414451",
+      "#8f8782",
+      "#cfcfcf"
+    ]
+  },
+  "annotations": {
+    "annotations": []
+  },
+  "timestamp": 1555051678773
+}

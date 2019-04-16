@@ -15,10 +15,6 @@ export class Marks extends SpecTag {
     this.attributes = {
       // type: new AttrInputSelect(['grouped', 'stacked'], 'grouped')
     };
-    this.properties = {
-      numBarGroups: () => this.children.length,
-      numBars: () => this.children.length ? this.children[0].children.length : 0,
-    };
 
   }
   fromSpecSVG(spec: d3Selection<SVGSVGElement>) {
@@ -29,11 +25,19 @@ export class Marks extends SpecTag {
     const serieses = caSpecDistinctClasses(marks, 'ca-series');
     const numSeries = serieses.length;
     if (chartType === 'bar-chart') {
+      this.properties = {
+        numBarGroups: () => this.children.length,
+        numBars: () => this.children.length ? this.children[0].children.length : 0,
+      };
       this.children = Array.from(Array(numGroups)).map((_, index) => {
         return new Bargroup(index, this._root, this);
       });
       this.children.forEach(child => child.fromSpecSVG(spec));
     } else {
+      this.properties = {
+        numSeries: () => this.children.length,
+        numAllPoints: () => this.children.map(childTag => childTag.children.length).reduce((x, y) => x + y)
+      };
       this.children = Array.from(Array(numSeries)).map((_, index) => {
         return new Series(index, this._root, this);
       });
@@ -46,13 +50,14 @@ export class Marks extends SpecTag {
       this.descriptionRule = this.assembleDescriptionRules([
         ['There are $(numBarGroups) bar groups', true],
         [', which correspond to each $(X Axis: label).', false, '.'],
-        [' And each bar group contains $(numBars) bars', true],
+        [' Each bar group contains $(numBars) bars', true],
         [', which correspond to each series of $(Legend: label).', false, '.'],
       ]);
     } else {
       this.descriptionRule = this.assembleDescriptionRules([
-        ['There are $(numBarGroups) series', true],
+        ['There are $(numSeries) series', true],
         [', which correspond to each $(Legend: label).', false, '.'],
+        [' There are $(numAllPoints) points in total.', true]
       ]);
 
     }
@@ -62,12 +67,11 @@ export class Marks extends SpecTag {
 
 export class Bargroup extends SpecTag {
   borrowX = this._root.x;
-  borrowY = this._root.y;
   borrowLegend = this._root.legend;
   constructor(private index: number, public _root: ChartSpec, public _parent: Marks) {
     super('Bar Group');
     this.properties = {
-      name: () => this.borrowX.children[index].attributes.text.value,
+      name: () => (this.borrowX.children[0] as Tick).ticks[index],
       numBars: () => this.children.length,
       sumOfBarValues: () => Math.round(
           10 * this.children.map(d => d.properties.value() as number).reduce((a, b) => a + b)
@@ -130,11 +134,13 @@ export class Series extends SpecTag {
   constructor(private index: number, public _root: ChartSpec, public _parent: Marks) {
     super('Series');
     this.properties = {
-      name: () => this.borrowLegend.children[index].attributes.text.value,
       numPoints: () => this.children.length,
       index0: () => index,
       index1: () => index + 1,
     };
+    if (this.borrowLegend.children.length) {
+      this.properties.name = () => this.borrowLegend.children[index].attributes.text.value;
+    }
     this.children = [];
   }
 
@@ -153,8 +159,9 @@ export class Series extends SpecTag {
 
   afterFromSpecSVG() {
     this.descriptionRule = this.assembleDescriptionRules([
-    ['A series named $(name).', true],
-    [' It contains $(numPoints) points', true],
+    ['A series', true],
+    [', named $(name),', false],
+    [' contains $(numPoints) points', true],
     [', each indicating $(Y Axis: label)', false, ''],
     [' in $(Y Axis: unit).', false, '.'],
     ]);
@@ -163,7 +170,7 @@ export class Series extends SpecTag {
 }
 
 export class Point extends SpecTag {
-  constructor(private seriesIndex: number, private pointIndex: number, public _root: ChartSpec, public _parent: Series) {
+  constructor(private seriesIndex: number, private pointIndex: number, public _root: ChartSpec, public _parent: Series|Marks) {
     super('Point');
   }
   fromSpecSVG(spec: d3Selection<SVGSVGElement>) {
@@ -205,11 +212,11 @@ export class Point extends SpecTag {
       ]);
     } else {
       this.descriptionRule = this.assembleDescriptionRules([
-        ['$(X Axis: label) is $(x) ', true],
-        ['$(X Axis: unit) ', false, ''],
-        ['and $(Y Axis: label) is $(y) ', true],
-        ['$(Y Axis: unit) ', false, ''],
-        ['in the series $(Series: name).', true],
+        ['$(X Axis: label) is $(x)', true],
+        [' $(X Axis: unit)', false, ''],
+        [' and $(Y Axis: label) is $(y)', true],
+        [' $(Y Axis: unit)', false, ''],
+        [' in the series $(Series: name).', false, '.'],
       ]);
     }
   }

@@ -19,9 +19,8 @@ import { ChartAccentHandler } from '../chart-structure/chart-accent/chart-accent
 export class MakeChartComponent implements OnInit {
   @Input() exampleId;
 
-  chart: Chart;
-  chartAccent: ChartAccent;
   specSVG;
+  specJSON
 
   chartSpec: ChartSpec;
   currentTag: SpecTag;
@@ -50,40 +49,16 @@ export class MakeChartComponent implements OnInit {
     });
     this.chartSpecService.bindChartSpec(this);
 
-    this.exampleId = this.exampleId || +this.route.snapshot.paramMap.get('exampleId');
+    this.specSVG = this.stageStateService.stageState.load.svg;
+    this.specJSON = this.stageStateService.stageState.load.json;
+    console.log(this.specSVG.node());
 
-    if (this.exampleId) {
-      this.chart = this.fetchExampleChart(this.exampleId);
-    } else {
-      this.chart = this.fetchChart();
-    }
+    this.chartSpecService.chartSpec = new ChartSpec();
+    this.chartSpecService.chartSpec.fromSpecSVG(this.specSVG);
+    this.chartSpecService.chartSpec.fromChartAccent(this.specJSON);
+    console.log(this.chartSpec);
+    this.chartSpecService.currentTag = this.chartSpecService.chartSpec.findById(0);
 
-    if (!this.chart.svg_only) {
-      this.http.get<ChartAccent>(this.chart.src_json).subscribe(json => {
-        d3.svg(this.chart.src_svg).then(svgRaw => {
-          const svg = d3.select(svgRaw.documentElement as unknown as SVGSVGElement);
-          console.log(svgRaw.documentElement);
-          const handler = new ChartAccentHandler(json, svg);
-          this.specSVG = handler.convertToSpec();
-
-          this.chartSpecService.chartSpec = new ChartSpec();
-          this.chartSpecService.chartSpec.fromSpecSVG(this.specSVG);
-          this.chartSpecService.chartSpec.fromChartAccent(json);
-          console.log(this.chartSpec);
-          this.chartSpecService.currentTag = this.chartSpecService.chartSpec.findById(0);
-        });
-      });
-    } else {
-      d3.svg(this.chart.src_svg).then(svgRaw => {
-        const svg = d3.select(svgRaw.documentElement as unknown as SVGSVGElement);
-        this.specSVG = svg;
-
-        this.chartSpecService.chartSpec = new ChartSpec();
-        this.chartSpecService.chartSpec.fromSpecSVG(this.specSVG);
-        console.log(this.chartSpec);
-        this.chartSpecService.currentTag = this.chartSpec.findById(0);
-      });
-    }
     this.onWindowResize();
   }
 

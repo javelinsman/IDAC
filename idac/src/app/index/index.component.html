@@ -1,9 +1,12 @@
 <app-nav-bar></app-nav-bar>
 
 <app-load-data *ngIf="currentStage === Stage.load"
-  (exampleIdChange)="_exampleIdChange($event)"
+  (inputDataConfirm)="onInputChange($event)"
 ></app-load-data>
 
-<app-make-chart *ngIf="currentStage === Stage.describe"
-  [exampleId]="exampleId"
+<app-make-chart *ngIf="currentStage === Stage.describe || currentStage === Stage.export"
+  [class.d-none]="currentStage === Stage.export"
 ></app-make-chart>
+
+<app-export-data *ngIf="currentStage === Stage.export"
+></app-export-data>

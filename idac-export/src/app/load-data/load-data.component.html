@@ -1,0 +1,70 @@
+<div class="container-fluid pb-5">
+  <section>
+    <div class="d-flex m-3 p-3 align-items-baseline">
+      <h1 class="display-3 font-weight-light">Narratable</h1>
+      <h1 class="font-weight-light">: Charts along with narrations</h1>
+    </div>
+  </section>
+  <section class="m-3 p-3">
+    <h3>Load Data</h3>
+    <p>
+      To get started, upload your chart (SVG) and the <a routerLink="/">specification</a> (JSON) file.
+      Alternatively, you can visit <a href="https://chartaccent.github.io">ChartAccent</a> and upload its outputs.
+    </p>
+    <div class="row">
+      <div class="col-md-6">
+        <form>
+          <div *ngFor="let config of inputConfigs" class="custom-file my-2">
+            <input type="file"
+              class="custom-file-input"
+              id="idac-input-{{config.filetypeShort}}"
+              (change)="onFileInput($event, config)"
+            >
+            <ng-container *ngIf="config.fileName.length; else errorCheck">
+              <label class="custom-file-label" for="idac-input-{{config.filetypeShort}}">{{ config.fileName }}</label>
+            </ng-container>
+            <ng-template #errorCheck>
+              <ng-container *ngIf="config.errorMessage.length; else defaultHint">
+                <label class="custom-file-label text-danger" for="idac-input-{{config.filetypeShort}}">{{ config.errorMessage }}</label>
+              </ng-container>
+            </ng-template>
+            <ng-template #defaultHint>
+              <label class="custom-file-label" for="idac-input-{{config.filetypeShort}}">{{ config.defaultHint }}</label>
+            </ng-template>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-2" [class.disabled]="!svg || !json" (click)="svg && json ? confirmData(svg, json): null">
+          <div *ngIf="!svg" class="w-100 d-flex bg-dark cursor-pointer" [style.height]="'170px'" (click)="svg ? null : uploadSVG()">
+            <p class="m-auto text-light text-unselectable">Upload chart (SVG) to proceed</p>
+          </div>
+          <app-svg-container *ngIf="svg" [svgData]="svg.documentElement"></app-svg-container>
+          <div class="card-body bg-light text-center">
+            <h5 class="card-text text-unselectable cursor-pointer"
+              [class.text-secondary]="!json"
+              (click)="json ? null : uploadJSON()"
+            >
+              {{ json ? json.chart.title.text : 'Upload specification (JSON) file to proceed'}}
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="examples" class="m-3 p-3">
+    <h3>Examples</h3>
+    <hr class="mb-4">
+    <div class="row">
+      <div class="col-md-4" *ngFor="let chart of charts; let i = index">
+        <div class="card mb-2" (click)="_exampleIdChange(i)">
+          <img class="img-fluid" [src]="chart.src_svg">
+          <div class="card-body bg-light text-center">
+            <h5 class="card-text">{{ chart.title }}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

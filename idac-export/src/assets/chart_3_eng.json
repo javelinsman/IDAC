@@ -1,0 +1,258 @@
+{
+  "dataset": {
+    "columns": [
+      {
+        "name": "month",
+        "type": "string"
+      },
+      {
+        "name": "mm",
+        "type": "integer",
+        "format": ".0f"
+      }
+    ],
+    "rawFile": "month,mm\r\n_1, 13\r\n_2, 16\r\n_3, 7\r\n_4, 31\r\n_5, 63\r\n_6, 98\r\n_7, 208\r\n_8, 173\r\n_9, 88\r\n_10, 52\r\n_11, 42\r\n_12, 18\r\n",
+    "fileName": "chart_3_eng.csv",
+    "rows": [
+      {
+        "month": "1",
+        "mm": 13
+      },
+      {
+        "month": "2",
+        "mm": 16
+      },
+      {
+        "month": "3",
+        "mm": 7
+      },
+      {
+        "month": "4",
+        "mm": 31
+      },
+      {
+        "month": "5",
+        "mm": 63
+      },
+      {
+        "month": "6",
+        "mm": 98
+      },
+      {
+        "month": "7",
+        "mm": 208
+      },
+      {
+        "month": "8",
+        "mm": 173
+      },
+      {
+        "month": "9",
+        "mm": 88
+      },
+      {
+        "month": "10",
+        "mm": 52
+      },
+      {
+        "month": "11",
+        "mm": 42
+      },
+      {
+        "month": "12",
+        "mm": 18
+      }
+    ],
+    "type": "csv"
+  },
+  "chart": {
+    "type": "bar-chart",
+    "title": {
+      "text": "Precipitation by month",
+      "fontFamily": "Roboto",
+      "fontSize": 20,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "width": 700,
+    "height": 400,
+    "xColumn": "month",
+    "yColumns": [
+      "mm"
+    ],
+    "xLabel": {
+      "text": "month",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "yLabel": {
+      "text": "precipitation (mm)",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "xScale": {
+      "type": "categorical"
+    },
+    "yScale": {
+      "min": 0,
+      "max": 240,
+      "type": "linear"
+    },
+    "legendLabel": {
+      "text": "Series",
+      "fontFamily": "Roboto",
+      "fontSize": 14,
+      "fontStyle": "regular",
+      "color": "#000000"
+    },
+    "colors": [
+      "#a6cee3",
+      "#1f78b4",
+      "#b2df8a",
+      "#33a02c",
+      "#fb9a99",
+      "#e31a1c"
+    ]
+  },
+  "annotations": {
+    "annotations": [
+      {
+        "target": {
+          "_id": "_uniqueid_947",
+          "type": "range",
+          "axis": "E0",
+          "range": "range(\"6\", \"8\", $[WyJfMSIsIl8yIiwiXzMiLCJfNCIsIl81IiwiXzYiLCJfNyIsIl84IiwiXzkiLCJfMTAiLCJfMTEiLCJfMTIiXQ==])"
+        },
+        "components": [
+          {
+            "type": "label",
+            "visible": true,
+            "style": {
+              "fill": {
+                "r": 187,
+                "g": 187,
+                "b": 187,
+                "a": 1
+              },
+              "stroke": null,
+              "stroke_width": 2,
+              "line_stroke": null,
+              "font_family": "Roboto",
+              "font_size": 14
+            },
+            "text": "the summer season",
+            "anchor": "m,t",
+            "anchor_offset": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "type": "range",
+            "visible": true,
+            "style": {
+              "fill": {
+                "r": 238,
+                "g": 238,
+                "b": 238,
+                "a": 1
+              },
+              "stroke": null,
+              "stroke_width": 1,
+              "line_stroke": null
+            }
+          }
+        ],
+        "visible": true,
+        "id": "#A1"
+      },
+      {
+        "target": {
+          "_id": "_uniqueid_947",
+          "type": "range",
+          "axis": "E0",
+          "range": "range(\"6\", \"8\", $[WyJfMSIsIl8yIiwiXzMiLCJfNCIsIl81IiwiXzYiLCJfNyIsIl84IiwiXzkiLCJfMTAiLCJfMTEiLCJfMTIiXQ==])"
+        },
+        "target_inherit": {
+          "mode": "within-or-equal",
+          "serieses": [
+            "E2"
+          ]
+        },
+        "components": [
+          {
+            "type": "item-label",
+            "visible": true,
+            "style": {
+              "fill": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "paint_order": "stroke",
+              "stroke": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null,
+              "font_family": "Roboto",
+              "font_size": 14
+            },
+            "text": "{format(\".0f\", value)}",
+            "anchor": "m,tt",
+            "anchor_offset": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "type": "highlight",
+            "visible": true,
+            "style": {
+              "fill": {
+                "mode": "brighter-darker",
+                "value": -0.25789473684210534
+              },
+              "stroke": {
+                "mode": "brighter-darker",
+                "value": -1
+              },
+              "stroke_width": 0,
+              "line_stroke": {
+                "mode": "brighter-darker",
+                "value": -0.2
+              },
+              "line_stroke_width": 3
+            }
+          },
+          {
+            "type": "trendline",
+            "visible": false,
+            "style": {
+              "fill": null,
+              "stroke": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "stroke_width": 2,
+              "line_stroke": null
+            }
+          }
+        ],
+        "visible": true,
+        "id": "#A1"
+      }
+    ]
+  },
+  "timestamp": 1546563052538
+}

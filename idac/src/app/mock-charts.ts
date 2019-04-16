@@ -13,7 +13,31 @@ export const CHARTS: Chart[] = [
         title: `How quickly Apple's market cap has fallen below its tech rivals`,
         src_json: './assets/chart-remastered-1.json',
         src_svg: './assets/chart-remastered-1.svg',
-    }
+    },
+    {
+        id: 3,
+        title: `Your Jealous Dog`,
+        src_json: './assets/simple-sample-2.json',
+        src_svg: './assets/simple-sample-2.svg',
+    },
+    {
+        id: 4,
+        title: `Development of Cooperation`,
+        src_json: './assets/simple-sample-3.json',
+        src_svg: './assets/simple-sample-3.svg',
+    },
+    {
+        id: 5,
+        title: `Depression and Stress`,
+        src_json: './assets/simple-sample-4.json',
+        src_svg: './assets/simple-sample-4.svg',
+    },
+    {
+        id: 6,
+        title: `How do adults get most of their national and international news (%)?`,
+        src_json: './assets/simple-sample-1.json',
+        src_svg: './assets/simple-sample-1.svg',
+    },
 ];
 
 const prev = [

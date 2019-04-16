@@ -1,0 +1,25 @@
+<div class="d-flex align-items-center">
+  <span *ngIf="tag.editorsNote.active"
+    class="mr-1"
+    (mouseover)="tag.editorsNote.showInGraphView = true"
+    (mouseout)="tag.editorsNote.showInGraphView = false"
+  >
+    <i class="d-inline fas fa-book editors-note"
+    ></i>
+  </span>
+  <p class="tagname font-weight-light">
+
+    <span
+      class="p-1 rounded tagname text-unselectable"
+      [class.highlighted]="currentTag === tag"
+      [style.white-space]="'nowrap'"
+    >
+      {{ tag._tagname }}
+    </span>
+  </p>
+  <!-- <p *ngIf="tag._parent._tagname !== 'ChartSpec' && siblingLength > 1"
+    [class.ml-1]="true || viewOnly" [class.small]="!viewOnly"
+    class="font-weight-light text-secondary" [style.white-space]="'nowrap'">
+    {{ siblingLength }} items
+  </p> -->
+</div>

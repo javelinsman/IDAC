@@ -1,0 +1,80 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/scss/bootstrap.scss";
+@import "~material-icons/iconfont/material-icons.css";
+@import "~font-awesome/css/font-awesome.css";
+@import "~ng-drag-drop/style.css";
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
+
+body {
+  font-family: 'Roboto';
+}
+
+* {
+  color: #333;
+}
+
+.dropdown-menu {
+  background-color: white;
+  border: 1px solid #ddd;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-menu li {
+  border-top: 1px solid #ddd;
+  padding: 2px 5px;
+  margin: 0;
+}
+
+.dropdown-menu li:first-child {
+  border-top: none;
+}
+
+.dropdown-menu li:hover,
+.dropdown-menu .active {
+  background-color: rgb(110, 183, 219);
+}
+
+.dropdown-menu a {
+  height: 18px;
+  text-decoration: none;
+  color: #555;
+}
+
+.dropdown-menu a:hover {
+  cursor: pointer;
+}
+
+.dropdown-menu img {
+  vertical-align: text-top;
+  height: 18px;
+}
+
+.editor {
+  margin: 1em 0 1em;
+}
+
+textarea {
+  width: 100%;
+}
+
+.add-annotation {
+  &.modal-backdrop {
+    opacity: 0 !important;
+    position: absolute !important;
+  }
+  &.modal {
+    position: absolute;
+
+    .modal-dialog {
+      position: absolute;
+      left: 45px;
+      top: 10px;
+    }
+  }
+}
+
+body.modal-open {
+  padding-right: 0px !important;
+}

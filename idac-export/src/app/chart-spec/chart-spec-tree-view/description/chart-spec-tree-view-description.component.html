@@ -1,0 +1,17 @@
+<div class="d-flex">
+  <p
+    [class.text-muted]="!tag.describe().length"
+    [class.font-italic]="!tag.describe().length"
+
+    [class.ml-2]="viewOnly"
+    [class.cursor-default]="viewOnly"
+
+    [class.text-unselectable]="!viewOnly"
+    [class.cursor-pointer]="!viewOnly"
+    [class.bg-light]="!viewOnly && hover && tag === currentTag"
+    class="font-weight-normal pl-1 mb-0"
+    #description
+  >
+  </p>
+
+</div>
