@@ -5,3 +5,4 @@ idac/package-lock.json
 .vs/ProjectSettings.json
 .vs/IDAC/v15/.suo
 idac-export/package-lock.json
+idac-touch/package-lock.json
