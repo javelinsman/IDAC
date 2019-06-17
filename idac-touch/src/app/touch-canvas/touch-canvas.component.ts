@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { copyTouch, colorForTouch, ongoingTouchIndexById, log } from 'src/utils';
+import { TouchObjectService } from '../touch-object.service';
+import { ITouchObject } from '../touch-object';
 
 @Component({
   selector: 'app-touch-canvas',
@@ -10,7 +12,13 @@ export class TouchCanvasComponent implements OnInit {
 
   ongoingTouches = [];
 
-  constructor() { }
+  constructor(
+    private touchObjectService: TouchObjectService
+  ) { }
+
+  private touchObjects: ITouchObject[];
+  private touchingObjectIndex = -1;
+  private lastTouchedTimestamp = -1;
 
   ngOnInit() {
     const el = document.getElementsByTagName('canvas')[0];
@@ -19,11 +27,34 @@ export class TouchCanvasComponent implements OnInit {
     el.addEventListener('touchcancel', this.handleCancel.bind(this), false);
     el.addEventListener('touchmove', this.handleMove.bind(this), false);
     console.log('initialized.');
+
+    this.touchObjects = this.touchObjectService.touchObjects;
+  }
+
+  handleTouchObjects(x: number, y: number) {
+    for (const touchObj of this.touchObjects) {
+      if (touchObj.collide(x, y)) {
+        const idx = this.touchObjects.indexOf(touchObj);
+        if (this.touchingObjectIndex !== idx && this.lastTouchedTimestamp + 100 < Date.now()) {
+          this.touchingObjectIndex = idx;
+          this.lastTouchedTimestamp = Date.now();
+          touchObj.notify();
+          log(idx + 'notify');
+        }
+        break;
+      }
+    }
   }
 
   handleStart(evt) {
     evt.preventDefault();
     console.log('touchstart.');
+    const touches = evt.changedTouches;
+    for (let i = 0; i < touches.length; i++) {
+      this.ongoingTouches.push(copyTouch(touches[i]));
+    }
+    this.handleMove(evt);
+    /*
     const el = document.getElementsByTagName('canvas')[0];
     const ctx = el.getContext('2d');
     const touches = evt.changedTouches;
@@ -38,11 +69,18 @@ export class TouchCanvasComponent implements OnInit {
       ctx.fill();
       console.log('touchstart:' + i + '.');
     }
+    */
   }
 
   handleEnd(evt) {
     evt.preventDefault();
     log('touchend');
+    const touches = evt.changedTouches;
+    for (let i = 0; i < touches.length; i++) {
+      const idx = ongoingTouchIndexById(this.ongoingTouches, touches[i].identifier);
+      this.ongoingTouches.splice(idx, 1);  // remove it; we're done
+    }
+    /*
     const el = document.getElementsByTagName('canvas')[0];
     const ctx = el.getContext('2d');
     const touches = evt.changedTouches;
@@ -63,6 +101,7 @@ export class TouchCanvasComponent implements OnInit {
         console.log('can\'t figure out which touch to end');
       }
     }
+    */
   }
 
   handleCancel(evt) {
@@ -88,6 +127,11 @@ export class TouchCanvasComponent implements OnInit {
 
       if (idx >= 0) {
         console.log('continuing touch ' + idx);
+        const touchX = touches[i].pageX;
+        const touchY = touches[i].pageY;
+        this.handleTouchObjects(touchX, touchY);
+
+        /*
         ctx.beginPath();
         console.log('ctx.moveTo(' + this.ongoingTouches[idx].pageX + ', ' + this.ongoingTouches[idx].pageY + ');');
         ctx.moveTo(this.ongoingTouches[idx].pageX, this.ongoingTouches[idx].pageY);
@@ -96,6 +140,7 @@ export class TouchCanvasComponent implements OnInit {
         ctx.lineWidth = 4;
         ctx.strokeStyle = color;
         ctx.stroke();
+        */
 
         this.ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
         console.log('.');

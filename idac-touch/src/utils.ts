@@ -26,6 +26,22 @@ export function ongoingTouchIndexById(ongoingTouches, idToFind) {
 }
 
 export function log(msg) {
+  return;
   const p = document.getElementById('log');
   p.innerHTML = msg + '\n' + p.innerHTML;
+}
+
+
+const audioContext = new AudioContext();
+
+export function beep(volume: number, frequency: number, duration: number) {
+  const v = audioContext.createOscillator();
+  const u = audioContext.createGain();
+  v.connect(u);
+  v.frequency.value = frequency;
+  v.type = 'square';
+  u.connect(audioContext.destination);
+  u.gain.value = volume * 0.01;
+  v.start(audioContext.currentTime);
+  v.stop(audioContext.currentTime + duration * 0.001);
 }
