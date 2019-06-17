@@ -21,22 +21,23 @@ export class TouchObjectService {
       const x = Math.round((cx + Math.random() * r));
       const y = Math.round((cy + Math.random() * r));
       this.touchObjects.push(
-        this.makeCircle(x, y, 20, {volume: 10, pitch: pitch, duration: 150}, {pattern: 50}, {text: `스트레스 ${y - 30} 우울 ${x - 30} ${name}`}),
+        this.makeCircle(x, y, 20, {volume: 10, pitch: pitch, duration: 150}, {pattern: 50}, {text: `소득 ${y - 30}천원 사교육비 ${x - 30}만원 ${name}`}),
       )
     }
   }
 
   constructChart() {
     for (let i = 0; i < 22; i++) {
-      this.touchObjects.push(this.makeRect(20, 30 + 25 * i, 20, 10, {volume: 10, pitch: 300, duration: 150}, {pattern: 50}, {text: `스트레스 ${25 * i}`}));
+      this.touchObjects.push(this.makeRect(20, 30 + 25 * i, 20, 10, {volume: 10, pitch: 300, duration: 150}, {pattern: 50}, {text: `소득 ${25 * i}천원`}));
     }
-    this.touchObjects.push(this.makeRect(30, 30, 10, 570, {volume: 10, pitch: 300, duration: 150}, {pattern: 50}, {text: 'x축 막대: 스트레스'}));
+    this.touchObjects.push(this.makeRect(30, 30, 10, 570, {volume: 10, pitch: 300, duration: 150}, {pattern: 50}, {text: 'x축 막대: 소득'}));
     for (let i = 0; i < 13; i++) {
-      this.touchObjects.push(this.makeRect(30 + 20 * i, 20, 10, 20, {volume: 10, pitch: 300, duration: 150}, {pattern: 50}, {text: `우울 ${20 * i}`}));
+      this.touchObjects.push(this.makeRect(30 + 20 * i, 20, 10, 20, {volume: 10, pitch: 300, duration: 150}, {pattern: 50}, {text: `사교육비 ${20 * i}만원`}));
     }
-    this.touchObjects.push(this.makeRect(30, 30, 270, 10, {volume: 10, pitch: 300, duration: 150}, {pattern: 50}, {text: 'y축 막대: 우울'}));
-    this.makeCluster(150, 150, 50, 13, 420, '한국');
-    this.makeCluster(100, 400, 30, 7, 640, '일본');
+    this.touchObjects.push(this.makeRect(30, 30, 270, 10, {volume: 10, pitch: 300, duration: 150}, {pattern: 50}, {text: 'y축 막대: 사교육비'}));
+    this.makeCluster(220, 480, 30, 25, 523, '부자고등학교');
+    this.makeCluster(70, 410, 20, 15, 784, '기숙사고등학교');
+    this.makeCluster(100, 200, 50, 40, 440, '일반고등학교');
 
     // background
     this.touchObjects.push(
