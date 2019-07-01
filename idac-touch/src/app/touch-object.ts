@@ -10,6 +10,8 @@ export interface ITouchObject {
 }
 
 export class TouchCircle implements ITouchObject {
+  type: string;
+  style: any;
   constructor(
     public beep: any,
     public tts: any,
@@ -19,7 +21,12 @@ export class TouchCircle implements ITouchObject {
     public beepSpec: any = null,
     public vibrationSpec: any = null,
     public ttsSpec: any = null,
-  ) {}
+  ) {
+    this.type = 'circle';
+    this.style = {
+      fill: (this.beepSpec && this.beepSpec.pitch) ? 'black' : 'transparent'
+    };
+  }
 
   notify() {
     if (this.beepSpec) {
@@ -40,6 +47,8 @@ export class TouchCircle implements ITouchObject {
 }
 
 export class TouchRectangle implements ITouchObject {
+  type: string;
+  style: any;
   constructor(
     public beep: any,
     public tts: any,
@@ -50,7 +59,12 @@ export class TouchRectangle implements ITouchObject {
     public beepSpec: any,
     public vibrationSpec: any,
     public ttsSpec: any
-  ) {}
+  ) {
+    this.type = 'rectangle';
+    this.style = {
+      fill: (this.beepSpec && this.beepSpec.pitch) ? 'black' : 'transparent'
+    };
+  }
 
   notify() {
     if (this.beepSpec) {

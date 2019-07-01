@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { copyTouch, colorForTouch, ongoingTouchIndexById, log } from 'src/utils';
 import { TouchObjectService } from '../touch-object.service';
 import { ITouchObject } from '../touch-object';
+import * as d3 from 'd3';
 
 @Component({
   selector: 'app-touch-canvas',
@@ -28,7 +29,21 @@ export class TouchCanvasComponent implements OnInit {
     el.addEventListener('touchmove', this.handleMove.bind(this), false);
     console.log('initialized.');
 
+    const canvas = d3.select('svg');
+
     this.touchObjects = this.touchObjectService.touchObjects;
+    console.log(this.touchObjects);
+    this.touchObjects.reverse();
+    this.touchObjects.forEach(touchObject => {
+      if (touchObject.type === 'circle') {
+        canvas.append('circle').attr('cx', touchObject.cx).attr('cy', touchObject.cy).attr('r', touchObject.r)
+          .style('fill', touchObject.style.fill);
+      } else if (touchObject.type === 'rectangle') {
+        canvas.append('rect').attr('x', touchObject.x).attr('y', touchObject.y).attr('width', touchObject.w).attr('height', touchObject.h)
+          .style('fill', touchObject.style.fill);
+      }
+    });
+    this.touchObjects.reverse();
   }
 
   handleTouchObjects(x: number, y: number) {
