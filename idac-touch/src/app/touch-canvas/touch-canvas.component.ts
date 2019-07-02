@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { copyTouch, colorForTouch, ongoingTouchIndexById, log } from 'src/utils';
 import { TouchObjectService } from '../touch-object.service';
 import { ITouchObject } from '../touch-object';
@@ -10,6 +10,8 @@ import * as d3 from 'd3';
   styleUrls: ['./touch-canvas.component.scss']
 })
 export class TouchCanvasComponent implements OnInit {
+
+  @Input() exampleId: number = 0;
 
   ongoingTouches = [];
 
@@ -31,7 +33,7 @@ export class TouchCanvasComponent implements OnInit {
 
     const canvas = d3.select('svg');
 
-    this.touchObjects = this.touchObjectService.touchObjects;
+    this.touchObjects = this.touchObjectService.getTouchObjects(this.exampleId);
     console.log(this.touchObjects);
     this.touchObjects.reverse();
     this.touchObjects.forEach(touchObject => {
@@ -41,6 +43,12 @@ export class TouchCanvasComponent implements OnInit {
       } else if (touchObject.type === 'rectangle') {
         canvas.append('rect').attr('x', touchObject.x).attr('y', touchObject.y).attr('width', touchObject.w).attr('height', touchObject.h)
           .style('fill', touchObject.style.fill);
+      } else if (touchObject.type === 'line') {
+        canvas.append('line')
+          .attr('x1', touchObject.x1).attr('y1', touchObject.y1)
+          .attr('x2', touchObject.x2).attr('y2', touchObject.y2)
+          .style('stroke', touchObject.style.fill)
+          .style('stroke-width', 6);
       }
     });
     this.touchObjects.reverse();

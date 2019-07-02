@@ -1,1 +1,9 @@
-<app-touch-canvas></app-touch-canvas>
+<ng-container *ngIf="!exampleId">
+  <button (click)="exampleId = 1">1</button>
+  <button (click)="exampleId = 2">2</button>
+  <button (click)="exampleId = 3">3</button>
+  <button (click)="exampleId = 4">4</button>
+</ng-container>
+<ng-container *ngIf="exampleId">
+  <app-touch-canvas [exampleId]="exampleId"></app-touch-canvas>
+</ng-container>

@@ -7,6 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent {
   title = 'idac-touch';
-
+  exampleId = 0;
 
 }

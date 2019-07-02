@@ -1,3 +1,5 @@
+import { distToSegment } from 'src/utils';
+
 export interface ITouchObject {
   beep: any;
   tts: any;
@@ -46,6 +48,42 @@ export class TouchCircle implements ITouchObject {
 
 }
 
+export class TouchLine implements ITouchObject {
+  type: string;
+  style: any;
+  constructor(
+    public beep: any,
+    public tts: any,
+    public x1: number,
+    public y1: number,
+    public x2: number,
+    public y2: number,
+    public beepSpec: any,
+    public vibrationSpec: any,
+    public ttsSpec: any
+  ) {
+    this.type = 'line';
+    this.style = {
+      fill: (this.beepSpec && this.beepSpec.pitch) ? 'black' : 'transparent'
+    };
+  }
+  notify() {
+    if (this.beepSpec) {
+      this.beep(this.beepSpec.volume, this.beepSpec.pitch, this.beepSpec.duration);
+    }
+    if (this.vibrationSpec) {
+      window.navigator.vibrate(this.vibrationSpec.pattern);
+    }
+    if (this.ttsSpec) {
+      this.tts(this.ttsSpec.text);
+    }
+  }
+  collide(x: number, y: number) {
+    return distToSegment({x: x, y: y}, {x: this.x1, y: this.y1}, {x: this.x2, y: this.y2}) <= 3;
+  }
+}
+
+
 export class TouchRectangle implements ITouchObject {
   type: string;
   style: any;
@@ -65,7 +103,6 @@ export class TouchRectangle implements ITouchObject {
       fill: (this.beepSpec && this.beepSpec.pitch) ? 'black' : 'transparent'
     };
   }
-
   notify() {
     if (this.beepSpec) {
       this.beep(this.beepSpec.volume, this.beepSpec.pitch, this.beepSpec.duration);
@@ -77,7 +114,6 @@ export class TouchRectangle implements ITouchObject {
       this.tts(this.ttsSpec.text);
     }
   }
-
   collide(x: number, y: number) {
     return this.x <= x && x <= this.x + this.w && this.y <= y && y <= this.y + this.h;
   }
